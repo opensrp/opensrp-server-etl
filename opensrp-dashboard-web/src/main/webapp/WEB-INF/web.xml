@@ -78,7 +78,7 @@
     - Servlet that dispatches requests to the Spring managed block servlets
     -->
   <servlet>
-   <servlet-name>DispatcherServlet</servlet-name>
+   <servlet-name>opensrp</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -96,8 +96,8 @@
     - to change this parameter.
     -->
   <servlet-mapping>
-    <servlet-name>DispatcherServlet</servlet-name>
-    <url-pattern>*.html</url-pattern>
+    <servlet-name>opensrp</servlet-name>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
 
 </web-app>

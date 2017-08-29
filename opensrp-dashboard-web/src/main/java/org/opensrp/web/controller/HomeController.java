@@ -18,7 +18,7 @@ public class HomeController {
 	@Autowired
 	private DemoTest demoTest;
 	
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String showHome(Model model) {
 		demoTest.setName("OpenSRP ETL!!");
 		return "home";

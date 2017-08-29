@@ -13,16 +13,12 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <h1>Hello world</h1>
+                    <h1>OpenSRP ETL!!! started successfully</h1>
                 </div>
                 <div class="col-md-3"></div>
             </div>
         </div>
 
-<div layout:fragment="content">
-    <span th:text="|${name}|"/>,<span th:utext="${formatted}"/> is running successfully.<span th:text="${formatted}"/> 
-</div>
-<P>  The time on the server is ${serverTime}. </P>
 
 <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
