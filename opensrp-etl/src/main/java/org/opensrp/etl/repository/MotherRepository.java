@@ -11,7 +11,7 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	private SessionFactory sessionFactory;
 	
 	public MotherRepository() {
-		System.out.println("constructor: MotherRepository");
+		
 	}
 	
 	@Autowired
@@ -21,7 +21,7 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	
 	@Override
 	public void save(MotherEntity motherEntity) {
-		System.out.println("Class: MotherRepository Method: save");
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(motherEntity);

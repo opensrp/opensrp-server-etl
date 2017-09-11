@@ -8,25 +8,25 @@ import org.ektorp.ViewQuery;
 import org.ektorp.ViewResult;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
-import org.opensrp.etl.entity.HouseHold;
+import org.opensrp.etl.entity.SourceDBEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SourceDBRepository extends CouchDbRepositorySupport<HouseHold> {
+public class SourceDBRepository extends CouchDbRepositorySupport<SourceDBEntity> {
 	
 	@Autowired
 	public SourceDBRepository(@Qualifier("sourceDB") CouchDbConnector couchDbConnector) {
-		super(HouseHold.class, couchDbConnector);
+		super(SourceDBEntity.class, couchDbConnector);
 		initStandardDesignDocument();
 	}
 	
 	@GenerateView
 	@Override
-	public List<HouseHold> getAll() {
+	public List<SourceDBEntity> getAll() {
 		ViewQuery q = createQuery("all").descending(true).includeDocs(true);
-		return db.queryView(q, HouseHold.class);
+		return db.queryView(q, SourceDBEntity.class);
 	}
 	
 	public ViewResult allData(long timeStamp) {

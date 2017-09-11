@@ -5,9 +5,11 @@ import javax.transaction.Transactional;
 import org.opensrp.etl.entity.ActionEntity;
 import org.opensrp.etl.interfaces.RegisterService;
 import org.opensrp.etl.repository.ActionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionService implements RegisterService<ActionEntity> {
 	
+	@Autowired
 	private ActionRepository actionRepository;
 	
 	public ActionService() {
@@ -17,7 +19,26 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	@Override
 	public void save(ActionEntity actionEntity) {
-		actionRepository.save(actionEntity);
+		
+		try {
+			if (!isActionExist(actionEntity)) {
+				actionRepository.save(actionEntity);
+			} else {
+				System.out.println("Action already exists in database!!!");
+			}
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Transactional
+	public boolean isActionExist(ActionEntity actionEntity) {
+		System.out.println("caseId:" + actionEntity.getCaseID());
+		return actionRepository.findActionByCaseId(actionEntity.getCaseID(), actionEntity.getVisitCode(),
+		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
 		
 	}
 	

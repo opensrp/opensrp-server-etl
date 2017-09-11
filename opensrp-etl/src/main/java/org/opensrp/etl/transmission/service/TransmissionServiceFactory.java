@@ -17,6 +17,9 @@ public class TransmissionServiceFactory {
 	@Autowired
 	private ChildTransmissionService childTransmissionService;
 	
+	@Autowired
+	private ActionTransmissionService actionTransmissionService;
+	
 	private TransmissionServices transmissionServices;
 	
 	private TransmissionServices getTransmissionService(String transmissionServiceType) {
@@ -28,6 +31,8 @@ public class TransmissionServiceFactory {
 			transmissionServices = motherTransmissionService;
 		else if (transmissionServiceType.equals("Child"))
 			transmissionServices = childTransmissionService;
+		else if (transmissionServiceType.equals("Action"))
+			transmissionServices = actionTransmissionService;
 		return transmissionServices;
 		
 	}

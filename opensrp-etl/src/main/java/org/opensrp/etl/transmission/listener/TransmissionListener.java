@@ -28,7 +28,7 @@ public class TransmissionListener {
 	
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
-		System.err.println("ok come to listener");
+		System.out.println("ETL process started transmission from source couchDB!!!");
 		ViewResult vr = sourceDBRepository.allData(0);
 		List<Row> rows = vr.getRows();
 		
