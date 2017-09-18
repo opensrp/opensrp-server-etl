@@ -12,15 +12,8 @@ import javax.persistence.Table;
 @Table(name = "household")
 public class HouseholdEntity extends CommonEntity {
 	
-	private HouseholdEntity() {
+	public HouseholdEntity() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static final HouseholdEntity INSTANCE = new HouseholdEntity();
-	
-	public static HouseholdEntity getInstance() {
-		return INSTANCE;
-		
 	}
 	
 	@Id

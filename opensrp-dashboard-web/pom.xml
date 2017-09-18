@@ -99,6 +99,9 @@
   	<resource>
 		<directory>../opensrp-etl/src/main/resources</directory>
 	</resource>
+	  	<resource>
+		<directory>../opensrp-etl/src/test/resources</directory>
+	</resource>
 	<resource>
 		<directory>../opensrp-dashboard-web/src/main/resources</directory>
 	</resource>

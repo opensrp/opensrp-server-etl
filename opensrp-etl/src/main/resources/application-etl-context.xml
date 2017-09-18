@@ -119,14 +119,10 @@
 <bean name="childEntity" class="org.opensrp.etl.entity.ChildEntity"/>
 <bean name="enccEntity" class="org.opensrp.etl.entity.ENCCEntity"/>
 <bean name="actionEntity" class="org.opensrp.etl.entity.ActionEntity"/>
+<bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
 
-
-<bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository">
-        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-</bean>
-     
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
-
+<bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>
     
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

@@ -230,5 +230,21 @@
      	</dependency>
 	</dependencies>
 
-
+<build>
+  <finalName>opensrp-dashboard</finalName>
+  <resources>
+ 	<resource>
+		<directory>../opensrp-reports/src/main/resources</directory>
+	</resource>
+  	<resource>
+		<directory>../opensrp-etl/src/main/resources</directory>
+	</resource>
+	  	<resource>
+		<directory>../opensrp-etl/src/test/resources</directory>
+	</resource>
+	<resource>
+		<directory>../opensrp-dashboard-web/src/main/resources</directory>
+	</resource>
+  </resources>
+  </build>
 </project>

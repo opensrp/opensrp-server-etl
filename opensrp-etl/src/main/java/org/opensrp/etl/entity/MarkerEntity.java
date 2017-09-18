@@ -12,6 +12,10 @@ import javax.persistence.Table;
 @Table(name = "marker")
 public class MarkerEntity {
 	
+	public MarkerEntity() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "marker_id_seq")
 	@SequenceGenerator(name = "marker_id_seq", sequenceName = "marker_id_seq", allocationSize = 1)

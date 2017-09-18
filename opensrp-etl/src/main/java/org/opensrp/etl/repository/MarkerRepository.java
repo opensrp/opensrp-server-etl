@@ -1,41 +1,26 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
 import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	
-	public MarkerRepository() {
-		// TODO Auto-generated constructor stub
-	}
-	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-	
-	public void save(MarkerEntity entity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(entity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void update(MarkerEntity markerEntity) {
-		Session session = getSession();
-		session.update(markerEntity);
-		
+	public MarkerRepository() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	private Session getSession() {
@@ -43,28 +28,52 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 		return session;
 	}
 	
-	public MarkerEntity getMarkerByNameAndType(String name, String type) {
-		/*Query query = getSession().createQuery("from marker where name = :name" +
-				" where stockCode = :stockCode");
-		query.setParameter("name", "household");*/
-		Session session = getSession();
-		Criteria cr = session.createCriteria(MarkerEntity.class);
-		cr.add(Restrictions.eq("name", name));
-		cr.add(Restrictions.eq("type", type));
-		return (MarkerEntity) cr.list().get(0);
+	@SuppressWarnings("unchecked")
+	public List<MarkerEntity> getAllMarker() {
+		return getSession().createQuery("from MarkerEntity").list();
+	}
+	
+	public long getCurrentTimeStampFromMarker() {
+		Query query = getSession().createQuery("select M.timeStamp from MarkerEntity M ");
+		
+		//return (long) query.list().get(0);
+		Criteria cr = getSession().createCriteria(MarkerEntity.class)
+		        .setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+		                .add(Projections.property("timeStamp"), "timeStamp"))
+		        .setResultTransformer(Transformers.aliasToBean(MarkerEntity.class));
+		List<MarkerEntity> list = cr.list();
+		System.err.println("L:" + list.get(0).getTimeStamp());
+		return list.get(0).getTimeStamp();
 		
 	}
 	
 	@Override
-	public void delete(MarkerEntity t) {
-		// TODO Auto-generated method stub
+	public void save(MarkerEntity markerEntity) {
+		try {
+			getSession().save(markerEntity);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void update(MarkerEntity markerEntity) {
+		getSession().update(markerEntity);
+	}
+	
+	@Override
+	public void delete(MarkerEntity markerEntity) {
+		if (null != markerEntity) {
+			getSession().delete(markerEntity);
+		}
 		
 	}
 	
 	@Override
 	public MarkerEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (MarkerEntity) getSession().get(MarkerEntity.class, id);
 	}
 	
 }

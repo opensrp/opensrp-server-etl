@@ -27,6 +27,7 @@
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/repository/ChildRepository.java
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/interfaces/RegisterService.java
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/transmission/service/ElcoTransmissionService.java
+/home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/entity/CommonMetaEntity.java
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/service/ANCService.java
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/service/ENCCService.java
 /home/sohel/workspace-test/opensrp-dashboard/opensrp-etl/src/main/java/org/opensrp/etl/entity/HouseHold.java

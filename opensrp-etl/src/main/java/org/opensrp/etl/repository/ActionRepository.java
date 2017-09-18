@@ -51,7 +51,7 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		return null;
 	}
 	
-	public int findActionByCaseId(String caseId, String visitCode, String alertStatus, String startDate) {
+	public int isActionExist(String caseId, String visitCode, String alertStatus, String startDate) {
 		Session session = this.sessionFactory.getCurrentSession();
 		int actionExist = 0;
 		try {

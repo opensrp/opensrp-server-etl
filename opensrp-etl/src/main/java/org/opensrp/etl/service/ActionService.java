@@ -37,7 +37,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	public boolean isActionExist(ActionEntity actionEntity) {
 		System.out.println("caseId:" + actionEntity.getCaseID());
-		return actionRepository.findActionByCaseId(actionEntity.getCaseID(), actionEntity.getVisitCode(),
+		return actionRepository.isActionExist(actionEntity.getCaseID(), actionEntity.getVisitCode(),
 		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
 		
 	}

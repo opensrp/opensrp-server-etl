@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "action")
-public class ActionEntity {
+public class ActionEntity extends CommonMetaEntity {
 	
 	public ActionEntity() {
 		

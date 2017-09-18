@@ -35,6 +35,8 @@ public class ActionDataConverterService implements DataConverterService {
 			actionEntity.setScheduleName(data.getString("scheduleName"));
 			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
 			actionEntity.setStartDate(data.getString("startDate"));
+			actionEntity.setDate_created();
+			actionEntity.setDate_updated();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
