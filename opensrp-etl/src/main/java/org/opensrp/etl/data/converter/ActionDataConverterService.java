@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.ActionEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ActionService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionDataConverterService implements DataConverterService {
@@ -31,10 +32,10 @@ public class ActionDataConverterService implements DataConverterService {
 			actionEntity.setIsActionActive(Boolean.parseBoolean(doc.getString("isActionActive")));
 			actionEntity.setAlertStatus(data.getString("alertStatus"));
 			actionEntity.setVisitCode(data.getString("visitCode"));
-			actionEntity.setExpiryDate(data.getString("expiryDate"));
+			actionEntity.setExpiryDate(DateUtil.getDateFromString(data.getString("expiryDate")));
 			actionEntity.setScheduleName(data.getString("scheduleName"));
 			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
-			actionEntity.setStartDate(data.getString("startDate"));
+			actionEntity.setStartDate(DateUtil.getDateFromString(data.getString("startDate")));
 			actionEntity.setCreated();
 			actionEntity.setUpdated();
 		}

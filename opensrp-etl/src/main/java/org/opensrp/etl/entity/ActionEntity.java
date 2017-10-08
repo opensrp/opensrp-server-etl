@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "action")
@@ -36,9 +38,9 @@ public class ActionEntity {
 	
 	@Column(name = "case_id")
 	private String caseId;
-	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
-	private String startDate;
+	private Date startDate;
 	
 	@Column(name = "beneficiary_type")
 	private String beneficiaryType;
@@ -46,8 +48,9 @@ public class ActionEntity {
 	@Column(name = "schedule_name")
 	private String scheduleName;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "expiry_date")
-	private String expiryDate;
+	private Date expiryDate;
 	
 	@Column(name = "visit_code")
 	private String visitCode;
@@ -119,11 +122,11 @@ public class ActionEntity {
 		this.caseId = caseID;
 	}
 	
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 	
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	
@@ -143,11 +146,11 @@ public class ActionEntity {
 		this.scheduleName = scheduleName;
 	}
 	
-	public String getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 	
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	

@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -55,7 +56,7 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		return null;
 	}
 	
-	public int isActionExist(String caseId, String visitCode, String alertStatus, String startDate) {
+	public int isActionExist(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = this.sessionFactory.getCurrentSession();
 		int actionExist = 0;
 		try {

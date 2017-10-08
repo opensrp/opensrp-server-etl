@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class CommonEntity {
@@ -30,15 +32,16 @@ public abstract class CommonEntity {
 	@Column(name = "location_id")
 	private String locationId;
 	
-	private String today;
+	@Temporal(TemporalType.DATE)
+	private Date today;
 	
-	private String start;
+	private Date start;
 	
 	@Column(name = "end_time")
-	private String end;
-	
+	private Date end;
+	@Temporal(TemporalType.DATE)
 	@Column(name = "registration_date")
-	private String registrationDate;
+	private Date registrationDate;
 	
 	private String country;
 	
@@ -149,35 +152,35 @@ public abstract class CommonEntity {
 		this.locationId = locationId;
 	}
 	
-	public String getToday() {
+	public Date getToday() {
 		return today;
 	}
 	
-	public void setToday(String today) {
+	public void setToday(Date today) {
 		this.today = today;
 	}
 	
-	public String getStart() {
+	public java.util.Date getStart() {
 		return start;
 	}
 	
-	public void setStart(String start) {
+	public void setStart(java.util.Date start) {
 		this.start = start;
 	}
 	
-	public String getEnd() {
+	public Date getEnd() {
 		return end;
 	}
 	
-	public void setEnd(String end) {
+	public void setEnd(Date end) {
 		this.end = end;
 	}
 	
-	public String getRegistrationDate() {
+	public Date getRegistrationDate() {
 		return registrationDate;
 	}
 	
-	public void setRegistrationDate(String registrationDate) {
+	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 	

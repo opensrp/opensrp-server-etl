@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.ChildEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ChildService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ChildDataConverterService implements DataConverterService {
@@ -30,11 +31,11 @@ public class ChildDataConverterService implements DataConverterService {
 			
 			childEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			
-			childEntity.setEnd(doc.getString("END"));
+			childEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			
-			childEntity.setStart(doc.getString("START"));
+			childEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
 			
-			childEntity.setToday(doc.getString("TODAY"));
+			childEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
 			
 			// ? childEntity.setFirstName(doc.getString("mother_first_name"));
 			

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.HouseholdEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.HouseholdService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 		householdEntity.setDivision(doc.getString("FWDIVISION"));
 		householdEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
 		
-		householdEntity.setEnd(doc.getString("END"));
+		householdEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 		householdEntity.setExternalUserId(doc.getString("external_user_ID"));
 		householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
 		householdEntity.setFormName(doc.getString("form_name"));
@@ -50,11 +51,11 @@ public class HouseholdDataConverterService implements DataConverterService {
 		householdEntity.setMauzaPara(doc.getString("FWMAUZA_PARA"));
 		//householdEntity.setMultimediaAttachments(houseHold.multimediaAttachments());
 		householdEntity.setProvider(doc.getString("PROVIDERID"));
-		householdEntity.setRegistrationDate(doc.getString("FWNHREGDATE"));
-		householdEntity.setStart(doc.getString("START"));
+		householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("FWNHREGDATE")));
+		householdEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
 		householdEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 		householdEntity.setSubunit(doc.getString("FWSUBUNIT"));
-		householdEntity.setToday(doc.getString("TODAY"));
+		householdEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
 		householdEntity.setUnion(doc.getString("FWUNION"));
 		householdEntity.setUpazila(doc.getString("FWUPAZILLA"));
 		householdEntity.setUserType(doc.getString("user_type"));

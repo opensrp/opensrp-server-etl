@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.ElcoEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ElcoService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ElcoDataConverterService implements DataConverterService {
@@ -31,7 +32,7 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
 			elcoEntity.setDivision(doc.getString("FWWOMDIVISION"));
 			elcoEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
-			elcoEntity.setEnd(doc.getString("END"));
+			elcoEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			elcoEntity.setExternalUserId(doc.getString("external_user_ID"));
 			elcoEntity.setFirstName(doc.getString("FWWOMFNAME"));
 			//elcoEntity.setFormName(doc.getString("form_name"));
@@ -44,11 +45,11 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setLocationId(doc.getString("LOCATIONID"));
 			elcoEntity.setMauzaPara(doc.getString("FWWOMMAUZA_PARA"));
 			elcoEntity.setProvider(doc.getString("PROVIDERID"));
-			elcoEntity.setRegistrationDate(doc.getString("WomanREGDATE"));
-			elcoEntity.setStart(doc.getString("START"));
+			elcoEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("WomanREGDATE")));
+			elcoEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
 			elcoEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			elcoEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
-			elcoEntity.setToday(doc.getString("TODAY"));
+			elcoEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
 			elcoEntity.setUnion(doc.getString("FWWOMUNION"));
 			elcoEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
 			elcoEntity.setUserType(doc.getString("user_type"));
