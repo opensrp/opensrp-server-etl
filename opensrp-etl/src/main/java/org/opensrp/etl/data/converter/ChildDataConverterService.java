@@ -15,6 +15,9 @@ public class ChildDataConverterService implements DataConverterService {
 	@Autowired
 	private ChildService childService;
 	
+	@Autowired
+	private ChildToENCCConverter childToENCCConverter;
+	
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		try {
@@ -37,7 +40,7 @@ public class ChildDataConverterService implements DataConverterService {
 			
 			childEntity.setCaseId(doc.getString("caseId"));
 			
-			childEntity.setInstantId(doc.getString("INSTANCEID"));
+			childEntity.setInstanceId(doc.getString("INSTANCEID"));
 			
 			// ? childEntity.setLocationId(doc.getString("LOCATIONID"));
 			
@@ -90,6 +93,8 @@ public class ChildDataConverterService implements DataConverterService {
 			e.printStackTrace();
 		}
 		childService.save(childEntity);
+		childToENCCConverter.enccVisitSave(doc);
+		
 	}
 	
 }

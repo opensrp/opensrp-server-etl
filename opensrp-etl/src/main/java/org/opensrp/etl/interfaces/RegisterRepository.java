@@ -10,4 +10,6 @@ public interface RegisterRepository<T> {
 	
 	public T findById(int id);
 	
+	public T findByCaseId(String caseID);
+	
 }

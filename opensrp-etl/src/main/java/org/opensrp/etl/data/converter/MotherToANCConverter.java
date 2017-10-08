@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ANCEntity;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author sohel
  */
 public class MotherToANCConverter {
+	
+	private static final Logger logger = Logger.getLogger(MotherToANCConverter.class);
 	
 	private static final String ANC = "ANC";
 	
@@ -173,58 +176,58 @@ public class MotherToANCConverter {
 		try {
 			
 			if (mdoc.has(ANC_Visit_One) && mdoc.isNull(ANC_Visit_One) || mdoc.getJSONObject(ANC_Visit_One).length() == 0) {
-				System.out.println("ancVisitOne does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitOne does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("ancVisitOne  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitOne  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_One));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("1");
 				ancEntity.setAncName(ANC_Visit_One);
 				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap));
-				System.out.println("ancVisitOne saved successfully entity: " + ancEntity.toString());
+				logger.debug("ancVisitOne saved successfully entity: " + ancEntity.toString());
 			}
 			
 			if (mdoc.has(ANC_Visit_Two) && mdoc.isNull(ANC_Visit_Two) || mdoc.getJSONObject(ANC_Visit_Two).length() == 0) {
-				System.out.println("ancVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("ancVisitTwo  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitTwo  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_Two));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("2");
 				ancEntity.setAncName(ANC_Visit_Two);
 				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap));
-				System.out.println("ancVisitTwo saved successfully entity: " + ancEntity.toString());
+				logger.debug("ancVisitTwo saved successfully entity: " + ancEntity.toString());
 			}
 			
 			if (mdoc.has(ANC_Visit_Three) && mdoc.isNull(ANC_Visit_Three)
 			        || mdoc.getJSONObject(ANC_Visit_Three).length() == 0) {
-				System.out.println("ancVisitThree does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitThree does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("ancVisitThree  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitThree  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Three));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("3");
 				ancEntity.setAncName(ANC_Visit_Three);
 				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap));
-				System.out.println("ancVisitThree saved successfully entity: " + ancEntity.toString());
+				logger.debug("ancVisitThree saved successfully entity: " + ancEntity.toString());
 			}
 			
 			if (mdoc.has(ANC_Visit_Four) && mdoc.isNull(ANC_Visit_Four)
 			        || mdoc.getJSONObject(ANC_Visit_Four).length() == 0) {
-				System.out.println("ancVisitFour does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitFour does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("ancVisitFour  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("ancVisitFour  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Four));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("4");
 				ancEntity.setAncName(ANC_Visit_Four);
 				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap));
-				System.out.println("ancVisitFour saved successfully entity: " + ancEntity.toString());
+				logger.debug("ancVisitFour saved successfully entity: " + ancEntity.toString());
 			}
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println(mdoc.getString("caseId"));
+			logger.debug(mdoc.getString("caseId"));
 			e.printStackTrace();
 		}
 		

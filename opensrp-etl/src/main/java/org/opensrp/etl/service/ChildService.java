@@ -41,10 +41,10 @@ public class ChildService implements RegisterService<ChildEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public ChildEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return childRepository.findByCaseId(caseId);
 	}
 	
 }

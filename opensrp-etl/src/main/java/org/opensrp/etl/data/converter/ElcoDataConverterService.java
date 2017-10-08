@@ -38,7 +38,7 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setGender(doc.getString("FWGENDER"));
 			elcoEntity.setGOBHHID(doc.getString("GOBHHID"));
 			elcoEntity.setGps(doc.getString("FWWOMGPS"));
-			elcoEntity.setInstantId(doc.getString("INSTANCEID"));
+			elcoEntity.setInstanceId(doc.getString("INSTANCEID"));
 			elcoEntity.setJiVitAHHID(doc.getString("JiVitAHHID"));
 			elcoEntity.setLastName(doc.getString("FWWOMLNAME"));
 			elcoEntity.setLocationId(doc.getString("LOCATIONID"));
@@ -82,11 +82,12 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			JSONObject details = new JSONObject(doc.getString("details"));
 			elcoEntity.setFWPSRPREGSTS(details.getString("relationalid"));
+			elcoEntity.setUpdated();
+			elcoEntity.setCreated();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("ElcoDataConverterService:" + elcoEntity.toString());
 		elcoService.save(elcoEntity);
 	}
 	

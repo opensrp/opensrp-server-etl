@@ -22,8 +22,8 @@ public abstract class CommonEntity {
 	@Column(name = "case_id")
 	public String caseId;
 	
-	@Column(name = "instant_id")
-	private String instantId;
+	@Column(name = "instance_id")
+	private String instanceId;
 	
 	private String provider;
 	
@@ -78,9 +78,6 @@ public abstract class CommonEntity {
 	@Column(name = "client_version")
 	private long clientVersion;
 	
-	@Column(name = "time_stamp")
-	private long timeStamp;
-	
 	private Date created;
 	
 	private Date updated;
@@ -128,12 +125,12 @@ public abstract class CommonEntity {
 		this.caseId = caseId;
 	}
 	
-	public String getInstantId() {
-		return instantId;
+	public String getInstanceId() {
+		return instanceId;
 	}
 	
-	public void setInstantId(String instantId) {
-		this.instantId = instantId;
+	public void setInstanceId(String instanceId) {
+		this.instanceId = instanceId;
 	}
 	
 	public String getProvider() {
@@ -304,28 +301,20 @@ public abstract class CommonEntity {
 		this.clientVersion = clientVersion;
 	}
 	
-	public long getTimeStamp() {
-		return timeStamp;
-	}
-	
-	public void setTimeStamp(long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-	
 	public Date getCreated() {
 		return created;
 	}
 	
-	public void setCreated(Date created) {
-		this.created = created;
+	public void setCreated() {
+		this.created = new Date();
 	}
 	
 	public Date getUpdated() {
 		return updated;
 	}
 	
-	public void setUpdated(Date updated) {
-		this.updated = updated;
+	public void setUpdated() {
+		this.updated = new Date();
 	}
 	
 	public String getReceivedTime() {
@@ -339,14 +328,14 @@ public abstract class CommonEntity {
 	@Override
 	public String toString() {
 		return "CommonEntity [firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", gender="
-		        + gender + ", caseId=" + caseId + ", instantId=" + instantId + ", provider=" + provider + ", locationId="
+		        + gender + ", caseId=" + caseId + ", instanceId=" + instanceId + ", provider=" + provider + ", locationId="
 		        + locationId + ", today=" + today + ", start=" + start + ", end=" + end + ", registrationDate="
 		        + registrationDate + ", country=" + country + ", division=" + division + ", district=" + district
 		        + ", upazila=" + upazila + ", union=" + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzaPara="
 		        + mauzaPara + ", gps=" + gps + ", formName=" + formName + ", userType=" + userType + ", externalUserId="
 		        + externalUserId + ", currentFormStatus=" + currentFormStatus + ", submissionTime=" + submissionTime
-		        + ", clientVersion=" + clientVersion + ", timeStamp=" + timeStamp + ", created=" + created + ", updated="
-		        + updated + ", receivedTime=" + receivedTime + "]";
+		        + ", clientVersion=" + clientVersion + ", created=" + created + ", updated=" + updated + ", receivedTime="
+		        + receivedTime + "]";
 	}
 	
 }

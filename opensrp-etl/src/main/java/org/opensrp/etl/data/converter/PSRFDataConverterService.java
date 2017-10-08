@@ -103,8 +103,6 @@ public class PSRFDataConverterService implements DataConverterService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		System.out.println("Class: PSRFDataConverterService, method: convertData");
 		psrfService.save(psrfEntity);
 		
 	}

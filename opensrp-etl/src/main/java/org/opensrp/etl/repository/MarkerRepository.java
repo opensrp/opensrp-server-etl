@@ -35,8 +35,6 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	
 	public long getCurrentTimeStampFromMarker() {
 		Query query = getSession().createQuery("select M.timeStamp from MarkerEntity M ");
-		
-		//return (long) query.list().get(0);
 		Criteria cr = getSession().createCriteria(MarkerEntity.class)
 		        .setProjection(Projections.projectionList().add(Projections.property("id"), "id")
 		                .add(Projections.property("timeStamp"), "timeStamp"))
@@ -74,6 +72,11 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	@Override
 	public MarkerEntity findById(int id) {
 		return (MarkerEntity) getSession().get(MarkerEntity.class, id);
+	}
+	
+	@Override
+	public MarkerEntity findByCaseId(String caseID) {
+		return null;
 	}
 	
 }

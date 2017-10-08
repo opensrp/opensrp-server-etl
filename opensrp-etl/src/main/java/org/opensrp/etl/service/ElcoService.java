@@ -45,10 +45,10 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public ElcoEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return elcoRepository.findByCaseId(caseId);
 	}
 	
 }

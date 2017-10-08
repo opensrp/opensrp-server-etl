@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.opensrp.etl.entity.PSRFEntity;
@@ -21,7 +22,6 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	
 	@Override
 	public void save(PSRFEntity psrfEntity) {
-		System.out.println("Class: PSRFRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(psrfEntity);
@@ -48,6 +48,19 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	public PSRFEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public PSRFEntity findByCaseId(String caseID) {
+		String hql = "from " + "PSRFEntity P " + " where P.caseID = :case_id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("case_id", caseID);
+		return (PSRFEntity) query.uniqueResult();
 	}
 	
 }

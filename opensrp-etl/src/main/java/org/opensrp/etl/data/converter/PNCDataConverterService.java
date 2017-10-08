@@ -34,7 +34,6 @@ public class PNCDataConverterService implements DataConverterService {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Class: PNCDataConverterService, method: convertData");
 		pncService.save(pncEntity);
 	}
 	

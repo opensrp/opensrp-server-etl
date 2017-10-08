@@ -107,6 +107,8 @@
 <bean name="bnfDataConverterService" class="org.opensrp.etl.data.converter.BNFDataConverterService"/>
 <bean name="enccDataConverterService" class="org.opensrp.etl.data.converter.ENCCDataConverterService"/>
 <bean name="actionDataConverterService" class="org.opensrp.etl.data.converter.ActionDataConverterService"/>
+<bean name="childDataConverterService" class="org.opensrp.etl.data.converter.ChildDataConverterService"/>
+<bean name="childToENCCConverter" class="org.opensrp.etl.data.converter.ChildToENCCConverter"/>
 
 
 <bean name="householdEntity" class="org.opensrp.etl.entity.HouseholdEntity"/>

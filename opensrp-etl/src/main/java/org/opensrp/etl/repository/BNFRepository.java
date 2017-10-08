@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.opensrp.etl.entity.BNFEntity;
@@ -21,7 +22,6 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	
 	@Override
 	public void save(BNFEntity bnfEntity) {
-		System.out.println("Class: BNFRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(bnfEntity);
@@ -50,4 +50,16 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 		return null;
 	}
 	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public BNFEntity findByCaseId(String caseID) {
+		String hql = "from " + "BNFEntity B " + " where B.caseID = :case_id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("case_id", caseID);
+		return (BNFEntity) query.uniqueResult();
+	}
 }

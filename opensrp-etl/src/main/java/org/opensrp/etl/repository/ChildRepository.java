@@ -1,7 +1,11 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ChildEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,7 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	private SessionFactory sessionFactory;
 	
 	public ChildRepository() {
-		System.out.println("constructor: MotherRepository");
+		
 	}
 	
 	@Autowired
@@ -21,7 +25,6 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	
 	@Override
 	public void save(ChildEntity childEntity) {
-		System.out.println("Class: ChildRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(childEntity);
@@ -50,4 +53,17 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 		return null;
 	}
 	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public ChildEntity findByCaseId(String caseId) {
+		Criteria listChildCr = getSession().createCriteria(ChildEntity.class);
+		listChildCr.add(Restrictions.eq("caseId", caseId));
+		List<ChildEntity> listChild = listChildCr.list();
+		System.out.println("size: " + listChild.size());
+		return (ChildEntity) listChild.get(0);
+	}
 }

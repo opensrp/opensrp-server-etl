@@ -27,7 +27,6 @@ public class ANCDataConverterService implements DataConverterService {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Class: ANCDataConverterService, method: convertData");
 		ancService.save(ancEntity);
 	}
 	

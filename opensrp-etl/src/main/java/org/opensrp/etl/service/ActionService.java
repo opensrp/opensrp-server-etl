@@ -36,7 +36,6 @@ public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Transactional
 	public boolean isActionExist(ActionEntity actionEntity) {
-		System.out.println("caseId:" + actionEntity.getCaseID());
 		return actionRepository.isActionExist(actionEntity.getCaseID(), actionEntity.getVisitCode(),
 		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
 		
@@ -60,10 +59,10 @@ public class ActionService implements RegisterService<ActionEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public ActionEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return actionRepository.findByCaseId(caseId);
 	}
 	
 }

@@ -29,7 +29,6 @@ public class ENCCDataConverterService implements DataConverterService {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Class: ENCCDataConverterService, method: convertData");
 		enccService.save(enccEntity);
 	}
 	

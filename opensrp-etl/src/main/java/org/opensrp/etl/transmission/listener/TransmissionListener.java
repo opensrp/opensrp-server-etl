@@ -2,6 +2,7 @@ package org.opensrp.etl.transmission.listener;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 public class TransmissionListener {
 	
+	private static final Logger logger = Logger.getLogger(TransmissionListener.class);
+	
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;
 	
@@ -37,14 +40,14 @@ public class TransmissionListener {
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		try {
-			System.out.println("ETL process started transmission from source couchDB!!!");
+			logger.debug("ETL process started transmission from source couchDB!!!");
 			markerEntity = markerService.findById(1);
-			ViewResult vr = sourceDBRepository.allData(0);
+			ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
 			List<Row> rows = vr.getRows();
 			for (Row row : rows) {
 				JSONObject jsonData = new JSONObject(row.getValue());
 				long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-				System.out.println("currentDocumentTimeStamp:" + currentDocumentTimeStamp);
+				logger.debug("currentDocumentTimeStamp:" + currentDocumentTimeStamp);
 				if (markerEntity.getTimeStamp() <= currentDocumentTimeStamp) {
 					transmissionServiceFactory.getTransmissionType(jsonData.getString("type"))
 					        .convertDataJsonToEntity(jsonData);

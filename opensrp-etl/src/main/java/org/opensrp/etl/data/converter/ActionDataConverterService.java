@@ -35,13 +35,12 @@ public class ActionDataConverterService implements DataConverterService {
 			actionEntity.setScheduleName(data.getString("scheduleName"));
 			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
 			actionEntity.setStartDate(data.getString("startDate"));
-			actionEntity.setDate_created();
-			actionEntity.setDate_updated();
+			actionEntity.setCreated();
+			actionEntity.setUpdated();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Class: ActionDataConverterService, method: convertData");
 		actionService.save(actionEntity);
 		
 	}

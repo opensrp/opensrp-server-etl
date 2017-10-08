@@ -41,10 +41,10 @@ public class ANCService implements RegisterService<ANCEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public ANCEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return ancRepository.findByCaseId(caseId);
 	}
 	
 }

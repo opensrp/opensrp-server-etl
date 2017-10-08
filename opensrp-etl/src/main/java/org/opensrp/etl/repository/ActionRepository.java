@@ -1,8 +1,12 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ActionEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,13 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void actionRepositoryPrint() {
-		System.out.println("Class:ActionRepository, method: actionRepositoryPrint");
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
 	}
 	
 	@Override
 	public void save(ActionEntity actionEntity) {
-		System.out.println("Class: ActionRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(actionEntity);
@@ -64,7 +68,6 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 			query.setParameter("alert_status", alertStatus);
 			query.setParameter("start_date", startDate);
 			actionExist = query.list().size();
-			System.out.println("number of  action fetched from database: " + actionExist);
 			
 		}
 		catch (Exception e) {
@@ -74,4 +77,12 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		return actionExist;
 	}
 	
+	@Override
+	public ActionEntity findByCaseId(String caseId) {
+		Criteria listActionCr = getSession().createCriteria(ActionEntity.class);
+		listActionCr.add(Restrictions.eq("caseId", caseId));
+		List<ActionEntity> listAction = listActionCr.list();
+		System.out.println("size: " + listAction.size());
+		return (ActionEntity) listAction.get(0);
+	}
 }

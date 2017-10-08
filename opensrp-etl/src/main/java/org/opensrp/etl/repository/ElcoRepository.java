@@ -1,7 +1,11 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ElcoEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +30,10 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Phone saved successfully, Phone Details=" + p);
 	}
 	
 	@Override
 	public void save(ElcoEntity elcoEntity) {
-		System.out.println("Class: ElcoRepository Method: save: " + elcoEntity);
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(elcoEntity);
@@ -59,5 +61,19 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	public ElcoEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public ElcoEntity findByCaseId(String caseId) {
+		Criteria listElcoCr = getSession().createCriteria(ElcoEntity.class);
+		listElcoCr.add(Restrictions.eq("caseId", caseId));
+		List<ElcoEntity> listElco = listElcoCr.list();
+		System.out.println("size: " + listElco.size());
+		return (ElcoEntity) listElco.get(0);
 	}
 }

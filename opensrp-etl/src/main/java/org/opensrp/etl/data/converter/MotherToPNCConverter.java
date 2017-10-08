@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.PNCEntity;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author sohel
  */
 public class MotherToPNCConverter {
+	
+	private static final Logger logger = Logger.getLogger(MotherToPNCConverter.class);
 	
 	private static final String PNC = "PNC";
 	
@@ -95,46 +98,46 @@ public class MotherToPNCConverter {
 		setPNCKeys();
 		try {
 			if (mdoc.has(PNC_Visit_One) && mdoc.isNull(PNC_Visit_One) || mdoc.getJSONObject(PNC_Visit_One).length() == 0) {
-				System.out.println("pncVisitOne does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitOne does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("pncVisitOne  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitOne  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_One));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("1");
 				pncEntity.setPncName(PNC_Visit_One);
 				pncService.save(convertTopncEntity(pncVisitOne, pncVisitKeyMap));
-				System.out.println("pncVisitOne saved successfully entity: " + pncEntity.toString());
+				logger.debug("pncVisitOne saved successfully entity: " + pncEntity.toString());
 			}
 			
 			if (mdoc.has(PNC_Visit_Two) && mdoc.isNull(PNC_Visit_Two) || mdoc.getJSONObject(PNC_Visit_Two).length() == 0) {
-				System.out.println("pncVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("pncVisitTwo  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitTwo  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_Two));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("2");
 				pncEntity.setPncName(PNC_Visit_Two);
 				pncService.save(convertTopncEntity(pncVisitOne, pncVisitKeyMap));
-				System.out.println("pncVisitTwo saved successfully entity: " + pncEntity.toString());
+				logger.debug("pncVisitTwo saved successfully entity: " + pncEntity.toString());
 			}
 			
 			if (mdoc.has(PNC_Visit_Three) && mdoc.isNull(PNC_Visit_Three)
 			        || mdoc.getJSONObject(PNC_Visit_Three).length() == 0) {
-				System.out.println("pncVisitThree does not exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitThree does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				System.out.println("pncVisitThree  exist caseId:" + mdoc.getString("caseId"));
+				logger.debug("pncVisitThree  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject pncVisit = new JSONObject(mdoc.getString(PNC_Visit_Three));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("3");
 				pncEntity.setPncName(PNC_Visit_Three);
 				pncService.save(convertTopncEntity(pncVisit, pncVisitKeyMap));
-				System.out.println("pncVisitThree saved successfully entity: " + pncEntity.toString());
+				logger.debug("pncVisitThree saved successfully entity: " + pncEntity.toString());
 			}
 			
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println(mdoc.getString("caseId"));
+			logger.debug(mdoc.getString("caseId"));
 			e.printStackTrace();
 		}
 		

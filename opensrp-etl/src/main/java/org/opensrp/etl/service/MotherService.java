@@ -42,10 +42,10 @@ public class MotherService implements RegisterService<MotherEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public MotherEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return motherRepository.findByCaseId(caseId);
 	}
 	
 }

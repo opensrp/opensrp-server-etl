@@ -1,5 +1,7 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +12,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "action")
-public class ActionEntity extends CommonMetaEntity {
+public class ActionEntity {
 	
 	public ActionEntity() {
 		
+	}
+	
+	@Override
+	public String toString() {
+		return "ActionEntity [id=" + id + ", provider=" + provider + ", caseID=" + caseId + ", startDate=" + startDate
+		        + ", beneficiaryType=" + beneficiaryType + ", scheduleName=" + scheduleName + ", expiryDate=" + expiryDate
+		        + ", visitCode=" + visitCode + ", alertStatus=" + alertStatus + ", actionTarget=" + actionTarget
+		        + ", actionType=" + actionType + ", isActionActive=" + isActionActive + ", timeStamp=" + timeStamp + "]";
 	}
 	
 	@Id
@@ -25,7 +35,7 @@ public class ActionEntity extends CommonMetaEntity {
 	private String provider;
 	
 	@Column(name = "case_id")
-	private String caseID;
+	private String caseId;
 	
 	@Column(name = "start_date")
 	private String startDate;
@@ -57,6 +67,34 @@ public class ActionEntity extends CommonMetaEntity {
 	@Column(name = "time_stamp")
 	private long timeStamp;
 	
+	private Date created;
+	
+	private Date updated;
+	
+	public String getCaseId() {
+		return caseId;
+	}
+	
+	public void setCaseId(String caseId) {
+		this.caseId = caseId;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+	
+	public void setCreated() {
+		this.created = new Date();
+	}
+	
+	public Date getUpdated() {
+		return updated;
+	}
+	
+	public void setUpdated() {
+		this.updated = new Date();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -74,11 +112,11 @@ public class ActionEntity extends CommonMetaEntity {
 	}
 	
 	public String getCaseID() {
-		return caseID;
+		return caseId;
 	}
 	
 	public void setCaseID(String caseID) {
-		this.caseID = caseID;
+		this.caseId = caseID;
 	}
 	
 	public String getStartDate() {

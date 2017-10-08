@@ -26,5 +26,5 @@
 	
 	<!-- <util:properties id="couchdbProperties" location="classpath:/couchdb.properties"/>
 	
-	<couchdb:database id="blogPostDatabase" name="jack" url="http://localhost:5984"/> -->
+	<couchdb:database id="blogPostDatabase" name="jack" url="http://192.168.22.152:5984"/> -->
 </beans>

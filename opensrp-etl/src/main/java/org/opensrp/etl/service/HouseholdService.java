@@ -20,11 +20,13 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	
 	@Transactional
 	@Override
-	public void save(HouseholdEntity entity) {
-		
-		// TODO if document already transfered then update with document information
-		householdRepository.save(entity);
-		
+	public void save(HouseholdEntity householdEntity) {
+		if (findByCaseId(householdEntity.caseId) == null) {
+			householdRepository.save(householdEntity);
+		} else {
+			System.out.println("update household entity:" + householdEntity.toString());
+			update(householdEntity);
+		}
 	}
 	
 	@Override
@@ -33,9 +35,10 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(HouseholdEntity t) {
-		// TODO Auto-generated method stub
+	public void update(HouseholdEntity householdEntity) {
+		householdRepository.update(householdEntity);
 		
 	}
 	
@@ -45,10 +48,10 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public HouseholdEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return householdRepository.findByCaseId(caseId);
 	}
 	
 }

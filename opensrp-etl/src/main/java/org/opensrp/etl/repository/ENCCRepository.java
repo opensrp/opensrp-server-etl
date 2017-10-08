@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.opensrp.etl.entity.ENCCEntity;
@@ -19,7 +20,6 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 	
 	@Override
 	public void save(ENCCEntity enccEntity) {
-		System.out.println("Class: ENCCRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(enccEntity);
@@ -46,6 +46,19 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 	public ENCCEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public ENCCEntity findByCaseId(String caseID) {
+		String hql = "from " + "ENCCEntity E " + " where E.caseID = :case_id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("case_id", caseID);
+		return (ENCCEntity) query.uniqueResult();
 	}
 	
 }

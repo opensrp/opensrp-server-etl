@@ -174,4 +174,13 @@ public class MotherEntity extends CommonEntity {
 		this.isClosed = isClosed;
 	}
 	
+	@Override
+	public String toString() {
+		return "MotherEntity [id=" + id + ", motherGOBHHID=" + motherGOBHHID + ", motherJIVIHID=" + motherJIVIHID
+		        + ", motherHusname=" + motherHusname + ", motherWomNID=" + motherWomNID + ", motherWomBID=" + motherWomBID
+		        + ", motherWomAge=" + motherWomAge + ", motherValid=" + motherValid + ", FWVG=" + FWVG + ", FWHRP=" + FWHRP
+		        + ", FWHR_PSR=" + FWHR_PSR + ", FWFLAGVALUE=" + FWFLAGVALUE + ", FWSORTVALUE=" + FWSORTVALUE
+		        + ", motherWomLMP=" + motherWomLMP + ", relationalId=" + relationalId + ", isClosed=" + isClosed + "]";
+	}
+	
 }

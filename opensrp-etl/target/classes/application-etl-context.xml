@@ -20,7 +20,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-<context:component-scan base-package="org.opensrp.etl.controller" />
+
 <context:component-scan base-package="org.opensrp.etl.entity" />
 <context:component-scan base-package="org.opensrp.etl.repository" />
 <context:component-scan base-package="org.opensrp.etl.service" />
@@ -107,7 +107,8 @@
 <bean name="bnfDataConverterService" class="org.opensrp.etl.data.converter.BNFDataConverterService"/>
 <bean name="enccDataConverterService" class="org.opensrp.etl.data.converter.ENCCDataConverterService"/>
 <bean name="actionDataConverterService" class="org.opensrp.etl.data.converter.ActionDataConverterService"/>
-
+<bean name="childDataConverterService" class="org.opensrp.etl.data.converter.ChildDataConverterService"/>
+<bean name="childToENCCConverter" class="org.opensrp.etl.data.converter.ChildToENCCConverter"/>
 
 <bean name="householdEntity" class="org.opensrp.etl.entity.HouseholdEntity"/>
 <bean name="elcoEntity" class="org.opensrp.etl.entity.ElcoEntity"/>
@@ -123,6 +124,7 @@
 
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>
+    
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />

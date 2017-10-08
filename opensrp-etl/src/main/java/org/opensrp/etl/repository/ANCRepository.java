@@ -1,7 +1,11 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ANCEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +52,20 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 	public ANCEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public ANCEntity findByCaseId(String caseId) {
+		Criteria listANCCr = getSession().createCriteria(ANCEntity.class);
+		listANCCr.add(Restrictions.eq("caseId", caseId));
+		List<ANCEntity> listANC = listANCCr.list();
+		System.out.println("size: " + listANC.size());
+		return (ANCEntity) listANC.get(0);
 	}
 	
 }

@@ -1,22 +1,22 @@
 package org.opensrp.etl.repository;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.MotherEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MotherRepository implements RegisterRepository<MotherEntity> {
 	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public MotherRepository() {
 		
-	}
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
 	}
 	
 	@Override
@@ -50,4 +50,17 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 		return null;
 	}
 	
+	private Session getSession() {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session;
+	}
+	
+	@Override
+	public MotherEntity findByCaseId(String caseId) {
+		Criteria listMotherCr = getSession().createCriteria(MotherEntity.class);
+		listMotherCr.add(Restrictions.eq("caseId", caseId));
+		List<MotherEntity> lisFilterMother = listMotherCr.list();
+		System.out.println("size: " + lisFilterMother.size());
+		return (MotherEntity) lisFilterMother.get(0);
+	}
 }

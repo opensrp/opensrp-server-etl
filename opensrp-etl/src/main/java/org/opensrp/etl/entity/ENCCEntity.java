@@ -14,14 +14,7 @@ import javax.persistence.Table;
 @Table(name = "encc")
 public class ENCCEntity {
 	
-	private static final ENCCEntity INSTANCE = new ENCCEntity();
-	
-	private ENCCEntity() {
-		
-	}
-	
-	public static ENCCEntity getInstance() {
-		return INSTANCE;
+	public ENCCEntity() {
 		
 	}
 	
@@ -30,39 +23,39 @@ public class ENCCEntity {
 	@SequenceGenerator(name = "encc_id_seq", sequenceName = "encc_id_seq", allocationSize = 1)
 	private int id;
 	
-	private String FWENCDATE;
+	private String FWENCCDATE;
 	
-	private String FWENCSTS;
+	private String FWENCCSTS;
 	
-	private String FWENCBFINTN;
+	private String FWENCCBFINTN;
 	
-	private String FWENCPRLCTL;
+	private String FWENCCPRLCTL;
 	
-	private String FWENCDRYWM;
+	private String FWENCCDRYWM;
 	
-	private String FWENCHDCOV;
+	private String FWENCCHDCOV;
 	
-	private String FWENCBTHD;
+	private String FWENCCBTHD;
 	
-	private String FWENCUMBS;
+	private String FWENCCUMBS;
 	
-	private String FWENCDSFVRCLD;
+	private String FWENCCDSFVRCLD;
 	
-	private String FWENCTEMP;
+	private String FWENCCTEMP;
 	
-	private String FWENCDSFOULUMBS;
+	private String FWENCCDSFOULUMBS;
 	
-	private String FWENCDSLIMBLUE;
+	private String FWENCCDSLIMBLUE;
 	
-	private String FWENCDSSKNYLW;
+	private String FWENCCDSSKNYLW;
 	
-	private String FWENCDSLETH;
+	private String FWENCCDSLETH;
 	
-	private String FWENCDSDIFBRTH;
+	private String FWENCCDSDIFBRTH;
 	
-	private String FWENCDSCONVL;
+	private String FWENCCDSCONVL;
 	
-	private String FWENCDELCOMP;
+	private String FWENCCDELCOMP;
 	
 	private String encc_current_formStatus;
 	
@@ -83,5 +76,221 @@ public class ENCCEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "child_id", referencedColumnName = "id")
 	private ChildEntity child;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getFWENCCDATE() {
+		return FWENCCDATE;
+	}
+	
+	public void setFWENCCDATE(String fWENCCDATE) {
+		FWENCCDATE = fWENCCDATE;
+	}
+	
+	public String getFWENCCSTS() {
+		return FWENCCSTS;
+	}
+	
+	public void setFWENCCSTS(String fWENCCSTS) {
+		FWENCCSTS = fWENCCSTS;
+	}
+	
+	public String getFWENCCBFINTN() {
+		return FWENCCBFINTN;
+	}
+	
+	public void setFWENCCBFINTN(String fWENCCBFINTN) {
+		FWENCCBFINTN = fWENCCBFINTN;
+	}
+	
+	public String getFWENCCPRLCTL() {
+		return FWENCCPRLCTL;
+	}
+	
+	public void setFWENCCPRLCTL(String fWENCCPRLCTL) {
+		FWENCCPRLCTL = fWENCCPRLCTL;
+	}
+	
+	public String getFWENCCDRYWM() {
+		return FWENCCDRYWM;
+	}
+	
+	public void setFWENCCDRYWM(String fWENCCDRYWM) {
+		FWENCCDRYWM = fWENCCDRYWM;
+	}
+	
+	public String getFWENCCHDCOV() {
+		return FWENCCHDCOV;
+	}
+	
+	public void setFWENCCHDCOV(String fWENCCHDCOV) {
+		FWENCCHDCOV = fWENCCHDCOV;
+	}
+	
+	public String getFWENCCBTHD() {
+		return FWENCCBTHD;
+	}
+	
+	public void setFWENCCBTHD(String fWENCCBTHD) {
+		FWENCCBTHD = fWENCCBTHD;
+	}
+	
+	public String getFWENCCUMBS() {
+		return FWENCCUMBS;
+	}
+	
+	public void setFWENCCUMBS(String fWENCCUMBS) {
+		FWENCCUMBS = fWENCCUMBS;
+	}
+	
+	public String getFWENCCDSFVRCLD() {
+		return FWENCCDSFVRCLD;
+	}
+	
+	public void setFWENCCDSFVRCLD(String fWENCCDSFVRCLD) {
+		FWENCCDSFVRCLD = fWENCCDSFVRCLD;
+	}
+	
+	public String getFWENCCTEMP() {
+		return FWENCCTEMP;
+	}
+	
+	public void setFWENCCTEMP(String fWENCCTEMP) {
+		FWENCCTEMP = fWENCCTEMP;
+	}
+	
+	public String getFWENCCDSFOULUMBS() {
+		return FWENCCDSFOULUMBS;
+	}
+	
+	public void setFWENCCDSFOULUMBS(String fWENCCDSFOULUMBS) {
+		FWENCCDSFOULUMBS = fWENCCDSFOULUMBS;
+	}
+	
+	public String getFWENCCDSLIMBLUE() {
+		return FWENCCDSLIMBLUE;
+	}
+	
+	public void setFWENCCDSLIMBLUE(String fWENCCDSLIMBLUE) {
+		FWENCCDSLIMBLUE = fWENCCDSLIMBLUE;
+	}
+	
+	public String getFWENCCDSSKNYLW() {
+		return FWENCCDSSKNYLW;
+	}
+	
+	public void setFWENCCDSSKNYLW(String fWENCCDSSKNYLW) {
+		FWENCCDSSKNYLW = fWENCCDSSKNYLW;
+	}
+	
+	public String getFWENCCDSLETH() {
+		return FWENCCDSLETH;
+	}
+	
+	public void setFWENCCDSLETH(String fWENCCDSLETH) {
+		FWENCCDSLETH = fWENCCDSLETH;
+	}
+	
+	public String getFWENCCDSDIFBRTH() {
+		return FWENCCDSDIFBRTH;
+	}
+	
+	public void setFWENCCDSDIFBRTH(String fWENCCDSDIFBRTH) {
+		FWENCCDSDIFBRTH = fWENCCDSDIFBRTH;
+	}
+	
+	public String getFWENCCDSCONVL() {
+		return FWENCCDSCONVL;
+	}
+	
+	public void setFWENCCDSCONVL(String fWENCCDSCONVL) {
+		FWENCCDSCONVL = fWENCCDSCONVL;
+	}
+	
+	public String getFWENCCDELCOMP() {
+		return FWENCCDELCOMP;
+	}
+	
+	public void setFWENCCDELCOMP(String fWENCCDELCOMP) {
+		FWENCCDELCOMP = fWENCCDELCOMP;
+	}
+	
+	public String getEncc_current_formStatus() {
+		return encc_current_formStatus;
+	}
+	
+	public void setEncc_current_formStatus(String encc_current_formStatus) {
+		this.encc_current_formStatus = encc_current_formStatus;
+	}
+	
+	public String getREFERENCE_DATE() {
+		return REFERENCE_DATE;
+	}
+	
+	public void setREFERENCE_DATE(String rEFERENCE_DATE) {
+		REFERENCE_DATE = rEFERENCE_DATE;
+	}
+	
+	public String getSTART_DATE() {
+		return START_DATE;
+	}
+	
+	public void setSTART_DATE(String sTART_DATE) {
+		START_DATE = sTART_DATE;
+	}
+	
+	public String getEND_DATE() {
+		return END_DATE;
+	}
+	
+	public void setEND_DATE(String eND_DATE) {
+		END_DATE = eND_DATE;
+	}
+	
+	public long getClientVersion() {
+		return clientVersion;
+	}
+	
+	public void setClientVersion(long clientVersion) {
+		this.clientVersion = clientVersion;
+	}
+	
+	public String getReceived_time() {
+		return received_time;
+	}
+	
+	public void setReceived_time(String received_time) {
+		this.received_time = received_time;
+	}
+	
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+	
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+	
+	public String getEnccName() {
+		return enccName;
+	}
+	
+	public void setEnccName(String enccName) {
+		this.enccName = enccName;
+	}
+	
+	public ChildEntity getChild() {
+		return child;
+	}
+	
+	public void setChild(ChildEntity child) {
+		this.child = child;
+	}
 	
 }

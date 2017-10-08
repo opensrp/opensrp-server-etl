@@ -1,22 +1,18 @@
 package org.opensrp.etl.transmission.listener;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.repository.SourceDBRepository;
 import org.opensrp.etl.service.MarkerService;
 import org.opensrp.etl.transmission.service.TransmissionServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml" })
 public class TransmissionListenerTest {
 	
@@ -32,7 +28,7 @@ public class TransmissionListenerTest {
 	@Autowired
 	private MarkerEntity markerEntity;
 	
-	@Test
+	//@Test
 	@SuppressWarnings("unchecked")
 	public void dataListenerTest() throws JSONException {
 		try {
@@ -40,8 +36,8 @@ public class TransmissionListenerTest {
 			markerEntity = markerService.findById(1);
 			ViewResult vr = sourceDBRepository.allData(0);
 			List<Row> rows = vr.getRows();
-			Collections.sort(rows);
-			sort(rows);
+			/*		Collections.sort(rows);
+					sort(rows);*/
 			/*
 			for (Row row : rows) {
 				JSONObject jsonData = new JSONObject(row.getValue());

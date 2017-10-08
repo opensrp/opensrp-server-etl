@@ -24,7 +24,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		//System.err.println("householdEntity:" + householdEntity);
-		householdEntity.setBirthDate(doc.getString("FWHOHBIRTHDATE"));
+		//householdEntity.setBirthDate(doc.getString("FWHOHBIRTHDATE"));
 		householdEntity.setCaseId(doc.getString("caseId"));
 		householdEntity.setClientVersion(doc.getLong("clientVersion"));
 		householdEntity.setCountry(doc.getString("FWCOUNTRY"));
@@ -43,7 +43,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 		householdEntity.setGender(doc.getString("FWHOHGENDER"));
 		householdEntity.setGOBHHID(doc.getString("FWGOBHHID"));
 		householdEntity.setGps(doc.getString("FWNHHHGPS"));
-		householdEntity.setInstantId(doc.getString("INSTANCEID"));
+		householdEntity.setInstanceId(doc.getString("INSTANCEID"));
 		householdEntity.setFWJIVHHID(doc.getString("FWJIVHHID"));
 		householdEntity.setLastName(doc.getString("FWHOHLNAME"));
 		householdEntity.setLocationId(doc.getString("LOCATIONID"));
@@ -59,7 +59,6 @@ public class HouseholdDataConverterService implements DataConverterService {
 		householdEntity.setUpazila(doc.getString("FWUPAZILLA"));
 		householdEntity.setUserType(doc.getString("user_type"));
 		householdEntity.setWard(doc.getString("FWWARD"));
-		
 		householdService.save(householdEntity);
 		
 	}
