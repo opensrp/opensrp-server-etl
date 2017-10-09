@@ -1,6 +1,9 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "anc")
@@ -25,7 +30,7 @@ public class ANCEntity {
 	
 	private String ancName;
 	
-	private String FWANCDATE;
+	private Date FWANCDATE;
 	
 	private String anc_current_formStatus;
 	
@@ -129,15 +134,28 @@ public class ANCEntity {
 	
 	private String REFERENCE_DATE;
 	
-	private String START_DATE;
-	
-	private String END_DATE;
-	
 	private long clientVersion;
 	
 	private String received_time;
 	
 	private long timeStamp;
+	
+	@Temporal(TemporalType.DATE)
+	private Date START_DATE;
+	
+	@Temporal(TemporalType.DATE)
+	private Date END_DATE;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	private Date created = new Date();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	private Date updated = new Date();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "mother_id", referencedColumnName = "id")
@@ -159,11 +177,11 @@ public class ANCEntity {
 		this.ancName = ancName;
 	}
 	
-	public String getFWANCDATE() {
+	public Date getFWANCDATE() {
 		return FWANCDATE;
 	}
 	
-	public void setFWANCDATE(String fWANCDATE) {
+	public void setFWANCDATE(Date fWANCDATE) {
 		FWANCDATE = fWANCDATE;
 	}
 	
@@ -575,20 +593,20 @@ public class ANCEntity {
 		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	
-	public String getSTART_DATE() {
+	public Date getSTART_DATE() {
 		return START_DATE;
 	}
 	
-	public void setSTART_DATE(String sTART_DATE) {
-		START_DATE = sTART_DATE;
+	public void setSTART_DATE(Date date) {
+		START_DATE = date;
 	}
 	
-	public String getEND_DATE() {
+	public Date getEND_DATE() {
 		return END_DATE;
 	}
 	
-	public void setEND_DATE(String eND_DATE) {
-		END_DATE = eND_DATE;
+	public void setEND_DATE(Date date) {
+		END_DATE = date;
 	}
 	
 	public long getClientVersion() {
@@ -613,6 +631,14 @@ public class ANCEntity {
 	
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+	
+	public Date getToday() {
+		return today;
+	}
+	
+	public void setToday(Date today) {
+		this.today = today;
 	}
 	
 	public MotherEntity getMother() {

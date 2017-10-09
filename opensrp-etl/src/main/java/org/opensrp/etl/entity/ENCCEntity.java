@@ -1,6 +1,9 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "encc")
@@ -23,7 +28,7 @@ public class ENCCEntity {
 	@SequenceGenerator(name = "encc_id_seq", sequenceName = "encc_id_seq", allocationSize = 1)
 	private int id;
 	
-	private String FWENCCDATE;
+	private Date FWENCCDATE;
 	
 	private String FWENCCSTS;
 	
@@ -61,9 +66,14 @@ public class ENCCEntity {
 	
 	private String REFERENCE_DATE;
 	
-	private String START_DATE;
+	@Temporal(TemporalType.DATE)
+	private Date START_DATE;
 	
-	private String END_DATE;
+	@Temporal(TemporalType.DATE)
+	private Date END_DATE;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
 	
 	private long clientVersion;
 	
@@ -72,6 +82,14 @@ public class ENCCEntity {
 	private long timeStamp;
 	
 	private String enccName;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	private Date created = new Date();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	private Date updated = new Date();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "child_id", referencedColumnName = "id")
@@ -85,11 +103,11 @@ public class ENCCEntity {
 		this.id = id;
 	}
 	
-	public String getFWENCCDATE() {
+	public Date getFWENCCDATE() {
 		return FWENCCDATE;
 	}
 	
-	public void setFWENCCDATE(String fWENCCDATE) {
+	public void setFWENCCDATE(Date fWENCCDATE) {
 		FWENCCDATE = fWENCCDATE;
 	}
 	
@@ -237,19 +255,19 @@ public class ENCCEntity {
 		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	
-	public String getSTART_DATE() {
+	public Date getSTART_DATE() {
 		return START_DATE;
 	}
 	
-	public void setSTART_DATE(String sTART_DATE) {
+	public void setSTART_DATE(Date sTART_DATE) {
 		START_DATE = sTART_DATE;
 	}
 	
-	public String getEND_DATE() {
+	public Date getEND_DATE() {
 		return END_DATE;
 	}
 	
-	public void setEND_DATE(String eND_DATE) {
+	public void setEND_DATE(Date eND_DATE) {
 		END_DATE = eND_DATE;
 	}
 	

@@ -24,7 +24,6 @@ public class ElcoDataConverterService implements DataConverterService {
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		
 		try {
-			System.out.println("ElcoDataConverterService convertData");
 			elcoEntity.setBirthDate(doc.getString("FWBIRTHDATE"));
 			elcoEntity.setCaseId(doc.getString("caseId"));
 			elcoEntity.setClientVersion(doc.getLong("clientVersion"));
@@ -83,8 +82,7 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			JSONObject details = new JSONObject(doc.getString("details"));
 			elcoEntity.setFWPSRPREGSTS(details.getString("relationalid"));
-			elcoEntity.setUpdated();
-			elcoEntity.setCreated();
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -39,6 +39,7 @@ public abstract class CommonEntity {
 	
 	@Column(name = "end_time")
 	private Date end;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "registration_date")
 	private Date registrationDate;
@@ -81,9 +82,13 @@ public abstract class CommonEntity {
 	@Column(name = "client_version")
 	private long clientVersion;
 	
-	private Date created;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	private Date created = new Date();
 	
-	private Date updated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	private Date updated = new Date();
 	
 	@Column(name = "received_time")
 	private String receivedTime;

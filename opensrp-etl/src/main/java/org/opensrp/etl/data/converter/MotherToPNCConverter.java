@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.PNCEntity;
 import org.opensrp.etl.service.PNCService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -74,6 +75,7 @@ public class MotherToPNCConverter {
 		pncKeys.add("REFERENCE_DATE");
 		pncKeys.add("start");
 		pncKeys.add("end");
+		pncKeys.add("today");
 		
 		pncKeys.add("clientVersion");
 		
@@ -145,7 +147,7 @@ public class MotherToPNCConverter {
 	
 	private PNCEntity convertTopncEntity(JSONObject pncVisit, Map<String, String> pncVisitKeyMap) {
 		try {
-			pncEntity.setFWPNCDATE(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE")));
+			pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
 			pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
 			//pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
 			pncEntity.setFWPNCREMSTS(pncVisit.getString(pncVisitKeyMap.get("FWPNCREMSTS")));
@@ -162,8 +164,9 @@ public class MotherToPNCConverter {
 			//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
 			//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
 			//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
-			pncEntity.setSTART_DATE(pncVisit.getString(pncVisitKeyMap.get("start")));
-			//pncEntity.setEND_DATE(pncVisit.getString(pncVisitKeyMap.get("end")));
+			pncEntity.setSTART_DATE(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
+			pncEntity.setEND_DATE(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
+			pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
 			pncEntity.setClientVersion(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("clientVersion"))));
 			pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
 			pncEntity.setTimeStamp(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("timeStamp"))));

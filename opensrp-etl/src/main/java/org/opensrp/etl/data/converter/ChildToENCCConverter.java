@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ENCCEntity;
 import org.opensrp.etl.service.ENCCService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -221,7 +222,7 @@ public class ChildToENCCConverter {
 	
 	private ENCCEntity convertToAncEntity(JSONObject enccVisit, Map<String, String> enccVisitKeyMap) {
 		try {
-			enccEntity.setFWENCCDATE(enccVisit.getString(enccVisitKeyMap.get("FWENCCDATE")));
+			enccEntity.setFWENCCDATE(DateUtil.getDateFromString(enccVisit.getString(enccVisitKeyMap.get("FWENCCDATE"))));
 			enccEntity.setEncc_current_formStatus(enccVisit.getString(enccVisitKeyMap.get("encc_current_formStatus")));
 			/*			enccEntity.setFWCONFIRMATION(enccVisit.getString(enccVisitKeyMap.get("FWCONFIRMATION")));
 						enccEntity.setFWGESTATIONALAGE(enccVisit.getString(enccVisitKeyMap.get("FWGESTATIONALAGE")));
@@ -272,8 +273,8 @@ public class ChildToENCCConverter {
 						enccEntity.setFW_HUSNAME(enccVisit.getString(enccVisitKeyMap.get("FW_HUSNAME")));
 						enccEntity.setMOTHER_REFERENCE_DATE(enccVisit.getString(enccVisitKeyMap.get("MOTHER_REFERENCE_DATE")));
 						enccEntity.setMOTHER_REFERENCE_DATE(enccVisit.getString(enccVisitKeyMap.get("REFERENCE_DATE")));*/
-			enccEntity.setSTART_DATE(enccVisit.getString(enccVisitKeyMap.get("start")));
-			enccEntity.setEND_DATE(enccVisit.getString(enccVisitKeyMap.get("end")));
+			enccEntity.setSTART_DATE(DateUtil.getDateTimeFromString(enccVisit.getString(enccVisitKeyMap.get("start"))));
+			enccEntity.setEND_DATE(DateUtil.getDateTimeFromString(enccVisit.getString(enccVisitKeyMap.get("end"))));
 			enccEntity.setClientVersion(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("clientVersion"))));
 			enccEntity.setReceived_time(enccVisit.getString(enccVisitKeyMap.get("received_time")));
 			enccEntity.setTimeStamp(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("timeStamp"))));

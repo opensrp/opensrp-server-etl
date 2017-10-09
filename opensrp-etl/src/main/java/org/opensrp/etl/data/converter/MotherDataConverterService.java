@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.MotherEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.MotherService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MotherDataConverterService implements DataConverterService {
@@ -30,34 +31,27 @@ public class MotherDataConverterService implements DataConverterService {
 		try {
 			System.out.println("Class:MotherDataConverterService, Method:convertData");
 			//? motherEntity.setBirthDate(doc.getString("FWBIRTHDATE"));
-			/*			
-						motherEntity.setCaseId(doc.getString("caseId"));
-						motherEntity.setClientVersion(doc.getLong("clientVersion"));
-						//motherEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
-						motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
-						//motherEntity.setDivision(doc.getString("FWWOMDIVISION"));
-						//FWWOMUPAZILLA
-						
-						// ? motherEntity.setEnd(doc.getString("END"));
-						//motherEntity.setExternalUserId(doc.getString("external_user_ID"));
-						motherEntity.setFirstName(doc.getString("mother_first_name"));
-						//motherEntity.setFormName(doc.getString("form_name"));
-						
-						motherEntity.setInstantId(doc.getString("INSTANCEID"));
-						
-						// ? motherEntity.setLocationId(doc.getString("LOCATIONID"));
-						// mother_mauza motherEntity.setMauzaPara(doc.getString("FWWOMMAUZA_PARA"));
-						
-						motherEntity.setProvider(doc.getString("PROVIDERID"));
-						
-						// ? motherEntity.setStart(doc.getString("START"));
-						motherEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
-						// ? motherEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
-						motherEntity.setToday(doc.getString("TODAY"));
-						motherEntity.setUnion(doc.getString("FWWOMUNION"));
-						motherEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));*/
 			
-			// ? motherEntity.setWard(doc.getString("FWWOMWARD"));
+			motherEntity.setCaseId(doc.getString("caseId"));
+			motherEntity.setClientVersion(doc.getLong("clientVersion"));
+			//motherEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
+			motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
+			//motherEntity.setDivision(doc.getString("FWWOMDIVISION"));
+			motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
+			
+			//motherEntity.setExternalUserId(doc.getString("external_user_ID"));
+			motherEntity.setFirstName(doc.getString("mother_first_name"));
+			//motherEntity.setFormName(doc.getString("form_name"));
+			
+			motherEntity.setInstanceId(doc.getString("INSTANCEID"));
+			// ? motherEntity.setLocationId(doc.getString("LOCATIONID"));
+			motherEntity.setMauzaPara(doc.getString("mother_mauza"));
+			motherEntity.setProvider(doc.getString("PROVIDERID"));
+			motherEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
+			motherEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
+			motherEntity.setUnion(doc.getString("FWWOMUNION"));
+			motherEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
+			motherEntity.setWard(doc.getString("FWWOMWARD"));
 			motherEntity.setMotherGOBHHID(doc.getString("mother_gobhhid"));
 			motherEntity.setMotherJIVIHID(doc.getString("mother_jivhhid"));
 			motherEntity.setMotherHusname(doc.getString("mother_husname"));
@@ -75,6 +69,11 @@ public class MotherDataConverterService implements DataConverterService {
 			// ? motherEntity.setMotherWomLMP(doc.getString("mother_wom_lmp"));
 			motherEntity.setRelationalId(doc.getString("relationalid"));
 			motherEntity.setIsClosed(doc.getString("isClosed"));
+			
+			motherEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
+			motherEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
+			motherEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
+			
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
