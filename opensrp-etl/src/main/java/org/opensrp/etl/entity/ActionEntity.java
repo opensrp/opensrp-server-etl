@@ -38,6 +38,7 @@ public class ActionEntity {
 	
 	@Column(name = "case_id")
 	private String caseId;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
 	private Date startDate;
@@ -70,9 +71,13 @@ public class ActionEntity {
 	@Column(name = "time_stamp")
 	private long timeStamp;
 	
-	private Date created;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	private Date created = new Date();
 	
-	private Date updated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	private Date updated = new Date();
 	
 	public String getCaseId() {
 		return caseId;

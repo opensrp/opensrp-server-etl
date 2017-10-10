@@ -20,7 +20,6 @@ public class PNCService implements RegisterService<PNCEntity> {
 	@Override
 	public void save(PNCEntity pncEntity) {
 		pncRepository.save(pncEntity);
-		
 	}
 	
 	@Override
@@ -29,9 +28,10 @@ public class PNCService implements RegisterService<PNCEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(PNCEntity t) {
-		// TODO Auto-generated method stub
+	public void update(PNCEntity pncEntity) {
+		pncRepository.update(pncEntity);
 		
 	}
 	
@@ -41,10 +41,10 @@ public class PNCService implements RegisterService<PNCEntity> {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public PNCEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return pncRepository.findByCaseId(caseId);
 	}
 	
 }

@@ -74,6 +74,6 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 		listElcoCr.add(Restrictions.eq("caseId", caseId));
 		List<ElcoEntity> listElco = listElcoCr.list();
 		System.out.println("size: " + listElco.size());
-		return (ElcoEntity) listElco.get(0);
+		return listElco.size() > 0 ? (ElcoEntity) listElco.get(0) : null;
 	}
 }

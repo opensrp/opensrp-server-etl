@@ -237,12 +237,13 @@ public class MotherToANCConverter {
 	}
 	
 	private ANCEntity convertToAncEntity(JSONObject ancVisit, Map<String, String> ancVisitKeyMap) {
+		
 		try {
 			ancEntity.setFWANCDATE(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWANCDATE"))));
 			ancEntity.setAnc_current_formStatus(ancVisit.getString(ancVisitKeyMap.get("anc_current_formStatus")));
 			ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
 			ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
-			ancEntity.setFWEDD(ancVisit.getString(ancVisitKeyMap.get("FWEDD")));
+			ancEntity.setFWEDD(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWEDD"))));
 			ancEntity.setFWANCREMSTS(ancVisit.getString(ancVisitKeyMap.get("FWANCREMSTS")));
 			ancEntity.setFWANCINT(ancVisit.getString(ancVisitKeyMap.get("FWANCINT")));
 			ancEntity.setFWANCANM(ancVisit.getString(ancVisitKeyMap.get("FWANCANM")));
@@ -287,20 +288,20 @@ public class MotherToANCConverter {
 			ancEntity.setFW_WOMNID(ancVisit.getString(ancVisitKeyMap.get("FW_WOMNID")));
 			ancEntity.setFW_WOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FW_WOMFNAME")));
 			ancEntity.setFW_HUSNAME(ancVisit.getString(ancVisitKeyMap.get("FW_HUSNAME")));
-			ancEntity.setMOTHER_REFERENCE_DATE(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE")));
-			ancEntity.setMOTHER_REFERENCE_DATE(ancVisit.getString(ancVisitKeyMap.get("REFERENCE_DATE")));
-			ancEntity.setSTART_DATE(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
-			ancEntity.setEND_DATE(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
+			ancEntity.setMOTHER_REFERENCE_DATE(
+			    DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
+			ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
+			ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
 			ancEntity.setToday(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("today"))));
 			ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
 			ancEntity.setReceived_time(ancVisit.getString(ancVisitKeyMap.get("received_time")));
 			ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
 		}
-		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+		catch (JSONException e) {
+			
 			e.printStackTrace();
 		}
-		catch (JSONException e) {
+		catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

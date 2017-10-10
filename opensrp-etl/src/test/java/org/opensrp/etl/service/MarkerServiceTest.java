@@ -16,7 +16,7 @@ public class MarkerServiceTest {
 	@Test
 	public void getCurrentTimeStampFromMarkerTest() {
 		// TODO Auto-generated method stub
-		System.out.println("timeStamp:" + markerService.getCurrentTimeStampFromMarker());
+		//System.out.println("timeStamp:" + markerService.getCurrentTimeStampFromMarker());
 		
 	}
 	

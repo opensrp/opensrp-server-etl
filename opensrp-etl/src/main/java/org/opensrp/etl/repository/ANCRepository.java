@@ -65,7 +65,7 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 		listANCCr.add(Restrictions.eq("caseId", caseId));
 		List<ANCEntity> listANC = listANCCr.list();
 		System.out.println("size: " + listANC.size());
-		return (ANCEntity) listANC.get(0);
+		return listANC.size() > 0 ? (ANCEntity) listANC.get(0) : null;
 	}
 	
 }

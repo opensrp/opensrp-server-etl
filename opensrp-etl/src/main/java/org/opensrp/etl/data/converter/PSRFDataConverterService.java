@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.PSRFEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.PSRFService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class PSRFDataConverterService implements DataConverterService {
@@ -21,7 +22,7 @@ public class PSRFDataConverterService implements DataConverterService {
 		try {
 			psrfEntity.setFWPSRSTS(doc.getString("FWPSRSTS"));
 			
-			psrfEntity.setFWPSRDATE(doc.getString("FWPSRDATE"));
+			psrfEntity.setFWPSRDATE(DateUtil.getDateFromString(doc.getString("FWPSRDATE")));
 			
 			psrfEntity.setFWCONFIRMATION(doc.getString("FWCONFIRMATION"));
 			
@@ -79,9 +80,9 @@ public class PSRFDataConverterService implements DataConverterService {
 			
 			psrfEntity.setFWSORTVALUE(doc.getString("FWSORTVALUE"));
 			
-			psrfEntity.setStart(doc.getString("start"));
+			psrfEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("start")));
 			
-			psrfEntity.setEnd(doc.getString("end"));
+			psrfEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("end")));
 			
 			psrfEntity.setExisting_ELCO(doc.getString("existing_ELCO"));
 			

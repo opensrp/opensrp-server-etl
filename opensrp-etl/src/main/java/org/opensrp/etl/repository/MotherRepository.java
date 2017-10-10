@@ -61,6 +61,6 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 		listMotherCr.add(Restrictions.eq("caseId", caseId));
 		List<MotherEntity> lisFilterMother = listMotherCr.list();
 		System.out.println("size: " + lisFilterMother.size());
-		return (MotherEntity) lisFilterMother.get(0);
+		return lisFilterMother.size() > 0 ? (MotherEntity) lisFilterMother.get(0) : null;
 	}
 }

@@ -64,6 +64,6 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 		listChildCr.add(Restrictions.eq("caseId", caseId));
 		List<ChildEntity> listChild = listChildCr.list();
 		System.out.println("size: " + listChild.size());
-		return (ChildEntity) listChild.get(0);
+		return listChild.size() > 0 ? (ChildEntity) listChild.get(0) : null;
 	}
 }

@@ -1,8 +1,11 @@
 package org.opensrp.etl.repository;
 
-import org.hibernate.Query;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ENCCEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 
@@ -54,11 +57,12 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 	}
 	
 	@Override
-	public ENCCEntity findByCaseId(String caseID) {
-		String hql = "from " + "ENCCEntity E " + " where E.caseID = :case_id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("case_id", caseID);
-		return (ENCCEntity) query.uniqueResult();
+	public ENCCEntity findByCaseId(String caseId) {
+		Criteria listENCCCr = getSession().createCriteria(ENCCEntity.class);
+		listENCCCr.add(Restrictions.eq("caseId", caseId));
+		List<ENCCEntity> lisENCC = listENCCCr.list();
+		System.out.println("size: " + lisENCC.size());
+		return lisENCC.size() > 0 ? (ENCCEntity) lisENCC.get(0) : null;
 	}
 	
 }

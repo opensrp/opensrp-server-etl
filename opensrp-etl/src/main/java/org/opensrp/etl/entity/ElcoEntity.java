@@ -1,11 +1,15 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "elco")
@@ -43,13 +47,8 @@ public class ElcoEntity extends CommonEntity {
 	
 	private String JiVitAHHID;
 	
-	private int existingElCO;
-	
-	private int newELCO;
-	
-	private int ELCO;
-	
-	private String FWCENDATE;
+	@Temporal(TemporalType.DATE)
+	private Date FWCENDATE;
 	
 	private String FWCENSTAT;
 	
@@ -167,35 +166,11 @@ public class ElcoEntity extends CommonEntity {
 		JiVitAHHID = jiVitAHHID;
 	}
 	
-	public int getExistingElCO() {
-		return existingElCO;
-	}
-	
-	public void setExistingElCO(int existingElCO) {
-		this.existingElCO = existingElCO;
-	}
-	
-	public int getNewELCO() {
-		return newELCO;
-	}
-	
-	public void setNewELCO(int newELCO) {
-		this.newELCO = newELCO;
-	}
-	
-	public int getELCO() {
-		return ELCO;
-	}
-	
-	public void setELCO(int eLCO) {
-		ELCO = eLCO;
-	}
-	
-	public String getFWCENDATE() {
+	public Date getFWCENDATE() {
 		return FWCENDATE;
 	}
 	
-	public void setFWCENDATE(String fWCENDATE) {
+	public void setFWCENDATE(Date fWCENDATE) {
 		FWCENDATE = fWCENDATE;
 	}
 	

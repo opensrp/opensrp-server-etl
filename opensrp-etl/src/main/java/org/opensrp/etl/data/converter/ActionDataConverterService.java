@@ -22,12 +22,14 @@ public class ActionDataConverterService implements DataConverterService {
 	
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		
+		String caseID = "";
 		try {
+			caseID = doc.getString("caseId");
 			JSONObject data = new JSONObject(doc.getString("data"));
 			actionEntity.setActionTarget(doc.getString("actionTarget"));
 			actionEntity.setProvider(doc.getString("anmIdentifier"));
 			actionEntity.setCaseID(doc.getString("caseID"));
+			actionEntity.setActionType(doc.getString("actionType"));
 			actionEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
 			actionEntity.setIsActionActive(Boolean.parseBoolean(doc.getString("isActionActive")));
 			actionEntity.setAlertStatus(data.getString("alertStatus"));
@@ -36,13 +38,12 @@ public class ActionDataConverterService implements DataConverterService {
 			actionEntity.setScheduleName(data.getString("scheduleName"));
 			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
 			actionEntity.setStartDate(DateUtil.getDateFromString(data.getString("startDate")));
-			actionEntity.setCreated();
-			actionEntity.setUpdated();
+			actionService.save(actionEntity);
 		}
-		catch (Exception e) {
+		catch (JSONException e) {
+			System.out.println("Could not transfer data caseId: " + caseID);
 			e.printStackTrace();
 		}
-		actionService.save(actionEntity);
 		
 	}
 	

@@ -57,13 +57,12 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 	}
 	
 	public int isActionExist(String caseId, String visitCode, String alertStatus, Date startDate) {
-		Session session = this.sessionFactory.getCurrentSession();
 		int actionExist = 0;
 		try {
-			String hql = "select A.caseID from " + "ActionEntity A " + "where A.caseID = :case_id "
+			String hql = "select A.caseId from " + "ActionEntity A " + "where A.caseId = :case_id "
 			        + "and A.visitCode = :visit_code " + "and A.alertStatus = :alert_status "
 			        + " and A.startDate = :start_date";
-			Query query = session.createQuery(hql);
+			Query query = getSession().createQuery(hql);
 			query.setParameter("case_id", caseId);
 			query.setParameter("visit_code", visitCode);
 			query.setParameter("alert_status", alertStatus);
@@ -84,6 +83,6 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		listActionCr.add(Restrictions.eq("caseId", caseId));
 		List<ActionEntity> listAction = listActionCr.list();
 		System.out.println("size: " + listAction.size());
-		return (ActionEntity) listAction.get(0);
+		return listAction.size() > 0 ? (ActionEntity) listAction.get(0) : null;
 	}
 }

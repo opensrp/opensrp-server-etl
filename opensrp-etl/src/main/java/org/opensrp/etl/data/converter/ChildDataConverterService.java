@@ -22,10 +22,9 @@ public class ChildDataConverterService implements DataConverterService {
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		try {
-			System.out.println("Class:ChildDataConverterService, Method:convertData");
 			JSONObject details = new JSONObject(doc.getString("details"));
 			
-			childEntity.setBirthDate(details.getString("FWBNFDOB"));
+			childEntity.setBirthDate(DateUtil.getDateFromString(details.getString("FWBNFDOB")));
 			
 			childEntity.setClientVersion(doc.getLong("clientVersion"));
 			
@@ -75,7 +74,7 @@ public class ChildDataConverterService implements DataConverterService {
 			
 			childEntity.setFWWOMBID(details.getString("FWWOMBID"));
 			
-			childEntity.setWBNFDOB(details.getString("FWBNFDOB"));
+			childEntity.setWBNFDOB(DateUtil.getDateFromString(details.getString("FWBNFDOB")));
 			
 			childEntity.setGOBHHID(details.getString("GOBHHID"));
 			

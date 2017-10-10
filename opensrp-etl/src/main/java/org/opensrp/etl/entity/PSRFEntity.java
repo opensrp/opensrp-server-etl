@@ -1,5 +1,7 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "psrf")
-public class PSRFEntity {
+public class PSRFEntity extends CommonEntity {
 	
 	private static final PSRFEntity INSTANCE = new PSRFEntity();
 	
@@ -32,7 +34,7 @@ public class PSRFEntity {
 	
 	private String FWPSRSTS;
 	
-	private String FWPSRDATE;
+	private Date FWPSRDATE;
 	
 	private String FWCONFIRMATION;
 	
@@ -90,10 +92,6 @@ public class PSRFEntity {
 	
 	private String FWSORTVALUE;
 	
-	private String start;
-	
-	private String end;
-	
 	private String existing_ELCO;
 	
 	private String FWNOTELIGIBLE;
@@ -132,11 +130,11 @@ public class PSRFEntity {
 		FWPSRSTS = fWPSRSTS;
 	}
 	
-	public String getFWPSRDATE() {
+	public Date getFWPSRDATE() {
 		return FWPSRDATE;
 	}
 	
-	public void setFWPSRDATE(String fWPSRDATE) {
+	public void setFWPSRDATE(Date fWPSRDATE) {
 		FWPSRDATE = fWPSRDATE;
 	}
 	
@@ -362,22 +360,6 @@ public class PSRFEntity {
 	
 	public void setFWSORTVALUE(String fWSORTVALUE) {
 		FWSORTVALUE = fWSORTVALUE;
-	}
-	
-	public String getStart() {
-		return start;
-	}
-	
-	public void setStart(String start) {
-		this.start = start;
-	}
-	
-	public String getEnd() {
-		return end;
-	}
-	
-	public void setEnd(String end) {
-		this.end = end;
 	}
 	
 	public String getExisting_ELCO() {

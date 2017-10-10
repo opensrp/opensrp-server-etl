@@ -1,5 +1,7 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "child")
@@ -49,10 +53,12 @@ public class ChildEntity extends CommonEntity {
 	
 	private String FWWOMBID;//details
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "reference_date")
-	private String referenceDate;//details
+	private Date referenceDate;//details
 	
-	private String WBNFDOB;//details
+	@Temporal(TemporalType.DATE)
+	private Date WBNFDOB;//details
 	
 	private String GOBHHID;//details
 	
@@ -143,19 +149,19 @@ public class ChildEntity extends CommonEntity {
 		FWWOMBID = fWWOMBID;
 	}
 	
-	public String getReferenceDate() {
+	public Date getReferenceDate() {
 		return referenceDate;
 	}
 	
-	public void setReferenceDate(String referenceDate) {
+	public void setReferenceDate(Date referenceDate) {
 		this.referenceDate = referenceDate;
 	}
 	
-	public String getWBNFDOB() {
+	public Date getWBNFDOB() {
 		return WBNFDOB;
 	}
 	
-	public void setWBNFDOB(String wBNFDOB) {
+	public void setWBNFDOB(Date wBNFDOB) {
 		WBNFDOB = wBNFDOB;
 	}
 	

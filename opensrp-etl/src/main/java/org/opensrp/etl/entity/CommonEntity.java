@@ -17,7 +17,7 @@ public abstract class CommonEntity {
 	private String lastName;
 	
 	@Column(name = "birth_date")
-	private String birthDate;
+	private Date birthDate;
 	
 	private String gender;
 	
@@ -29,16 +29,13 @@ public abstract class CommonEntity {
 	
 	private String provider;
 	
-	@Column(name = "location_id")
-	private String locationId;
-	
-	@Temporal(TemporalType.DATE)
-	private Date today;
-	
 	private Date start;
 	
 	@Column(name = "end_time")
 	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "registration_date")
@@ -91,7 +88,7 @@ public abstract class CommonEntity {
 	private Date updated = new Date();
 	
 	@Column(name = "received_time")
-	private String receivedTime;
+	private Date receivedTime;
 	
 	public String getFirstName() {
 		return firstName;
@@ -109,11 +106,11 @@ public abstract class CommonEntity {
 		this.lastName = lastName;
 	}
 	
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 	
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 	
@@ -147,14 +144,6 @@ public abstract class CommonEntity {
 	
 	public void setProvider(String provider) {
 		this.provider = provider;
-	}
-	
-	public String getLocationId() {
-		return locationId;
-	}
-	
-	public void setLocationId(String locationId) {
-		this.locationId = locationId;
 	}
 	
 	public Date getToday() {
@@ -325,25 +314,24 @@ public abstract class CommonEntity {
 		this.updated = new Date();
 	}
 	
-	public String getReceivedTime() {
+	public Date getReceivedTime() {
 		return receivedTime;
 	}
 	
-	public void setReceivedTime(String receivedTime) {
+	public void setReceivedTime(Date receivedTime) {
 		this.receivedTime = receivedTime;
 	}
 	
 	@Override
 	public String toString() {
 		return "CommonEntity [firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", gender="
-		        + gender + ", caseId=" + caseId + ", instanceId=" + instanceId + ", provider=" + provider + ", locationId="
-		        + locationId + ", today=" + today + ", start=" + start + ", end=" + end + ", registrationDate="
-		        + registrationDate + ", country=" + country + ", division=" + division + ", district=" + district
-		        + ", upazila=" + upazila + ", union=" + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzaPara="
-		        + mauzaPara + ", gps=" + gps + ", formName=" + formName + ", userType=" + userType + ", externalUserId="
-		        + externalUserId + ", currentFormStatus=" + currentFormStatus + ", submissionTime=" + submissionTime
-		        + ", clientVersion=" + clientVersion + ", created=" + created + ", updated=" + updated + ", receivedTime="
-		        + receivedTime + "]";
+		        + gender + ", caseId=" + caseId + ", instanceId=" + instanceId + ", provider=" + provider + ", today="
+		        + today + ", start=" + start + ", end=" + end + ", registrationDate=" + registrationDate + ", country="
+		        + country + ", division=" + division + ", district=" + district + ", upazila=" + upazila + ", union=" + union
+		        + ", ward=" + ward + ", subunit=" + subunit + ", mauzaPara=" + mauzaPara + ", gps=" + gps + ", formName="
+		        + formName + ", userType=" + userType + ", externalUserId=" + externalUserId + ", currentFormStatus="
+		        + currentFormStatus + ", submissionTime=" + submissionTime + ", clientVersion=" + clientVersion
+		        + ", created=" + created + ", updated=" + updated + ", receivedTime=" + receivedTime + "]";
 	}
 	
 }

@@ -23,8 +23,6 @@ public class HouseholdEntity extends CommonEntity {
 	
 	private String FWGOBHHID;
 	
-	private String GOBHHID;
-	
 	private String FWNHHMBRNUM;
 	
 	private String FWNHHMWRA;
@@ -51,14 +49,6 @@ public class HouseholdEntity extends CommonEntity {
 	
 	public void setFWGOBHHID(String fWGOBHHID) {
 		FWGOBHHID = fWGOBHHID;
-	}
-	
-	public String getGOBHHID() {
-		return GOBHHID;
-	}
-	
-	public void setGOBHHID(String gOBHHID) {
-		GOBHHID = gOBHHID;
 	}
 	
 	public String getFWNHHMBRNUM() {
@@ -103,8 +93,8 @@ public class HouseholdEntity extends CommonEntity {
 	
 	@Override
 	public String toString() {
-		return "HouseholdEntity [id=" + id + ", FWGOBHHID=" + FWGOBHHID + ", GOBHHID=" + GOBHHID + ", FWNHHMBRNUM="
-		        + FWNHHMBRNUM + ", FWNHHMWRA=" + FWNHHMWRA + ", FWJIVHHID=" + FWJIVHHID + ", ELCO=" + ELCO + ", elco=" + "]";
+		return "HouseholdEntity [id=" + id + ", FWGOBHHID=" + FWGOBHHID + ", FWNHHMBRNUM=" + FWNHHMBRNUM + ", FWNHHMWRA="
+		        + FWNHHMWRA + ", FWJIVHHID=" + FWJIVHHID + ", ELCO=" + ELCO + ", elco=" + "]";
 	}
 	
 }

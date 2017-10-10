@@ -1,5 +1,7 @@
 package org.opensrp.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "bnf")
@@ -25,7 +29,8 @@ public class BNFEntity {
 	@JoinColumn(name = "mother_id", referencedColumnName = "id")
 	private MotherEntity mother;
 	
-	private String FWBNFDATE;
+	@Temporal(TemporalType.DATE)
+	private Date FWBNFDATE;
 	
 	private String bnf_current_formStatus;
 	
@@ -33,7 +38,8 @@ public class BNFEntity {
 	
 	private String FWGESTATIONALAGE;
 	
-	private String FWEDD;
+	@Temporal(TemporalType.DATE)
+	private Date FWEDD;
 	
 	private String FWBNFSTS;
 	
@@ -41,7 +47,8 @@ public class BNFEntity {
 	
 	private String FWBNFWOMVITSTS;
 	
-	private String FWBNFDTOO;
+	@Temporal(TemporalType.DATE)
+	private Date FWBNFDTOO;
 	
 	private String FWBNFLB;
 	
@@ -91,11 +98,11 @@ public class BNFEntity {
 		this.mother = mother;
 	}
 	
-	public String getFWBNFDATE() {
+	public Date getFWBNFDATE() {
 		return FWBNFDATE;
 	}
 	
-	public void setFWBNFDATE(String fWBNFDATE) {
+	public void setFWBNFDATE(Date fWBNFDATE) {
 		FWBNFDATE = fWBNFDATE;
 	}
 	
@@ -123,11 +130,11 @@ public class BNFEntity {
 		FWGESTATIONALAGE = fWGESTATIONALAGE;
 	}
 	
-	public String getFWEDD() {
+	public Date getFWEDD() {
 		return FWEDD;
 	}
 	
-	public void setFWEDD(String fWEDD) {
+	public void setFWEDD(Date fWEDD) {
 		FWEDD = fWEDD;
 	}
 	
@@ -155,11 +162,11 @@ public class BNFEntity {
 		FWBNFWOMVITSTS = fWBNFWOMVITSTS;
 	}
 	
-	public String getFWBNFDTOO() {
+	public Date getFWBNFDTOO() {
 		return FWBNFDTOO;
 	}
 	
-	public void setFWBNFDTOO(String fWBNFDTOO) {
+	public void setFWBNFDTOO(Date fWBNFDTOO) {
 		FWBNFDTOO = fWBNFDTOO;
 	}
 	

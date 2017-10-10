@@ -1,8 +1,11 @@
 package org.opensrp.etl.repository;
 
-import org.hibernate.Query;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +59,11 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	}
 	
 	@Override
-	public BNFEntity findByCaseId(String caseID) {
-		String hql = "from " + "BNFEntity B " + " where B.caseID = :case_id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("case_id", caseID);
-		return (BNFEntity) query.uniqueResult();
+	public BNFEntity findByCaseId(String caseId) {
+		Criteria listBNFCr = getSession().createCriteria(BNFEntity.class);
+		listBNFCr.add(Restrictions.eq("caseId", caseId));
+		List<BNFEntity> listBNF = listBNFCr.list();
+		System.out.println("size: " + listBNF.size());
+		return listBNF.size() > 0 ? (BNFEntity) listBNF.get(0) : null;
 	}
 }

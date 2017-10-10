@@ -164,8 +164,8 @@ public class MotherToPNCConverter {
 			//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
 			//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
 			//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
-			pncEntity.setSTART_DATE(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
-			pncEntity.setEND_DATE(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
+			pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
+			pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
 			pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
 			pncEntity.setClientVersion(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("clientVersion"))));
 			pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));

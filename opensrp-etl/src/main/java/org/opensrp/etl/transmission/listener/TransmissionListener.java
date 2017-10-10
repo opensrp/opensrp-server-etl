@@ -39,29 +39,20 @@ public class TransmissionListener {
 	
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
-		try {
-			logger.debug("ETL process started transmission from source couchDB!!!");
-			markerEntity = markerService.findById(1);
-			ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
-			List<Row> rows = vr.getRows();
-			for (Row row : rows) {
-				JSONObject jsonData = new JSONObject(row.getValue());
-				long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-				logger.debug("currentDocumentTimeStamp:" + currentDocumentTimeStamp);
-				if (markerEntity.getTimeStamp() <= currentDocumentTimeStamp) {
-					transmissionServiceFactory.getTransmissionType(jsonData.getString("type"))
-					        .convertDataJsonToEntity(jsonData);
-				}
-				if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-					markerEntity.setTimeStamp(currentDocumentTimeStamp);
-					markerService.update(markerEntity);
-				}
-				
+		logger.debug("ETL process started transmission from source couchDB!!!");
+		markerEntity = markerService.findById(1);
+		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
+		List<Row> rows = vr.getRows();
+		for (Row row : rows) {
+			JSONObject jsonData = new JSONObject(row.getValue());
+			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+			logger.debug("currentDocumentTimeStamp:" + currentDocumentTimeStamp);
+			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
+			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+				markerEntity.setTimeStamp(currentDocumentTimeStamp);
+				markerService.update(markerEntity);
 			}
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		
 	}

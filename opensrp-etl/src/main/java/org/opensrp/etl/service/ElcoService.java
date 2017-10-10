@@ -21,10 +21,13 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 	@Transactional
 	@Override
 	public void save(ElcoEntity elcoEntity) {
-		System.out.println("save elcoReopsitory" + elcoRepository);
-		elcoRepository.save(elcoEntity);
-		// TODO Auto-generated method stub
-		
+		ElcoEntity existingElcoEntity = findByCaseId(elcoEntity.caseId);
+		if (existingElcoEntity == null) {
+			elcoRepository.save(elcoEntity);
+		} else {
+			System.out.println("update elco entity:" + existingElcoEntity.toString());
+			update(existingElcoEntity);
+		}
 	}
 	
 	@Override
@@ -33,9 +36,10 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(ElcoEntity t) {
-		// TODO Auto-generated method stub
+	public void update(ElcoEntity elcoEntity) {
+		elcoRepository.update(elcoEntity);
 		
 	}
 	

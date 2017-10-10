@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.BNFService;
+import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BNFDataConverterService implements DataConverterService {
@@ -22,7 +23,7 @@ public class BNFDataConverterService implements DataConverterService {
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		
-		bnfEntity.setFWBNFDATE(doc.getString("FWBNFDATE"));
+		bnfEntity.setFWBNFDATE(DateUtil.getDateFromString(doc.getString("FWBNFDATE")));
 		
 		bnfEntity.setBnf_current_formStatus(doc.getString("bnf_current_formStatus"));
 		
@@ -30,7 +31,7 @@ public class BNFDataConverterService implements DataConverterService {
 		
 		bnfEntity.setFWGESTATIONALAGE(doc.getString("FWGESTATIONALAGE"));
 		
-		bnfEntity.setFWEDD(doc.getString("FWEDD"));
+		bnfEntity.setFWEDD(DateUtil.getDateFromString(doc.getString("FWEDD")));
 		
 		bnfEntity.setFWBNFSTS(doc.getString("FWBNFSTS"));
 		
@@ -38,7 +39,7 @@ public class BNFDataConverterService implements DataConverterService {
 		
 		bnfEntity.setFWBNFWOMVITSTS(doc.getString("FWBNFWOMVITSTS"));
 		
-		bnfEntity.setFWBNFDTOO(doc.getString("FWBNFDTOO"));
+		bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc.getString("FWBNFDTOO")));
 		
 		bnfEntity.setFWBNFLB(doc.getString("FWBNFLB"));
 		

@@ -28,6 +28,7 @@ public class ENCCEntity {
 	@SequenceGenerator(name = "encc_id_seq", sequenceName = "encc_id_seq", allocationSize = 1)
 	private int id;
 	
+	@Temporal(TemporalType.DATE)
 	private Date FWENCCDATE;
 	
 	private String FWENCCSTS;
@@ -64,7 +65,8 @@ public class ENCCEntity {
 	
 	private String encc_current_formStatus;
 	
-	private String REFERENCE_DATE;
+	@Temporal(TemporalType.DATE)
+	private Date REFERENCE_DATE;
 	
 	@Temporal(TemporalType.DATE)
 	private Date START_DATE;
@@ -247,11 +249,11 @@ public class ENCCEntity {
 		this.encc_current_formStatus = encc_current_formStatus;
 	}
 	
-	public String getREFERENCE_DATE() {
+	public Date getREFERENCE_DATE() {
 		return REFERENCE_DATE;
 	}
 	
-	public void setREFERENCE_DATE(String rEFERENCE_DATE) {
+	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
 		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	

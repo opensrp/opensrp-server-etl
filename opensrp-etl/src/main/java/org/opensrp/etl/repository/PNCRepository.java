@@ -1,8 +1,11 @@
 package org.opensrp.etl.repository;
 
-import org.hibernate.Query;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.PNCEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +55,11 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 	}
 	
 	@Override
-	public PNCEntity findByCaseId(String caseID) {
-		String hql = "from " + "PNCEntity P " + " where P.caseID = :case_id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("case_id", caseID);
-		return (PNCEntity) query.uniqueResult();
+	public PNCEntity findByCaseId(String caseId) {
+		Criteria listPNCCr = getSession().createCriteria(PNCEntity.class);
+		listPNCCr.add(Restrictions.eq("caseId", caseId));
+		List<PNCEntity> listPNC = listPNCCr.list();
+		System.out.println("size: " + listPNC.size());
+		return listPNC.size() > 0 ? (PNCEntity) listPNC.get(0) : null;
 	}
-	
 }

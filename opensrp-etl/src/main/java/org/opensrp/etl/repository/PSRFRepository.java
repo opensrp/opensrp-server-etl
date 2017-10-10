@@ -1,8 +1,11 @@
 package org.opensrp.etl.repository;
 
-import org.hibernate.Query;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.PSRFEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +59,11 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	}
 	
 	@Override
-	public PSRFEntity findByCaseId(String caseID) {
-		String hql = "from " + "PSRFEntity P " + " where P.caseID = :case_id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("case_id", caseID);
-		return (PSRFEntity) query.uniqueResult();
+	public PSRFEntity findByCaseId(String caseId) {
+		Criteria listPsrfCr = getSession().createCriteria(PSRFEntity.class);
+		listPsrfCr.add(Restrictions.eq("caseId", caseId));
+		List<PSRFEntity> listPsrf = listPsrfCr.list();
+		System.out.println("size: " + listPsrf.size());
+		return listPsrf.size() > 0 ? (PSRFEntity) listPsrf.get(0) : null;
 	}
-	
 }

@@ -19,8 +19,8 @@ public class ActionServiceTest {
 	
 	@Test
 	public void findByCaseIdTest() {
-		System.out.println(
-		    "findByCaseIdTest: " + actionService.findByCaseId("cdb1db77-010d-42c6-a785-d3c0d2ad9017").toString());
+		/*System.out.println(
+		    "findByCaseIdTest: " + actionService.findByCaseId("cdb1db77-010d-42c6-a785-d3c0d2ad9017").toString());*/
 	}
 	
 }

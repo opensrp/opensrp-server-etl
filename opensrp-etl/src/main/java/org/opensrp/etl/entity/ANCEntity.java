@@ -30,6 +30,7 @@ public class ANCEntity {
 	
 	private String ancName;
 	
+	@Temporal(TemporalType.DATE)
 	private Date FWANCDATE;
 	
 	private String anc_current_formStatus;
@@ -38,7 +39,8 @@ public class ANCEntity {
 	
 	private String FWGESTATIONALAGE;
 	
-	private String FWEDD;
+	@Temporal(TemporalType.DATE)
+	private Date FWEDD;
 	
 	private String FWANCREMSTS;
 	
@@ -130,9 +132,11 @@ public class ANCEntity {
 	
 	private String FW_HUSNAME;
 	
-	private String MOTHER_REFERENCE_DATE;
+	@Temporal(TemporalType.DATE)
+	private Date MOTHER_REFERENCE_DATE;
 	
-	private String REFERENCE_DATE;
+	@Temporal(TemporalType.DATE)
+	private Date REFERENCE_DATE;
 	
 	private long clientVersion;
 	
@@ -140,11 +144,10 @@ public class ANCEntity {
 	
 	private long timeStamp;
 	
-	@Temporal(TemporalType.DATE)
-	private Date START_DATE;
+	private Date start;
 	
-	@Temporal(TemporalType.DATE)
-	private Date END_DATE;
+	@Column(name = "end_time")
+	private Date end;
 	
 	@Temporal(TemporalType.DATE)
 	private Date today;
@@ -209,11 +212,11 @@ public class ANCEntity {
 		FWGESTATIONALAGE = fWGESTATIONALAGE;
 	}
 	
-	public String getFWEDD() {
+	public Date getFWEDD() {
 		return FWEDD;
 	}
 	
-	public void setFWEDD(String fWEDD) {
+	public void setFWEDD(Date fWEDD) {
 		FWEDD = fWEDD;
 	}
 	
@@ -577,36 +580,60 @@ public class ANCEntity {
 		FW_HUSNAME = fW_HUSNAME;
 	}
 	
-	public String getMOTHER_REFERENCE_DATE() {
+	public Date getMOTHER_REFERENCE_DATE() {
 		return MOTHER_REFERENCE_DATE;
 	}
 	
-	public void setMOTHER_REFERENCE_DATE(String mOTHER_REFERENCE_DATE) {
+	public void setMOTHER_REFERENCE_DATE(Date mOTHER_REFERENCE_DATE) {
 		MOTHER_REFERENCE_DATE = mOTHER_REFERENCE_DATE;
 	}
 	
-	public String getREFERENCE_DATE() {
+	public Date getREFERENCE_DATE() {
 		return REFERENCE_DATE;
 	}
 	
-	public void setREFERENCE_DATE(String rEFERENCE_DATE) {
+	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
 		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	
-	public Date getSTART_DATE() {
-		return START_DATE;
+	public String getFWBPCFINARGMT() {
+		return FWBPCFINARGMT;
 	}
 	
-	public void setSTART_DATE(Date date) {
-		START_DATE = date;
+	public void setFWBPCFINARGMT(String fWBPCFINARGMT) {
+		FWBPCFINARGMT = fWBPCFINARGMT;
 	}
 	
-	public Date getEND_DATE() {
-		return END_DATE;
+	public Date getStart() {
+		return start;
 	}
 	
-	public void setEND_DATE(Date date) {
-		END_DATE = date;
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
+	public Date getEnd() {
+		return end;
+	}
+	
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+	
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	
+	public Date getUpdated() {
+		return updated;
+	}
+	
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 	public long getClientVersion() {

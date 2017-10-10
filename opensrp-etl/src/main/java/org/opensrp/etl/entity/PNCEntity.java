@@ -28,6 +28,7 @@ public class PNCEntity {
 	@SequenceGenerator(name = "pnc_id_seq", sequenceName = "pnc_id_seq", allocationSize = 1)
 	private int id;
 	
+	@Temporal(TemporalType.DATE)
 	private Date FWPNCDATE;
 	
 	private String FWCONFIRMATION;
@@ -60,17 +61,18 @@ public class PNCEntity {
 	
 	private String FW_HUSNAME;
 	
+	@Temporal(TemporalType.DATE)
 	private Date FWBNFDTOO;
 	
 	private String FWBNFSTS;
 	
-	private String REFERENCE_DATE;
-	
 	@Temporal(TemporalType.DATE)
-	private Date START_DATE;
+	private Date REFERENCE_DATE;
 	
-	@Temporal(TemporalType.DATE)
-	private Date END_DATE;
+	private Date start;
+	
+	@Column(name = "end_time")
+	private Date end;
 	
 	@Temporal(TemporalType.DATE)
 	private Date today;
@@ -255,28 +257,44 @@ public class PNCEntity {
 		FWBNFSTS = fWBNFSTS;
 	}
 	
-	public String getREFERENCE_DATE() {
+	public Date getREFERENCE_DATE() {
 		return REFERENCE_DATE;
 	}
 	
-	public void setREFERENCE_DATE(String rEFERENCE_DATE) {
+	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
 		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	
-	public Date getSTART_DATE() {
-		return START_DATE;
+	public Date getStart() {
+		return start;
 	}
 	
-	public void setSTART_DATE(Date sTART_DATE) {
-		START_DATE = sTART_DATE;
+	public void setStart(Date start) {
+		this.start = start;
 	}
 	
-	public Date getEND_DATE() {
-		return END_DATE;
+	public Date getEnd() {
+		return end;
 	}
 	
-	public void setEND_DATE(Date eND_DATE) {
-		END_DATE = eND_DATE;
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+	
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	
+	public Date getUpdated() {
+		return updated;
+	}
+	
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 	public String getPnc_current_formStatus() {

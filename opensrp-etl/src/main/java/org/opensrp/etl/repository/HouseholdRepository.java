@@ -23,9 +23,7 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	
 	@Override
 	public void save(HouseholdEntity entity) {
-		
 		Session session = this.sessionFactory.getCurrentSession();
-		System.err.println("dd: " + session + "+ entity:" + entity.toString());
 		try {
 			session.save(entity);
 		}
