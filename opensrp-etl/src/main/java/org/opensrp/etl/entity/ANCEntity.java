@@ -39,8 +39,7 @@ public class ANCEntity {
 	
 	private String FWGESTATIONALAGE;
 	
-	@Temporal(TemporalType.DATE)
-	private Date FWEDD;
+	private String FWEDD;
 	
 	private String FWANCREMSTS;
 	
@@ -124,23 +123,17 @@ public class ANCEntity {
 	
 	private String FW_JiVitAHHID;
 	
-	private String FW_WOMBID;
+	private String FWWOMBID;
 	
-	private String FW_WOMNID;
+	private String FWWOMNID;
 	
-	private String FW_WOMFNAME;
+	private String FWWOMFNAME;
 	
-	private String FW_HUSNAME;
-	
-	@Temporal(TemporalType.DATE)
-	private Date MOTHER_REFERENCE_DATE;
-	
-	@Temporal(TemporalType.DATE)
-	private Date REFERENCE_DATE;
+	private String FWHUSNAME;
 	
 	private long clientVersion;
 	
-	private String received_time;
+	private Date received_time;
 	
 	private long timeStamp;
 	
@@ -212,11 +205,11 @@ public class ANCEntity {
 		FWGESTATIONALAGE = fWGESTATIONALAGE;
 	}
 	
-	public Date getFWEDD() {
+	public String getFWEDD() {
 		return FWEDD;
 	}
 	
-	public void setFWEDD(Date fWEDD) {
+	public void setFWEDD(String fWEDD) {
 		FWEDD = fWEDD;
 	}
 	
@@ -548,52 +541,36 @@ public class ANCEntity {
 		FW_JiVitAHHID = fW_JiVitAHHID;
 	}
 	
-	public String getFW_WOMBID() {
-		return FW_WOMBID;
+	public String getFWWOMBID() {
+		return FWWOMBID;
 	}
 	
-	public void setFW_WOMBID(String fW_WOMBID) {
-		FW_WOMBID = fW_WOMBID;
+	public void setFWWOMBID(String fWWOMBID) {
+		FWWOMBID = fWWOMBID;
 	}
 	
-	public String getFW_WOMNID() {
-		return FW_WOMNID;
+	public String getFWWOMNID() {
+		return FWWOMNID;
 	}
 	
-	public void setFW_WOMNID(String fW_WOMNID) {
-		FW_WOMNID = fW_WOMNID;
+	public void setFWWOMNID(String fWWOMNID) {
+		FWWOMNID = fWWOMNID;
 	}
 	
-	public String getFW_WOMFNAME() {
-		return FW_WOMFNAME;
+	public String getFWWOMFNAME() {
+		return FWWOMFNAME;
 	}
 	
-	public void setFW_WOMFNAME(String fW_WOMFNAME) {
-		FW_WOMFNAME = fW_WOMFNAME;
+	public void setFWWOMFNAME(String fWWOMFNAME) {
+		FWWOMFNAME = fWWOMFNAME;
 	}
 	
-	public String getFW_HUSNAME() {
-		return FW_HUSNAME;
+	public String getFWHUSNAME() {
+		return FWHUSNAME;
 	}
 	
-	public void setFW_HUSNAME(String fW_HUSNAME) {
-		FW_HUSNAME = fW_HUSNAME;
-	}
-	
-	public Date getMOTHER_REFERENCE_DATE() {
-		return MOTHER_REFERENCE_DATE;
-	}
-	
-	public void setMOTHER_REFERENCE_DATE(Date mOTHER_REFERENCE_DATE) {
-		MOTHER_REFERENCE_DATE = mOTHER_REFERENCE_DATE;
-	}
-	
-	public Date getREFERENCE_DATE() {
-		return REFERENCE_DATE;
-	}
-	
-	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
-		REFERENCE_DATE = rEFERENCE_DATE;
+	public void setFWHUSNAME(String fWHUSNAME) {
+		FWHUSNAME = fWHUSNAME;
 	}
 	
 	public String getFWBPCFINARGMT() {
@@ -644,11 +621,11 @@ public class ANCEntity {
 		this.clientVersion = clientVersion;
 	}
 	
-	public String getReceived_time() {
+	public Date getReceived_time() {
 		return received_time;
 	}
 	
-	public void setReceived_time(String received_time) {
+	public void setReceived_time(Date received_time) {
 		this.received_time = received_time;
 	}
 	

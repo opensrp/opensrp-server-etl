@@ -24,11 +24,11 @@ public class MotherToPNCConverter {
 	
 	private static final String PNC = "PNC";
 	
-	private static final String PNC_Visit_One = "pncVisitOne";
+	private static final String PNC_Visit_One = "pncrv_1";
 	
-	private static final String PNC_Visit_Two = "pncVisitTwo";
+	private static final String PNC_Visit_Two = "pncrv_2";
 	
-	private static final String PNC_Visit_Three = "pncVisitThree";
+	private static final String PNC_Visit_Three = "pncrv_3";
 	
 	private ArrayList<String> pncKeys = new ArrayList<String>();
 	
@@ -63,13 +63,13 @@ public class MotherToPNCConverter {
 		
 		pncKeys.add("FW_JiVitAHHID");
 		
-		pncKeys.add("FW_WOMBID");
+		pncKeys.add("FWWOMBID");
 		
-		pncKeys.add("FW_WOMNID");
+		pncKeys.add("FWWOMNID");
 		
-		pncKeys.add("FW_WOMFNAME");
+		pncKeys.add("FWWOMFNAME");
 		
-		pncKeys.add("FW_HUSNAME");
+		pncKeys.add("FWHUSNAME");
 		pncKeys.add("FWBNFDTOO");
 		pncKeys.add("FWBNFSTS");
 		pncKeys.add("REFERENCE_DATE");

@@ -24,13 +24,13 @@ public class MotherToANCConverter {
 	
 	private static final String ANC = "ANC";
 	
-	private static final String ANC_Visit_One = "ancVisitOne";
+	private static final String ANC_Visit_One = "ancrv_1";
 	
-	private static final String ANC_Visit_Two = "ancVisitTwo";
+	private static final String ANC_Visit_Two = "ancrv_2";
 	
-	private static final String ANC_Visit_Three = "ancVisitThree";
+	private static final String ANC_Visit_Three = "ancrv_3";
 	
-	private static final String ANC_Visit_Four = "ancVisitFour";
+	private static final String ANC_Visit_Four = "ancrv_4";
 	
 	private ArrayList<String> ancKeys = new ArrayList<String>();
 	
@@ -135,15 +135,15 @@ public class MotherToANCConverter {
 		
 		ancKeys.add("GOBHHID");
 		
-		ancKeys.add("FW_JiVitAHHID");
+		ancKeys.add("JiVitAHHID");
 		
-		ancKeys.add("FW_WOMBID");
+		ancKeys.add("FWWOMBID");
 		
-		ancKeys.add("FW_WOMNID");
+		ancKeys.add("FWWOMNID");
 		
-		ancKeys.add("FW_WOMFNAME");
+		ancKeys.add("FWWOMFNAME");
 		
-		ancKeys.add("FW_HUSNAME");
+		ancKeys.add("FWHUSNAME");
 		
 		ancKeys.add("MOTHER_REFERENCE_DATE");
 		
@@ -243,7 +243,7 @@ public class MotherToANCConverter {
 			ancEntity.setAnc_current_formStatus(ancVisit.getString(ancVisitKeyMap.get("anc_current_formStatus")));
 			ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
 			ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
-			ancEntity.setFWEDD(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWEDD"))));
+			ancEntity.setFWEDD(ancVisit.getString(ancVisitKeyMap.get("FWEDD")));
 			ancEntity.setFWANCREMSTS(ancVisit.getString(ancVisitKeyMap.get("FWANCREMSTS")));
 			ancEntity.setFWANCINT(ancVisit.getString(ancVisitKeyMap.get("FWANCINT")));
 			ancEntity.setFWANCANM(ancVisit.getString(ancVisitKeyMap.get("FWANCANM")));
@@ -283,18 +283,22 @@ public class MotherToANCConverter {
 			ancEntity.setExternal_user_ID(ancVisit.getString(ancVisitKeyMap.get("external_user_ID")));
 			ancEntity.setRelationalid(ancVisit.getString(ancVisitKeyMap.get("relationalid")));
 			ancEntity.setFW_GOBHHID(ancVisit.getString(ancVisitKeyMap.get("GOBHHID")));
-			ancEntity.setFW_JiVitAHHID(ancVisit.getString(ancVisitKeyMap.get("FW_JiVitAHHID")));
-			ancEntity.setFW_WOMBID(ancVisit.getString(ancVisitKeyMap.get("FW_WOMBID")));
-			ancEntity.setFW_WOMNID(ancVisit.getString(ancVisitKeyMap.get("FW_WOMNID")));
-			ancEntity.setFW_WOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FW_WOMFNAME")));
-			ancEntity.setFW_HUSNAME(ancVisit.getString(ancVisitKeyMap.get("FW_HUSNAME")));
-			ancEntity.setMOTHER_REFERENCE_DATE(
-			    DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
+			ancEntity.setFW_JiVitAHHID(ancVisit.getString(ancVisitKeyMap.get("JiVitAHHID")));
+			if (ancVisit.has("FWWOMBID"))
+				ancEntity.setFWWOMBID(ancVisit.getString(ancVisitKeyMap.get("FWWOMBID")));
+			if (ancVisit.has("FWWOMNID"))
+				ancEntity.setFWWOMNID(ancVisit.getString(ancVisitKeyMap.get("FWWOMNID")));
+			if (ancVisit.has("FWWOMFNAME"))
+				ancEntity.setFWWOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FWWOMFNAME")));
+			if (ancVisit.has("FWHUSNAME"))
+				ancEntity.setFWHUSNAME(ancVisit.getString(ancVisitKeyMap.get("FWHUSNAME")));
+			//ancEntity.setMOTHER_REFERENCE_DATE(
+			//  DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
 			ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
 			ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
 			ancEntity.setToday(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("today"))));
 			ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
-			ancEntity.setReceived_time(ancVisit.getString(ancVisitKeyMap.get("received_time")));
+			ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("received_time"))));
 			ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
 		}
 		catch (JSONException e) {

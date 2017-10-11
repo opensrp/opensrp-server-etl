@@ -19,9 +19,13 @@ public class MotherService implements RegisterService<MotherEntity> {
 	@Transactional
 	@Override
 	public void save(MotherEntity motherEntity) {
-		System.out.println("Class:MotherService, Method:save");
-		motherRepository.save(motherEntity);
-		
+		MotherEntity existingMotherEntity = findByCaseId(motherEntity.caseId);
+		if (existingMotherEntity == null) {
+			motherRepository.save(motherEntity);
+		} else {
+			System.out.println("update mother entity:" + existingMotherEntity.toString());
+			update(existingMotherEntity);
+		}
 	}
 	
 	@Override
@@ -30,9 +34,10 @@ public class MotherService implements RegisterService<MotherEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(MotherEntity t) {
-		// TODO Auto-generated method stub
+	public void update(MotherEntity motherEntity) {
+		motherRepository.update(motherEntity);
 		
 	}
 	
