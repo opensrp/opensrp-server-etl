@@ -24,7 +24,7 @@ public class ActionDataConverterService implements DataConverterService {
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		String caseID = "";
 		try {
-			caseID = doc.getString("caseId");
+			caseID = doc.getString("caseID");
 			JSONObject data = new JSONObject(doc.getString("data"));
 			actionEntity.setActionTarget(doc.getString("actionTarget"));
 			actionEntity.setProvider(doc.getString("anmIdentifier"));
