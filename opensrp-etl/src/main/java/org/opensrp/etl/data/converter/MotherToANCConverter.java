@@ -24,13 +24,13 @@ public class MotherToANCConverter {
 	
 	private static final String ANC = "ANC";
 	
-	private static final String ANC_Visit_One = "ancrv_1";
+	private static final String ANC_Visit_One = "ancVisitOne";
 	
-	private static final String ANC_Visit_Two = "ancrv_2";
+	private static final String ANC_Visit_Two = "ancVisitTwo";
 	
-	private static final String ANC_Visit_Three = "ancrv_3";
+	private static final String ANC_Visit_Three = "ancVisitThree";
 	
-	private static final String ANC_Visit_Four = "ancrv_4";
+	private static final String ANC_Visit_Four = "ancVisitFour";
 	
 	private ArrayList<String> ancKeys = new ArrayList<String>();
 	
@@ -215,8 +215,7 @@ public class MotherToANCConverter {
 				logger.debug("ancVisitThree saved successfully entity: " + ancEntity.toString());
 			}
 			
-			if (mdoc.has(ANC_Visit_Four) && mdoc.isNull(ANC_Visit_Four)
-			        || mdoc.getJSONObject(ANC_Visit_Four).length() == 0) {
+			if (mdoc.has(ANC_Visit_Four) && mdoc.isNull(ANC_Visit_Four) || mdoc.getJSONObject(ANC_Visit_Four).length() == 0) {
 				logger.debug("ancVisitFour does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
 				logger.debug("ancVisitFour  exist caseId:" + mdoc.getString("caseId"));

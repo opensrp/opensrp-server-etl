@@ -1,5 +1,6 @@
 package org.opensrp.etl.data.converter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.BNFEntity;
@@ -21,43 +22,57 @@ public class BNFDataConverterService implements DataConverterService {
 	}
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		
-		bnfEntity.setFWBNFDATE(DateUtil.getDateFromString(doc.getString("FWBNFDATE")));
-		
-		bnfEntity.setBnf_current_formStatus(doc.getString("bnf_current_formStatus"));
-		
-		bnfEntity.setFWCONFIRMATION(doc.getString("FWCONFIRMATION"));
-		
-		bnfEntity.setFWGESTATIONALAGE(doc.getString("FWGESTATIONALAGE"));
-		
-		bnfEntity.setFWEDD(DateUtil.getDateFromString(doc.getString("FWEDD")));
-		
-		bnfEntity.setFWBNFSTS(doc.getString("FWBNFSTS"));
-		
-		bnfEntity.setFWDISPLAYTEXT(doc.getString("FWDISPLAYTEXT"));
-		
-		bnfEntity.setFWBNFWOMVITSTS(doc.getString("FWBNFWOMVITSTS"));
-		
-		bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc.getString("FWBNFDTOO")));
-		
-		bnfEntity.setFWBNFLB(doc.getString("FWBNFLB"));
-		
-		bnfEntity.setFWBNFSMSRSN(doc.getString("FWBNFSMSRSN"));
-		
-		bnfEntity.setUser_type(doc.getString("user_type"));
-		
-		bnfEntity.setExternal_user_ID(doc.getString("external_user_ID"));
-		
-		bnfEntity.setReceived_time(doc.getString("received_time"));
-		
-		bnfEntity.setClientVersion(Long.parseLong(doc.getString("clientVersion")));
-		
-		bnfEntity.setServerVersion(Long.parseLong(doc.getString("serverVersion")));
-		
-		bnfEntity.setRelationalid(doc.getString("relationalid"));
-		
-		bnfService.save(bnfEntity);
+	public void convertToEntityAndSave(JSONObject mother) throws JSONException {
+		JSONArray bnfs = new JSONArray();
+		bnfs = mother.getJSONArray("bnfVisitDetails");
+		for (int i = 0; i < bnfs.length(); i++) {
+			JSONObject doc = bnfs.getJSONObject(i);
+			try {
+				bnfEntity.setFWBNFDATE(DateUtil.getDateFromString(doc.getString("FWBNFDATE")));
+				
+				bnfEntity.setBnf_current_formStatus(doc.getString("bnf_current_formStatus"));
+				
+				bnfEntity.setFWCONFIRMATION(doc.getString("FWCONFIRMATION"));
+				
+				bnfEntity.setFWGESTATIONALAGE(doc.getString("FWGESTATIONALAGE"));
+				
+				bnfEntity.setFWEDD(doc.getString("FWEDD"));
+				
+				bnfEntity.setFWBNFSTS(doc.getString("FWBNFSTS"));
+				
+				bnfEntity.setFWDISPLAYTEXT(doc.getString("FWDISPLAYTEXT1"));
+				
+				bnfEntity.setFWBNFWOMVITSTS(doc.getString("FWBNFWOMVITSTS"));
+				if (doc.has("FWBNFDTOO") && !doc.getString("FWBNFDTOO").isEmpty()
+				        && !"null".equalsIgnoreCase(doc.getString("FWBNFDTOO")))
+					bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc.getString("FWBNFDTOO")));
+				
+				bnfEntity.setFWBNFLB(doc.getString("FWBNFLB"));
+				
+				bnfEntity.setFWBNFSMSRSN(doc.getString("FWBNFSMSRSN"));
+				if (mother.has("user_type"))
+					bnfEntity.setUser_type(mother.getString("user_type"));
+				if (mother.has("external_user_ID"))
+					bnfEntity.setExternal_user_ID(mother.getString("external_user_ID"));
+				
+				bnfEntity.setReceived_time(DateUtil.getDateTimeFromString(doc.getString("received_time")));
+				
+				bnfEntity.setClientVersion(Long.parseLong(doc.getString("clientVersion")));
+				
+				bnfEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
+				bnfEntity.setExternal_user_ID(doc.getString("external_user_ID"));
+				bnfEntity.setUser_type(doc.getString("user_type"));
+				bnfEntity.setRelationalId(mother.getString("caseId"));
+				bnfEntity.setProvider(mother.getString("PROVIDERID"));
+				//bnfEntity.setToday(DateUtil.getDateFromString(doc.getString("today")));
+				//bnfEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("start")));
+				
+				bnfService.save(bnfEntity);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
-	
 }

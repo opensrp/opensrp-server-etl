@@ -1,5 +1,9 @@
 package org.opensrp.etl.service;
 
+import java.util.Date;
+
+import javax.transaction.Transactional;
+
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.RegisterService;
 import org.opensrp.etl.repository.BNFRepository;
@@ -18,9 +22,17 @@ public class BNFService implements RegisterService<BNFEntity> {
 		this.bnfRepository = bnfRepository;
 	}
 	
+	@Transactional
 	@Override
-	public void save(BNFEntity t) {
-		// TODO Auto-generated method stub
+	public void save(BNFEntity bnffEntity) {
+		BNFEntity existingPSRFEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
+		
+		if (existingPSRFEntity == null) {
+			bnfRepository.save(bnffEntity);
+		} else {
+			System.out.println("update household entity:" + existingPSRFEntity.toString());
+			update(existingPSRFEntity);
+		}
 		
 	}
 	
@@ -40,6 +52,12 @@ public class BNFService implements RegisterService<BNFEntity> {
 	public BNFEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Transactional
+	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
+		
+		return bnfRepository.findByCaseIdAndToday(relationalId, FWBNFDATE);
 	}
 	
 	@Override

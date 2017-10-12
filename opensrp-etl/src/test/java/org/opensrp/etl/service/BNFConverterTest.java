@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml" })
-public class PSRFConverterTest {
+public class BNFConverterTest {
 	
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;

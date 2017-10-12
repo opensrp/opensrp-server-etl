@@ -3,6 +3,7 @@ package org.opensrp.etl.entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,12 +35,14 @@ public class BNFEntity {
 	
 	private String bnf_current_formStatus;
 	
+	private String provider;
+	
 	private String FWCONFIRMATION;
 	
 	private String FWGESTATIONALAGE;
 	
-	@Temporal(TemporalType.DATE)
-	private Date FWEDD;
+	//@Temporal(TemporalType.DATE)
+	private String FWEDD;
 	
 	private String FWBNFSTS;
 	
@@ -58,20 +61,50 @@ public class BNFEntity {
 	
 	private String external_user_ID;
 	
-	private String received_time;
+	private Date received_time;
 	
 	private long clientVersion;
 	
-	private long serverVersion;
+	private String relationalId;//mother id
 	
-	private String relationalid;//mother id
+	private Date start;
 	
-	public long getServerVersion() {
-		return serverVersion;
+	@Column(name = "end_time")
+	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
+	
+	public String getProvider() {
+		return provider;
 	}
 	
-	public void setServerVersion(long serverVersion) {
-		this.serverVersion = serverVersion;
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+	
+	public Date getStart() {
+		return start;
+	}
+	
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
+	public Date getEnd() {
+		return end;
+	}
+	
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	public Date getToday() {
+		return today;
+	}
+	
+	public void setToday(Date today) {
+		this.today = today;
 	}
 	
 	public int getId() {
@@ -130,11 +163,11 @@ public class BNFEntity {
 		FWGESTATIONALAGE = fWGESTATIONALAGE;
 	}
 	
-	public Date getFWEDD() {
+	public String getFWEDD() {
 		return FWEDD;
 	}
 	
-	public void setFWEDD(Date fWEDD) {
+	public void setFWEDD(String fWEDD) {
 		FWEDD = fWEDD;
 	}
 	
@@ -202,11 +235,11 @@ public class BNFEntity {
 		this.external_user_ID = external_user_ID;
 	}
 	
-	public String getReceived_time() {
+	public Date getReceived_time() {
 		return received_time;
 	}
 	
-	public void setReceived_time(String received_time) {
+	public void setReceived_time(Date received_time) {
 		this.received_time = received_time;
 	}
 	
@@ -218,12 +251,12 @@ public class BNFEntity {
 		this.clientVersion = clientVersion;
 	}
 	
-	public String getRelationalid() {
-		return relationalid;
+	public String getRelationalId() {
+		return relationalId;
 	}
 	
-	public void setRelationalid(String relationalid) {
-		this.relationalid = relationalid;
+	public void setRelationalId(String relationalId) {
+		this.relationalId = relationalId;
 	}
 	
 }

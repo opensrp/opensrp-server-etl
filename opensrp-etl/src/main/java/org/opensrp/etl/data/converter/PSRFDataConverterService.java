@@ -24,7 +24,7 @@ public class PSRFDataConverterService implements DataConverterService {
 		
 		for (int i = 0; i < psrf.length(); i++) {
 			JSONObject doc = psrf.getJSONObject(i);
-			System.err.println("" + doc);
+			
 			try {
 				psrfEntity.setRelationalId(elco.getString("caseId"));
 				psrfEntity.setExternalUserId(elco.getString("external_user_ID"));

@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -56,6 +57,14 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	private Session getSession() {
 		Session session = this.sessionFactory.getCurrentSession();
 		return session;
+	}
+	
+	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
+		Criteria listPsrfCr = getSession().createCriteria(BNFEntity.class);
+		listPsrfCr.add(Restrictions.eq("relationalId", relationalId));
+		listPsrfCr.add(Restrictions.eq("FWBNFDATE", FWBNFDATE));
+		List<BNFEntity> listPsrf = listPsrfCr.list();
+		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
 	}
 	
 	@Override

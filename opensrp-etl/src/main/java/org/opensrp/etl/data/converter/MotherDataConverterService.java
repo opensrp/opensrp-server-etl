@@ -22,6 +22,9 @@ public class MotherDataConverterService implements DataConverterService {
 	@Autowired
 	private MotherService motherService;
 	
+	@Autowired
+	private BNFDataConverterService bnfDataConverterService;
+	
 	public MotherDataConverterService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -70,8 +73,10 @@ public class MotherDataConverterService implements DataConverterService {
 				motherEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			motherEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
 			motherService.save(motherEntity);
-			motherToANCConverter.ancVisitSave(doc);
-			motherToPNCConverter.pncVisitSave(doc);
+			
+			bnfDataConverterService.convertToEntityAndSave(doc);
+			//motherToANCConverter.ancVisitSave(doc);
+			//motherToPNCConverter.pncVisitSave(doc);
 		}
 		catch (JSONException e) {
 			System.out.println("Could not transfer data caseId: " + caseID);
