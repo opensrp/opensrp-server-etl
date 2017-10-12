@@ -3,6 +3,7 @@ package org.opensrp.etl.entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,19 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "psrf")
-public class PSRFEntity extends CommonEntity {
+public class PSRFEntity {
 	
-	private static final PSRFEntity INSTANCE = new PSRFEntity();
-	
-	private PSRFEntity() {
-		
-	}
-	
-	public static PSRFEntity getInstance() {
-		return INSTANCE;
+	public PSRFEntity() {
 		
 	}
 	
@@ -34,13 +30,36 @@ public class PSRFEntity extends CommonEntity {
 	
 	private String FWPSRSTS;
 	
+	private String provider;
+	
+	@Column(name = "external_user_id")
+	private String externalUserId;
+	
+	@Column(name = "user_type")
+	private String userType;
+	
 	private Date FWPSRDATE;
+	
+	private Date start;
+	
+	@Column(name = "end_time")
+	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
 	
 	private String FWCONFIRMATION;
 	
 	private String FWPSRPREGSTS;
 	
 	private String FWPSRPREGWTD;
+	
+	private String FWPSRHUSPREGWTD;
+	
+	@Temporal(TemporalType.DATE)
+	private Date FWPSRLMP;
+	
+	private String FWHR_PSR;
 	
 	private String FWPSREVRPREG;
 	
@@ -92,11 +111,11 @@ public class PSRFEntity extends CommonEntity {
 	
 	private String FWSORTVALUE;
 	
-	private String existing_ELCO;
+	private int existing_ELCO;
 	
 	private String FWNOTELIGIBLE;
 	
-	private String ELCO;
+	private int ELCO;
 	
 	private String FWELIGIBLE;
 	
@@ -113,6 +132,54 @@ public class PSRFEntity extends CommonEntity {
 	private ElcoEntity elco;
 	
 	private String relationalId;//getting from elco
+	
+	public String getProvider() {
+		return provider;
+	}
+	
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+	
+	public String getExternalUserId() {
+		return externalUserId;
+	}
+	
+	public void setExternalUserId(String externalUserId) {
+		this.externalUserId = externalUserId;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+	
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	
+	public String getFWPSRHUSPREGWTD() {
+		return FWPSRHUSPREGWTD;
+	}
+	
+	public void setFWPSRHUSPREGWTD(String fWPSRHUSPREGWTD) {
+		FWPSRHUSPREGWTD = fWPSRHUSPREGWTD;
+	}
+	
+	public Date getFWPSRLMP() {
+		return FWPSRLMP;
+	}
+	
+	public void setFWPSRLMP(Date fWPSRLMP) {
+		FWPSRLMP = fWPSRLMP;
+	}
+	
+	public String getFWHR_PSR() {
+		return FWHR_PSR;
+	}
+	
+	public void setFWHR_PSR(String fWHR_PSR) {
+		FWHR_PSR = fWHR_PSR;
+	}
 	
 	public int getId() {
 		return id;
@@ -362,11 +429,11 @@ public class PSRFEntity extends CommonEntity {
 		FWSORTVALUE = fWSORTVALUE;
 	}
 	
-	public String getExisting_ELCO() {
+	public int getExisting_ELCO() {
 		return existing_ELCO;
 	}
 	
-	public void setExisting_ELCO(String existing_ELCO) {
+	public void setExisting_ELCO(int existing_ELCO) {
 		this.existing_ELCO = existing_ELCO;
 	}
 	
@@ -378,11 +445,11 @@ public class PSRFEntity extends CommonEntity {
 		FWNOTELIGIBLE = fWNOTELIGIBLE;
 	}
 	
-	public String getELCO() {
+	public int getELCO() {
 		return ELCO;
 	}
 	
-	public void setELCO(String eLCO) {
+	public void setELCO(int eLCO) {
 		ELCO = eLCO;
 	}
 	
@@ -440,6 +507,30 @@ public class PSRFEntity extends CommonEntity {
 	
 	public void setRelationalId(String relationalId) {
 		this.relationalId = relationalId;
+	}
+	
+	public Date getStart() {
+		return start;
+	}
+	
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
+	public Date getEnd() {
+		return end;
+	}
+	
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	public Date getToday() {
+		return today;
+	}
+	
+	public void setToday(Date today) {
+		this.today = today;
 	}
 	
 }

@@ -16,6 +16,9 @@ public class ElcoDataConverterService implements DataConverterService {
 	@Autowired
 	private ElcoService elcoService;
 	
+	@Autowired
+	private PSRFDataConverterService psrfDataConverterService;
+	
 	public ElcoDataConverterService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -95,7 +98,8 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			elcoEntity.setRelationalId(details.getString("relationalid"));
 			elcoEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
-			
+			elcoService.save(elcoEntity);
+			psrfDataConverterService.convertToEntityAndSave(doc);
 		}
 		catch (JSONException e) {
 			System.out.println("Could not transfer data caseId: " + caseID);
@@ -105,7 +109,7 @@ public class ElcoDataConverterService implements DataConverterService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		elcoService.save(elcoEntity);
+		
 	}
 	
 }

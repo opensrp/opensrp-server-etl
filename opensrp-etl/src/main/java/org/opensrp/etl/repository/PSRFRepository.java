@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -58,12 +59,17 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 		return session;
 	}
 	
-	@Override
-	public PSRFEntity findByCaseId(String caseId) {
+	public PSRFEntity findByCaseIdAndToday(String relationalId, Date today) {
 		Criteria listPsrfCr = getSession().createCriteria(PSRFEntity.class);
-		listPsrfCr.add(Restrictions.eq("caseId", caseId));
+		listPsrfCr.add(Restrictions.eq("relationalId", relationalId));
+		listPsrfCr.add(Restrictions.eq("today", today));
 		List<PSRFEntity> listPsrf = listPsrfCr.list();
-		System.out.println("size: " + listPsrf.size());
-		return listPsrf.size() > 0 ? (PSRFEntity) listPsrf.get(0) : null;
+		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
+	}
+	
+	@Override
+	public PSRFEntity findByCaseId(String caseID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

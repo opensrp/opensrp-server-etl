@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.PSRFEntity;
@@ -19,7 +21,8 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	@Transactional
 	@Override
 	public void save(PSRFEntity psrfEntity) {
-		PSRFEntity existingPSRFEntity = findByCaseId(psrfEntity.caseId);
+		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalId(), psrfEntity.getToday());
+		
 		if (existingPSRFEntity == null) {
 			psrfRepository.save(psrfEntity);
 		} else {
@@ -48,9 +51,15 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	}
 	
 	@Transactional
+	public PSRFEntity findByCaseIdAndToday(String relationalId, Date today) {
+		
+		return psrfRepository.findByCaseIdAndToday(relationalId, today);
+	}
+	
 	@Override
 	public PSRFEntity findByCaseId(String caseId) {
-		return psrfRepository.findByCaseId(caseId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
