@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import javax.transaction.Transactional;
+
 import org.opensrp.etl.entity.ENCCEntity;
 import org.opensrp.etl.interfaces.RegisterService;
 import org.opensrp.etl.repository.ENCCRepository;
@@ -14,9 +16,10 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Transactional
 	@Override
-	public void save(ENCCEntity t) {
-		// TODO Auto-generated method stub
+	public void save(ENCCEntity enccEntity) {
+		enccRepository.save(enccEntity);
 		
 	}
 	

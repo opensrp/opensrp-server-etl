@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.ANCEntity;
@@ -47,4 +49,9 @@ public class ANCService implements RegisterService<ANCEntity> {
 		return ancRepository.findByCaseId(caseId);
 	}
 	
+	@Transactional
+	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
+		
+		return ancRepository.findByCaseIdAndToday(relationalId, today);
+	}
 }

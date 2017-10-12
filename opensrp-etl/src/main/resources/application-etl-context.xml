@@ -46,7 +46,8 @@
                 <value>org.opensrp.etl.entity.ChildEntity</value>
                 <value>org.opensrp.etl.entity.MarkerEntity</value>   
                 <value>org.opensrp.etl.entity.PSRFEntity</value> 
-                <value>org.opensrp.etl.entity.BNFEntity</value>                
+                <value>org.opensrp.etl.entity.BNFEntity</value>   
+                <value>org.opensrp.etl.entity.ENCCEntity</value>             
             </list>
         </property>
         <property name="hibernateProperties">

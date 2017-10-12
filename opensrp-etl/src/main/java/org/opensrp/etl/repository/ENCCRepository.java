@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ENCCEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 	
@@ -17,6 +18,7 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Autowired
 	public void setSessionFactory(SessionFactory sf) {
 		this.sessionFactory = sf;
 	}

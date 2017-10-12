@@ -92,7 +92,7 @@ public class ChildDataConverterService implements DataConverterService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		childService.save(childEntity);
+		//childService.save(childEntity);
 		childToENCCConverter.enccVisitSave(doc);
 		
 	}

@@ -83,6 +83,8 @@ public class ENCCEntity {
 	
 	private long timeStamp;
 	
+	private String relationalId;
+	
 	private String enccName;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -96,6 +98,22 @@ public class ENCCEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "child_id", referencedColumnName = "id")
 	private ChildEntity child;
+	
+	public String getRelationalId() {
+		return relationalId;
+	}
+	
+	public void setRelationalId(String relationalId) {
+		this.relationalId = relationalId;
+	}
+	
+	public Date getToday() {
+		return today;
+	}
+	
+	public void setToday(Date today) {
+		this.today = today;
+	}
 	
 	public int getId() {
 		return id;
