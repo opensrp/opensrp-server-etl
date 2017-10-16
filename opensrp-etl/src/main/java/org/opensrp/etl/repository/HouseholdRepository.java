@@ -65,4 +65,10 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 		return listHousehold.size() > 0 ? (HouseholdEntity) listHousehold.get(0) : null;
 	}
 	
+	public List<HouseholdEntity> list() {
+		getSession();
+		return null;
+		//getSession().
+	}
+	
 }

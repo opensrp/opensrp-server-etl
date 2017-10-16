@@ -24,11 +24,11 @@ public class MotherToPNCConverter {
 	
 	private static final String PNC = "PNC";
 	
-	private static final String PNC_Visit_One = "pncrv_1";
+	private static final String PNC_Visit_One = "pncVisitOne";
 	
-	private static final String PNC_Visit_Two = "pncrv_2";
+	private static final String PNC_Visit_Two = "pncVisitTwo";
 	
-	private static final String PNC_Visit_Three = "pncrv_3";
+	private static final String PNC_Visit_Three = "pncVisitThree";
 	
 	private ArrayList<String> pncKeys = new ArrayList<String>();
 	

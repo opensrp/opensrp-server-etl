@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.HouseholdEntity;
@@ -55,4 +57,9 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return householdRepository.findByCaseId(caseId);
 	}
 	
+	public List<HouseholdEntity> list() {
+		//householdRepository.
+		return null;
+		
+	}
 }

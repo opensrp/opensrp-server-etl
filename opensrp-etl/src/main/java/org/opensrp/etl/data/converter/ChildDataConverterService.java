@@ -87,13 +87,13 @@ public class ChildDataConverterService implements DataConverterService {
 			childEntity.setFWHUSNAME(details.getString("FWHUSNAME"));
 			
 			childEntity.setRelationalId(details.getString("relationalid"));
+			childService.save(childEntity);
+			childToENCCConverter.enccVisitSave(doc);
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//childService.save(childEntity);
-		childToENCCConverter.enccVisitSave(doc);
 		
 	}
 	

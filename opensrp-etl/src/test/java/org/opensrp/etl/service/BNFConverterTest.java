@@ -7,7 +7,6 @@ import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opensrp.etl.entity.MarkerEntity;
@@ -33,12 +32,11 @@ public class BNFConverterTest {
 	@Autowired
 	private MarkerEntity markerEntity;
 	
-	@Ignore
 	@Test
 	public void saveTest() throws ParseException, JSONException {
 		
 		markerEntity = markerService.findById(1);
-		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
+		ViewResult vr = sourceDBRepository.allData(0);
 		List<Row> rows = vr.getRows();
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());

@@ -21,6 +21,14 @@ public class ChildService implements RegisterService<ChildEntity> {
 	public void save(ChildEntity childEntity) {
 		System.out.println("Class:ChildService, Method:save");
 		childRepository.save(childEntity);
+		
+		ChildEntity existingCHildEntity = findByCaseId(childEntity.caseId);
+		if (existingCHildEntity == null) {
+			childRepository.save(childEntity);
+		} else {
+			
+			update(existingCHildEntity);
+		}
 	}
 	
 	@Override
@@ -29,9 +37,10 @@ public class ChildService implements RegisterService<ChildEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(ChildEntity t) {
-		// TODO Auto-generated method stub
+	public void update(ChildEntity childEntity) {
+		childRepository.update(childEntity);
 		
 	}
 	
