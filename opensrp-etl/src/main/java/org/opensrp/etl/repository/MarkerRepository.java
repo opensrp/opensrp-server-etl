@@ -35,9 +35,11 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	
 	public long getCurrentTimeStampFromMarker() {
 		Query query = getSession().createQuery("select M.timeStamp from MarkerEntity M ");
-		Criteria cr = getSession().createCriteria(MarkerEntity.class)
-		        .setProjection(Projections.projectionList().add(Projections.property("id"), "id")
-		                .add(Projections.property("timeStamp"), "timeStamp"))
+		Criteria cr = getSession()
+		        .createCriteria(MarkerEntity.class)
+		        .setProjection(
+		            Projections.projectionList().add(Projections.property("id"), "id")
+		                    .add(Projections.property("timeStamp"), "timeStamp"))
 		        .setResultTransformer(Transformers.aliasToBean(MarkerEntity.class));
 		List<MarkerEntity> list = cr.list();
 		System.err.println("L:" + list.get(0).getTimeStamp());
@@ -62,10 +64,11 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	}
 	
 	@Override
-	public void delete(MarkerEntity markerEntity) {
+	public boolean delete(MarkerEntity markerEntity) {
 		if (null != markerEntity) {
 			getSession().delete(markerEntity);
 		}
+		return true;
 		
 	}
 	

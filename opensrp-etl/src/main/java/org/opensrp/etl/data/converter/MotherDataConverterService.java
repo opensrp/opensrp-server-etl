@@ -74,9 +74,9 @@ public class MotherDataConverterService implements DataConverterService {
 			motherEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
 			motherService.save(motherEntity);
 			
-			bnfDataConverterService.convertToEntityAndSave(doc);
-			motherToANCConverter.ancVisitSave(doc);
-			motherToPNCConverter.pncVisitSave(doc);
+			//bnfDataConverterService.convertToEntityAndSave(doc);
+			//motherToANCConverter.ancVisitSave(doc);
+			//motherToPNCConverter.pncVisitSave(doc);
 		}
 		catch (JSONException e) {
 			System.out.println("Could not transfer data caseId: " + caseID);

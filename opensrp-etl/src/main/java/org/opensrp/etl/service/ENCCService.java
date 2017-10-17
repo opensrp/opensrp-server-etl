@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.ENCCEntity;
@@ -19,13 +21,20 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	@Transactional
 	@Override
 	public void save(ENCCEntity enccEntity) {
-		enccRepository.save(enccEntity);
+		
+		ENCCEntity existingEnccEntity = findByCaseIdAndToday(enccEntity.getRelationalId(), enccEntity.getToday());
+		if (existingEnccEntity == null) {
+			enccRepository.save(enccEntity);
+		} else {
+			if (delete(existingEnccEntity))
+				enccRepository.save(enccEntity);
+		}
 		
 	}
 	
 	@Override
-	public void delete(ENCCEntity t) {
-		// TODO Auto-generated method stub
+	public boolean delete(ENCCEntity enccEntity) {
+		return enccRepository.delete(enccEntity);
 		
 	}
 	
@@ -39,6 +48,12 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	public ENCCEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Transactional
+	public ENCCEntity findByCaseIdAndToday(String relationalId, Date today) {
+		
+		return enccRepository.findByCaseIdAndToday(relationalId, today);
 	}
 	
 	@Override

@@ -39,7 +39,8 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 	}
 	
 	@Override
-	public void delete(ActionEntity t) {
+	public boolean delete(ActionEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

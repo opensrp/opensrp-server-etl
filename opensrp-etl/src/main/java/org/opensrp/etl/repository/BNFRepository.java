@@ -37,7 +37,8 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	}
 	
 	@Override
-	public void delete(BNFEntity t) {
+	public boolean delete(BNFEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

@@ -23,7 +23,8 @@ public class PNCService implements RegisterService<PNCEntity> {
 	}
 	
 	@Override
-	public void delete(PNCEntity t) {
+	public boolean delete(PNCEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

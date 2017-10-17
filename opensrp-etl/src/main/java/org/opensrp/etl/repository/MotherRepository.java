@@ -33,7 +33,8 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	}
 	
 	@Override
-	public void delete(MotherEntity t) {
+	public boolean delete(MotherEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

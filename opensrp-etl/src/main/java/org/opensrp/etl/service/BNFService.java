@@ -37,7 +37,8 @@ public class BNFService implements RegisterService<BNFEntity> {
 	}
 	
 	@Override
-	public void delete(BNFEntity t) {
+	public boolean delete(BNFEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

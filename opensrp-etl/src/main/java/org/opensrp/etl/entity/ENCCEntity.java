@@ -2,14 +2,11 @@ package org.opensrp.etl.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -95,9 +92,9 @@ public class ENCCEntity {
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	private Date updated = new Date();
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	/*@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "child_id", referencedColumnName = "id")
-	private ChildEntity child;
+	private ChildEntity child;*/
 	
 	public String getRelationalId() {
 		return relationalId;
@@ -321,14 +318,6 @@ public class ENCCEntity {
 	
 	public void setEnccName(String enccName) {
 		this.enccName = enccName;
-	}
-	
-	public ChildEntity getChild() {
-		return child;
-	}
-	
-	public void setChild(ChildEntity child) {
-		this.child = child;
 	}
 	
 }

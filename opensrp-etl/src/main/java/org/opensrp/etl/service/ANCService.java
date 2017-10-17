@@ -26,7 +26,8 @@ public class ANCService implements RegisterService<ANCEntity> {
 	}
 	
 	@Override
-	public void delete(ANCEntity t) {
+	public boolean delete(ANCEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

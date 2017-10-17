@@ -34,7 +34,8 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	}
 	
 	@Override
-	public void delete(HouseholdEntity t) {
+	public boolean delete(HouseholdEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

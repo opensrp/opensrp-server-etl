@@ -7,8 +7,10 @@ import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.opensrp.etl.entity.ExceptionEntity;
 import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.repository.SourceDBRepository;
 import org.opensrp.etl.transmission.service.TransmissionServiceFactory;
@@ -32,6 +34,12 @@ public class BNFConverterTest {
 	@Autowired
 	private MarkerEntity markerEntity;
 	
+	@Autowired
+	private ExceptionEntity exceptionEntity;
+	
+	@Autowired
+	private ExceptionService exceptionService;
+	
 	@Test
 	public void saveTest() throws ParseException, JSONException {
 		
@@ -49,6 +57,14 @@ public class BNFConverterTest {
 			}
 			
 		}
+	}
+	
+	@Ignore
+	@Test
+	public void testExecption() {
+		exceptionEntity.setBenificiaryType("ff");
+		exceptionEntity.setCaseId("dd");
+		exceptionService.save(exceptionEntity);
 	}
 	
 }

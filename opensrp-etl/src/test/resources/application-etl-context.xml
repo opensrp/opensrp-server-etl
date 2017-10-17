@@ -47,7 +47,8 @@
                 <value>org.opensrp.etl.entity.MarkerEntity</value> 
                 <value>org.opensrp.etl.entity.PSRFEntity</value>  
                 <value>org.opensrp.etl.entity.BNFEntity</value>
-                <value>org.opensrp.etl.entity.ENCCEntity</value>               
+                <value>org.opensrp.etl.entity.ENCCEntity</value> 
+                <value>org.opensrp.etl.entity.ExceptionEntity</value>              
             </list>
         </property>
         <property name="hibernateProperties">
@@ -55,7 +56,7 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
-                 <prop key="hibernate.show_sql">true</prop>
+                 <prop key="hibernate.show_sql">false</prop>
                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
@@ -74,6 +75,7 @@
 <bean name="childService" class="org.opensrp.etl.service.ChildService"/>
 <bean name="enccService" class="org.opensrp.etl.service.ENCCService"/>
 <bean name="actionService" class="org.opensrp.etl.service.ActionService"/>
+<bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
 
 
 <bean name="householdRepository" class="org.opensrp.etl.repository.HouseholdRepository"/>
@@ -86,6 +88,7 @@
 <bean name="childRepository" class="org.opensrp.etl.repository.ChildRepository"/>
 <bean name="enccRepository" class="org.opensrp.etl.repository.ENCCRepository"/>
 <bean name="actionRepository" class="org.opensrp.etl.repository.ActionRepository"/>
+<bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
 
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
@@ -98,6 +101,7 @@
 <bean name="childTransmissionService" class="org.opensrp.etl.transmission.service.ChildTransmissionService"/>
 <bean name="enccTransmissionService" class="org.opensrp.etl.transmission.service.ENCCTransmissionService"/>
 <bean name="actionTransmissionService" class="org.opensrp.etl.transmission.service.ActionTransmissionService"/>
+
   
 <bean name="householdDataConverterService" class="org.opensrp.etl.data.converter.HouseholdDataConverterService"/>
 <bean name="elcoDataConverterService" class="org.opensrp.etl.data.converter.ElcoDataConverterService"/>
@@ -125,6 +129,7 @@
 <bean name="enccEntity" class="org.opensrp.etl.entity.ENCCEntity"/>
 <bean name="actionEntity" class="org.opensrp.etl.entity.ActionEntity"/>
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
+<bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
 
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>

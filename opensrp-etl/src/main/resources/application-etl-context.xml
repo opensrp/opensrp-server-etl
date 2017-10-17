@@ -47,7 +47,8 @@
                 <value>org.opensrp.etl.entity.MarkerEntity</value>   
                 <value>org.opensrp.etl.entity.PSRFEntity</value> 
                 <value>org.opensrp.etl.entity.BNFEntity</value>   
-                <value>org.opensrp.etl.entity.ENCCEntity</value>             
+                <value>org.opensrp.etl.entity.ENCCEntity</value>  
+                <value>org.opensrp.etl.entity.ExceptionEntity</value>                
             </list>
         </property>
         <property name="hibernateProperties">
@@ -85,7 +86,7 @@
 <bean name="childRepository" class="org.opensrp.etl.repository.ChildRepository"/>
 <bean name="enccRepository" class="org.opensrp.etl.repository.ENCCRepository"/>
 <bean name="actionRepository" class="org.opensrp.etl.repository.ActionRepository"/>
-
+<bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="elcoTransmissionService" class="org.opensrp.etl.transmission.service.ElcoTransmissionService"/>
@@ -97,6 +98,7 @@
 <bean name="childTransmissionService" class="org.opensrp.etl.transmission.service.ChildTransmissionService"/>
 <bean name="enccTransmissionService" class="org.opensrp.etl.transmission.service.ENCCTransmissionService"/>
 <bean name="actionTransmissionService" class="org.opensrp.etl.transmission.service.ActionTransmissionService"/>
+ <bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
   
 <bean name="householdDataConverterService" class="org.opensrp.etl.data.converter.HouseholdDataConverterService"/>
 <bean name="elcoDataConverterService" class="org.opensrp.etl.data.converter.ElcoDataConverterService"/>
@@ -123,6 +125,7 @@
 <bean name="enccEntity" class="org.opensrp.etl.entity.ENCCEntity"/>
 <bean name="actionEntity" class="org.opensrp.etl.entity.ActionEntity"/>
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
+<bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
 
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>

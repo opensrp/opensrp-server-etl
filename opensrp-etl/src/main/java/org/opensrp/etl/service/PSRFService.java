@@ -32,7 +32,8 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	}
 	
 	@Override
-	public void delete(PSRFEntity t) {
+	public boolean delete(PSRFEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

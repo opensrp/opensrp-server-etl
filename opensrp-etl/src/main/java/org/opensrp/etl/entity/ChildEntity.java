@@ -41,8 +41,6 @@ public class ChildEntity extends CommonEntity {
 	
 	private String FWBNFNAME;//details
 	
-	private String FWBNFGEN;//details
-	
 	private String FWWOMFNAME;//details
 	
 	@Column(name = "mother_wom_age")
@@ -107,14 +105,6 @@ public class ChildEntity extends CommonEntity {
 	
 	public void setFWBNFNAME(String fWBNFNAME) {
 		FWBNFNAME = fWBNFNAME;
-	}
-	
-	public String getFWBNFGEN() {
-		return FWBNFGEN;
-	}
-	
-	public void setFWBNFGEN(String fWBNFGEN) {
-		FWBNFGEN = fWBNFGEN;
 	}
 	
 	public String getFWWOMFNAME() {

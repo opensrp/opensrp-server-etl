@@ -29,8 +29,8 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 	
 	@Transactional
 	@Override
-	public void delete(MarkerEntity markerEntity) {
-		markerRepository.delete(markerEntity);
+	public boolean delete(MarkerEntity markerEntity) {
+		return markerRepository.delete(markerEntity);
 		
 	}
 	

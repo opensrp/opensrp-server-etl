@@ -46,7 +46,8 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	}
 	
 	@Override
-	public void delete(ElcoEntity t) {
+	public boolean delete(ElcoEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

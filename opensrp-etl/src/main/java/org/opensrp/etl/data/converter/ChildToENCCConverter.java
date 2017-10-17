@@ -11,11 +11,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ENCCEntity;
 import org.opensrp.etl.service.ENCCService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author sohel
+ * @author proshanto
  */
 public class ChildToENCCConverter {
 	
@@ -36,6 +38,9 @@ public class ChildToENCCConverter {
 	
 	@Autowired
 	private ENCCService enccService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	private void setENCCKeys() {
 		enccKeys.add("enccName");
@@ -89,62 +94,62 @@ public class ChildToENCCConverter {
 	
 	public void enccVisitSave(JSONObject mdoc) throws JSONException {
 		setENCCKeys();
+		
 		try {
 			
 			if (mdoc.has(ENCC_Visit_One) && mdoc.isNull(ENCC_Visit_One) || mdoc.getJSONObject(ENCC_Visit_One).length() == 0) {
-				System.out.println("enccVisitOne does not exist caseId:" + mdoc.getString("caseId"));
+				
 			} else {
-				System.out.println("enccVisitOne  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject enccVisitOne = new JSONObject(mdoc.getString(ENCC_Visit_One));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("1");
 				enccEntity.setEnccName(ENCC_Visit_One);
 				enccService.save(convertToAncEntity(enccVisitOne, enccVisitKeyMap, mdoc.get("caseId").toString()));
-				System.out.println("enccVisitOne saved successfully entity: " + enccEntity.toString());
+				
 			}
 			
 			if (mdoc.has(ENCC_Visit_Two) && mdoc.isNull(ENCC_Visit_Two) || mdoc.getJSONObject(ENCC_Visit_Two).length() == 0) {
-				System.out.println("enccVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
+				
 			} else {
-				System.out.println("enccVisitTwo  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject enccVisitOne = new JSONObject(mdoc.getString(ENCC_Visit_Two));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("2");
 				enccEntity.setEnccName(ENCC_Visit_Two);
 				enccService.save(convertToAncEntity(enccVisitOne, enccVisitKeyMap, mdoc.get("caseId").toString()));
-				System.out.println("enccVisitTwo saved successfully entity: " + enccEntity.toString());
+				
 			}
 			
 			if (mdoc.has(ENCC_Visit_Three) && mdoc.isNull(ENCC_Visit_Three)
 			        || mdoc.getJSONObject(ENCC_Visit_Three).length() == 0) {
-				System.out.println("enccVisitThree does not exist caseId:" + mdoc.getString("caseId").toString());
+				
 			} else {
-				System.out.println("enccVisitThree  exist caseId:" + mdoc.getString("caseId"));
 				JSONObject enccVisit = new JSONObject(mdoc.getString(ENCC_Visit_Three));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("3");
 				enccEntity.setEnccName(ENCC_Visit_Three);
 				enccService.save(convertToAncEntity(enccVisit, enccVisitKeyMap, mdoc.get("caseId").toString()));
-				System.out.println("enccVisitThree saved successfully entity: " + enccEntity.toString());
+				
 			}
 			
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(mdoc.getString("caseId"));
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "ENCC");
 		}
 		
 	}
 	
 	private String replace(String str) {
-		
 		str = str.replace("enc", "encc");
 		str = str.replace("c_current", "_current");
 		return str;
 	}
 	
-	private ENCCEntity convertToAncEntity(JSONObject enccVisit, Map<String, String> enccVisitKeyMap, String caseId) {
+	private ENCCEntity convertToAncEntity(JSONObject enccVisit, Map<String, String> enccVisitKeyMap, String caseId)
+	    throws JSONException {
+		
 		try {
 			enccEntity.setFWENCCDATE(DateUtil.getDateFromString(enccVisit.getString(enccVisitKeyMap.get("FWENCDATE"))));
 			enccEntity
@@ -178,13 +183,9 @@ public class ChildToENCCConverter {
 			enccEntity.setTimeStamp(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("timeStamp"))));
 			enccEntity.setToday(DateUtil.getDateFromString(enccVisit.getString("today")));
 			enccEntity.setRelationalId(caseId);
-			enccService.save(enccEntity);
+			
 		}
 		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -32,7 +32,8 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 	}
 	
 	@Override
-	public void delete(PNCEntity t) {
+	public boolean delete(PNCEntity t) {
+		return true;
 		// TODO Auto-generated method stub
 		
 	}

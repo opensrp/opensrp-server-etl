@@ -1,8 +1,10 @@
 package org.opensrp.etl.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -27,7 +29,8 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	public void save(ChildEntity childEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
-			session.save(childEntity);
+			session.merge(childEntity);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -36,8 +39,16 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	}
 	
 	@Override
-	public void delete(ChildEntity t) {
-		// TODO Auto-generated method stub
+	public boolean delete(ChildEntity childEntity) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("delete ChildEntity where id = :ID");
+		query.setParameter("ID", childEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 	
@@ -62,8 +73,9 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	public ChildEntity findByCaseId(String caseId) {
 		Criteria listChildCr = getSession().createCriteria(ChildEntity.class);
 		listChildCr.add(Restrictions.eq("caseId", caseId));
-		List<ChildEntity> listChild = listChildCr.list();
-		System.out.println("size: " + listChild.size());
+		List<ChildEntity> listChild = new ArrayList<ChildEntity>();
+		listChild = listChildCr.list();
+		
 		return listChild.size() > 0 ? (ChildEntity) listChild.get(0) : null;
 	}
 }
