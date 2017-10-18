@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -37,10 +38,15 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	}
 	
 	@Override
-	public boolean delete(BNFEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(BNFEntity bnfEntity) {
+		Query query = getSession().createQuery("delete BNFEntity where id = :ID");
+		query.setParameter("ID", bnfEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -73,7 +79,6 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 		Criteria listBNFCr = getSession().createCriteria(BNFEntity.class);
 		listBNFCr.add(Restrictions.eq("caseId", caseId));
 		List<BNFEntity> listBNF = listBNFCr.list();
-		System.out.println("size: " + listBNF.size());
 		return listBNF.size() > 0 ? (BNFEntity) listBNF.get(0) : null;
 	}
 }

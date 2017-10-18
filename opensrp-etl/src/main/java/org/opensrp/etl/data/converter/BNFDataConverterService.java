@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.BNFService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,9 @@ public class BNFDataConverterService implements DataConverterService {
 	
 	@Autowired
 	private BNFService bnfService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	public BNFDataConverterService() {
 		// TODO Auto-generated constructor stub
@@ -70,7 +74,7 @@ public class BNFDataConverterService implements DataConverterService {
 				bnfService.save(bnfEntity);
 			}
 			catch (Exception e) {
-				e.printStackTrace();
+				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "bnf");
 			}
 			
 		}

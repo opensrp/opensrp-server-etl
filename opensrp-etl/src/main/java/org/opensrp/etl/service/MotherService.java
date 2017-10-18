@@ -19,19 +19,19 @@ public class MotherService implements RegisterService<MotherEntity> {
 	@Transactional
 	@Override
 	public void save(MotherEntity motherEntity) {
-		MotherEntity existingMotherEntity = findByCaseId(motherEntity.caseId);
+		MotherEntity existingMotherEntity = findByCaseId(motherEntity.getCaseId());
 		if (existingMotherEntity == null) {
 			motherRepository.save(motherEntity);
 		} else {
-			System.out.println("update mother entity:" + existingMotherEntity.toString());
-			update(existingMotherEntity);
+			if (delete(existingMotherEntity))
+				motherRepository.save(motherEntity);
 		}
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(MotherEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(MotherEntity motherEntity) {
+		return motherRepository.delete(motherEntity);
 		
 	}
 	

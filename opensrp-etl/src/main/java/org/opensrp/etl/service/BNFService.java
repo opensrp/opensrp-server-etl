@@ -25,22 +25,20 @@ public class BNFService implements RegisterService<BNFEntity> {
 	@Transactional
 	@Override
 	public void save(BNFEntity bnffEntity) {
-		BNFEntity existingPSRFEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
-		
-		if (existingPSRFEntity == null) {
+		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
+		if (existingbnfEntity == null) {
 			bnfRepository.save(bnffEntity);
 		} else {
-			System.out.println("update household entity:" + existingPSRFEntity.toString());
-			update(existingPSRFEntity);
+			if (delete(existingbnfEntity))
+				bnfRepository.save(bnffEntity);
 		}
 		
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(BNFEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(BNFEntity bnffEntity) {
+		return bnfRepository.delete(bnffEntity);
 	}
 	
 	@Override
@@ -57,7 +55,6 @@ public class BNFService implements RegisterService<BNFEntity> {
 	
 	@Transactional
 	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
-		
 		return bnfRepository.findByCaseIdAndToday(relationalId, FWBNFDATE);
 	}
 	

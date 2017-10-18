@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.MotherEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.MotherService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class MotherDataConverterService implements DataConverterService {
 	@Autowired
 	private BNFDataConverterService bnfDataConverterService;
 	
+	@Autowired
+	private ExceptionService exceptionService;
+	
 	public MotherDataConverterService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -41,6 +45,18 @@ public class MotherDataConverterService implements DataConverterService {
 			motherEntity.setClientVersion(doc.getLong("clientVersion"));
 			motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
 			motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
+			
+			motherEntity.setCountry("BANGLADESH");
+			motherEntity.setCurrentFormStatus("");
+			if (doc.has("external_user_ID")) {
+				motherEntity.setExternalUserId(doc.getString("external_user_ID"));
+			} else {
+				motherEntity.setExternalUserId("");
+			}
+			
+			motherEntity.setGender("female");
+			motherEntity.setGps("");
+			motherEntity.setLastName("");
 			motherEntity.setFirstName(doc.getString("mother_first_name"));
 			motherEntity.setInstanceId(doc.getString("INSTANCEID"));
 			motherEntity.setMauzaPara(doc.getString("mother_mauza"));
@@ -69,25 +85,33 @@ public class MotherDataConverterService implements DataConverterService {
 			motherEntity.setBirthDate(DateUtil.getDateFromString(details.getString("birthDate")));
 			motherEntity.setRelationalId(doc.getString("relationalid"));
 			motherEntity.setIsClosed(doc.getString("isClosed"));
+			if (details.has("received_time"))
+				motherEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
+			
 			if (doc.has("START"))
 				motherEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
 			if (doc.has("END"))
 				motherEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			motherEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
-			motherService.save(motherEntity);
+			motherEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("TODAY")));
+			
+			if (doc.has("user_type")) {
+				motherEntity.setUserType(doc.getString("user_type"));
+			} else {
+				motherEntity.setUserType("");
+			}
+			//motherService.save(motherEntity);
 			
 			//bnfDataConverterService.convertToEntityAndSave(doc);
-			//motherToANCConverter.ancVisitSave(doc);
+			motherToANCConverter.ancVisitSave(doc);
 			//motherToPNCConverter.pncVisitSave(doc);
 		}
 		catch (JSONException e) {
-			System.out.println("Could not transfer data caseId: " + caseID);
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
 		}
 		catch (ParseException e) {
-			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
 		}
 		
 	}
-	
 }

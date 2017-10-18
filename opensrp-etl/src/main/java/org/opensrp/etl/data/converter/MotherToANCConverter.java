@@ -13,11 +13,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ANCEntity;
 import org.opensrp.etl.service.ANCService;
+import org.opensrp.etl.service.ExceptionService;
+import org.opensrp.etl.util.ANCType;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author sohel
+ * @author proshanto
  */
 public class MotherToANCConverter {
 	
@@ -42,6 +45,9 @@ public class MotherToANCConverter {
 	
 	@Autowired
 	private ANCService ancService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	private void setANCKeys() {
 		ancKeys.add("ancName");
@@ -175,145 +181,134 @@ public class MotherToANCConverter {
 		return ancVisitKeyMap;
 	}
 	
-	public void ancVisitSave(JSONObject mdoc) throws JSONException {
+	public void ancVisitSave(JSONObject mdoc) throws JSONException, ParseException {
 		setANCKeys();
 		try {
 			
 			if (mdoc.has(ANC_Visit_One) && mdoc.isNull(ANC_Visit_One) || mdoc.getJSONObject(ANC_Visit_One).length() == 0) {
-				logger.debug("ancVisitOne does not exist caseId:" + mdoc.getString("caseId"));
+				
 			} else {
-				logger.debug("ancVisitOne  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_One));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("1");
 				ancEntity.setAncName(ANC_Visit_One);
-				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap));
-				logger.debug("ancVisitOne saved successfully entity: " + ancEntity.toString());
+				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap, ANCType.anc1_current_formStatus.name()));
+				
 			}
 			
 			if (mdoc.has(ANC_Visit_Two) && mdoc.isNull(ANC_Visit_Two) || mdoc.getJSONObject(ANC_Visit_Two).length() == 0) {
 				logger.debug("ancVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				logger.debug("ancVisitTwo  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_Two));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("2");
 				ancEntity.setAncName(ANC_Visit_Two);
-				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap));
-				logger.debug("ancVisitTwo saved successfully entity: " + ancEntity.toString());
+				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap, ANCType.ANC2_current_formStatus.name()));
+				
 			}
 			
 			if (mdoc.has(ANC_Visit_Three) && mdoc.isNull(ANC_Visit_Three)
 			        || mdoc.getJSONObject(ANC_Visit_Three).length() == 0) {
-				logger.debug("ancVisitThree does not exist caseId:" + mdoc.getString("caseId"));
+				
 			} else {
-				logger.debug("ancVisitThree  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Three));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("3");
 				ancEntity.setAncName(ANC_Visit_Three);
-				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap));
-				logger.debug("ancVisitThree saved successfully entity: " + ancEntity.toString());
+				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap, ANCType.ANC3_current_formStatus.name()));
+				
 			}
 			
 			if (mdoc.has(ANC_Visit_Four) && mdoc.isNull(ANC_Visit_Four) || mdoc.getJSONObject(ANC_Visit_Four).length() == 0) {
 				logger.debug("ancVisitFour does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				logger.debug("ancVisitFour  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Four));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("4");
 				ancEntity.setAncName(ANC_Visit_Four);
-				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap));
-				logger.debug("ancVisitFour saved successfully entity: " + ancEntity.toString());
+				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap, ANCType.ANC4_current_formStatus.name()));
+				
 			}
 		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.debug(mdoc.getString("caseId"));
-			e.printStackTrace();
+		catch (JSONException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "anc");
+		}
+		catch (ParseException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "anc");
 		}
 		
 	}
 	
-	private ANCEntity convertToAncEntity(JSONObject ancVisit, Map<String, String> ancVisitKeyMap) {
+	private ANCEntity convertToAncEntity(JSONObject ancVisit, Map<String, String> ancVisitKeyMap, String anc_current_status)
+	    throws ParseException, JSONException {
 		
-		try {
-			ancEntity.setFWANCDATE(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWANCDATE"))));
-			ancEntity.setAnc_current_formStatus(ancVisit.getString(ancVisitKeyMap.get("anc_current_formStatus")));
-			ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
-			ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
-			ancEntity.setFWEDD(ancVisit.getString(ancVisitKeyMap.get("FWEDD")));
-			ancEntity.setFWANCREMSTS(ancVisit.getString(ancVisitKeyMap.get("FWANCREMSTS")));
-			ancEntity.setFWANCINT(ancVisit.getString(ancVisitKeyMap.get("FWANCINT")));
-			ancEntity.setFWANCANM(ancVisit.getString(ancVisitKeyMap.get("FWANCANM")));
-			ancEntity.setFWANCHBP(ancVisit.getString(ancVisitKeyMap.get("FWANCHBP")));
-			ancEntity.setFWANCDBT(ancVisit.getString(ancVisitKeyMap.get("FWANCDBT")));
-			ancEntity.setFWANCTHY(ancVisit.getString(ancVisitKeyMap.get("FWANCTHY")));
-			ancEntity.setFWANCPROB(ancVisit.getString(ancVisitKeyMap.get("FWANCPROB")));
-			ancEntity.setFWANCHEAD(ancVisit.getString(ancVisitKeyMap.get("FWANCHEAD")));
-			ancEntity.setFWBPCLOCOFDEL(ancVisit.getString(ancVisitKeyMap.get("FWBPC1LOCOFDEL")));
-			ancEntity.setFWBPCASSTLAB(ancVisit.getString(ancVisitKeyMap.get("FWBPC1ASSTLAB")));
-			ancEntity.setFWBPCTRNSPRT(ancVisit.getString(ancVisitKeyMap.get("FWBPC1TRNSPRT")));
-			ancEntity.setFWBPCBLDGRP(ancVisit.getString(ancVisitKeyMap.get("FWBPC1BLDGRP")));
-			ancEntity.setFWBPCBLDDNR(ancVisit.getString(ancVisitKeyMap.get("FWBPC1BLDDNR")));
-			ancEntity.setFWBPC1FINARGMT(ancVisit.getString(ancVisitKeyMap.get("FWBPC1FINARGMT")));
-			ancEntity.setMauza(ancVisit.getString(ancVisitKeyMap.get("mauza")));
-			ancEntity.setFWVG(ancVisit.getString(ancVisitKeyMap.get("FWVG")));
-			ancEntity.setFWHR_PSR(ancVisit.getString(ancVisitKeyMap.get("FWHR_PSR")));
-			ancEntity.setFWHRP(ancVisit.getString(ancVisitKeyMap.get("FWHRP")));
-			ancEntity.setExisting_ELCO(ancVisit.getString(ancVisitKeyMap.get("existing_ELCO")));
-			ancEntity.setFWANCBLRVIS(ancVisit.getString(ancVisitKeyMap.get("FWANCBLRVIS")));
-			ancEntity.setFWANCSWLNG(ancVisit.getString(ancVisitKeyMap.get("FWANCSWLNG")));
-			ancEntity.setFWANCCONVL(ancVisit.getString(ancVisitKeyMap.get("FWANCCONVL")));
-			ancEntity.setFWANCBLD(ancVisit.getString(ancVisitKeyMap.get("FWANCBLD")));
-			ancEntity.setFWANCDS1(ancVisit.getString(ancVisitKeyMap.get("FWANCDS1")));
-			ancEntity.setFWANCDS2(ancVisit.getString(ancVisitKeyMap.get("FWANCDS2")));
-			ancEntity.setFWANCDS3(ancVisit.getString(ancVisitKeyMap.get("FWANCDS3")));
-			ancEntity.setFWANCDS4(ancVisit.getString(ancVisitKeyMap.get("FWANCDS4")));
-			ancEntity.setFWANCDS5(ancVisit.getString(ancVisitKeyMap.get("FWANCDS5")));
-			ancEntity.setFWANCDS6(ancVisit.getString(ancVisitKeyMap.get("FWANCDS6")));
-			ancEntity.setFWDANGERVALUE(ancVisit.getString(ancVisitKeyMap.get("FWDANGERVALUE")));
-			ancEntity.setFWNOTELIGIBLE(ancVisit.getString(ancVisitKeyMap.get("FWNOTELIGIBLE")));
-			ancEntity.setELCO(ancVisit.getString(ancVisitKeyMap.get("ELCO")));
-			ancEntity.setFWHR_ANC(ancVisit.getString(ancVisitKeyMap.get("FWHR_ANC")));
-			ancEntity.setFWFLAGVALUE(ancVisit.getString(ancVisitKeyMap.get("FWFLAGVALUE")));
-			ancEntity.setFWSORTVALUE(ancVisit.getString(ancVisitKeyMap.get("FWSORTVALUE")));
-			ancEntity.setUser_type(ancVisit.getString(ancVisitKeyMap.get("user_type")));
-			ancEntity.setExternal_user_ID(ancVisit.getString(ancVisitKeyMap.get("external_user_ID")));
-			ancEntity.setRelationalid(ancVisit.getString(ancVisitKeyMap.get("relationalid")));
-			ancEntity.setFW_GOBHHID(ancVisit.getString(ancVisitKeyMap.get("GOBHHID")));
-			ancEntity.setFW_JiVitAHHID(ancVisit.getString(ancVisitKeyMap.get("JiVitAHHID")));
-			if (ancVisit.has("FWWOMBID"))
-				ancEntity.setFWWOMBID(ancVisit.getString(ancVisitKeyMap.get("FWWOMBID")));
-			if (ancVisit.has("FWWOMNID"))
-				ancEntity.setFWWOMNID(ancVisit.getString(ancVisitKeyMap.get("FWWOMNID")));
-			if (ancVisit.has("FWWOMFNAME"))
-				ancEntity.setFWWOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FWWOMFNAME")));
-			if (ancVisit.has("FWHUSNAME"))
-				ancEntity.setFWHUSNAME(ancVisit.getString(ancVisitKeyMap.get("FWHUSNAME")));
-			//ancEntity.setMOTHER_REFERENCE_DATE(
-			//  DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
-			ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
-			ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
-			ancEntity.setToday(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("today"))));
-			ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
-			ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("received_time"))));
-			ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
-		}
-		catch (JSONException e) {
-			
-			e.printStackTrace();
-		}
-		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (ParseException e) {
-			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
-		}
+		ancEntity.setFWANCDATE(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWANCDATE"))));
+		ancEntity.setAnc_current_formStatus(ancVisit.getString(anc_current_status));
+		ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
+		ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
+		ancEntity.setFWEDD(ancVisit.getString(ancVisitKeyMap.get("FWEDD")));
+		ancEntity.setFWANCREMSTS(ancVisit.getString(ancVisitKeyMap.get("FWANCREMSTS")));
+		ancEntity.setFWANCINT(ancVisit.getString(ancVisitKeyMap.get("FWANCINT")));
+		ancEntity.setFWANCANM(ancVisit.getString(ancVisitKeyMap.get("FWANCANM")));
+		ancEntity.setFWANCHBP(ancVisit.getString(ancVisitKeyMap.get("FWANCHBP")));
+		ancEntity.setFWANCDBT(ancVisit.getString(ancVisitKeyMap.get("FWANCDBT")));
+		ancEntity.setFWANCTHY(ancVisit.getString(ancVisitKeyMap.get("FWANCTHY")));
+		ancEntity.setFWANCPROB(ancVisit.getString(ancVisitKeyMap.get("FWANCPROB")));
+		ancEntity.setFWANCHEAD(ancVisit.getString(ancVisitKeyMap.get("FWANCHEAD")));
+		ancEntity.setFWBPCLOCOFDEL(ancVisit.getString(ancVisitKeyMap.get("FWBPC1LOCOFDEL")));
+		ancEntity.setFWBPCASSTLAB(ancVisit.getString(ancVisitKeyMap.get("FWBPC1ASSTLAB")));
+		ancEntity.setFWBPCTRNSPRT(ancVisit.getString(ancVisitKeyMap.get("FWBPC1TRNSPRT")));
+		ancEntity.setFWBPCBLDGRP(ancVisit.getString(ancVisitKeyMap.get("FWBPC1BLDGRP")));
+		ancEntity.setFWBPCBLDDNR(ancVisit.getString(ancVisitKeyMap.get("FWBPC1BLDDNR")));
+		ancEntity.setFWBPC1FINARGMT(ancVisit.getString(ancVisitKeyMap.get("FWBPC1FINARGMT")));
+		ancEntity.setMauza(ancVisit.getString(ancVisitKeyMap.get("mauza")));
+		ancEntity.setFWVG(ancVisit.getString(ancVisitKeyMap.get("FWVG")));
+		ancEntity.setFWHR_PSR(ancVisit.getString(ancVisitKeyMap.get("FWHR_PSR")));
+		ancEntity.setFWHRP(ancVisit.getString(ancVisitKeyMap.get("FWHRP")));
+		ancEntity.setExisting_ELCO(ancVisit.getString(ancVisitKeyMap.get("existing_ELCO")));
+		ancEntity.setFWANCBLRVIS(ancVisit.getString(ancVisitKeyMap.get("FWANCBLRVIS")));
+		ancEntity.setFWANCSWLNG(ancVisit.getString(ancVisitKeyMap.get("FWANCSWLNG")));
+		ancEntity.setFWANCCONVL(ancVisit.getString(ancVisitKeyMap.get("FWANCCONVL")));
+		ancEntity.setFWANCBLD(ancVisit.getString(ancVisitKeyMap.get("FWANCBLD")));
+		ancEntity.setFWANCDS1(ancVisit.getString(ancVisitKeyMap.get("FWANCDS1")));
+		ancEntity.setFWANCDS2(ancVisit.getString(ancVisitKeyMap.get("FWANCDS2")));
+		ancEntity.setFWANCDS3(ancVisit.getString(ancVisitKeyMap.get("FWANCDS3")));
+		ancEntity.setFWANCDS4(ancVisit.getString(ancVisitKeyMap.get("FWANCDS4")));
+		ancEntity.setFWANCDS5(ancVisit.getString(ancVisitKeyMap.get("FWANCDS5")));
+		ancEntity.setFWANCDS6(ancVisit.getString(ancVisitKeyMap.get("FWANCDS6")));
+		ancEntity.setFWDANGERVALUE(ancVisit.getString(ancVisitKeyMap.get("FWDANGERVALUE")));
+		ancEntity.setFWNOTELIGIBLE(ancVisit.getString(ancVisitKeyMap.get("FWNOTELIGIBLE")));
+		//ancEntity.setFWANCKNWPRVDR(ancVisit.getString(ancVisitKeyMap.get("FWANC4KNWPRVDR")));
+		ancEntity.setFWHR_ANC(ancVisit.getString(ancVisitKeyMap.get("FWHR_ANC")));
+		ancEntity.setFWFLAGVALUE(ancVisit.getString(ancVisitKeyMap.get("FWFLAGVALUE")));
+		ancEntity.setFWSORTVALUE(ancVisit.getString(ancVisitKeyMap.get("FWSORTVALUE")));
+		ancEntity.setUser_type(ancVisit.getString(ancVisitKeyMap.get("user_type")));
+		ancEntity.setExternal_user_ID(ancVisit.getString(ancVisitKeyMap.get("external_user_ID")));
+		ancEntity.setRelationalid(ancVisit.getString(ancVisitKeyMap.get("relationalid")));
+		ancEntity.setFW_GOBHHID(ancVisit.getString(ancVisitKeyMap.get("GOBHHID")));
+		ancEntity.setFW_JiVitAHHID(ancVisit.getString(ancVisitKeyMap.get("JiVitAHHID")));
+		if (ancVisit.has("FWWOMBID"))
+			ancEntity.setFWWOMBID(ancVisit.getString(ancVisitKeyMap.get("FWWOMBID")));
+		if (ancVisit.has("FWWOMNID"))
+			ancEntity.setFWWOMNID(ancVisit.getString(ancVisitKeyMap.get("FWWOMNID")));
+		if (ancVisit.has("FWWOMFNAME"))
+			ancEntity.setFWWOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FWWOMFNAME")));
+		if (ancVisit.has("FWHUSNAME"))
+			ancEntity.setFWHUSNAME(ancVisit.getString(ancVisitKeyMap.get("FWHUSNAME")));
+		//ancEntity.setMOTHER_REFERENCE_DATE(
+		//  DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
+		ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
+		ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
+		ancEntity.setToday(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("today"))));
+		ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
+		ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("received_time"))));
+		ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
+		
 		return ancEntity;
 		
 	}
-	
 }

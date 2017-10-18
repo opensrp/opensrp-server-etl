@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.ActionEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ActionService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +18,9 @@ public class ActionDataConverterService implements DataConverterService {
 	
 	@Autowired
 	private ActionService actionService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	public ActionDataConverterService() {
 		
@@ -43,11 +47,10 @@ public class ActionDataConverterService implements DataConverterService {
 			actionService.save(actionEntity);
 		}
 		catch (JSONException e) {
-			System.out.println("Could not transfer data caseId: " + caseID);
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "action");
 		}
 		catch (ParseException e) {
-			
+			exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "action");
 		}
 		
 	}

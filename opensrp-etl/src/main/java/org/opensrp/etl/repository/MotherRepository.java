@@ -3,6 +3,7 @@ package org.opensrp.etl.repository;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -21,7 +22,6 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	
 	@Override
 	public void save(MotherEntity motherEntity) {
-		
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(motherEntity);
@@ -33,9 +33,15 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	}
 	
 	@Override
-	public boolean delete(MotherEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(MotherEntity motherEntity) {
+		Query query = getSession().createQuery("delete MotherEntity where id = :ID");
+		query.setParameter("ID", motherEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 	
@@ -61,7 +67,6 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 		Criteria listMotherCr = getSession().createCriteria(MotherEntity.class);
 		listMotherCr.add(Restrictions.eq("caseId", caseId));
 		List<MotherEntity> lisFilterMother = listMotherCr.list();
-		System.out.println("size: " + lisFilterMother.size());
 		return lisFilterMother.size() > 0 ? (MotherEntity) lisFilterMother.get(0) : null;
 	}
 }

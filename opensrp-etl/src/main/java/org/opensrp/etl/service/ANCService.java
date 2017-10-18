@@ -21,15 +21,22 @@ public class ANCService implements RegisterService<ANCEntity> {
 	@Transactional
 	@Override
 	public void save(ANCEntity ancEntity) {
-		ancRepository.save(ancEntity);
+		//ancRepository.save(ancEntity);
+		System.err.println("ANCEntity");
+		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
+		if (existingancEntity == null) {
+			ancRepository.save(ancEntity);
+		} else {
+			if (delete(existingancEntity))
+				ancRepository.save(ancEntity);
+		}
 		
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(ANCEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(ANCEntity ancEntity) {
+		return ancRepository.delete(ancEntity);
 	}
 	
 	@Override
@@ -52,7 +59,6 @@ public class ANCService implements RegisterService<ANCEntity> {
 	
 	@Transactional
 	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
-		
 		return ancRepository.findByCaseIdAndToday(relationalId, today);
 	}
 }

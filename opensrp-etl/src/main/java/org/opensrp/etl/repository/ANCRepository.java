@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -26,7 +27,6 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 	
 	@Override
 	public void save(ANCEntity ancEntity) {
-		System.out.println("Class: ANCRepository Method: save");
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.save(ancEntity);
@@ -38,10 +38,15 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 	}
 	
 	@Override
-	public boolean delete(ANCEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(ANCEntity ancEntity) {
+		Query query = getSession().createQuery("delete ANCEntity where id = :ID");
+		query.setParameter("ID", ancEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -66,7 +71,6 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 		Criteria listANCCr = getSession().createCriteria(ANCEntity.class);
 		listANCCr.add(Restrictions.eq("caseId", caseId));
 		List<ANCEntity> listANC = listANCCr.list();
-		System.out.println("size: " + listANC.size());
 		return listANC.size() > 0 ? (ANCEntity) listANC.get(0) : null;
 	}
 	
@@ -75,6 +79,7 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
 		listPsrfCr.add(Restrictions.eq("today", today));
 		List<ANCEntity> listPsrf = listPsrfCr.list();
+		System.err.println("Size:" + listPsrf.size());
 		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
 	}
 	

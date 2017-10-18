@@ -105,8 +105,6 @@ public class ANCEntity {
 	
 	private String FWNOTELIGIBLE;
 	
-	private String ELCO;
-	
 	private String FWHR_ANC;
 	
 	private String FWFLAGVALUE;
@@ -467,14 +465,6 @@ public class ANCEntity {
 	
 	public void setFWNOTELIGIBLE(String fWNOTELIGIBLE) {
 		FWNOTELIGIBLE = fWNOTELIGIBLE;
-	}
-	
-	public String getELCO() {
-		return ELCO;
-	}
-	
-	public void setELCO(String eLCO) {
-		ELCO = eLCO;
 	}
 	
 	public String getFWHR_ANC() {
