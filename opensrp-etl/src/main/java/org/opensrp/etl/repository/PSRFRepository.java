@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -37,9 +38,15 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	}
 	
 	@Override
-	public boolean delete(PSRFEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(PSRFEntity psrfEntity) {
+		Query query = getSession().createQuery("delete PSRFEntity where id = :ID");
+		query.setParameter("ID", psrfEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 	

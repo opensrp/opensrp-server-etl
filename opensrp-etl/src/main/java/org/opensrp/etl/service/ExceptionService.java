@@ -26,8 +26,9 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	    throws JSONException {
 		exceptionEntity.setCaseId(doc.getString("caseId"));
 		exceptionEntity.setBenificiaryType(benificiaryType);
-		exceptionEntity.setMessage(message);
+		exceptionEntity.setErrorMessage(message);
 		exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
+		exceptionEntity.setDocId(doc.getString("_id"));
 		save(exceptionEntity);
 		return exceptionEntity;
 		

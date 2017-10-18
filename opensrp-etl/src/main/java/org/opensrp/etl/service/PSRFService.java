@@ -22,19 +22,18 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	@Override
 	public void save(PSRFEntity psrfEntity) {
 		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalId(), psrfEntity.getToday());
-		
 		if (existingPSRFEntity == null) {
 			psrfRepository.save(psrfEntity);
 		} else {
-			System.out.println("update household entity:" + existingPSRFEntity.toString());
-			update(existingPSRFEntity);
+			if (delete(existingPSRFEntity))
+				psrfRepository.save(psrfEntity);
 		}
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(PSRFEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(PSRFEntity psrfEntity) {
+		return psrfRepository.delete(psrfEntity);
 		
 	}
 	
@@ -53,7 +52,6 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	
 	@Transactional
 	public PSRFEntity findByCaseIdAndToday(String relationalId, Date today) {
-		
 		return psrfRepository.findByCaseIdAndToday(relationalId, today);
 	}
 	

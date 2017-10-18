@@ -25,6 +25,9 @@ public class ExceptionEntity {
 	@SequenceGenerator(name = "exception_id_seq", sequenceName = "exception_id_seq", allocationSize = 1)
 	private int id;
 	
+	@Column(name = "doc_id")
+	private String docId;
+	
 	@Column(name = "benificiary_type")
 	private String benificiaryType;
 	
@@ -32,7 +35,8 @@ public class ExceptionEntity {
 	private String caseId;
 	
 	//@Type(type = "text")
-	private String message;
+	@Column(name = "error_message")
+	private String errorMessage;
 	
 	@Column(name = "instance_id")
 	private String instanceId;
@@ -89,12 +93,12 @@ public class ExceptionEntity {
 		this.caseId = caseId;
 	}
 	
-	public String getMessage() {
-		return message;
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 	
-	public void setMessage(String message) {
-		this.message = message;
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 	
 	public String getInstanceId() {
@@ -103,6 +107,14 @@ public class ExceptionEntity {
 	
 	public void setInstanceId(String instanceId) {
 		this.instanceId = instanceId;
+	}
+	
+	public String getDocId() {
+		return docId;
+	}
+	
+	public void setDocId(String docId) {
+		this.docId = docId;
 	}
 	
 }

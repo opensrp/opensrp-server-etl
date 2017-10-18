@@ -25,15 +25,15 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 		if (existingElcoEntity == null) {
 			elcoRepository.save(elcoEntity);
 		} else {
-			System.out.println("update elco entity:" + existingElcoEntity.toString());
-			update(existingElcoEntity);
+			if (delete(existingElcoEntity))
+				elcoRepository.save(elcoEntity);
 		}
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(ElcoEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(ElcoEntity elcoEntity) {
+		return elcoRepository.delete(elcoEntity);
 		
 	}
 	

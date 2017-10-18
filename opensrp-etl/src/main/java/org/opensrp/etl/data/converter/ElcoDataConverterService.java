@@ -1,10 +1,13 @@
 package org.opensrp.etl.data.converter;
 
+import java.text.ParseException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ElcoEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ElcoService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +22,9 @@ public class ElcoDataConverterService implements DataConverterService {
 	@Autowired
 	private PSRFDataConverterService psrfDataConverterService;
 	
+	@Autowired
+	private ExceptionService exceptionService;
+	
 	public ElcoDataConverterService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,7 +35,7 @@ public class ElcoDataConverterService implements DataConverterService {
 		try {
 			caseID = doc.getString("caseId");
 			JSONObject details = new JSONObject(doc.getString("details"));
-			elcoEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("FWBIRTHDATE")));
+			elcoEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("WomanREGDATE")));
 			elcoEntity.setCaseId(doc.getString("caseId"));
 			elcoEntity.setClientVersion(doc.getLong("clientVersion"));
 			elcoEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
@@ -55,6 +61,7 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
 			elcoEntity.setUserType(doc.getString("user_type"));
 			elcoEntity.setWard(doc.getString("FWWOMWARD"));
+			
 			if (doc.has("FWCWOMSTRMEN"))
 				elcoEntity.setFWCWOMSTRMEN(doc.getString("FWCWOMSTRMEN"));
 			if (doc.has("FWCWOMSTER"))
@@ -65,12 +72,17 @@ public class ElcoDataConverterService implements DataConverterService {
 				elcoEntity.setFWCWOMHUSLIV(doc.getString("FWCWOMHUSLIV"));
 			if (doc.has("FWCWOMHUSSTR"))
 				elcoEntity.setFWCWOMHUSSTR(doc.getString("FWCWOMHUSSTR"));
-			if (doc.has("isClosed"))
-				elcoEntity.setClosed(doc.getString("isClosed"));
-			if (doc.has("FWCENDATE"))
+			
+			if (doc.has("FWCENDATE")) {
 				elcoEntity.setFWCENDATE(DateUtil.getDateFromString(doc.getString("FWCENDATE")));
-			if (doc.has("FWCENSTAT"))
+			}
+			
+			if (doc.has("FWCENSTAT")) {
 				elcoEntity.setFWCENSTAT(doc.getString("FWCENSTAT"));
+			} else {
+				elcoEntity.setFWCENSTAT("");
+			}
+			
 			if (doc.has("FWWOMANYID"))
 				elcoEntity.setFWWOMANYID(doc.getString("FWWOMANYID"));
 			if (doc.has("FWWOMNID"))
@@ -87,27 +99,50 @@ public class ElcoDataConverterService implements DataConverterService {
 				elcoEntity.setFWWOMRETYPEBID_CONCEPT(doc.getString("FWWOMRETYPEBID_CONCEPT"));
 			elcoEntity.setFWHUSNAME(doc.getString("FWHUSNAME"));
 			elcoEntity.setFWWOMAGE(doc.getString("FWWOMAGE"));
-			//elcoEntity.setFWDISPLAYAGE(doc.getString("FWDISPLAYAGE"));
-			//elcoEntity.setFWWOMSTRMEN(doc.getString("FWWOMSTRMEN"));
-			//elcoEntity.setFWWOMHUSALV(doc.getString("FWWOMHUSALV"));
-			//elcoEntity.setFWWOMHUSSTR(doc.getString("FWWOMHUSSTR"));
-			//elcoEntity.setFWWOMHUSLIV(doc.getString("FWWOMHUSLIV"));
+			if (doc.has("FWDISPLAYAGE")) {
+				elcoEntity.setFWDISPLAYAGE(doc.getString("FWDISPLAYAGE"));
+			} else {
+				elcoEntity.setFWDISPLAYAGE("");
+			}
+			if (doc.has("FWWOMSTRMEN")) {
+				elcoEntity.setFWWOMSTRMEN(doc.getString("FWWOMSTRMEN"));
+			} else {
+				elcoEntity.setFWWOMSTRMEN("");
+			}
+			if (doc.has("FWWOMHUSALV")) {
+				elcoEntity.setFWWOMHUSALV(doc.getString("FWWOMHUSALV"));
+			} else {
+				elcoEntity.setFWWOMHUSALV("");
+			}
+			if (doc.has("FWWOMHUSSTR")) {
+				elcoEntity.setFWWOMHUSSTR(doc.getString("FWWOMHUSSTR"));
+			} else {
+				elcoEntity.setFWWOMHUSSTR("");
+			}
+			if (doc.has("FWWOMHUSLIV")) {
+				elcoEntity.setFWWOMHUSLIV(doc.getString("FWWOMHUSLIV"));
+			} else {
+				elcoEntity.setFWWOMHUSLIV("");
+			}
 			elcoEntity.setFWELIGIBLE(doc.getString("FWELIGIBLE"));
 			elcoEntity.setFWELIGIBLE2(doc.getString("FWELIGIBLE2"));
 			elcoEntity.setFWWOMGOBHHID(doc.getString("FWWOMGOBHHID"));
 			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			elcoEntity.setRelationalId(details.getString("relationalid"));
 			elcoEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
+			elcoEntity.setCurrentFormStatus("");
+			
 			elcoService.save(elcoEntity);
 			psrfDataConverterService.convertToEntityAndSave(doc);
 		}
 		catch (JSONException e) {
-			System.out.println("Could not transfer data caseId: " + caseID);
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "elco");
 		}
 		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "elco");
+		}
+		catch (ParseException e) {
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "elco");
 		}
 		
 	}

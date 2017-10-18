@@ -3,6 +3,7 @@
  */
 package org.opensrp.etl.data.converter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -308,7 +309,9 @@ public class MotherToANCConverter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		catch (ParseException e) {
+			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
+		}
 		return ancEntity;
 		
 	}

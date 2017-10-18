@@ -51,7 +51,7 @@ public class ChildDataConverterService implements DataConverterService {
 			childEntity.setCaseId(doc.getString("caseId"));
 			
 			childEntity.setInstanceId(doc.getString("INSTANCEID"));
-			childEntity.setFormName("");
+			
 			childEntity.setGps("");
 			childEntity.setFirstName(details.getString("FWBNFCHILDNAME"));
 			childEntity.setLastName("");

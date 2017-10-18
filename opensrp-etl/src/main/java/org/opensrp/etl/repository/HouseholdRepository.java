@@ -3,6 +3,7 @@ package org.opensrp.etl.repository;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -23,9 +24,11 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	
 	@Override
 	public void save(HouseholdEntity entity) {
-		Session session = this.sessionFactory.getCurrentSession();
+		
 		try {
-			session.save(entity);
+			getSession().save(entity);
+			getSession().close();
+			getSession().clear();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -34,10 +37,18 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	}
 	
 	@Override
-	public boolean delete(HouseholdEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(HouseholdEntity householdEntity) {
 		
+		Query query = getSession().createQuery("delete HouseholdEntity where id = :ID");
+		query.setParameter("ID", householdEntity.getId());
+		int result = query.executeUpdate();
+		getSession().close();
+		getSession().clear();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -62,7 +73,9 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 		Criteria listHouseholdCr = getSession().createCriteria(HouseholdEntity.class);
 		listHouseholdCr.add(Restrictions.eq("caseId", caseId));
 		List<HouseholdEntity> listHousehold = listHouseholdCr.list();
-		System.out.println("size: " + listHousehold.size());
+		
+		getSession().close();
+		getSession().clear();
 		return listHousehold.size() > 0 ? (HouseholdEntity) listHousehold.get(0) : null;
 	}
 	

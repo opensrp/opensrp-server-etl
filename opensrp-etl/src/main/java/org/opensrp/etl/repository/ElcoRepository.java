@@ -3,6 +3,7 @@ package org.opensrp.etl.repository;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -22,10 +23,10 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	}
 	
 	public void addElco(ElcoEntity p) {
-		Session session = this.sessionFactory.getCurrentSession();
 		
 		try {
-			session.save(p);
+			getSession().save(p);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -34,9 +35,10 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	
 	@Override
 	public void save(ElcoEntity elcoEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
+		
 		try {
-			session.save(elcoEntity);
+			getSession().save(elcoEntity);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -46,9 +48,16 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	}
 	
 	@Override
-	public boolean delete(ElcoEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(ElcoEntity elcoEntity) {
+		Query query = getSession().createQuery("delete ElcoEntity where id = :ID");
+		query.setParameter("ID", elcoEntity.getId());
+		int result = query.executeUpdate();
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 	
@@ -74,7 +83,7 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 		Criteria listElcoCr = getSession().createCriteria(ElcoEntity.class);
 		listElcoCr.add(Restrictions.eq("caseId", caseId));
 		List<ElcoEntity> listElco = listElcoCr.list();
-		System.out.println("size: " + listElco.size());
+		
 		return listElco.size() > 0 ? (ElcoEntity) listElco.get(0) : null;
 	}
 }

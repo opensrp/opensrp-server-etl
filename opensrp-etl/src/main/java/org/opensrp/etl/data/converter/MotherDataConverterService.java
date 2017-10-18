@@ -1,5 +1,7 @@
 package org.opensrp.etl.data.converter;
 
+import java.text.ParseException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.MotherEntity;
@@ -81,6 +83,9 @@ public class MotherDataConverterService implements DataConverterService {
 		catch (JSONException e) {
 			System.out.println("Could not transfer data caseId: " + caseID);
 			e.printStackTrace();
+		}
+		catch (ParseException e) {
+			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
 		}
 		
 	}

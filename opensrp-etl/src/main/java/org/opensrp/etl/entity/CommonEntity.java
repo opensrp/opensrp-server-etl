@@ -61,9 +61,6 @@ public abstract class CommonEntity {
 	
 	private String gps;
 	
-	@Column(name = "form_name")
-	private String formName;
-	
 	@Column(name = "user_type")
 	private String userType;
 	
@@ -250,14 +247,6 @@ public abstract class CommonEntity {
 		this.gps = gps;
 	}
 	
-	public String getFormName() {
-		return formName;
-	}
-	
-	public void setFormName(String formName) {
-		this.formName = formName;
-	}
-	
 	public String getUserType() {
 		return userType;
 	}
@@ -327,9 +316,9 @@ public abstract class CommonEntity {
 		return "CommonEntity [firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", gender="
 		        + gender + ", caseId=" + caseId + ", instanceId=" + instanceId + ", provider=" + provider + ", today="
 		        + today + ", start=" + start + ", end=" + end + ", registrationDate=" + registrationDate + ", country="
-		        + country + ", division=" + division + ", district=" + district + ", upazila=" + upazila + ", union=" + union
-		        + ", ward=" + ward + ", subunit=" + subunit + ", mauzaPara=" + mauzaPara + ", gps=" + gps + ", formName="
-		        + formName + ", userType=" + userType + ", externalUserId=" + externalUserId + ", currentFormStatus="
+		        + country + ", division=" + division + ", district=" + district + ", upazila=" + upazila + ", union="
+		        + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzaPara=" + mauzaPara + ", gps=" + gps
+		        + ", userType=" + userType + ", externalUserId=" + externalUserId + ", currentFormStatus="
 		        + currentFormStatus + ", submissionTime=" + submissionTime + ", clientVersion=" + clientVersion
 		        + ", created=" + created + ", updated=" + updated + ", receivedTime=" + receivedTime + "]";
 	}

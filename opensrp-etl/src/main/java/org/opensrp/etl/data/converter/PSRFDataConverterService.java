@@ -1,10 +1,13 @@
 package org.opensrp.etl.data.converter;
 
+import java.text.ParseException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.PSRFEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.PSRFService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class PSRFDataConverterService implements DataConverterService {
 	
 	@Autowired
 	private PSRFService psrfService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	@Override
 	public void convertToEntityAndSave(JSONObject elco) throws JSONException {
@@ -112,8 +118,10 @@ public class PSRFDataConverterService implements DataConverterService {
 				psrfService.save(psrfEntity);
 			}
 			catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "psrf");
+			}
+			catch (ParseException e) {
+				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "psrf");
 			}
 			
 		}

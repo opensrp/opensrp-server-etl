@@ -27,15 +27,14 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		if (existingHouseholdEntity == null) {
 			householdRepository.save(householdEntity);
 		} else {
-			System.out.println("update household entity:" + existingHouseholdEntity.toString());
-			update(existingHouseholdEntity);
+			if (delete(existingHouseholdEntity))
+				householdRepository.save(householdEntity);
 		}
 	}
 	
 	@Override
-	public boolean delete(HouseholdEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+	public boolean delete(HouseholdEntity householdEntity) {
+		return householdRepository.delete(householdEntity);
 		
 	}
 	

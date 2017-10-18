@@ -1,9 +1,12 @@
 package org.opensrp.etl.data.converter;
 
+import java.text.ParseException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.HouseholdEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.HouseholdService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,11 @@ public class HouseholdDataConverterService implements DataConverterService {
 	@Autowired
 	private HouseholdEntity householdEntity;
 	
+	@Autowired
+	private ExceptionService exceptionService;
+	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) {
+	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");
@@ -34,11 +40,16 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdEntity.setCurrentFormStatus(doc.getString("current_formStatus"));
 			householdEntity.setDistrict(doc.getString("FWDISTRICT"));
 			householdEntity.setDivision(doc.getString("FWDIVISION"));
-			householdEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
+			if ("".equalsIgnoreCase(doc.getString("ELCO")) || "N/A".equalsIgnoreCase(doc.getString("ELCO"))) {
+				householdEntity.setELCO(-1);
+			} else {
+				householdEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
+			}
+			
 			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			householdEntity.setExternalUserId(doc.getString("external_user_ID"));
 			householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
-			householdEntity.setFormName(doc.getString("form_name"));
+			
 			householdEntity.setFWNHHMBRNUM(doc.getString("FWNHHMBRNUM"));
 			householdEntity.setFWNHHMWRA(doc.getString("FWNHHMWRA"));
 			householdEntity.setGender(doc.getString("FWHOHGENDER"));
@@ -63,13 +74,13 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdService.save(householdEntity);
 		}
 		catch (JSONException e) {
-			System.out.println("Could not transfer data caseId:" + caseID);
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
 		}
 		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
+		}
+		catch (ParseException e) {
+			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
 		}
 	}
-	
 }

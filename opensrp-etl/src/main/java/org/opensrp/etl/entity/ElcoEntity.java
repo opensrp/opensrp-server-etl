@@ -41,8 +41,6 @@ public class ElcoEntity extends CommonEntity {
 	
 	private String FWCWOMHUSSTR;
 	
-	private String isClosed;
-	
 	private String GOBHHID;
 	
 	private String JiVitAHHID;
@@ -140,14 +138,6 @@ public class ElcoEntity extends CommonEntity {
 	
 	public void setFWCWOMHUSSTR(String fWCWOMHUSSTR) {
 		FWCWOMHUSSTR = fWCWOMHUSSTR;
-	}
-	
-	public String isClosed() {
-		return isClosed;
-	}
-	
-	public void setClosed(String isClosed) {
-		this.isClosed = isClosed;
 	}
 	
 	public String getGOBHHID() {
