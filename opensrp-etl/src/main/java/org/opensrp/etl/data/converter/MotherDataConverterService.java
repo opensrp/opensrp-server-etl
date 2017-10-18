@@ -100,11 +100,11 @@ public class MotherDataConverterService implements DataConverterService {
 			} else {
 				motherEntity.setUserType("");
 			}
-			//motherService.save(motherEntity);
+			motherService.save(motherEntity);
 			
-			//bnfDataConverterService.convertToEntityAndSave(doc);
+			bnfDataConverterService.convertToEntityAndSave(doc);
 			motherToANCConverter.ancVisitSave(doc);
-			//motherToPNCConverter.pncVisitSave(doc);
+			motherToPNCConverter.pncVisitSave(doc);
 		}
 		catch (JSONException e) {
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
