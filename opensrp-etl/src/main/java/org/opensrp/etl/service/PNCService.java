@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.PNCEntity;
@@ -19,14 +21,22 @@ public class PNCService implements RegisterService<PNCEntity> {
 	@Transactional
 	@Override
 	public void save(PNCEntity pncEntity) {
-		pncRepository.save(pncEntity);
+		//pncRepository.save(pncEntity);
+		
+		System.err.println("ANCEntity");
+		PNCEntity existingpncEntity = findByCaseIdAndToday(pncEntity.getRelationalid(), pncEntity.getToday());
+		if (existingpncEntity == null) {
+			pncRepository.save(pncEntity);
+		} else {
+			if (delete(existingpncEntity))
+				pncRepository.save(pncEntity);
+		}
 	}
 	
+	@Transactional
 	@Override
-	public boolean delete(PNCEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(PNCEntity ancEntity) {
+		return pncRepository.delete(ancEntity);
 	}
 	
 	@Transactional
@@ -48,4 +58,8 @@ public class PNCService implements RegisterService<PNCEntity> {
 		return pncRepository.findByCaseId(caseId);
 	}
 	
+	@Transactional
+	public PNCEntity findByCaseIdAndToday(String relationalId, Date today) {
+		return pncRepository.findByCaseIdAndToday(relationalId, today);
+	}
 }

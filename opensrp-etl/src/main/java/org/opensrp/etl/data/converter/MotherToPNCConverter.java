@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.PNCEntity;
+import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.PNCService;
 import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class MotherToPNCConverter {
 	private ArrayList<String> pncKeys = new ArrayList<String>();
 	
 	private Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
+	
+	@Autowired
+	private ExceptionService exceptionService;
 	
 	@Autowired
 	private PNCEntity pncEntity;
@@ -138,51 +142,41 @@ public class MotherToPNCConverter {
 			}
 			
 		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.debug(mdoc.getString("caseId"));
-			e.printStackTrace();
+		catch (JSONException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "pnc");
+		}
+		catch (ParseException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "pnc");
 		}
 		
 	}
 	
-	private PNCEntity convertTopncEntity(JSONObject pncVisit, Map<String, String> pncVisitKeyMap) {
-		try {
-			pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
-			pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
-			//pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
-			pncEntity.setFWPNCREMSTS(pncVisit.getString(pncVisitKeyMap.get("FWPNCREMSTS")));
-			//pncEntity.setFWPNCINT(pncVisit.getString(pncVisitKeyMap.get("FWPNCINT")));
-			pncEntity.setUser_type(pncVisit.getString(pncVisitKeyMap.get("user_type")));
-			pncEntity.setExternal_user_ID(pncVisit.getString(pncVisitKeyMap.get("external_user_ID")));
-			pncEntity.setRelationalid(pncVisit.getString(pncVisitKeyMap.get("relationalid")));
-			pncEntity.setFW_GOBHHID(pncVisit.getString(pncVisitKeyMap.get("GOBHHID")));
-			//pncEntity.setFW_JiVitAHHID(pncVisit.getString(pncVisitKeyMap.get("FW_JiVitAHHID")));
-			//pncEntity.setFW_WOMBID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMBID")));
-			//pncEntity.setFW_WOMNID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMNID")));
-			//pncEntity.setFW_WOMFNAME(pncVisit.getString(pncVisitKeyMap.get("FW_WOMFNAME")));
-			//pncEntity.setFW_HUSNAME(pncVisit.getString(pncVisitKeyMap.get("FW_HUSNAME")));
-			//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
-			//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
-			//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
-			pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
-			pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
-			pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
-			pncEntity.setClientVersion(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("clientVersion"))));
-			pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
-			pncEntity.setTimeStamp(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("timeStamp"))));
-		}
-		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (ParseException e) {
-			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
-		}
+	private PNCEntity convertTopncEntity(JSONObject pncVisit, Map<String, String> pncVisitKeyMap) throws ParseException,
+	    JSONException {
+		
+		pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
+		pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
+		//pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
+		pncEntity.setFWPNCREMSTS(pncVisit.getString(pncVisitKeyMap.get("FWPNCREMSTS")));
+		//pncEntity.setFWPNCINT(pncVisit.getString(pncVisitKeyMap.get("FWPNCINT")));
+		pncEntity.setUser_type(pncVisit.getString(pncVisitKeyMap.get("user_type")));
+		pncEntity.setExternal_user_ID(pncVisit.getString(pncVisitKeyMap.get("external_user_ID")));
+		pncEntity.setRelationalid(pncVisit.getString(pncVisitKeyMap.get("relationalid")));
+		pncEntity.setFW_GOBHHID(pncVisit.getString(pncVisitKeyMap.get("GOBHHID")));
+		//pncEntity.setFW_JiVitAHHID(pncVisit.getString(pncVisitKeyMap.get("FW_JiVitAHHID")));
+		//pncEntity.setFW_WOMBID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMBID")));
+		//pncEntity.setFW_WOMNID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMNID")));
+		//pncEntity.setFW_WOMFNAME(pncVisit.getString(pncVisitKeyMap.get("FW_WOMFNAME")));
+		//pncEntity.setFW_HUSNAME(pncVisit.getString(pncVisitKeyMap.get("FW_HUSNAME")));
+		//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
+		//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
+		//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
+		pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
+		pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
+		pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
+		pncEntity.setClientVersion(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("clientVersion"))));
+		pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
+		pncEntity.setTimeStamp(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("timeStamp"))));
 		
 		return pncEntity;
 		

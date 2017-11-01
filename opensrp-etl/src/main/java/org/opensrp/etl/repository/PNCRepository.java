@@ -1,8 +1,10 @@
 package org.opensrp.etl.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -32,10 +34,15 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 	}
 	
 	@Override
-	public boolean delete(PNCEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(PNCEntity pncEntity) {
+		Query query = getSession().createQuery("delete PNCEntity where id = :ID");
+		query.setParameter("ID", pncEntity.getId());
+		int result = query.executeUpdate();
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -62,5 +69,14 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 		List<PNCEntity> listPNC = listPNCCr.list();
 		System.out.println("size: " + listPNC.size());
 		return listPNC.size() > 0 ? (PNCEntity) listPNC.get(0) : null;
+	}
+	
+	public PNCEntity findByCaseIdAndToday(String relationalId, Date today) {
+		Criteria listPsrfCr = getSession().createCriteria(PNCEntity.class);
+		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
+		listPsrfCr.add(Restrictions.eq("today", today));
+		List<PNCEntity> listPsrf = listPsrfCr.list();
+		System.err.println("Size:" + listPsrf.size());
+		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
 	}
 }

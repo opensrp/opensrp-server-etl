@@ -21,7 +21,7 @@ public class ANCService implements RegisterService<ANCEntity> {
 	@Transactional
 	@Override
 	public void save(ANCEntity ancEntity) {
-		//ancRepository.save(ancEntity);
+		
 		System.err.println("ANCEntity");
 		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
 		if (existingancEntity == null) {
