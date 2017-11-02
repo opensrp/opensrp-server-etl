@@ -29,25 +29,25 @@ public class PNCEntity {
 	private int id;
 	
 	@Temporal(TemporalType.DATE)
-	private Date FWPNCDATE;
+	private Date FWPNCDATE;//variable
 	
 	private String FWCONFIRMATION;
 	
-	private String FWPNCREMSTS;
+	private String FWPNCREMSTS;//variable
 	
-	private String FWPNCINT;
+	private String FWPNCINT;//variable
 	
-	private String FWPNCKNWPRVDR;
+	private String FWPNCKNWPRVDR;//variable
 	
-	private String FWPNCFVR;
+	private String FWPNCFVR;//variable
 	
-	private String FWPNCTEMP;
+	private String FWPNCTEMP;//variable
 	
-	private String FWPNCDNGRSIGN;
+	private String FWPNCDNGRSIGN;//variable
 	
 	private String FWPNCDELTYPE;
 	
-	private String FWPNCDELCOMP;
+	private String FWPNCDELCOMP;//variable
 	
 	private String FW_GOBHHID;
 	
@@ -61,13 +61,9 @@ public class PNCEntity {
 	
 	private String FW_HUSNAME;
 	
-	@Temporal(TemporalType.DATE)
 	private Date FWBNFDTOO;
 	
 	private String FWBNFSTS;
-	
-	@Temporal(TemporalType.DATE)
-	private Date REFERENCE_DATE;
 	
 	private Date start;
 	
@@ -77,7 +73,7 @@ public class PNCEntity {
 	@Temporal(TemporalType.DATE)
 	private Date today;
 	
-	private String pnc_current_formStatus;
+	private String pnc_current_formStatus;//variable
 	
 	private String relationalid;
 	
@@ -87,11 +83,7 @@ public class PNCEntity {
 	
 	private String pncName;
 	
-	private long clientVersion;
-	
 	private String received_time;
-	
-	private long timeStamp;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -257,14 +249,6 @@ public class PNCEntity {
 		FWBNFSTS = fWBNFSTS;
 	}
 	
-	public Date getREFERENCE_DATE() {
-		return REFERENCE_DATE;
-	}
-	
-	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
-		REFERENCE_DATE = rEFERENCE_DATE;
-	}
-	
 	public Date getStart() {
 		return start;
 	}
@@ -337,28 +321,12 @@ public class PNCEntity {
 		this.pncName = pncName;
 	}
 	
-	public long getClientVersion() {
-		return clientVersion;
-	}
-	
-	public void setClientVersion(long clientVersion) {
-		this.clientVersion = clientVersion;
-	}
-	
 	public String getReceived_time() {
 		return received_time;
 	}
 	
 	public void setReceived_time(String received_time) {
 		this.received_time = received_time;
-	}
-	
-	public long getTimeStamp() {
-		return timeStamp;
-	}
-	
-	public void setTimeStamp(long timeStamp) {
-		this.timeStamp = timeStamp;
 	}
 	
 	public Date getToday() {

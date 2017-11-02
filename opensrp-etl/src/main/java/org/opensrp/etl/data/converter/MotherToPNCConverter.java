@@ -49,44 +49,31 @@ public class MotherToPNCConverter {
 		pncKeys.add("pncName");
 		
 		pncKeys.add("FWPNCDATE");
-		
+		pncKeys.add("FWPNCREMSTS");
+		pncKeys.add("FWPNCINT");
+		pncKeys.add("FWPNCKNWPRVDR");
+		pncKeys.add("FWPNCFVR");
+		pncKeys.add("FWPNCTEMP");
+		pncKeys.add("FWPNCDNGRSIGN");
+		pncKeys.add("FWPNCDELCOMP");
 		pncKeys.add("pnc_current_formStatus");
 		
-		pncKeys.add("FWCONFIRMATION");
-		
-		pncKeys.add("FWPNCREMSTS");
-		
-		pncKeys.add("FWPNCINT");
-		
 		pncKeys.add("user_type");
-		
 		pncKeys.add("external_user_ID");
-		
 		pncKeys.add("relationalid");
-		
 		pncKeys.add("GOBHHID");
-		
-		pncKeys.add("FW_JiVitAHHID");
-		
+		pncKeys.add("JiVitAHHID");
 		pncKeys.add("FWWOMBID");
-		
 		pncKeys.add("FWWOMNID");
-		
 		pncKeys.add("FWWOMFNAME");
-		
 		pncKeys.add("FWHUSNAME");
 		pncKeys.add("FWBNFDTOO");
-		pncKeys.add("FWBNFSTS");
-		pncKeys.add("REFERENCE_DATE");
+		
 		pncKeys.add("start");
 		pncKeys.add("end");
 		pncKeys.add("today");
-		
-		pncKeys.add("clientVersion");
-		
 		pncKeys.add("received_time");
 		
-		pncKeys.add("timeStamp");
 	}
 	
 	private Map<String, String> getpncVisitKeys(String visitNo) {
@@ -171,12 +158,11 @@ public class MotherToPNCConverter {
 		//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
 		//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
 		//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
+		
 		pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
 		pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
 		pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
-		pncEntity.setClientVersion(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("clientVersion"))));
 		pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
-		pncEntity.setTimeStamp(Long.parseLong(pncVisit.getString(pncVisitKeyMap.get("timeStamp"))));
 		
 		return pncEntity;
 		
