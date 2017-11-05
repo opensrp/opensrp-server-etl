@@ -83,7 +83,6 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		Criteria listActionCr = getSession().createCriteria(ActionEntity.class);
 		listActionCr.add(Restrictions.eq("caseId", caseId));
 		List<ActionEntity> listAction = listActionCr.list();
-		System.out.println("size: " + listAction.size());
 		return listAction.size() > 0 ? (ActionEntity) listAction.get(0) : null;
 	}
 }

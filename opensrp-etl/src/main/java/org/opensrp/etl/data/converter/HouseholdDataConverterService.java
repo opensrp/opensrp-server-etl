@@ -29,11 +29,15 @@ public class HouseholdDataConverterService implements DataConverterService {
 	private ExceptionService exceptionService;
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+	public void convertToEntityAndSave(JSONObject doc) {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");
-			householdEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("FWHOHBIRTHDATE")));
+			if (doc.has("FWHOHBIRTHDATE") && !doc.getString("FWHOHBIRTHDATE").isEmpty()) {
+				householdEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("FWHOHBIRTHDATE")));
+			} else {
+				householdEntity.setBirthDate(null);
+			}
 			householdEntity.setCaseId(doc.getString("caseId"));
 			householdEntity.setClientVersion(doc.getLong("clientVersion"));
 			householdEntity.setCountry(doc.getString("FWCOUNTRY"));
@@ -48,22 +52,51 @@ public class HouseholdDataConverterService implements DataConverterService {
 			
 			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
 			householdEntity.setExternalUserId(doc.getString("external_user_ID"));
-			householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
+			if (doc.has("FWHOHFNAME") && !doc.getString("FWHOHFNAME").isEmpty()) {
+				householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
+			} else {
+				householdEntity.setFirstName("");
+			}
+			if (doc.has("FWNHHMBRNUM") && !doc.getString("FWNHHMBRNUM").isEmpty()) {
+				householdEntity.setFWNHHMBRNUM(doc.getString("FWNHHMBRNUM"));
+			} else {
+				householdEntity.setFWNHHMBRNUM("");
+			}
 			
-			householdEntity.setFWNHHMBRNUM(doc.getString("FWNHHMBRNUM"));
-			householdEntity.setFWNHHMWRA(doc.getString("FWNHHMWRA"));
-			householdEntity.setGender(doc.getString("FWHOHGENDER"));
+			if (doc.has("FWNHHMWRA") && !doc.getString("FWNHHMWRA").isEmpty()) {
+				householdEntity.setFWNHHMWRA(doc.getString("FWNHHMWRA"));
+			} else {
+				householdEntity.setFWNHHMWRA("");
+			}
+			
+			if (doc.has("FWHOHGENDER") && !doc.getString("FWHOHGENDER").isEmpty()) {
+				householdEntity.setGender(doc.getString("FWHOHGENDER"));
+			} else {
+				householdEntity.setGender("");
+			}
 			householdEntity.setGps(doc.getString("FWNHHHGPS"));
 			householdEntity.setInstanceId(doc.getString("INSTANCEID"));
 			householdEntity.setFWJIVHHID(doc.getString("FWJIVHHID"));
-			householdEntity.setLastName(doc.getString("FWHOHLNAME"));
+			//householdEntity.setLastName(doc.getString("FWHOHLNAME"));
 			householdEntity.setMauzaPara(doc.getString("FWMAUZA_PARA"));
 			householdEntity.setProvider(doc.getString("PROVIDERID"));
-			householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("FWNHREGDATE")));
-			householdEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
+			if (doc.has("FWNHREGDATE") && !doc.getString("FWNHREGDATE").isEmpty()) {
+				householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("FWNHREGDATE")));
+			} else {
+				householdEntity.setRegistrationDate(null);
+			}
+			if (doc.has("START") && !doc.getString("START").isEmpty()) {
+				householdEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
+			} else {
+				householdEntity.setStart(null);
+			}
 			householdEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			householdEntity.setSubunit(doc.getString("FWSUBUNIT"));
-			householdEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
+			if (doc.has("TODAY") && !doc.getString("TODAY").isEmpty()) {
+				householdEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
+			} else {
+				householdEntity.setToday(null);
+			}
 			householdEntity.setUnion(doc.getString("FWUNION"));
 			householdEntity.setUpazila(doc.getString("FWUPAZILLA"));
 			householdEntity.setUserType(doc.getString("user_type"));
@@ -74,12 +107,16 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdService.save(householdEntity);
 		}
 		catch (JSONException e) {
+			e.printStackTrace();
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
+			
 		}
 		catch (NumberFormatException e) {
+			e.printStackTrace();
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
 		}
 		catch (ParseException e) {
+			e.printStackTrace();
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
 		}
 	}

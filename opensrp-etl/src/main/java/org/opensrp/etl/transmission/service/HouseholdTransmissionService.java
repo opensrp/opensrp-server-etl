@@ -1,6 +1,5 @@
 package org.opensrp.etl.transmission.service;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.data.converter.HouseholdDataConverterService;
 import org.opensrp.etl.interfaces.TransmissionServices;
@@ -16,7 +15,7 @@ public class HouseholdTransmissionService implements TransmissionServices {
 	}
 	
 	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+	public void convertDataJsonToEntity(JSONObject doc) {
 		householdDataConverterService.convertToEntityAndSave(doc);
 		
 	}

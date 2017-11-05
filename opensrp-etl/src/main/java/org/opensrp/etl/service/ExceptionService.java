@@ -22,14 +22,20 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	}
 	
 	@Transactional
-	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String benificiaryType)
-	    throws JSONException {
-		exceptionEntity.setCaseId(doc.getString("caseId"));
-		exceptionEntity.setBenificiaryType(benificiaryType);
-		exceptionEntity.setErrorMessage(message);
-		exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
-		exceptionEntity.setDocId(doc.getString("_id"));
-		save(exceptionEntity);
+	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String benificiaryType) {
+		try {
+			exceptionEntity.setCaseId(doc.getString("caseId"));
+			exceptionEntity.setBenificiaryType(benificiaryType);
+			exceptionEntity.setErrorMessage(message);
+			exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
+			exceptionEntity.setDocId(doc.getString("_id"));
+			save(exceptionEntity);
+		}
+		catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return exceptionEntity;
 		
 	}

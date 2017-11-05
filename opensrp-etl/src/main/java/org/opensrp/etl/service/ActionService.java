@@ -19,17 +19,10 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	@Override
 	public void save(ActionEntity actionEntity) {
-		
-		try {
-			if (!isActionExist(actionEntity)) {
-				actionRepository.save(actionEntity);
-			} else {
-				System.out.println("Action already exists in database!!!");
-			}
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (!isActionExist(actionEntity)) {
+			actionRepository.save(actionEntity);
+		} else {
+			System.out.println("Action already exists in database!!!");
 		}
 		
 	}

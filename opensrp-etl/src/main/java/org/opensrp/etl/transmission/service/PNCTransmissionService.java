@@ -23,7 +23,7 @@ public class PNCTransmissionService implements TransmissionServices {
 	
 	@Override
 	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		System.out.println("Class:PNCTransmissionService, method:sentDataToConvert");
+		
 		pncDataConverterService.convertToEntityAndSave(doc);
 		
 	}

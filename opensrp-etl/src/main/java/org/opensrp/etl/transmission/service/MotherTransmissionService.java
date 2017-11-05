@@ -13,7 +13,7 @@ public class MotherTransmissionService implements TransmissionServices {
 	
 	@Override
 	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		System.out.println("Class:MotherTransmissionService, method:sentDataToConvert");
+		
 		motherDataConverterService.convertToEntityAndSave(doc);
 	}
 	

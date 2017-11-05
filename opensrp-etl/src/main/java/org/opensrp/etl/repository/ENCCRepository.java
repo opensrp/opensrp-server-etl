@@ -82,7 +82,7 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 		Criteria listENCCCr = getSession().createCriteria(ENCCEntity.class);
 		listENCCCr.add(Restrictions.eq("caseId", caseId));
 		List<ENCCEntity> lisENCC = listENCCCr.list();
-		System.out.println("size: " + lisENCC.size());
+		
 		return lisENCC.size() > 0 ? (ENCCEntity) lisENCC.get(0) : null;
 	}
 	

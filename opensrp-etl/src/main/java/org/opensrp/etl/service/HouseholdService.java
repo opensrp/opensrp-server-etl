@@ -32,6 +32,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		}
 	}
 	
+	@Transactional
 	@Override
 	public boolean delete(HouseholdEntity householdEntity) {
 		return householdRepository.delete(householdEntity);

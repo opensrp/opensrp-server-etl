@@ -38,6 +38,7 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 		Query query = getSession().createQuery("delete PNCEntity where id = :ID");
 		query.setParameter("ID", pncEntity.getId());
 		int result = query.executeUpdate();
+		
 		if (result == 1) {
 			return true;
 		} else {
@@ -67,7 +68,7 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 		Criteria listPNCCr = getSession().createCriteria(PNCEntity.class);
 		listPNCCr.add(Restrictions.eq("caseId", caseId));
 		List<PNCEntity> listPNC = listPNCCr.list();
-		System.out.println("size: " + listPNC.size());
+		
 		return listPNC.size() > 0 ? (PNCEntity) listPNC.get(0) : null;
 	}
 	
@@ -76,7 +77,7 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
 		listPsrfCr.add(Restrictions.eq("today", today));
 		List<PNCEntity> listPsrf = listPsrfCr.list();
-		System.err.println("Size:" + listPsrf.size());
+		
 		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
 	}
 }

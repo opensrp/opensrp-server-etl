@@ -21,7 +21,6 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	@Transactional
 	@Override
 	public void save(ENCCEntity enccEntity) {
-		
 		ENCCEntity existingEnccEntity = findByCaseIdAndToday(enccEntity.getRelationalId(), enccEntity.getToday());
 		if (existingEnccEntity == null) {
 			enccRepository.save(enccEntity);
@@ -29,9 +28,9 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 			if (delete(existingEnccEntity))
 				enccRepository.save(enccEntity);
 		}
-		
 	}
 	
+	@Transactional
 	@Override
 	public boolean delete(ENCCEntity enccEntity) {
 		return enccRepository.delete(enccEntity);

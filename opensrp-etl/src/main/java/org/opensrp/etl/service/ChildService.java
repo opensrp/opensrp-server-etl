@@ -19,7 +19,6 @@ public class ChildService implements RegisterService<ChildEntity> {
 	@Transactional
 	@Override
 	public void save(ChildEntity childEntity) {
-		
 		ChildEntity existingCHildEntity = findByCaseId(childEntity.caseId);
 		if (existingCHildEntity == null) {
 			childRepository.save(childEntity);

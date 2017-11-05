@@ -18,6 +18,7 @@ import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * @author proshanto
  * @author sohel
  */
 public class MotherToPNCConverter {
@@ -47,7 +48,6 @@ public class MotherToPNCConverter {
 	
 	private void setPNCKeys() {
 		pncKeys.add("pncName");
-		
 		pncKeys.add("FWPNCDATE");
 		pncKeys.add("FWPNCREMSTS");
 		pncKeys.add("FWPNCINT");
@@ -57,6 +57,7 @@ public class MotherToPNCConverter {
 		pncKeys.add("FWPNCDNGRSIGN");
 		pncKeys.add("FWPNCDELCOMP");
 		pncKeys.add("pnc_current_formStatus");
+		pncKeys.add("FWPNCDELTYPE");
 		
 		pncKeys.add("user_type");
 		pncKeys.add("external_user_ID");
@@ -68,7 +69,8 @@ public class MotherToPNCConverter {
 		pncKeys.add("FWWOMFNAME");
 		pncKeys.add("FWHUSNAME");
 		pncKeys.add("FWBNFDTOO");
-		
+		pncKeys.add("FWCONFIRMATION");
+		pncKeys.add("FWBNFSTS");
 		pncKeys.add("start");
 		pncKeys.add("end");
 		pncKeys.add("today");
@@ -94,7 +96,7 @@ public class MotherToPNCConverter {
 			if (mdoc.has(PNC_Visit_One) && mdoc.isNull(PNC_Visit_One) || mdoc.getJSONObject(PNC_Visit_One).length() == 0) {
 				logger.debug("pncVisitOne does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				logger.debug("pncVisitOne  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_One));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("1");
@@ -106,7 +108,7 @@ public class MotherToPNCConverter {
 			if (mdoc.has(PNC_Visit_Two) && mdoc.isNull(PNC_Visit_Two) || mdoc.getJSONObject(PNC_Visit_Two).length() == 0) {
 				logger.debug("pncVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				logger.debug("pncVisitTwo  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_Two));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("2");
@@ -119,13 +121,13 @@ public class MotherToPNCConverter {
 			        || mdoc.getJSONObject(PNC_Visit_Three).length() == 0) {
 				logger.debug("pncVisitThree does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				logger.debug("pncVisitThree  exist caseId:" + mdoc.getString("caseId"));
+				
 				JSONObject pncVisit = new JSONObject(mdoc.getString(PNC_Visit_Three));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("3");
 				pncEntity.setPncName(PNC_Visit_Three);
 				pncService.save(convertTopncEntity(pncVisit, pncVisitKeyMap));
-				logger.debug("pncVisitThree saved successfully entity: " + pncEntity.toString());
+				
 			}
 			
 		}
@@ -140,24 +142,70 @@ public class MotherToPNCConverter {
 	
 	private PNCEntity convertTopncEntity(JSONObject pncVisit, Map<String, String> pncVisitKeyMap) throws ParseException,
 	    JSONException {
+		if (pncVisit.has(pncVisitKeyMap.get("pnc_current_formStatus"))) {
+			pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
+		} else {
+			pncEntity.setFWPNCDATE(null);
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("pnc_current_formStatus"))) {
+			pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
+		} else {
+			pncEntity.setPnc_current_formStatus("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCREMSTS"))) {
+			pncEntity.setFWPNCREMSTS(pncVisit.getString(pncVisitKeyMap.get("FWPNCREMSTS")));
+		} else {
+			pncEntity.setFWPNCREMSTS("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCINT"))) {
+			pncEntity.setFWPNCINT(pncVisit.getString(pncVisitKeyMap.get("FWPNCINT")));
+		} else {
+			pncEntity.setFWPNCINT("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCKNWPRVDR"))) {
+			pncEntity.setFWPNCKNWPRVDR(pncVisit.getString(pncVisitKeyMap.get("FWPNCKNWPRVDR")));
+		} else {
+			pncEntity.setFWPNCKNWPRVDR("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCFVR"))) {
+			pncEntity.setFWPNCFVR(pncVisit.getString(pncVisitKeyMap.get("FWPNCFVR")));
+		} else {
+			pncEntity.setFWPNCFVR("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCTEMP"))) {
+			pncEntity.setFWPNCTEMP(pncVisit.getString(pncVisitKeyMap.get("FWPNCTEMP")));
+		} else {
+			pncEntity.setFWPNCTEMP("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCDNGRSIGN"))) {
+			pncEntity.setFWPNCDNGRSIGN(pncVisit.getString(pncVisitKeyMap.get("FWPNCDNGRSIGN")));
+		} else {
+			pncEntity.setFWPNCDNGRSIGN("");
+		}
 		
-		pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
-		pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
-		//pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
-		pncEntity.setFWPNCREMSTS(pncVisit.getString(pncVisitKeyMap.get("FWPNCREMSTS")));
-		//pncEntity.setFWPNCINT(pncVisit.getString(pncVisitKeyMap.get("FWPNCINT")));
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCDELCOMP"))) {
+			pncEntity.setFWPNCDELCOMP(pncVisit.getString(pncVisitKeyMap.get("FWPNCDELCOMP")));
+		} else {
+			pncEntity.setFWPNCDELCOMP("");
+		}
+		if (pncVisit.has(pncVisitKeyMap.get("FWPNCDELTYPE"))) {
+			pncEntity.setFWPNCDELTYPE(pncVisit.getString(pncVisitKeyMap.get("FWPNCDELTYPE")));
+		} else {
+			pncEntity.setFWPNCDELTYPE("");
+		}
+		
 		pncEntity.setUser_type(pncVisit.getString(pncVisitKeyMap.get("user_type")));
-		pncEntity.setExternal_user_ID(pncVisit.getString(pncVisitKeyMap.get("external_user_ID")));
-		pncEntity.setRelationalid(pncVisit.getString(pncVisitKeyMap.get("relationalid")));
+		
+		pncEntity.setRelationalid(pncVisit.getString(pncVisitKeyMap.get("relationalid")).trim());
 		pncEntity.setFW_GOBHHID(pncVisit.getString(pncVisitKeyMap.get("GOBHHID")));
-		//pncEntity.setFW_JiVitAHHID(pncVisit.getString(pncVisitKeyMap.get("FW_JiVitAHHID")));
-		//pncEntity.setFW_WOMBID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMBID")));
-		//pncEntity.setFW_WOMNID(pncVisit.getString(pncVisitKeyMap.get("FW_WOMNID")));
-		//pncEntity.setFW_WOMFNAME(pncVisit.getString(pncVisitKeyMap.get("FW_WOMFNAME")));
-		//pncEntity.setFW_HUSNAME(pncVisit.getString(pncVisitKeyMap.get("FW_HUSNAME")));
-		//pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
-		//pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
-		//pncEntity.setREFERENCE_DATE(pncVisit.getString(pncVisitKeyMap.get("REFERENCE_DATE")));
+		pncEntity.setFW_JiVitAHHID(pncVisit.getString(pncVisitKeyMap.get("JiVitAHHID")));
+		pncEntity.setFW_WOMBID(pncVisit.getString(pncVisitKeyMap.get("FWWOMBID")));
+		pncEntity.setFW_WOMNID(pncVisit.getString(pncVisitKeyMap.get("FWWOMNID")));
+		pncEntity.setFW_WOMFNAME(pncVisit.getString(pncVisitKeyMap.get("FWWOMFNAME")));
+		pncEntity.setFW_HUSNAME(pncVisit.getString(pncVisitKeyMap.get("FWHUSNAME")));
+		pncEntity.setFWBNFDTOO(pncVisit.getString(pncVisitKeyMap.get("FWBNFDTOO")));
+		pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
+		pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
 		
 		pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
 		pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));

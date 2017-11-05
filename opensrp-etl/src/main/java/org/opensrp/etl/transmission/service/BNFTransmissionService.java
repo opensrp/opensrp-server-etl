@@ -13,7 +13,6 @@ public class BNFTransmissionService implements TransmissionServices {
 	
 	@Override
 	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		System.out.println("Class:BNFTransmissionService, method:sentDataToConvert");
 		bnfDataConverterService.convertToEntityAndSave(doc);
 	}
 	

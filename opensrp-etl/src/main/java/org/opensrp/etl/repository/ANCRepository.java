@@ -79,7 +79,7 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
 		listPsrfCr.add(Restrictions.eq("today", today));
 		List<ANCEntity> listPsrf = listPsrfCr.list();
-		System.err.println("Size:" + listPsrf.size());
+		
 		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
 	}
 	

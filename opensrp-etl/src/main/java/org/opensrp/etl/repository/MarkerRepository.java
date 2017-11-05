@@ -42,7 +42,6 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 		                    .add(Projections.property("timeStamp"), "timeStamp"))
 		        .setResultTransformer(Transformers.aliasToBean(MarkerEntity.class));
 		List<MarkerEntity> list = cr.list();
-		System.err.println("L:" + list.get(0).getTimeStamp());
 		return list.get(0).getTimeStamp();
 		
 	}

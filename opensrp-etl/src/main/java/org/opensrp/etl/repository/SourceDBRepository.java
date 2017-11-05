@@ -32,8 +32,8 @@ public class SourceDBRepository extends CouchDbRepositorySupport<HouseHold> {
 	public ViewResult allData(long timeStamp) {
 		ComplexKey start = ComplexKey.of(timeStamp + 1);
 		ComplexKey end = ComplexKey.of(Long.MAX_VALUE);
-		ViewResult vr = db
-		        .queryView(createQuery("all_by_timestamp").startKey(start).endKey(end).includeDocs(false));
+		ViewResult vr = db.queryView(createQuery("all_by_timestamp").startKey(start).endKey(end).descending(false)
+		        .limit(10000).includeDocs(false));
 		
 		return vr;
 	}

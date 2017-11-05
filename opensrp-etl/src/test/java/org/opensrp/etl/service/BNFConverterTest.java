@@ -40,6 +40,7 @@ public class BNFConverterTest {
 	@Autowired
 	private ExceptionService exceptionService;
 	
+	@Ignore
 	@Test
 	public void saveTest() throws ParseException, JSONException {
 		
@@ -49,12 +50,12 @@ public class BNFConverterTest {
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());
 			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-			
-			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
+			System.err.println(currentDocumentTimeStamp);
+			/*transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
 			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
 				markerEntity.setTimeStamp(currentDocumentTimeStamp);
-				//markerService.update(markerEntity);
-			}
+				markerService.update(markerEntity);
+			}*/
 			
 		}
 	}

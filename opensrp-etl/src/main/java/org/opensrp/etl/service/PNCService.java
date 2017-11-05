@@ -21,9 +21,6 @@ public class PNCService implements RegisterService<PNCEntity> {
 	@Transactional
 	@Override
 	public void save(PNCEntity pncEntity) {
-		//pncRepository.save(pncEntity);
-		
-		System.err.println("ANCEntity");
 		PNCEntity existingpncEntity = findByCaseIdAndToday(pncEntity.getRelationalid(), pncEntity.getToday());
 		if (existingpncEntity == null) {
 			pncRepository.save(pncEntity);

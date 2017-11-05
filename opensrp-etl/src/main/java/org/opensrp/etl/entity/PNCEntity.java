@@ -61,7 +61,7 @@ public class PNCEntity {
 	
 	private String FW_HUSNAME;
 	
-	private Date FWBNFDTOO;
+	private String FWBNFDTOO;
 	
 	private String FWBNFSTS;
 	
@@ -78,8 +78,6 @@ public class PNCEntity {
 	private String relationalid;
 	
 	private String user_type;
-	
-	private String external_user_ID;
 	
 	private String pncName;
 	
@@ -233,11 +231,11 @@ public class PNCEntity {
 		FW_HUSNAME = fW_HUSNAME;
 	}
 	
-	public Date getFWBNFDTOO() {
+	public String getFWBNFDTOO() {
 		return FWBNFDTOO;
 	}
 	
-	public void setFWBNFDTOO(Date fWBNFDTOO) {
+	public void setFWBNFDTOO(String fWBNFDTOO) {
 		FWBNFDTOO = fWBNFDTOO;
 	}
 	
@@ -303,14 +301,6 @@ public class PNCEntity {
 	
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
-	}
-	
-	public String getExternal_user_ID() {
-		return external_user_ID;
-	}
-	
-	public void setExternal_user_ID(String external_user_ID) {
-		this.external_user_ID = external_user_ID;
 	}
 	
 	public String getPncName() {

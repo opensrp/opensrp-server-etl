@@ -24,11 +24,8 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	
 	@Override
 	public void save(HouseholdEntity entity) {
-		
 		try {
 			getSession().save(entity);
-			getSession().close();
-			getSession().clear();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -42,8 +39,7 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 		Query query = getSession().createQuery("delete HouseholdEntity where id = :ID");
 		query.setParameter("ID", householdEntity.getId());
 		int result = query.executeUpdate();
-		getSession().close();
-		getSession().clear();
+		
 		if (result == 1) {
 			return true;
 		} else {
@@ -74,8 +70,6 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 		listHouseholdCr.add(Restrictions.eq("caseId", caseId));
 		List<HouseholdEntity> listHousehold = listHouseholdCr.list();
 		
-		getSession().close();
-		getSession().clear();
 		return listHousehold.size() > 0 ? (HouseholdEntity) listHousehold.get(0) : null;
 	}
 	

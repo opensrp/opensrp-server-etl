@@ -23,7 +23,6 @@ public class ANCTransmissionService implements TransmissionServices {
 	
 	@Override
 	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		System.out.println("Class:ANCTransmissionService, method:sentDataToConvert");
 		ancDataConverterService.convertToEntityAndSave(doc);
 		
 	}
