@@ -93,15 +93,13 @@ public class ChildToENCCConverter {
 		return enccVisitKeyMap;
 	}
 	
-	public void enccVisitSave(JSONObject mdoc) throws JSONException {
+	public void enccVisitSave(JSONObject mdoc) throws JSONException, ParseException {
 		setENCCKeys();
-		
 		try {
 			
 			if (mdoc.has(ENCC_Visit_One) && mdoc.isNull(ENCC_Visit_One) || mdoc.getJSONObject(ENCC_Visit_One).length() == 0) {
 				
 			} else {
-				
 				JSONObject enccVisitOne = new JSONObject(mdoc.getString(ENCC_Visit_One));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("1");
@@ -134,9 +132,13 @@ public class ChildToENCCConverter {
 			}
 			
 		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println(mdoc.getString("caseId"));
+		catch (JSONException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "ENCC");
+		}
+		catch (ParseException e) {
+			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "ENCC");
+		}
+		catch (NumberFormatException e) {
 			exceptionService.generatedEntityAndSave(mdoc, e.fillInStackTrace().toString(), "ENCC");
 		}
 		
@@ -149,53 +151,41 @@ public class ChildToENCCConverter {
 	}
 	
 	private ENCCEntity convertToAncEntity(JSONObject enccVisit, Map<String, String> enccVisitKeyMap, String caseId)
-	    throws JSONException {
+	    throws JSONException, ParseException {
+		enccEntity.setFWENCCDATE(DateUtil.getDateFromString(enccVisit, enccVisitKeyMap.get("FWENCDATE")));
 		
-		try {
-			enccEntity.setFWENCCDATE(DateUtil.getDateFromString(enccVisit.getString(enccVisitKeyMap.get("FWENCDATE"))));
-			enccEntity
-			        .setEncc_current_formStatus(enccVisit.getString(replace(enccVisitKeyMap.get("encc_current_formStatus"))));
-			enccEntity.setFWENCCSTS(enccVisit.getString(enccVisitKeyMap.get("FWENCSTS")));
-			enccEntity.setFWENCCBFINTN(enccVisit.getString(enccVisitKeyMap.get("FWENCBFINTN")));
-			enccEntity.setFWENCCPRLCTL(enccVisit.getString(enccVisitKeyMap.get("FWENCPRLCTL")));
-			enccEntity.setFWENCCDRYWM(enccVisit.getString(enccVisitKeyMap.get("FWENCDRYWM")));
-			
-			enccEntity.setFWENCCHDCOV(enccVisit.getString(enccVisitKeyMap.get("FWENCHDCOV")));
-			enccEntity.setFWENCCBTHD(enccVisit.getString(enccVisitKeyMap.get("FWENCBTHD")));
-			
-			enccEntity.setFWENCCUMBS(enccVisit.getString(enccVisitKeyMap.get("FWENCUMBS")));
-			enccEntity.setFWENCCDSFVRCLD(enccVisit.getString(enccVisitKeyMap.get("FWENCDSFVRCLD")));
-			enccEntity.setFWENCCTEMP(enccVisit.getString(enccVisitKeyMap.get("FWENCTEMP")));
-			enccEntity.setFWENCCDSFOULUMBS(enccVisit.getString(enccVisitKeyMap.get("FWENCDSFOULUMBS")));
-			
-			enccEntity.setFWENCCDSLIMBLUE(enccVisit.getString(enccVisitKeyMap.get("FWENCDSLIMBLUE")));
-			enccEntity.setFWENCCDSSKNYLW(enccVisit.getString(enccVisitKeyMap.get("FWENCDSSKNYLW")));
-			enccEntity.setFWENCCDSLETH(enccVisit.getString(enccVisitKeyMap.get("FWENCDSLETH")));
-			
-			enccEntity.setFWENCCDSDIFBRTH(enccVisit.getString(enccVisitKeyMap.get("FWENCDSDIFBRTH")));
-			enccEntity.setFWENCCDSCONVL(enccVisit.getString(enccVisitKeyMap.get("FWENCDSCONVL")));
-			enccEntity.setFWENCCDELCOMP(enccVisit.getString(enccVisitKeyMap.get("FWENCDELCOMP")));
-			enccEntity.setFWENCCDELCOMP(enccVisit.getString(enccVisitKeyMap.get("FWENCDELCOMP")));
-			
-			enccEntity.setSTART_DATE(DateUtil.getDateTimeFromString(enccVisit.getString(enccVisitKeyMap.get("start"))));
-			enccEntity.setEND_DATE(DateUtil.getDateTimeFromString(enccVisit.getString(enccVisitKeyMap.get("end"))));
-			enccEntity.setClientVersion(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("clientVersion"))));
-			enccEntity.setReceived_time(enccVisit.getString(enccVisitKeyMap.get("received_time")));
-			enccEntity.setTimeStamp(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("timeStamp"))));
-			enccEntity.setToday(DateUtil.getDateFromString(enccVisit.getString("today")));
-			enccEntity.setRelationalId(caseId);
-			
-		}
-		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (ParseException e) {
-			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
-		}
+		enccEntity.setEncc_current_formStatus(enccVisit.getString(replace(enccVisitKeyMap.get("encc_current_formStatus"))));
+		enccEntity.setFWENCCSTS(enccVisit.getString(enccVisitKeyMap.get("FWENCSTS")));
+		enccEntity.setFWENCCBFINTN(enccVisit.getString(enccVisitKeyMap.get("FWENCBFINTN")));
+		enccEntity.setFWENCCPRLCTL(enccVisit.getString(enccVisitKeyMap.get("FWENCPRLCTL")));
+		enccEntity.setFWENCCDRYWM(enccVisit.getString(enccVisitKeyMap.get("FWENCDRYWM")));
+		
+		enccEntity.setFWENCCHDCOV(enccVisit.getString(enccVisitKeyMap.get("FWENCHDCOV")));
+		enccEntity.setFWENCCBTHD(enccVisit.getString(enccVisitKeyMap.get("FWENCBTHD")));
+		
+		enccEntity.setFWENCCUMBS(enccVisit.getString(enccVisitKeyMap.get("FWENCUMBS")));
+		enccEntity.setFWENCCDSFVRCLD(enccVisit.getString(enccVisitKeyMap.get("FWENCDSFVRCLD")));
+		enccEntity.setFWENCCTEMP(enccVisit.getString(enccVisitKeyMap.get("FWENCTEMP")));
+		enccEntity.setFWENCCDSFOULUMBS(enccVisit.getString(enccVisitKeyMap.get("FWENCDSFOULUMBS")));
+		
+		enccEntity.setFWENCCDSLIMBLUE(enccVisit.getString(enccVisitKeyMap.get("FWENCDSLIMBLUE")));
+		enccEntity.setFWENCCDSSKNYLW(enccVisit.getString(enccVisitKeyMap.get("FWENCDSSKNYLW")));
+		enccEntity.setFWENCCDSLETH(enccVisit.getString(enccVisitKeyMap.get("FWENCDSLETH")));
+		
+		enccEntity.setFWENCCDSDIFBRTH(enccVisit.getString(enccVisitKeyMap.get("FWENCDSDIFBRTH")));
+		enccEntity.setFWENCCDSCONVL(enccVisit.getString(enccVisitKeyMap.get("FWENCDSCONVL")));
+		enccEntity.setFWENCCDELCOMP(enccVisit.getString(enccVisitKeyMap.get("FWENCDELCOMP")));
+		enccEntity.setFWENCCDELCOMP(enccVisit.getString(enccVisitKeyMap.get("FWENCDELCOMP")));
+		
+		enccEntity.setSTART_DATE(DateUtil.getDateTimeFromString(enccVisit, enccVisitKeyMap.get("start")));
+		enccEntity.setEND_DATE(DateUtil.getDateTimeFromString(enccVisit, enccVisitKeyMap.get("end")));
+		enccEntity.setClientVersion(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("clientVersion"))));
+		enccEntity.setReceived_time(enccVisit.getString(enccVisitKeyMap.get("received_time")));
+		enccEntity.setTimeStamp(Long.parseLong(enccVisit.getString(enccVisitKeyMap.get("timeStamp"))));
+		enccEntity.setToday(DateUtil.getDateFromString(enccVisit, "today"));
+		enccEntity.setRelationalId(caseId);
 		
 		return enccEntity;
 		
 	}
-	
 }

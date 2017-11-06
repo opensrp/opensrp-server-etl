@@ -1,6 +1,5 @@
 package org.opensrp.etl.repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -33,12 +32,7 @@ public class ExceptionRepository implements RegisterRepository<ExceptionEntity> 
 	@Override
 	public void save(ExceptionEntity exceptionEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			Serializable d = session.save(exceptionEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // 
+		session.save(exceptionEntity);
 		
 	}
 	

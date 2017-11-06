@@ -142,11 +142,9 @@ public class MotherToPNCConverter {
 	
 	private PNCEntity convertTopncEntity(JSONObject pncVisit, Map<String, String> pncVisitKeyMap) throws ParseException,
 	    JSONException {
-		if (pncVisit.has(pncVisitKeyMap.get("pnc_current_formStatus"))) {
-			pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("FWPNCDATE"))));
-		} else {
-			pncEntity.setFWPNCDATE(null);
-		}
+		
+		pncEntity.setFWPNCDATE(DateUtil.getDateFromString(pncVisit, pncVisitKeyMap.get("FWPNCDATE")));
+		
 		if (pncVisit.has(pncVisitKeyMap.get("pnc_current_formStatus"))) {
 			pncEntity.setPnc_current_formStatus(pncVisit.getString(pncVisitKeyMap.get("pnc_current_formStatus")));
 		} else {
@@ -207,10 +205,14 @@ public class MotherToPNCConverter {
 		pncEntity.setFWCONFIRMATION(pncVisit.getString(pncVisitKeyMap.get("FWCONFIRMATION")));
 		pncEntity.setFWBNFSTS(pncVisit.getString(pncVisitKeyMap.get("FWBNFSTS")));
 		
-		pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("start"))));
-		pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit.getString(pncVisitKeyMap.get("end"))));
-		pncEntity.setToday(DateUtil.getDateFromString(pncVisit.getString(pncVisitKeyMap.get("today"))));
-		pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
+		pncEntity.setStart(DateUtil.getDateTimeFromString(pncVisit, pncVisitKeyMap.get("start")));
+		pncEntity.setEnd(DateUtil.getDateTimeFromString(pncVisit, pncVisitKeyMap.get("end")));
+		pncEntity.setToday(DateUtil.getDateFromString(pncVisit, pncVisitKeyMap.get("today")));
+		if (pncVisit.has("received_time")) {
+			pncEntity.setReceived_time(pncVisit.getString(pncVisitKeyMap.get("received_time")));
+		} else {
+			pncEntity.setReceived_time(null);
+		}
 		
 		return pncEntity;
 		

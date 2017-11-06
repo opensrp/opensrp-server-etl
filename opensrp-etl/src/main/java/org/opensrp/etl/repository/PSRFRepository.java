@@ -28,12 +28,7 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	@Override
 	public void save(PSRFEntity psrfEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(psrfEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(psrfEntity);
 		
 	}
 	

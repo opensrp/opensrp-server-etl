@@ -28,12 +28,7 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 	@Override
 	public void save(BNFEntity bnfEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(bnfEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(bnfEntity);
 		
 	}
 	

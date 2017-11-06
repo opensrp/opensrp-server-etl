@@ -24,12 +24,7 @@ public class PNCRepository implements RegisterRepository<PNCEntity> {
 	@Override
 	public void save(PNCEntity pncEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(pncEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(pncEntity);
 		
 	}
 	

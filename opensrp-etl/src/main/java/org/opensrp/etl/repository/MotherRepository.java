@@ -23,12 +23,7 @@ public class MotherRepository implements RegisterRepository<MotherEntity> {
 	@Override
 	public void save(MotherEntity motherEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(motherEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(motherEntity);
 		
 	}
 	

@@ -28,13 +28,7 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 	@Override
 	public void save(ChildEntity childEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.merge(childEntity);
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.merge(childEntity);
 		
 	}
 	

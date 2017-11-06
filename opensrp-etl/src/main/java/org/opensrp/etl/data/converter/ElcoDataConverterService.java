@@ -35,7 +35,7 @@ public class ElcoDataConverterService implements DataConverterService {
 		try {
 			caseID = doc.getString("caseId");
 			JSONObject details = new JSONObject(doc.getString("details"));
-			elcoEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("WomanREGDATE")));
+			elcoEntity.setBirthDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
 			elcoEntity.setCaseId(doc.getString("caseId"));
 			elcoEntity.setClientVersion(doc.getLong("clientVersion"));
 			elcoEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
@@ -51,12 +51,12 @@ public class ElcoDataConverterService implements DataConverterService {
 			elcoEntity.setLastName(doc.getString("FWWOMLNAME"));
 			elcoEntity.setMauzaPara(doc.getString("FWWOMMAUZA_PARA"));
 			elcoEntity.setProvider(doc.getString("PROVIDERID"));
-			elcoEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("WomanREGDATE")));
+			elcoEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
 			elcoEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			elcoEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
-			elcoEntity.setStart(DateUtil.getDateTimeFromString(details.getString("start")));
-			elcoEntity.setEnd(DateUtil.getDateTimeFromString(details.getString("end")));
-			elcoEntity.setToday(DateUtil.getDateFromString(details.getString("today")));
+			elcoEntity.setStart(DateUtil.getDateTimeFromString(details, "start"));
+			elcoEntity.setEnd(DateUtil.getDateTimeFromString(details, "end"));
+			elcoEntity.setToday(DateUtil.getDateFromString(details, "today"));
 			elcoEntity.setUnion(doc.getString("FWWOMUNION"));
 			elcoEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
 			elcoEntity.setUserType(doc.getString("user_type"));
@@ -73,8 +73,8 @@ public class ElcoDataConverterService implements DataConverterService {
 			if (doc.has("FWCWOMHUSSTR"))
 				elcoEntity.setFWCWOMHUSSTR(doc.getString("FWCWOMHUSSTR"));
 			
-			if (doc.has("FWCENDATE")) {
-				elcoEntity.setFWCENDATE(DateUtil.getDateFromString(doc.getString("FWCENDATE")));
+			if (doc.has("FWCENDATE") && !doc.getString("FWCENDATE").isEmpty()) {
+				elcoEntity.setFWCENDATE(DateUtil.getDateFromString(doc, "FWCENDATE"));
 			}
 			
 			if (doc.has("FWCENSTAT")) {
@@ -125,11 +125,15 @@ public class ElcoDataConverterService implements DataConverterService {
 				elcoEntity.setFWWOMHUSLIV("");
 			}
 			elcoEntity.setFWELIGIBLE(doc.getString("FWELIGIBLE"));
-			elcoEntity.setFWELIGIBLE2(doc.getString("FWELIGIBLE2"));
+			if (doc.has("FWELIGIBLE2")) {
+				elcoEntity.setFWELIGIBLE2(doc.getString("FWELIGIBLE2"));
+			} else {
+				elcoEntity.setFWELIGIBLE2("");
+			}
 			elcoEntity.setFWWOMGOBHHID(doc.getString("FWWOMGOBHHID"));
 			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			elcoEntity.setRelationalId(details.getString("relationalid"));
-			elcoEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
+			elcoEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
 			elcoEntity.setCurrentFormStatus("");
 			
 			elcoService.save(elcoEntity);

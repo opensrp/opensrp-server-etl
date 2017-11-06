@@ -188,7 +188,6 @@ public class MotherToANCConverter {
 			if (mdoc.has(ANC_Visit_One) && mdoc.isNull(ANC_Visit_One) || mdoc.getJSONObject(ANC_Visit_One).length() == 0) {
 				
 			} else {
-				
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_One));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("1");
@@ -200,7 +199,6 @@ public class MotherToANCConverter {
 			if (mdoc.has(ANC_Visit_Two) && mdoc.isNull(ANC_Visit_Two) || mdoc.getJSONObject(ANC_Visit_Two).length() == 0) {
 				logger.debug("ancVisitTwo does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_Two));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("2");
@@ -208,12 +206,10 @@ public class MotherToANCConverter {
 				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap, ANCType.ANC2_current_formStatus.name()));
 				
 			}
-			
 			if (mdoc.has(ANC_Visit_Three) && mdoc.isNull(ANC_Visit_Three)
 			        || mdoc.getJSONObject(ANC_Visit_Three).length() == 0) {
 				
 			} else {
-				
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Three));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("3");
@@ -221,11 +217,9 @@ public class MotherToANCConverter {
 				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap, ANCType.ANC3_current_formStatus.name()));
 				
 			}
-			
 			if (mdoc.has(ANC_Visit_Four) && mdoc.isNull(ANC_Visit_Four) || mdoc.getJSONObject(ANC_Visit_Four).length() == 0) {
 				logger.debug("ancVisitFour does not exist caseId:" + mdoc.getString("caseId"));
 			} else {
-				
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Four));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("4");
@@ -246,7 +240,8 @@ public class MotherToANCConverter {
 	private ANCEntity convertToAncEntity(JSONObject ancVisit, Map<String, String> ancVisitKeyMap, String anc_current_status)
 	    throws ParseException, JSONException {
 		
-		ancEntity.setFWANCDATE(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("FWANCDATE"))));
+		ancEntity.setFWANCDATE(DateUtil.getDateFromString(ancVisit, ancVisitKeyMap.get("FWANCDATE")));
+		
 		ancEntity.setAnc_current_formStatus(ancVisit.getString(anc_current_status));
 		ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
 		ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
@@ -282,7 +277,7 @@ public class MotherToANCConverter {
 		ancEntity.setFWANCDS6(ancVisit.getString(ancVisitKeyMap.get("FWANCDS6")));
 		ancEntity.setFWDANGERVALUE(ancVisit.getString(ancVisitKeyMap.get("FWDANGERVALUE")));
 		ancEntity.setFWNOTELIGIBLE(ancVisit.getString(ancVisitKeyMap.get("FWNOTELIGIBLE")));
-		//ancEntity.setFWANCKNWPRVDR(ancVisit.getString(ancVisitKeyMap.get("FWANC4KNWPRVDR")));
+		
 		ancEntity.setFWHR_ANC(ancVisit.getString(ancVisitKeyMap.get("FWHR_ANC")));
 		ancEntity.setFWFLAGVALUE(ancVisit.getString(ancVisitKeyMap.get("FWFLAGVALUE")));
 		ancEntity.setFWSORTVALUE(ancVisit.getString(ancVisitKeyMap.get("FWSORTVALUE")));
@@ -299,13 +294,14 @@ public class MotherToANCConverter {
 			ancEntity.setFWWOMFNAME(ancVisit.getString(ancVisitKeyMap.get("FWWOMFNAME")));
 		if (ancVisit.has("FWHUSNAME"))
 			ancEntity.setFWHUSNAME(ancVisit.getString(ancVisitKeyMap.get("FWHUSNAME")));
-		//ancEntity.setMOTHER_REFERENCE_DATE(
-		//  DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("MOTHER_REFERENCE_DATE"))));
-		ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("start"))));
-		ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit.getString(ancVisitKeyMap.get("end"))));
-		ancEntity.setToday(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("today"))));
+		
+		ancEntity.setStart(DateUtil.getDateTimeFromString(ancVisit, ancVisitKeyMap.get("start")));
+		ancEntity.setEnd(DateUtil.getDateTimeFromString(ancVisit, ancVisitKeyMap.get("end")));
+		ancEntity.setToday(DateUtil.getDateFromString(ancVisit, ancVisitKeyMap.get("today")));
 		ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
-		ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit.getString(ancVisitKeyMap.get("received_time"))));
+		
+		ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit, ancVisitKeyMap.get("received_time")));
+		
 		ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
 		
 		return ancEntity;

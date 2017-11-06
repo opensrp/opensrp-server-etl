@@ -33,11 +33,9 @@ public class HouseholdDataConverterService implements DataConverterService {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");
-			if (doc.has("FWHOHBIRTHDATE") && !doc.getString("FWHOHBIRTHDATE").isEmpty()) {
-				householdEntity.setBirthDate(DateUtil.getDateFromString(doc.getString("FWHOHBIRTHDATE")));
-			} else {
-				householdEntity.setBirthDate(null);
-			}
+			
+			householdEntity.setBirthDate(DateUtil.getDateFromString(doc, "FWHOHBIRTHDATE"));
+			
 			householdEntity.setCaseId(doc.getString("caseId"));
 			householdEntity.setClientVersion(doc.getLong("clientVersion"));
 			householdEntity.setCountry(doc.getString("FWCOUNTRY"));
@@ -50,7 +48,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 				householdEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
 			}
 			
-			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
+			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc, "END"));
 			householdEntity.setExternalUserId(doc.getString("external_user_ID"));
 			if (doc.has("FWHOHFNAME") && !doc.getString("FWHOHFNAME").isEmpty()) {
 				householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
@@ -80,30 +78,23 @@ public class HouseholdDataConverterService implements DataConverterService {
 			//householdEntity.setLastName(doc.getString("FWHOHLNAME"));
 			householdEntity.setMauzaPara(doc.getString("FWMAUZA_PARA"));
 			householdEntity.setProvider(doc.getString("PROVIDERID"));
-			if (doc.has("FWNHREGDATE") && !doc.getString("FWNHREGDATE").isEmpty()) {
-				householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("FWNHREGDATE")));
-			} else {
-				householdEntity.setRegistrationDate(null);
-			}
-			if (doc.has("START") && !doc.getString("START").isEmpty()) {
-				householdEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
-			} else {
-				householdEntity.setStart(null);
-			}
+			
+			householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "FWNHREGDATE"));
+			
+			householdEntity.setStart(DateUtil.getDateTimeFromString(doc, "START"));
+			
 			householdEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			householdEntity.setSubunit(doc.getString("FWSUBUNIT"));
-			if (doc.has("TODAY") && !doc.getString("TODAY").isEmpty()) {
-				householdEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
-			} else {
-				householdEntity.setToday(null);
-			}
+			
+			householdEntity.setToday(DateUtil.getDateFromString(doc, "TODAY"));
+			
 			householdEntity.setUnion(doc.getString("FWUNION"));
 			householdEntity.setUpazila(doc.getString("FWUPAZILLA"));
 			householdEntity.setUserType(doc.getString("user_type"));
 			householdEntity.setWard(doc.getString("FWWARD"));
 			householdEntity.setFWGOBHHID(doc.getString("FWGOBHHID"));
 			JSONObject details = new JSONObject(doc.getString("details"));
-			householdEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
+			householdEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
 			householdService.save(householdEntity);
 		}
 		catch (JSONException e) {

@@ -81,19 +81,19 @@ public class MotherDataConverterService implements DataConverterService {
 			motherEntity.setFWHR_PSR(doc.getString("FWHR_PSR"));
 			motherEntity.setFWFLAGVALUE(doc.getString("FWFLAGVALUE"));
 			motherEntity.setFWSORTVALUE(doc.getString("FWSORTVALUE"));
-			motherEntity.setMotherWomLMP(DateUtil.getDateFromString(details.getString("LMP")));
-			motherEntity.setBirthDate(DateUtil.getDateFromString(details.getString("birthDate")));
+			motherEntity.setMotherWomLMP(DateUtil.getDateFromString(details, "LMP"));
+			motherEntity.setBirthDate(DateUtil.getDateFromString(details, "birthDate"));
 			motherEntity.setRelationalId(doc.getString("relationalid"));
 			motherEntity.setIsClosed(doc.getString("isClosed"));
-			if (details.has("received_time"))
-				motherEntity.setReceivedTime(DateUtil.getDateTimeFromString(details.getString("received_time")));
 			
-			if (doc.has("START"))
-				motherEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("START")));
-			if (doc.has("END"))
-				motherEntity.setEnd(DateUtil.getDateTimeFromString(doc.getString("END")));
-			motherEntity.setToday(DateUtil.getDateFromString(doc.getString("TODAY")));
-			motherEntity.setRegistrationDate(DateUtil.getDateFromString(doc.getString("TODAY")));
+			motherEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
+			
+			motherEntity.setStart(DateUtil.getDateTimeFromString(doc, "START"));
+			
+			motherEntity.setEnd(DateUtil.getDateTimeFromString(doc, "END"));
+			
+			motherEntity.setToday(DateUtil.getDateFromString(doc, "TODAY"));
+			motherEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "TODAY"));
 			
 			if (doc.has("user_type")) {
 				motherEntity.setUserType(doc.getString("user_type"));

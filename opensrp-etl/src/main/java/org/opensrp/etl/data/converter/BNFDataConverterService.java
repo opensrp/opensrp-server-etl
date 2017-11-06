@@ -32,8 +32,8 @@ public class BNFDataConverterService implements DataConverterService {
 		for (int i = 0; i < bnfs.length(); i++) {
 			JSONObject doc = bnfs.getJSONObject(i);
 			try {
-				bnfEntity.setFWBNFDATE(DateUtil.getDateFromString(doc.getString("FWBNFDATE")));
 				
+				bnfEntity.setFWBNFDATE(DateUtil.getDateFromString(doc, "FWBNFDATE"));
 				bnfEntity.setBnf_current_formStatus(doc.getString("bnf_current_formStatus"));
 				
 				bnfEntity.setFWCONFIRMATION(doc.getString("FWCONFIRMATION"));
@@ -47,9 +47,8 @@ public class BNFDataConverterService implements DataConverterService {
 				bnfEntity.setFWDISPLAYTEXT(doc.getString("FWDISPLAYTEXT1"));
 				
 				bnfEntity.setFWBNFWOMVITSTS(doc.getString("FWBNFWOMVITSTS"));
-				if (doc.has("FWBNFDTOO") && !doc.getString("FWBNFDTOO").isEmpty()
-				        && !"null".equalsIgnoreCase(doc.getString("FWBNFDTOO")))
-					bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc.getString("FWBNFDTOO")));
+				
+				bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc, "FWBNFDTOO"));
 				
 				bnfEntity.setFWBNFLB(doc.getString("FWBNFLB"));
 				
@@ -59,17 +58,16 @@ public class BNFDataConverterService implements DataConverterService {
 				if (mother.has("external_user_ID"))
 					bnfEntity.setExternal_user_ID(mother.getString("external_user_ID"));
 				
-				bnfEntity.setReceived_time(DateUtil.getDateTimeFromString(doc.getString("received_time")));
-				
+				bnfEntity.setReceived_time(DateUtil.getDateTimeFromString(doc, "received_time"));
 				bnfEntity.setClientVersion(Long.parseLong(doc.getString("clientVersion")));
-				
 				bnfEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
 				bnfEntity.setExternal_user_ID(doc.getString("external_user_ID"));
 				bnfEntity.setUser_type(doc.getString("user_type"));
 				bnfEntity.setRelationalId(mother.getString("caseId"));
 				bnfEntity.setProvider(mother.getString("PROVIDERID"));
-				//bnfEntity.setToday(DateUtil.getDateFromString(doc.getString("today")));
-				//bnfEntity.setStart(DateUtil.getDateTimeFromString(doc.getString("start")));
+				bnfEntity.setToday(DateUtil.getDateFromString(mother, "TODAY"));
+				bnfEntity.setStart(DateUtil.getDateTimeFromString(mother, "START"));
+				bnfEntity.setEnd(DateUtil.getDateTimeFromString(mother, "END"));
 				
 				bnfService.save(bnfEntity);
 			}

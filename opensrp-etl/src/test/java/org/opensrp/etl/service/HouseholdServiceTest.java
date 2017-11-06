@@ -6,7 +6,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opensrp.etl.entity.HouseholdEntity;
-import org.opensrp.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,8 +29,8 @@ public class HouseholdServiceTest {
 		he.setCaseId("Cwaseer");
 		String today = "1998-12-29";
 		String start = "1998-12-29 23:37:50";
-		he.setToday(DateUtil.getDateFromString(today));
-		he.setStart(DateUtil.getDateTimeFromString(start));
+		//he.setToday(DateUtil.getDateFromString(today));
+		//he.setStart(DateUtil.getDateTimeFromString(start));
 		
 		householdService.save(he);
 	}

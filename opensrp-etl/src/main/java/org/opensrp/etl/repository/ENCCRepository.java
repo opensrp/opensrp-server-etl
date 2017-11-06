@@ -27,14 +27,8 @@ public class ENCCRepository implements RegisterRepository<ENCCEntity> {
 	
 	@Override
 	public void save(ENCCEntity enccEntity) {
-		
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(enccEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(enccEntity);
 		
 	}
 	

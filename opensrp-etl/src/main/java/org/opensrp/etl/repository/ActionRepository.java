@@ -29,12 +29,7 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 	@Override
 	public void save(ActionEntity actionEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		try {
-			session.save(actionEntity);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		session.save(actionEntity);
 		
 	}
 	

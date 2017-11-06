@@ -63,9 +63,6 @@ public class ENCCEntity {
 	private String encc_current_formStatus;
 	
 	@Temporal(TemporalType.DATE)
-	private Date REFERENCE_DATE;
-	
-	@Temporal(TemporalType.DATE)
 	private Date START_DATE;
 	
 	@Temporal(TemporalType.DATE)
@@ -262,14 +259,6 @@ public class ENCCEntity {
 	
 	public void setEncc_current_formStatus(String encc_current_formStatus) {
 		this.encc_current_formStatus = encc_current_formStatus;
-	}
-	
-	public Date getREFERENCE_DATE() {
-		return REFERENCE_DATE;
-	}
-	
-	public void setREFERENCE_DATE(Date rEFERENCE_DATE) {
-		REFERENCE_DATE = rEFERENCE_DATE;
 	}
 	
 	public Date getSTART_DATE() {

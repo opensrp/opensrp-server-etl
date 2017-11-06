@@ -23,14 +23,8 @@ public class ElcoRepository implements RegisterRepository<ElcoEntity> {
 	}
 	
 	public void addElco(ElcoEntity p) {
+		getSession().save(p);
 		
-		try {
-			getSession().save(p);
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
