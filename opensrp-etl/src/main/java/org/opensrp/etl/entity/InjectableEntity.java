@@ -542,7 +542,4 @@ public class InjectableEntity {
 	public void setrelationalid(String relationalid) {
 		this.relationalid = relationalid;
 	}
-	
-	
-	
 }

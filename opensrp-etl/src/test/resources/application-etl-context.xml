@@ -77,6 +77,7 @@
 <bean name="adolescentService" class="org.opensrp.etl.service.AdolescentService"/>
 <bean name="injectableService" class="org.opensrp.etl.service.InjectableService"/>
 <bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
+<bean name="registerServiceImpl" class="org.opensrp.etl.service.RegisterServiceImpl"/>
 
 
 <bean name="householdRepository" class="org.opensrp.etl.repository.HouseholdRepository"/>
@@ -91,6 +92,7 @@
 <bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
 <bean name="adolescentRepository" class="org.opensrp.etl.repository.AdolescentRepository"/>
 <bean name="injectableRepository" class="org.opensrp.etl.repository.InjectableRepository"/>
+<bean name="registerRepositoryImpl" class="org.opensrp.etl.repository.RegisterRepositoryImpl"/>
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="memberTransmissionService" class="org.opensrp.etl.transmission.service.MemberTransmissionService"/>

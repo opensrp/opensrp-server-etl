@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.InjectableEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ExceptionService;
-import org.opensrp.etl.service.InjectableService;
+import org.opensrp.etl.service.RegisterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InjectableDataConverterService implements DataConverterService{
@@ -15,7 +15,7 @@ public class InjectableDataConverterService implements DataConverterService{
 	private InjectableEntity injectableEntity;
 	
 	@Autowired
-	private InjectableService injectableService;
+	private RegisterServiceImpl injectableService;
 	
 	@Autowired
 	private ExceptionService exceptionService;
@@ -31,8 +31,6 @@ public class InjectableDataConverterService implements DataConverterService{
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		JSONArray injectables = new JSONArray();
 		injectables = doc.getJSONArray("injecTables");
-		
-		System.err.println("injecTables size: " + injectables.length());
 
 		for (int i = 0; i < injectables.length(); i++) {
 			JSONObject injectable = injectables.getJSONObject(i);
