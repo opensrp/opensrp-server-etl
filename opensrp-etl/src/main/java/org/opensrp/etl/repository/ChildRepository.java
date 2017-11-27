@@ -1,6 +1,6 @@
 package org.opensrp.etl.repository;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,28 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ChildRepository implements RegisterRepository<ChildEntity> {
 	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public ChildRepository() {
 		
 	}
 	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-	
 	@Override
 	public void save(ChildEntity childEntity) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.merge(childEntity);
+		session.save(childEntity);
+		//session.merge(childEntity);
 		
 	}
 	
 	@Override
 	public boolean delete(ChildEntity childEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("delete ChildEntity where id = :ID");
+		Query query = getSession().createQuery("delete ChildEntity where id = :ID");
 		query.setParameter("ID", childEntity.getId());
 		int result = query.executeUpdate();
 		if (result == 1) {
@@ -62,14 +58,19 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 		Session session = this.sessionFactory.getCurrentSession();
 		return session;
 	}
-	
+
+	public ChildEntity findByCaseIdAndToday(String relationalId, Date today) {
+		Criteria listChildCr = getSession().createCriteria(ChildEntity.class);
+		listChildCr.add(Restrictions.eq("relationalid", relationalId));
+		listChildCr.add(Restrictions.eq("Today", today));
+		System.out.println("before caseId: " + relationalId + " today: " + today);
+		List<ChildEntity> listChild = listChildCr.list();
+		System.out.println("after caseId: " + relationalId);
+		return listChild.size() > 0 ? (ChildEntity) listChild.get(0) : null;
+	}
+
 	@Override
 	public ChildEntity findByCaseId(String caseId) {
-		Criteria listChildCr = getSession().createCriteria(ChildEntity.class);
-		listChildCr.add(Restrictions.eq("caseId", caseId));
-		List<ChildEntity> listChild = new ArrayList<ChildEntity>();
-		listChild = listChildCr.list();
-		
-		return listChild.size() > 0 ? (ChildEntity) listChild.get(0) : null;
+		return null;
 	}
 }

@@ -1,15 +1,15 @@
 package org.opensrp.etl.interfaces;
 
-public interface RegisterService<T> {
+public interface RegisterService<Object> {
 	
-	public void save(T t);
+	public void save(Object t);
 	
-	public boolean delete(T t);
+	public boolean delete(Object t);
 	
-	public void update(T t);
+	public void update(Object t);
 	
-	public T findById(int id);
+	public Object findById(int id);
 	
-	public T findByCaseId(String caseId);
+	public Object findByCaseId(String caseId);
 	
 }

@@ -1,6 +1,5 @@
 package org.opensrp.etl.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -69,10 +68,10 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 		return listANC.size() > 0 ? (ANCEntity) listANC.get(0) : null;
 	}
 	
-	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
+	public ANCEntity findByCaseIdAndName(String relationalId, String name) {
 		Criteria listPsrfCr = getSession().createCriteria(ANCEntity.class);
 		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
-		listPsrfCr.add(Restrictions.eq("today", today));
+		listPsrfCr.add(Restrictions.eq("ancName", name));
 		List<ANCEntity> listPsrf = listPsrfCr.list();
 		
 		return listPsrf.size() > 0 ? listPsrf.get(0) : null;

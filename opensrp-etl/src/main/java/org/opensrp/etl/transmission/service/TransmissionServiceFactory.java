@@ -9,13 +9,7 @@ public class TransmissionServiceFactory {
 	private HouseholdTransmissionService householdTransmissionService;
 	
 	@Autowired
-	private ElcoTransmissionService elcoTransmissionService;
-	
-	@Autowired
-	private MotherTransmissionService motherTransmissionService;
-	
-	@Autowired
-	private ChildTransmissionService childTransmissionService;
+	private MemberTransmissionService memberTransmissionService;
 	
 	@Autowired
 	private ActionTransmissionService actionTransmissionService;
@@ -25,12 +19,8 @@ public class TransmissionServiceFactory {
 	private TransmissionServices getTransmissionService(String transmissionServiceType) {
 		if (transmissionServiceType.equals("HouseHold"))
 			transmissionServices = householdTransmissionService;
-		else if (transmissionServiceType.equals("Elco"))
-			transmissionServices = elcoTransmissionService;
-		else if (transmissionServiceType.equals("Mother"))
-			transmissionServices = motherTransmissionService;
-		else if (transmissionServiceType.equals("Child"))
-			transmissionServices = childTransmissionService;
+		else if (transmissionServiceType.equals("Members"))
+			transmissionServices = memberTransmissionService;
 		else if (transmissionServiceType.equals("Action"))
 			transmissionServices = actionTransmissionService;
 		return transmissionServices;

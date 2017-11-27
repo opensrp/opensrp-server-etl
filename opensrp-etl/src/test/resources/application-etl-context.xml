@@ -27,7 +27,7 @@
 	
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url"  value="jdbc:postgresql://localhost/mcare2" />
+        <property name="url"  value="jdbc:postgresql://localhost/dgfp" />
         <property name="username" value="postgres" />
         <property name="password" value="password" />
 </bean>
@@ -38,17 +38,18 @@
         <property name="annotatedClasses">
             <list>
                 <value>org.opensrp.etl.entity.HouseholdEntity</value>
-                <value>org.opensrp.etl.entity.ElcoEntity</value>
+                <value>org.opensrp.etl.entity.MemberEntity</value>
                 <value>org.opensrp.etl.entity.ActionEntity</value>
-                <value>org.opensrp.etl.entity.MotherEntity</value>
+                <value>org.opensrp.etl.entity.NutritionEntity</value>
                 <value>org.opensrp.etl.entity.ANCEntity</value>
-                 <value>org.opensrp.etl.entity.PNCEntity</value>                 
+                <value>org.opensrp.etl.entity.PNCEntity</value>
                 <value>org.opensrp.etl.entity.ChildEntity</value>
-                <value>org.opensrp.etl.entity.MarkerEntity</value> 
-                <value>org.opensrp.etl.entity.PSRFEntity</value>  
-                <value>org.opensrp.etl.entity.BNFEntity</value>
-                <value>org.opensrp.etl.entity.ENCCEntity</value> 
-                <value>org.opensrp.etl.entity.ExceptionEntity</value>              
+                <value>org.opensrp.etl.entity.MarkerEntity</value>   
+                <value>org.opensrp.etl.entity.PSRFEntity</value> 
+                <value>org.opensrp.etl.entity.BNFEntity</value>   
+                <value>org.opensrp.etl.entity.ExceptionEntity</value>
+                <value>org.opensrp.etl.entity.AdolescentEntity</value>
+                <value>org.opensrp.etl.entity.InjectableEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -56,7 +57,6 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
-                 <prop key="hibernate.show_sql">false</prop>
                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
@@ -66,73 +66,67 @@
  <bean name="transmissionServiceFactory" class="org.opensrp.etl.transmission.service.TransmissionServiceFactory"/>
   
 <bean name="householdService" class="org.opensrp.etl.service.HouseholdService"/>    
-<bean name="elcoService" class="org.opensrp.etl.service.ElcoService"/>
+<bean name="memberService" class="org.opensrp.etl.service.MemberService"/>
 <bean name="psrfService" class="org.opensrp.etl.service.PSRFService"/>
-<bean name="motherService" class="org.opensrp.etl.service.MotherService"/>
+<bean name="nutritionService" class="org.opensrp.etl.service.NutritionService"/>
 <bean name="ancService" class="org.opensrp.etl.service.ANCService"/>
 <bean name="pncService" class="org.opensrp.etl.service.PNCService"/>
 <bean name="bnfService" class="org.opensrp.etl.service.BNFService"/>
 <bean name="childService" class="org.opensrp.etl.service.ChildService"/>
-<bean name="enccService" class="org.opensrp.etl.service.ENCCService"/>
 <bean name="actionService" class="org.opensrp.etl.service.ActionService"/>
+<bean name="adolescentService" class="org.opensrp.etl.service.AdolescentService"/>
+<bean name="injectableService" class="org.opensrp.etl.service.InjectableService"/>
 <bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
 
 
 <bean name="householdRepository" class="org.opensrp.etl.repository.HouseholdRepository"/>
-<bean name="elcoRepository" class="org.opensrp.etl.repository.ElcoRepository"/>
+<bean name="memberRepository" class="org.opensrp.etl.repository.MemberRepository"/>
 <bean name="psrfRepository" class="org.opensrp.etl.repository.PSRFRepository"/> 
-<bean name="motherRepository" class="org.opensrp.etl.repository.MotherRepository"/>
+<bean name="nutritionRepository" class="org.opensrp.etl.repository.NutritionRepository"/>
 <bean name="ancRepository" class="org.opensrp.etl.repository.ANCRepository"/>
 <bean name="pncRepository" class="org.opensrp.etl.repository.PNCRepository"/>
 <bean name="bnfRepository" class="org.opensrp.etl.repository.BNFRepository"/>
 <bean name="childRepository" class="org.opensrp.etl.repository.ChildRepository"/>
-<bean name="enccRepository" class="org.opensrp.etl.repository.ENCCRepository"/>
 <bean name="actionRepository" class="org.opensrp.etl.repository.ActionRepository"/>
 <bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
-
+<bean name="adolescentRepository" class="org.opensrp.etl.repository.AdolescentRepository"/>
+<bean name="injectableRepository" class="org.opensrp.etl.repository.InjectableRepository"/>
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
-<bean name="elcoTransmissionService" class="org.opensrp.etl.transmission.service.ElcoTransmissionService"/>
-<bean name="psrfTransmissionService" class="org.opensrp.etl.transmission.service.PSRFTransmissionService"/> 
-<bean name="motherTransmissionService" class="org.opensrp.etl.transmission.service.MotherTransmissionService"/>
-<bean name="ancTransmissionService" class="org.opensrp.etl.transmission.service.ANCTransmissionService"/>
-<bean name="pncTransmissionService" class="org.opensrp.etl.transmission.service.PNCTransmissionService"/>
-<bean name="bnfTransmissionService" class="org.opensrp.etl.transmission.service.BNFTransmissionService"/>
-<bean name="childTransmissionService" class="org.opensrp.etl.transmission.service.ChildTransmissionService"/>
-<bean name="enccTransmissionService" class="org.opensrp.etl.transmission.service.ENCCTransmissionService"/>
+<bean name="memberTransmissionService" class="org.opensrp.etl.transmission.service.MemberTransmissionService"/>
 <bean name="actionTransmissionService" class="org.opensrp.etl.transmission.service.ActionTransmissionService"/>
-
   
 <bean name="householdDataConverterService" class="org.opensrp.etl.data.converter.HouseholdDataConverterService"/>
-<bean name="elcoDataConverterService" class="org.opensrp.etl.data.converter.ElcoDataConverterService"/>
+<bean name="memberDataConverterService" class="org.opensrp.etl.data.converter.MemberDataConverterService"/>
 <bean name="psrfDataConverterService" class="org.opensrp.etl.data.converter.PSRFDataConverterService"/> 
-<bean name="motherDataConverterService" class="org.opensrp.etl.data.converter.MotherDataConverterService"/>
-<bean name="motherToANCConverter" class="org.opensrp.etl.data.converter.MotherToANCConverter"/>
-<bean name="motherToPNCConverter" class="org.opensrp.etl.data.converter.MotherToPNCConverter"/>
+<bean name="nutritionDataConverterService" class="org.opensrp.etl.data.converter.NutritionDataConverterService"/>
 <bean name="ancDataConverterService" class="org.opensrp.etl.data.converter.ANCDataConverterService"/>
 <bean name="pncDataConverterService" class="org.opensrp.etl.data.converter.PNCDataConverterService"/>
 <bean name="bnfDataConverterService" class="org.opensrp.etl.data.converter.BNFDataConverterService"/>
-<bean name="enccDataConverterService" class="org.opensrp.etl.data.converter.ENCCDataConverterService"/>
 <bean name="actionDataConverterService" class="org.opensrp.etl.data.converter.ActionDataConverterService"/>
 <bean name="childDataConverterService" class="org.opensrp.etl.data.converter.ChildDataConverterService"/>
-<bean name="childToENCCConverter" class="org.opensrp.etl.data.converter.ChildToENCCConverter"/>
+<bean name="adolescentDataConverterService" class="org.opensrp.etl.data.converter.AdolescentDataConverterService"/>
+<bean name="injectableDataConverterService" class="org.opensrp.etl.data.converter.InjectableDataConverterService"/>
 
+<bean name="dataConverter" class="org.opensrp.etl.data.converter.DataConverter"/>
 
 <bean name="householdEntity" class="org.opensrp.etl.entity.HouseholdEntity"/>
-<bean name="elcoEntity" class="org.opensrp.etl.entity.ElcoEntity"/>
+<bean name="memberEntity" class="org.opensrp.etl.entity.MemberEntity"/>
 <bean name="psrfEntity" class="org.opensrp.etl.entity.PSRFEntity"/>
-<bean name="motherEntity" class="org.opensrp.etl.entity.MotherEntity"/>
+<bean name="nutritionEntity" class="org.opensrp.etl.entity.NutritionEntity"/>
 <bean name="ancEntity" class="org.opensrp.etl.entity.ANCEntity"/>
 <bean name="pncEntity" class="org.opensrp.etl.entity.PNCEntity"/>
 <bean name="bnfEntity" class="org.opensrp.etl.entity.BNFEntity"/>
 <bean name="childEntity" class="org.opensrp.etl.entity.ChildEntity"/>
-<bean name="enccEntity" class="org.opensrp.etl.entity.ENCCEntity"/>
+<bean name="adolescentEntity" class="org.opensrp.etl.entity.AdolescentEntity"/>
+<bean name="injectableEntity" class="org.opensrp.etl.entity.InjectableEntity"/>
 <bean name="actionEntity" class="org.opensrp.etl.entity.ActionEntity"/>
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
 <bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
 
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>
+    
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />

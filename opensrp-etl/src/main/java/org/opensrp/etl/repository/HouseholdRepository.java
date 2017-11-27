@@ -24,7 +24,13 @@ public class HouseholdRepository implements RegisterRepository<HouseholdEntity> 
 	
 	@Override
 	public void save(HouseholdEntity entity) {
-		getSession().save(entity);
+		try {
+			System.err.println("looooooooo");
+			getSession().save(entity);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

@@ -2,14 +2,11 @@ package org.opensrp.etl.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,138 +27,127 @@ public class ANCEntity {
 	
 	private String ancName;
 	
+	private String existing_Age_Youngest_Child;
+	
+	private String existing_Mem_Marital_Status;
+	
+	private String existing_ELCO_Mobile_Number;
+	
+	private String existing_Bleeding;
+	
+	private Integer IFA_Received;
+	
+	private String existing_Heavy_Blood_Flow;
+	
 	@Temporal(TemporalType.DATE)
-	private Date FWANCDATE;
+	private Date ANC_Expired_Date;
 	
-	private String anc_current_formStatus;
+	private String existing_Final_Vill;
 	
-	private String FWCONFIRMATION;
+	private String yn_dk_label;
 	
-	private String FWGESTATIONALAGE;
+	private String existing_Gravida;
 	
-	private String FWEDD;
+	private String Confirm_Info;
 	
-	private String FWANCREMSTS;
+	private Integer Visit_Status;
 	
-	private String FWANCINT;
+	private Integer Is_Post_Due;
 	
-	private String FWANCKNWPRVDR;
+	private String existing_ELCO_BRID;
 	
-	private String FWANCANM;
+	@Temporal(TemporalType.DATE)
+	private Date existing_EDD;
 	
-	private String FWANCHBP;
+	private String Met;
 	
-	private String FWANCDBT;
+	private String existing_Caesarean;
 	
-	private String FWANCTHY;
+	private String existing_Birth_Outcome;
 	
-	private String FWANCPROB;
-	
-	private String FWANCHEAD;
-	
-	private String FWBPCLOCOFDEL;
-	
-	private String FWBPCASSTLAB;
-	
-	private String FWBPCTRNSPRT;
-	
-	private String FWBPCBLDGRP;
-	
-	private String FWBPCBLDDNR;
-	
-	private String FWBPCFINARGMT;
-	
-	private String mauza;
-	
-	private String FWVG;
-	
-	private String FWHR_PSR;
-	
-	private String FWHRP;
-	
-	private String existing_ELCO;
-	
-	private String FWANCBLRVIS;
-	
-	private String FWANCSWLNG;
-	
-	private String FWANCCONVL;
-	
-	private String FWANCBLD;
-	
-	private String FWANCDS1;
-	
-	private String FWANCDS2;
-	
-	private String FWANCDS3;
-	
-	private String FWANCDS4;
-	
-	private String FWANCDS5;
-	
-	private String FWANCDS6;
-	
-	private String FWDANGERVALUE;
-	
-	private String FWNOTELIGIBLE;
-	
-	private String FWHR_ANC;
-	
-	private String FWFLAGVALUE;
-	
-	private String FWSORTVALUE;
-	
-	private String user_type;
-	
-	private String external_user_ID;
-	
-	private String relationalid;
-	
-	private String FW_GOBHHID;
-	
-	private String FW_JiVitAHHID;
-	
-	private String FWWOMBID;
-	
-	private String FWWOMNID;
-	
-	private String FWWOMFNAME;
-	
-	private String FWHUSNAME;
-	
-	private long clientVersion;
-	
-	private Date received_time;
-	
-	private long timeStamp;
+	private String existing_Mauzapara;
 	
 	private Date start;
 	
-	@Column(name = "end_time")
-	private Date end;
+	private String Convulsions;
+	
+	private String Is_On_Time;
+	
+	private String existing_TT_Count;
+	
+	private String existing_Dead_Child;
+	
+	private String existing_GoB_HHID;
+	
+	private String relationalid;
+	
+	private String existing_Couple_No;
+	
+	private String Symptoms;
+	
+	private String Is_Reffered;
+	
+	private String existing_Spouse_Name;
+	
+	private String Is_Critical;
+	
+	private String Is_Expired;
 	
 	@Temporal(TemporalType.DATE)
 	private Date today;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_DATE", updatable = false)
-	private Date created = new Date();
+	private Integer Preg_Status;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
-	private Date updated = new Date();
+	private String existing_ELCO;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "mother_id", referencedColumnName = "id")
-	private MotherEntity mother;
+	private String existing_Height;
 	
-	public int getId() {
-		return id;
-	}
+	private String ELCO;
 	
-	public void setId(int id) {
-		this.id = id;
-	}
+	private String existing_Marriage_Life;
+	
+	private String Headache_Blur_Vision;
+	
+	private String existing_Mem_F_Name;
+	
+	private String existing_Risky_Preg;
+	
+	private String anc_current_formStatus;
+	
+	@Temporal(TemporalType.DATE)
+	private Date ANC_Post_Due_Date;
+	
+	private String existing_Gestational_Age;
+	
+	@Column(name = "end_time")
+	private Date end;
+	
+	private String existing_Prolong_Delivery;
+	
+	private Date received_time;
+	
+	private String existing_HoH_F_Name;
+	
+	private String Prolonged_Delivery;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+	
+	private String existing_Total_Child_Alive;
+	
+	private String Not_Eligible;
+	
+	@Temporal(TemporalType.DATE)
+	private Date existing_LMP;
+	
+	private String Position_Child_During_Delivery;
+	
+	private String Menstruation;
+	
+	private String High_Fever;
+	
+	@Temporal(TemporalType.DATE)
+	private Date ANC_Due_Date;
 	
 	public String getAncName() {
 		return ancName;
@@ -171,476 +157,472 @@ public class ANCEntity {
 		this.ancName = ancName;
 	}
 	
-	public Date getFWANCDATE() {
-		return FWANCDATE;
+	public String getExisting_Age_Youngest_Child() {
+		return existing_Age_Youngest_Child;
 	}
 	
-	public void setFWANCDATE(Date fWANCDATE) {
-		FWANCDATE = fWANCDATE;
+	public void setexisting_Age_Youngest_Child(String existing_Age_Youngest_Child) {
+		this.existing_Age_Youngest_Child = existing_Age_Youngest_Child;
 	}
 	
-	public String getAnc_current_formStatus() {
-		return anc_current_formStatus;
+	public String getExisting_Mem_Marital_Status() {
+		return existing_Mem_Marital_Status;
 	}
 	
-	public void setAnc_current_formStatus(String anc_current_formStatus) {
-		this.anc_current_formStatus = anc_current_formStatus;
+	public void setexisting_Mem_Marital_Status(String existing_Mem_Marital_Status) {
+		this.existing_Mem_Marital_Status = existing_Mem_Marital_Status;
 	}
 	
-	public String getFWCONFIRMATION() {
-		return FWCONFIRMATION;
+	public String getExisting_ELCO_Mobile_Number() {
+		return existing_ELCO_Mobile_Number;
 	}
 	
-	public void setFWCONFIRMATION(String fWCONFIRMATION) {
-		FWCONFIRMATION = fWCONFIRMATION;
+	public void setexisting_ELCO_Mobile_Number(String existing_ELCO_Mobile_Number) {
+		this.existing_ELCO_Mobile_Number = existing_ELCO_Mobile_Number;
 	}
 	
-	public String getFWGESTATIONALAGE() {
-		return FWGESTATIONALAGE;
+	public String getExisting_Bleeding() {
+		return existing_Bleeding;
 	}
 	
-	public void setFWGESTATIONALAGE(String fWGESTATIONALAGE) {
-		FWGESTATIONALAGE = fWGESTATIONALAGE;
+	public void setexisting_Bleeding(String existing_Bleeding) {
+		this.existing_Bleeding = existing_Bleeding;
 	}
 	
-	public String getFWEDD() {
-		return FWEDD;
+	public Integer getIFA_Received() {
+		return IFA_Received;
 	}
 	
-	public void setFWEDD(String fWEDD) {
-		FWEDD = fWEDD;
+	public void setIFA_Received(Integer iFA_Received) {
+		IFA_Received = iFA_Received;
 	}
 	
-	public String getFWANCREMSTS() {
-		return FWANCREMSTS;
+	public String getExisting_Heavy_Blood_Flow() {
+		return existing_Heavy_Blood_Flow;
 	}
 	
-	public void setFWANCREMSTS(String fWANCREMSTS) {
-		FWANCREMSTS = fWANCREMSTS;
+	public void setexisting_Heavy_Blood_Flow(String existing_Heavy_Blood_Flow) {
+		this.existing_Heavy_Blood_Flow = existing_Heavy_Blood_Flow;
 	}
 	
-	public String getFWANCINT() {
-		return FWANCINT;
+	@Temporal(TemporalType.DATE)
+	public Date getANC_Expired_Date() {
+		return ANC_Expired_Date;
 	}
 	
-	public void setFWANCINT(String fWANCINT) {
-		FWANCINT = fWANCINT;
+	public void setANC_Expired_Date(Date aNC_Expired_Date) {
+		ANC_Expired_Date = aNC_Expired_Date;
 	}
 	
-	public String getFWANCKNWPRVDR() {
-		return FWANCKNWPRVDR;
+	public String getExisting_Final_Vill() {
+		return existing_Final_Vill;
 	}
 	
-	public void setFWANCKNWPRVDR(String fWANCKNWPRVDR) {
-		FWANCKNWPRVDR = fWANCKNWPRVDR;
+	public void setexisting_Final_Vill(String existing_Final_Vill) {
+		this.existing_Final_Vill = existing_Final_Vill;
 	}
 	
-	public String getFWANCANM() {
-		return FWANCANM;
+	public String getYn_dk_label() {
+		return yn_dk_label;
 	}
 	
-	public void setFWANCANM(String fWANCANM) {
-		FWANCANM = fWANCANM;
+	public void setyn_dk_label(String yn_dk_label) {
+		this.yn_dk_label = yn_dk_label;
 	}
 	
-	public String getFWANCHBP() {
-		return FWANCHBP;
+	public String getExisting_Gravida() {
+		return existing_Gravida;
 	}
 	
-	public void setFWANCHBP(String fWANCHBP) {
-		FWANCHBP = fWANCHBP;
+	public void setexisting_Gravida(String existing_Gravida) {
+		this.existing_Gravida = existing_Gravida;
 	}
 	
-	public String getFWANCDBT() {
-		return FWANCDBT;
+	public String getConfirm_Info() {
+		return Confirm_Info;
 	}
 	
-	public void setFWANCDBT(String fWANCDBT) {
-		FWANCDBT = fWANCDBT;
+	public void setConfirm_Info(String confirm_Info) {
+		Confirm_Info = confirm_Info;
 	}
 	
-	public String getFWANCTHY() {
-		return FWANCTHY;
+	public Integer getVisit_Status() {
+		return Visit_Status;
 	}
 	
-	public void setFWANCTHY(String fWANCTHY) {
-		FWANCTHY = fWANCTHY;
+	public void setVisit_Status(Integer visit_Status) {
+		Visit_Status = visit_Status;
 	}
 	
-	public String getFWANCPROB() {
-		return FWANCPROB;
+	public Integer getIs_Post_Due() {
+		return Is_Post_Due;
 	}
 	
-	public void setFWANCPROB(String fWANCPROB) {
-		FWANCPROB = fWANCPROB;
+	public void setIs_Post_Due(Integer is_Post_Due) {
+		Is_Post_Due = is_Post_Due;
 	}
 	
-	public String getFWANCHEAD() {
-		return FWANCHEAD;
+	public String getexisting_ELCO_BRID() {
+		return existing_ELCO_BRID;
 	}
 	
-	public void setFWANCHEAD(String fWANCHEAD) {
-		FWANCHEAD = fWANCHEAD;
+	public void setexisting_ELCO_BRID(String existing_ELCO_BRID) {
+		this.existing_ELCO_BRID = existing_ELCO_BRID;
 	}
 	
-	public String getFWBPCLOCOFDEL() {
-		return FWBPCLOCOFDEL;
+	public Date getExisting_EDD() {
+		return existing_EDD;
 	}
 	
-	public void setFWBPCLOCOFDEL(String fWBPCLOCOFDEL) {
-		FWBPCLOCOFDEL = fWBPCLOCOFDEL;
+	@Temporal(TemporalType.DATE)
+	public void setexisting_EDD(Date existing_EDD) {
+		this.existing_EDD = existing_EDD;
 	}
 	
-	public String getFWBPCASSTLAB() {
-		return FWBPCASSTLAB;
+	public String getMet() {
+		return Met;
 	}
 	
-	public void setFWBPCASSTLAB(String fWBPCASSTLAB) {
-		FWBPCASSTLAB = fWBPCASSTLAB;
+	public void setMet(String met) {
+		Met = met;
 	}
 	
-	public String getFWBPCTRNSPRT() {
-		return FWBPCTRNSPRT;
+	public String getExisting_Caesarean() {
+		return existing_Caesarean;
 	}
 	
-	public void setFWBPCTRNSPRT(String fWBPCTRNSPRT) {
-		FWBPCTRNSPRT = fWBPCTRNSPRT;
+	public void setexisting_Caesarean(String existing_Caesarean) {
+		this.existing_Caesarean = existing_Caesarean;
 	}
 	
-	public String getFWBPCBLDGRP() {
-		return FWBPCBLDGRP;
+	public String getExisting_Birth_Outcome() {
+		return existing_Birth_Outcome;
 	}
 	
-	public void setFWBPCBLDGRP(String fWBPCBLDGRP) {
-		FWBPCBLDGRP = fWBPCBLDGRP;
+	public void setexisting_Birth_Outcome(String existing_Birth_Outcome) {
+		this.existing_Birth_Outcome = existing_Birth_Outcome;
 	}
 	
-	public String getFWBPCBLDDNR() {
-		return FWBPCBLDDNR;
+	public String getExisting_Mauzapara() {
+		return existing_Mauzapara;
 	}
 	
-	public void setFWBPCBLDDNR(String fWBPCBLDDNR) {
-		FWBPCBLDDNR = fWBPCBLDDNR;
-	}
-	
-	public String getFWBPC1FINARGMT() {
-		return FWBPCFINARGMT;
-	}
-	
-	public void setFWBPC1FINARGMT(String fWBPC1FINARGMT) {
-		FWBPCFINARGMT = fWBPC1FINARGMT;
-	}
-	
-	public String getMauza() {
-		return mauza;
-	}
-	
-	public void setMauza(String mauza) {
-		this.mauza = mauza;
-	}
-	
-	public String getFWVG() {
-		return FWVG;
-	}
-	
-	public void setFWVG(String fWVG) {
-		FWVG = fWVG;
-	}
-	
-	public String getFWHR_PSR() {
-		return FWHR_PSR;
-	}
-	
-	public void setFWHR_PSR(String fWHR_PSR) {
-		FWHR_PSR = fWHR_PSR;
-	}
-	
-	public String getFWHRP() {
-		return FWHRP;
-	}
-	
-	public void setFWHRP(String fWHRP) {
-		FWHRP = fWHRP;
-	}
-	
-	public String getExisting_ELCO() {
-		return existing_ELCO;
-	}
-	
-	public void setExisting_ELCO(String existing_ELCO) {
-		this.existing_ELCO = existing_ELCO;
-	}
-	
-	public String getFWANCBLRVIS() {
-		return FWANCBLRVIS;
-	}
-	
-	public void setFWANCBLRVIS(String fWANCBLRVIS) {
-		FWANCBLRVIS = fWANCBLRVIS;
-	}
-	
-	public String getFWANCSWLNG() {
-		return FWANCSWLNG;
-	}
-	
-	public void setFWANCSWLNG(String fWANCSWLNG) {
-		FWANCSWLNG = fWANCSWLNG;
-	}
-	
-	public String getFWANCCONVL() {
-		return FWANCCONVL;
-	}
-	
-	public void setFWANCCONVL(String fWANCCONVL) {
-		FWANCCONVL = fWANCCONVL;
-	}
-	
-	public String getFWANCBLD() {
-		return FWANCBLD;
-	}
-	
-	public void setFWANCBLD(String fWANCBLD) {
-		FWANCBLD = fWANCBLD;
-	}
-	
-	public String getFWANCDS1() {
-		return FWANCDS1;
-	}
-	
-	public void setFWANCDS1(String fWANCDS1) {
-		FWANCDS1 = fWANCDS1;
-	}
-	
-	public String getFWANCDS2() {
-		return FWANCDS2;
-	}
-	
-	public void setFWANCDS2(String fWANCDS2) {
-		FWANCDS2 = fWANCDS2;
-	}
-	
-	public String getFWANCDS3() {
-		return FWANCDS3;
-	}
-	
-	public void setFWANCDS3(String fWANCDS3) {
-		FWANCDS3 = fWANCDS3;
-	}
-	
-	public String getFWANCDS4() {
-		return FWANCDS4;
-	}
-	
-	public void setFWANCDS4(String fWANCDS4) {
-		FWANCDS4 = fWANCDS4;
-	}
-	
-	public String getFWANCDS5() {
-		return FWANCDS5;
-	}
-	
-	public void setFWANCDS5(String fWANCDS5) {
-		FWANCDS5 = fWANCDS5;
-	}
-	
-	public String getFWANCDS6() {
-		return FWANCDS6;
-	}
-	
-	public void setFWANCDS6(String fWANCDS6) {
-		FWANCDS6 = fWANCDS6;
-	}
-	
-	public String getFWDANGERVALUE() {
-		return FWDANGERVALUE;
-	}
-	
-	public void setFWDANGERVALUE(String fWDANGERVALUE) {
-		FWDANGERVALUE = fWDANGERVALUE;
-	}
-	
-	public String getFWNOTELIGIBLE() {
-		return FWNOTELIGIBLE;
-	}
-	
-	public void setFWNOTELIGIBLE(String fWNOTELIGIBLE) {
-		FWNOTELIGIBLE = fWNOTELIGIBLE;
-	}
-	
-	public String getFWHR_ANC() {
-		return FWHR_ANC;
-	}
-	
-	public void setFWHR_ANC(String fWHR_ANC) {
-		FWHR_ANC = fWHR_ANC;
-	}
-	
-	public String getFWFLAGVALUE() {
-		return FWFLAGVALUE;
-	}
-	
-	public void setFWFLAGVALUE(String fWFLAGVALUE) {
-		FWFLAGVALUE = fWFLAGVALUE;
-	}
-	
-	public String getFWSORTVALUE() {
-		return FWSORTVALUE;
-	}
-	
-	public void setFWSORTVALUE(String fWSORTVALUE) {
-		FWSORTVALUE = fWSORTVALUE;
-	}
-	
-	public String getUser_type() {
-		return user_type;
-	}
-	
-	public void setUser_type(String user_type) {
-		this.user_type = user_type;
-	}
-	
-	public String getExternal_user_ID() {
-		return external_user_ID;
-	}
-	
-	public void setExternal_user_ID(String external_user_ID) {
-		this.external_user_ID = external_user_ID;
-	}
-	
-	public String getRelationalid() {
-		return relationalid;
-	}
-	
-	public void setRelationalid(String relationalid) {
-		this.relationalid = relationalid;
-	}
-	
-	public String getFW_GOBHHID() {
-		return FW_GOBHHID;
-	}
-	
-	public void setFW_GOBHHID(String fW_GOBHHID) {
-		FW_GOBHHID = fW_GOBHHID;
-	}
-	
-	public String getFW_JiVitAHHID() {
-		return FW_JiVitAHHID;
-	}
-	
-	public void setFW_JiVitAHHID(String fW_JiVitAHHID) {
-		FW_JiVitAHHID = fW_JiVitAHHID;
-	}
-	
-	public String getFWWOMBID() {
-		return FWWOMBID;
-	}
-	
-	public void setFWWOMBID(String fWWOMBID) {
-		FWWOMBID = fWWOMBID;
-	}
-	
-	public String getFWWOMNID() {
-		return FWWOMNID;
-	}
-	
-	public void setFWWOMNID(String fWWOMNID) {
-		FWWOMNID = fWWOMNID;
-	}
-	
-	public String getFWWOMFNAME() {
-		return FWWOMFNAME;
-	}
-	
-	public void setFWWOMFNAME(String fWWOMFNAME) {
-		FWWOMFNAME = fWWOMFNAME;
-	}
-	
-	public String getFWHUSNAME() {
-		return FWHUSNAME;
-	}
-	
-	public void setFWHUSNAME(String fWHUSNAME) {
-		FWHUSNAME = fWHUSNAME;
-	}
-	
-	public String getFWBPCFINARGMT() {
-		return FWBPCFINARGMT;
-	}
-	
-	public void setFWBPCFINARGMT(String fWBPCFINARGMT) {
-		FWBPCFINARGMT = fWBPCFINARGMT;
+	public void setexisting_Mauzapara(String existing_Mauzapara) {
+		this.existing_Mauzapara = existing_Mauzapara;
 	}
 	
 	public Date getStart() {
 		return start;
 	}
 	
-	public void setStart(Date start) {
+	public void setstart(Date start) {
 		this.start = start;
+	}
+	
+	public String getConvulsions() {
+		return Convulsions;
+	}
+	
+	public void setConvulsions(String convulsions) {
+		Convulsions = convulsions;
+	}
+	
+	public String getIs_On_Time() {
+		return Is_On_Time;
+	}
+	
+	public void setIs_On_Time(String is_On_Time) {
+		Is_On_Time = is_On_Time;
+	}
+	
+	public String getExisting_TT_Count() {
+		return existing_TT_Count;
+	}
+	
+	public void setexisting_TT_Count(String existing_TT_Count) {
+		this.existing_TT_Count = existing_TT_Count;
+	}
+	
+	public String getExisting_Dead_Child() {
+		return existing_Dead_Child;
+	}
+	
+	public void setexisting_Dead_Child(String existing_Dead_Child) {
+		this.existing_Dead_Child = existing_Dead_Child;
+	}
+	
+	public String getExisting_GoB_HHID() {
+		return existing_GoB_HHID;
+	}
+	
+	public void setexisting_GoB_HHID(String existing_GoB_HHID) {
+		this.existing_GoB_HHID = existing_GoB_HHID;
+	}
+	
+	public String getRelationalid() {
+		return relationalid;
+	}
+	
+	public void setrelationalid(String relationalid) {
+		this.relationalid = relationalid;
+	}
+	
+	public String getExisting_Couple_No() {
+		return existing_Couple_No;
+	}
+	
+	public void setexisting_Couple_No(String existing_Couple_No) {
+		this.existing_Couple_No = existing_Couple_No;
+	}
+	
+	public String getSymptoms() {
+		return Symptoms;
+	}
+	
+	public void setSymptoms(String symptoms) {
+		Symptoms = symptoms;
+	}
+	
+	public String getIs_Reffered() {
+		return Is_Reffered;
+	}
+	
+	public void setIs_Reffered(String is_Reffered) {
+		Is_Reffered = is_Reffered;
+	}
+	
+	public String getExisting_Spouse_Name() {
+		return existing_Spouse_Name;
+	}
+	
+	public void setexisting_Spouse_Name(String existing_Spouse_Name) {
+		this.existing_Spouse_Name = existing_Spouse_Name;
+	}
+	
+	public String getIs_Critical() {
+		return Is_Critical;
+	}
+	
+	public void setIs_Critical(String is_Critical) {
+		Is_Critical = is_Critical;
+	}
+	
+	public String getIs_Expired() {
+		return Is_Expired;
+	}
+	
+	public void setIs_Expired(String is_Expired) {
+		Is_Expired = is_Expired;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getToday() {
+		return today;
+	}
+	
+	public void settoday(Date today) {
+		this.today = today;
+	}
+	
+	public Integer getPreg_Status() {
+		return Preg_Status;
+	}
+	
+	public void setPreg_Status(Integer preg_Status) {
+		Preg_Status = preg_Status;
+	}
+	
+	public String getExisting_ELCO() {
+		return existing_ELCO;
+	}
+	
+	public void setexisting_ELCO(String existing_ELCO) {
+		this.existing_ELCO = existing_ELCO;
+	}
+	
+	public String getExisting_Height() {
+		return existing_Height;
+	}
+	
+	public void setexisting_Height(String existing_Height) {
+		this.existing_Height = existing_Height;
+	}
+	
+	public String getELCO() {
+		return ELCO;
+	}
+	
+	public void setELCO(String eLCO) {
+		ELCO = eLCO;
+	}
+	
+	public String getExisting_Marriage_Life() {
+		return existing_Marriage_Life;
+	}
+	
+	public void setexisting_Marriage_Life(String existing_Marriage_Life) {
+		this.existing_Marriage_Life = existing_Marriage_Life;
+	}
+	
+	public String getHeadache_Blur_Vision() {
+		return Headache_Blur_Vision;
+	}
+	
+	public void setHeadache_Blur_Vision(String headache_Blur_Vision) {
+		Headache_Blur_Vision = headache_Blur_Vision;
+	}
+	
+	public String getExisting_Mem_F_Name() {
+		return existing_Mem_F_Name;
+	}
+	
+	public void setexisting_Mem_F_Name(String existing_Mem_F_Name) {
+		this.existing_Mem_F_Name = existing_Mem_F_Name;
+	}
+	
+	public String getExisting_Risky_Preg() {
+		return existing_Risky_Preg;
+	}
+	
+	public void setexisting_Risky_Preg(String existing_Risky_Preg) {
+		this.existing_Risky_Preg = existing_Risky_Preg;
+	}
+	
+	public String getAnc_current_formStatus() {
+		return anc_current_formStatus;
+	}
+	
+	public void setanc_current_formStatus(String anc_current_formStatus) {
+		this.anc_current_formStatus = anc_current_formStatus;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getANC_Post_Due_Date() {
+		return ANC_Post_Due_Date;
+	}
+	
+	public void setANC_Post_Due_Date(Date aNC_Post_Due_Date) {
+		ANC_Post_Due_Date = aNC_Post_Due_Date;
+	}
+	
+	public String getExisting_Gestational_Age() {
+		return existing_Gestational_Age;
+	}
+	
+	public void setexisting_Gestational_Age(String existing_Gestational_Age) {
+		this.existing_Gestational_Age = existing_Gestational_Age;
 	}
 	
 	public Date getEnd() {
 		return end;
 	}
 	
-	public void setEnd(Date end) {
+	public void setend(Date end) {
 		this.end = end;
 	}
 	
-	public Date getCreated() {
-		return created;
+	public String getExisting_Prolong_Delivery() {
+		return existing_Prolong_Delivery;
 	}
 	
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-	
-	public Date getUpdated() {
-		return updated;
-	}
-	
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-	
-	public long getClientVersion() {
-		return clientVersion;
-	}
-	
-	public void setClientVersion(long clientVersion) {
-		this.clientVersion = clientVersion;
+	public void setexisting_Prolong_Delivery(String existing_Prolong_Delivery) {
+		this.existing_Prolong_Delivery = existing_Prolong_Delivery;
 	}
 	
 	public Date getReceived_time() {
 		return received_time;
 	}
 	
-	public void setReceived_time(Date received_time) {
+	public void setreceived_time(Date received_time) {
 		this.received_time = received_time;
 	}
 	
-	public long getTimeStamp() {
-		return timeStamp;
+	public String getExisting_HoH_F_Name() {
+		return existing_HoH_F_Name;
 	}
 	
-	public void setTimeStamp(long timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setexisting_HoH_F_Name(String existing_HoH_F_Name) {
+		this.existing_HoH_F_Name = existing_HoH_F_Name;
 	}
 	
-	public Date getToday() {
-		return today;
+	public String getProlonged_Delivery() {
+		return Prolonged_Delivery;
 	}
 	
-	public void setToday(Date today) {
-		this.today = today;
+	public void setProlonged_Delivery(String prolonged_Delivery) {
+		Prolonged_Delivery = prolonged_Delivery;
 	}
 	
-	public MotherEntity getMother() {
-		return mother;
+	@Temporal(TemporalType.DATE)
+	public Date getVisit_Date() {
+		return Visit_Date;
 	}
 	
-	public void setMother(MotherEntity mother) {
-		this.mother = mother;
+	public void setVisit_Date(Date visit_Date) {
+		Visit_Date = visit_Date;
+	}
+	
+	public String getExisting_Total_Child_Alive() {
+		return existing_Total_Child_Alive;
+	}
+	
+	public void setexisting_Total_Child_Alive(String existing_Total_Child_Alive) {
+		this.existing_Total_Child_Alive = existing_Total_Child_Alive;
+	}
+	
+	public String getNot_Eligible() {
+		return Not_Eligible;
+	}
+	
+	public void setNot_Eligible(String not_Eligible) {
+		Not_Eligible = not_Eligible;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getExisting_LMP() {
+		return existing_LMP;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public void setexisting_LMP(Date existing_LMP) {
+		this.existing_LMP = existing_LMP;
+	}
+	
+	public String getPosition_Child_During_Delivery() {
+		return Position_Child_During_Delivery;
+	}
+	
+	public void setPosition_Child_During_Delivery(String position_Child_During_Delivery) {
+		Position_Child_During_Delivery = position_Child_During_Delivery;
+	}
+	
+	public String getMenstruation() {
+		return Menstruation;
+	}
+	
+	public void setMenstruation(String menstruation) {
+		Menstruation = menstruation;
+	}
+	
+	public String getHigh_Fever() {
+		return High_Fever;
+	}
+	
+	public void setHigh_Fever(String high_Fever) {
+		High_Fever = high_Fever;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getANC_Due_Date() {
+		return ANC_Due_Date;
+	}
+	
+	public void setANC_Due_Date(Date aNC_Due_Date) {
+		ANC_Due_Date = aNC_Due_Date;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }

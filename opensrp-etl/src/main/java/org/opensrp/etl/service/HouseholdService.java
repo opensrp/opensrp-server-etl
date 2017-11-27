@@ -23,7 +23,8 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	@Transactional
 	@Override
 	public void save(HouseholdEntity householdEntity) {
-		HouseholdEntity existingHouseholdEntity = findByCaseId(householdEntity.caseId);
+		
+		HouseholdEntity existingHouseholdEntity = findByCaseId(householdEntity.getCaseId());
 		if (existingHouseholdEntity == null) {
 			householdRepository.save(householdEntity);
 		} else {

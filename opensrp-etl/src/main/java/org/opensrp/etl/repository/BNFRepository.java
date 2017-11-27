@@ -14,24 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class BNFRepository implements RegisterRepository<BNFEntity> {
 	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public BNFRepository() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-	
 	@Override
 	public void save(BNFEntity bnfEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(bnfEntity);
-		
+		try {
+			Session session = this.sessionFactory.getCurrentSession();
+			session.save(bnfEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	@Override
 	public boolean delete(BNFEntity bnfEntity) {
 		Query query = getSession().createQuery("delete BNFEntity where id = :ID");
@@ -61,19 +61,16 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 		return session;
 	}
 	
-	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
-		Criteria listPsrfCr = getSession().createCriteria(BNFEntity.class);
-		listPsrfCr.add(Restrictions.eq("relationalId", relationalId));
-		listPsrfCr.add(Restrictions.eq("FWBNFDATE", FWBNFDATE));
-		List<BNFEntity> listPsrf = listPsrfCr.list();
-		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
+	public BNFEntity findByCaseIdAndToday(String caseId, Date today) {
+		Criteria listBnfCr = getSession().createCriteria(BNFEntity.class);
+		listBnfCr.add(Restrictions.eq("relationalid", caseId));
+		listBnfCr.add(Restrictions.eq("Today", today));
+		List<BNFEntity> listBnf = listBnfCr.list();
+		return listBnf.size() > 0 ? (BNFEntity) listBnf.get(0) : null;
 	}
 	
 	@Override
 	public BNFEntity findByCaseId(String caseId) {
-		Criteria listBNFCr = getSession().createCriteria(BNFEntity.class);
-		listBNFCr.add(Restrictions.eq("caseId", caseId));
-		List<BNFEntity> listBNF = listBNFCr.list();
-		return listBNF.size() > 0 ? (BNFEntity) listBNF.get(0) : null;
+		return null;
 	}
 }

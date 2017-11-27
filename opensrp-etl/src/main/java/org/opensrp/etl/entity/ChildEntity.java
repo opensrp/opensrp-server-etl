@@ -2,14 +2,11 @@ package org.opensrp.etl.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,198 +14,599 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "child")
-public class ChildEntity extends CommonEntity {
+public class ChildEntity {
 	
 	private static final ChildEntity INSTANCE = new ChildEntity();
 	
 	private ChildEntity() {
 		
 	}
-	
+
 	public static ChildEntity getInstance() {
 		return INSTANCE;
 		
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "child_id_seq")
 	@SequenceGenerator(name = "child_id_seq", sequenceName = "child_id_seq", allocationSize = 1)
-	private int id;
-	
-	private String isClosed;
-	
-	private String FWBNFCHLDVITSTS;//details
-	
-	private String FWBNFNAME;//details
-	
-	private String FWWOMFNAME;//details
-	
-	@Column(name = "mother_wom_age")
-	//details
-	private String motherWomAge;
-	
-	private String FWBNFCHILDNAME;//details
-	
-	private String FWWOMBID;//details
-	
+
+	private long id;
+
+	@Column(name="end_time")
+	private Date end;
+
+	private long clientVersion;
+
+	private long serverVersion;
+
 	@Temporal(TemporalType.DATE)
-	@Column(name = "reference_date")
-	private Date referenceDate;//details
-	
+	private Date start;
+
 	@Temporal(TemporalType.DATE)
-	private Date WBNFDOB;//details
-	
-	private String GOBHHID;//details
-	
-	private String JIVITAHHID;//details
-	
-	private String FWBNFNAMECHECK;//details
-	
-	private String FWWOMNID;//details
-	
-	private String FWHUSNAME;//details
-	
-	@Column(name = "relational_id")
-	private String relationalId;//details
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "mother_id", referencedColumnName = "id")
-	private MotherEntity mother;
-	
-	public int getId() {
+	private Date Today;
+
+	private String changes;
+
+	private Date received_time;
+
+	private String Met;
+
+	private String Visit_Status;
+
+	private long version;
+
+	private String existing_HR;
+
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+
+	private String Note;
+
+	@Temporal(TemporalType.DATE)
+	private Date child_today;
+
+	private String existing_Child_Father;
+
+	private String child_current_form_status;
+
+	@Temporal(TemporalType.DATE)
+	private Date OPV0;
+
+	@Temporal(TemporalType.DATE)
+	private Date OPV1;
+
+	@Temporal(TemporalType.DATE)
+	private Date OPV2;
+
+	@Temporal(TemporalType.DATE)
+	private Date OPV3;
+
+	@Temporal(TemporalType.DATE)
+	private Date DOO_35;
+
+	@Temporal(TemporalType.DATE)
+	private Date DOO_56;
+
+	@Temporal(TemporalType.DATE)
+	private Date DOO_266;
+
+	@Temporal(TemporalType.DATE)
+	private Date DOO_441;
+
+	private long existing_Mem_BRID;
+
+	private long existing_Mem_Mobile_Number;
+
+	private String existing_Final_Vill;
+
+	private Date existing_Member_Birth_Date;
+
+	private String Confirm_Info;
+
+	private String Child_Vaccination;
+
+	private String existing_ELCO_BRID;
+
+	private String existing_Child_Mother;
+
+	private String Diseases_Prob;
+
+	private String existing_Mauzapara;
+
+	private String BCG;
+
+	private String Vaccines;
+
+	private String existing_GoB_HHID;
+
+	@Temporal(TemporalType.DATE)
+	private Date PCV1;
+
+	@Temporal(TemporalType.DATE)
+	private Date PCV2;
+
+	@Temporal(TemporalType.DATE)
+	private Date PCV3;
+
+	@Temporal(TemporalType.DATE)
+	private Date Penta1;
+
+	@Temporal(TemporalType.DATE)
+	private Date Penta2;
+
+	@Temporal(TemporalType.DATE)
+	private Date Penta3;
+
+	private String existing_Premature_Birth;
+
+	private String existing_Couple_No;
+
+	private String Has_Referred;
+
+	private String existing_Mem_F_Name;
+
+	@Temporal(TemporalType.DATE)
+	private Date Measles1;
+
+	@Temporal(TemporalType.DATE)
+	private Date Measles2;
+
+	private long existing_ELCO_NID;
+
+	@Temporal(TemporalType.DATE)
+	private Date IPV;
+
+	private String Detail_Diseases_Prob;
+
+	private String relationalid;
+
+	public long getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
+
+	public Date getEnd() {
+		return end;
 	}
-	
-	public String getIsClosed() {
-		return isClosed;
+
+	public void setEnd(Date end) {
+		this.end = end;
 	}
-	
-	public void setIsClosed(String isClosed) {
-		this.isClosed = isClosed;
+
+	public String getExisting_Child_Father() {
+		return existing_Child_Father;
 	}
-	
-	public String getFWBNFCHLDVITSTS() {
-		return FWBNFCHLDVITSTS;
+
+	public void setexisting_Child_Father(String existing_Child_Father) {
+		this.existing_Child_Father = existing_Child_Father;
 	}
-	
-	public void setFWBNFCHLDVITSTS(String fWBNFCHLDVITSTS) {
-		FWBNFCHLDVITSTS = fWBNFCHLDVITSTS;
+
+	public String getChild_current_form_status() {
+		return child_current_form_status;
 	}
-	
-	public String getFWBNFNAME() {
-		return FWBNFNAME;
+
+	public void setchild_current_form_status(String child_current_form_status) {
+		this.child_current_form_status = child_current_form_status;
 	}
-	
-	public void setFWBNFNAME(String fWBNFNAME) {
-		FWBNFNAME = fWBNFNAME;
+
+	@Temporal(TemporalType.DATE)
+	public Date getOPV0() {
+		return OPV0;
 	}
-	
-	public String getFWWOMFNAME() {
-		return FWWOMFNAME;
+
+	public void setOPV0(Date oPV0) {
+		OPV0 = oPV0;
 	}
-	
-	public void setFWWOMFNAME(String fWWOMFNAME) {
-		FWWOMFNAME = fWWOMFNAME;
+
+	@Temporal(TemporalType.DATE)
+	public Date getOPV1() {
+		return OPV1;
 	}
-	
-	public String getMotherWomAge() {
-		return motherWomAge;
+
+	public void setOPV1(Date oPV1) {
+		OPV1 = oPV1;
 	}
-	
-	public void setMotherWomAge(String motherWomAge) {
-		this.motherWomAge = motherWomAge;
+
+	@Temporal(TemporalType.DATE)
+	public Date getOPV2() {
+		return OPV2;
 	}
-	
-	public String getFWBNFCHILDNAME() {
-		return FWBNFCHILDNAME;
+
+	public void setOPV2(Date oPV2) {
+		OPV2 = oPV2;
 	}
-	
-	public void setFWBNFCHILDNAME(String fWBNFCHILDNAME) {
-		FWBNFCHILDNAME = fWBNFCHILDNAME;
+
+	@Temporal(TemporalType.DATE)
+	public Date getOPV3() {
+		return OPV3;
 	}
-	
-	public String getFWWOMBID() {
-		return FWWOMBID;
+
+	public void setOPV3(Date oPV3) {
+		OPV3 = oPV3;
 	}
-	
-	public void setFWWOMBID(String fWWOMBID) {
-		FWWOMBID = fWWOMBID;
+
+	@Temporal(TemporalType.DATE)
+	public Date getDOO_35() {
+		return DOO_35;
 	}
-	
-	public Date getReferenceDate() {
-		return referenceDate;
+
+	public void setDOO_35(Date dOO_35) {
+		DOO_35 = dOO_35;
 	}
-	
-	public void setReferenceDate(Date referenceDate) {
-		this.referenceDate = referenceDate;
+
+	@Temporal(TemporalType.DATE)
+	public Date getDOO_56() {
+		return DOO_56;
 	}
-	
-	public Date getWBNFDOB() {
-		return WBNFDOB;
+
+	public void setDOO_56(Date dOO_56) {
+		DOO_56 = dOO_56;
 	}
-	
-	public void setWBNFDOB(Date wBNFDOB) {
-		WBNFDOB = wBNFDOB;
+
+	@Temporal(TemporalType.DATE)
+	public Date getDOO_266() {
+		return DOO_266;
 	}
-	
-	public String getGOBHHID() {
-		return GOBHHID;
+
+	public void setDOO_266(Date dOO_266) {
+		DOO_266 = dOO_266;
 	}
-	
-	public void setGOBHHID(String gOBHHID) {
-		GOBHHID = gOBHHID;
+
+	@Temporal(TemporalType.DATE)
+	public Date getDOO_441() {
+		return DOO_441;
 	}
-	
-	public String getJIVITAHHID() {
-		return JIVITAHHID;
+
+	public void setDOO_441(Date dOO_441) {
+		DOO_441 = dOO_441;
 	}
-	
-	public void setJIVITAHHID(String jIVITAHHID) {
-		JIVITAHHID = jIVITAHHID;
+
+	public long getExisting_Mem_BRID() {
+		return existing_Mem_BRID;
 	}
-	
-	public String getFWBNFNAMECHECK() {
-		return FWBNFNAMECHECK;
+
+	public void setexisting_Mem_BRID(long existing_Mem_BRID) {
+		this.existing_Mem_BRID = existing_Mem_BRID;
 	}
-	
-	public void setFWBNFNAMECHECK(String fWBNFNAMECHECK) {
-		FWBNFNAMECHECK = fWBNFNAMECHECK;
+
+	public long getExisting_Mem_Mobile_Number() {
+		return existing_Mem_Mobile_Number;
 	}
-	
-	public String getFWWOMNID() {
-		return FWWOMNID;
+
+	public void setexisting_Mem_Mobile_Number(long existing_Mem_Mobile_Number) {
+		this.existing_Mem_Mobile_Number = existing_Mem_Mobile_Number;
 	}
-	
-	public void setFWWOMNID(String fWWOMNID) {
-		FWWOMNID = fWWOMNID;
+
+	public String getExisting_Final_Vill() {
+		return existing_Final_Vill;
 	}
-	
-	public String getFWHUSNAME() {
-		return FWHUSNAME;
+
+	public void setexisting_Final_Vill(String existing_Final_Vill) {
+		this.existing_Final_Vill = existing_Final_Vill;
 	}
-	
-	public void setFWHUSNAME(String fWHUSNAME) {
-		FWHUSNAME = fWHUSNAME;
+
+	public long getClientVersion() {
+		return clientVersion;
 	}
-	
-	public String getRelationalId() {
-		return relationalId;
+
+	public void setclientVersion(long clientVersion) {
+		this.clientVersion = clientVersion;
 	}
-	
-	public void setRelationalId(String relationalId) {
-		this.relationalId = relationalId;
+
+	public Date getExisting_Member_Birth_Date() {
+		return existing_Member_Birth_Date;
 	}
-	
-	public MotherEntity getMother() {
-		return mother;
+
+	public void setexisting_Member_Birth_Date(Date existing_Member_Birth_Date) {
+		this.existing_Member_Birth_Date = existing_Member_Birth_Date;
 	}
-	
-	public void setMother(MotherEntity mother) {
-		this.mother = mother;
+
+	public String getVisit_Status() {
+		return Visit_Status;
 	}
-	
+
+	public void setVisit_Status(String visit_Status) {
+		Visit_Status = visit_Status;
+	}
+
+	public String getConfirm_Info() {
+		return Confirm_Info;
+	}
+
+	public void setConfirm_Info(String confirm_Info) {
+		Confirm_Info = confirm_Info;
+	}
+
+	public String getChild_Vaccination() {
+		return Child_Vaccination;
+	}
+
+	public void setChild_Vaccination(String child_Vaccination) {
+		Child_Vaccination = child_Vaccination;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getChild_today() {
+		return child_today;
+	}
+
+	public void setchild_today(Date child_today) {
+		this.child_today = child_today;
+	}
+
+	public long getServerVersion() {
+		return serverVersion;
+	}
+
+	public void setserverVersion(long serverVersion) {
+		this.serverVersion = serverVersion;
+	}
+
+	public String getExisting_ELCO_BRID() {
+		return existing_ELCO_BRID;
+	}
+
+	public void setexisting_ELCO_BRID(String existing_ELCO_BRID) {
+		this.existing_ELCO_BRID = existing_ELCO_BRID;
+	}
+
+	public String getExisting_Child_Mother() {
+		return existing_Child_Mother;
+	}
+
+	public void setexisting_Child_Mother(String existing_Child_Mother) {
+		this.existing_Child_Mother = existing_Child_Mother;
+	}
+
+	public String getMet() {
+		return Met;
+	}
+
+	public void setMet(String met) {
+		Met = met;
+	}
+
+	public String getDiseases_Prob() {
+		return Diseases_Prob;
+	}
+
+	public void setDiseases_Prob(String diseases_Prob) {
+		Diseases_Prob = diseases_Prob;
+	}
+
+	public String getExisting_Mauzapara() {
+		return existing_Mauzapara;
+	}
+
+	public void setexisting_Mauzapara(String existing_Mauzapara) {
+		this.existing_Mauzapara = existing_Mauzapara;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getStart() {
+		return start;
+	}
+
+	public void setstart(Date start) {
+		this.start = start;
+	}
+
+	public String getBCG() {
+		return BCG;
+	}
+
+	public void setBCG(String bCG) {
+		BCG = bCG;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getToday() {
+		return Today;
+	}
+
+	public void setToday(Date today) {
+		Today = today;
+	}
+
+	public String getVaccines() {
+		return Vaccines;
+	}
+
+	public void setVaccines(String vaccines) {
+		Vaccines = vaccines;
+	}
+
+	public String getExisting_GoB_HHID() {
+		return existing_GoB_HHID;
+	}
+
+	public void setexisting_GoB_HHID(String existing_GoB_HHID) {
+		this.existing_GoB_HHID = existing_GoB_HHID;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPCV1() {
+		return PCV1;
+	}
+
+	public void setPCV1(Date pCV1) {
+		PCV1 = pCV1;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPCV2() {
+		return PCV2;
+	}
+
+	public void setPCV2(Date pCV2) {
+		PCV2 = pCV2;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPCV3() {
+		return PCV3;
+	}
+
+	public void setPCV3(Date pCV3) {
+		PCV3 = pCV3;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPenta1() {
+		return Penta1;
+	}
+
+	public void setPenta1(Date penta1) {
+		Penta1 = penta1;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPenta2() {
+		return Penta2;
+	}
+
+	public void setPenta2(Date penta2) {
+		Penta2 = penta2;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getPenta3() {
+		return Penta3;
+	}
+
+	public void setPenta3(Date penta3) {
+		Penta3 = penta3;
+	}
+
+	public String getExisting_Premature_Birth() {
+		return existing_Premature_Birth;
+	}
+
+	public void setexisting_Premature_Birth(String existing_Premature_Birth) {
+		this.existing_Premature_Birth = existing_Premature_Birth;
+	}
+
+	public String getExisting_Couple_No() {
+		return existing_Couple_No;
+	}
+
+	public void setexisting_Couple_No(String existing_Couple_No) {
+		this.existing_Couple_No = existing_Couple_No;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setversion(long version) {
+		this.version = version;
+	}
+
+	public String getHas_Referred() {
+		return Has_Referred;
+	}
+
+	public void setHas_Referred(String has_Referred) {
+		Has_Referred = has_Referred;
+	}
+
+	public String getExisting_Mem_F_Name() {
+		return existing_Mem_F_Name;
+	}
+
+	public void setexisting_Mem_F_Name(String existing_Mem_F_Name) {
+		this.existing_Mem_F_Name = existing_Mem_F_Name;
+	}
+
+	public String getNote() {
+		return Note;
+	}
+
+	public void setNote(String note) {
+		Note = note;
+	}
+
+	public String getExisting_HR() {
+		return existing_HR;
+	}
+
+	public void setexisting_HR(String existing_HR) {
+		this.existing_HR = existing_HR;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getMeasles1() {
+		return Measles1;
+	}
+
+	public void setMeasles1(Date measles1) {
+		Measles1 = measles1;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getMeasles2() {
+		return Measles2;
+	}
+
+	public void setMeasles2(Date measles2) {
+		Measles2 = measles2;
+	}
+
+	public long getExisting_ELCO_NID() {
+		return existing_ELCO_NID;
+	}
+
+	public void setexisting_ELCO_NID(long existing_ELCO_NID) {
+		this.existing_ELCO_NID = existing_ELCO_NID;
+	}
+
+	public Date getReceived_time() {
+		return received_time;
+	}
+
+	public void setreceived_time(Date received_time) {
+		this.received_time = received_time;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getVisit_Date() {
+		return Visit_Date;
+	}
+
+	public void setVisit_Date(Date visit_Date) {
+		Visit_Date = visit_Date;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getIPV() {
+		return IPV;
+	}
+
+	public void setIPV(Date iPV) {
+		IPV = iPV;
+	}
+
+	public String getDetail_Diseases_Prob() {
+		return Detail_Diseases_Prob;
+	}
+
+	public void setDetail_Diseases_Prob(String detail_Diseases_Prob) {
+		Detail_Diseases_Prob = detail_Diseases_Prob;
+	}
+
+	public String getChanges() {
+		return changes;
+	}
+
+	public void setchanges(String changes) {
+		this.changes = changes;
+	}
+
+	public String getRelationalid() {
+		return relationalid;
+	}
+
+	public void setrelationalid(String relationalid) {
+		this.relationalid = relationalid;
+	}
 }

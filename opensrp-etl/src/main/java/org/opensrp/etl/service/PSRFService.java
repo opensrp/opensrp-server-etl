@@ -21,7 +21,9 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	@Transactional
 	@Override
 	public void save(PSRFEntity psrfEntity) {
-		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalId(), psrfEntity.getToday());
+		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalid(),
+				psrfEntity.getToday());
+
 		if (existingPSRFEntity == null) {
 			psrfRepository.save(psrfEntity);
 		} else {

@@ -21,8 +21,10 @@ public class DateUtil {
 	
 	public static Date getDateFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
+		
 		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
 			date = getYYYYMMDDFormat.parse(doc.getString(key));
+			System.err.println(date);
 			return date;
 		}
 		return date;

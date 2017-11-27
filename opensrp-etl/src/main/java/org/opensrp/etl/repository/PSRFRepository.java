@@ -14,22 +14,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public PSRFRepository() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-	
 	@Override
 	public void save(PSRFEntity psrfEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(psrfEntity);
-		
+		System.err.println("save");
+		try {
+			Session session = this.sessionFactory.getCurrentSession();
+			session.save(psrfEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -46,8 +46,8 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	}
 	
 	@Override
-	public void update(PSRFEntity t) {
-		// TODO Auto-generated method stub
+	public void update(PSRFEntity psrfEntity) {
+		getSession().update(psrfEntity);
 		
 	}
 	
@@ -64,10 +64,10 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	
 	public PSRFEntity findByCaseIdAndToday(String relationalId, Date today) {
 		Criteria listPsrfCr = getSession().createCriteria(PSRFEntity.class);
-		listPsrfCr.add(Restrictions.eq("relationalId", relationalId));
+		listPsrfCr.add(Restrictions.eq("relationalid", relationalId));
 		listPsrfCr.add(Restrictions.eq("today", today));
 		List<PSRFEntity> listPsrf = listPsrfCr.list();
-		return listPsrf.size() > 0 ? listPsrf.get(0) : null;
+		return listPsrf.size() > 0 ? (PSRFEntity) listPsrf.get(0) : null;
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package org.opensrp.etl.transmission.listener;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 public class TransmissionListener {
 	
-	private static final Logger logger = Logger.getLogger(TransmissionListener.class);
+	//private static final Logger logger = Logger.getLogger(TransmissionListener.class);
 	
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;
