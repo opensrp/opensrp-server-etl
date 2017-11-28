@@ -12,14 +12,9 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 <context:annotation-config></context:annotation-config>
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
-		in the /WEB-INF/views directory -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
 	
+	
+<context:component-scan base-package="org.mcare.acl" />
 <context:component-scan base-package="org.mcare.etl" />
 <context:component-scan base-package="org.mcare.etl" />
 <context:component-scan base-package="org.mcare.etl.entity" />
@@ -27,43 +22,9 @@
 <context:component-scan base-package="org.mcare.etl.service" />
 <context:component-scan base-package="org.mcare.etl.transmission.listener" />
 <context:component-scan base-package="org.mcare.etl.service" />
-	
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url"  value="jdbc:postgresql://localhost/mcare2" />
-        <property name="username" value="postgres" />
-        <property name="password" value="password" />
-</bean>
+<context:property-placeholder location="classpath:hibernate.properties" />
 
-<!-- Hibernate 4 SessionFactory Bean definition -->
-<bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
-            <list>
-                <value>org.mcare.etl.entity.UserEntity</value>
-                <value>org.mcare.etl.entity.ElcoEntity</value>
-                <value>org.mcare.etl.entity.ActionEntity</value>
-                <value>org.mcare.etl.entity.MotherEntity</value>
-                <value>org.mcare.etl.entity.ANCEntity</value>
-                 <value>org.mcare.etl.entity.PNCEntity</value>                 
-                <value>org.mcare.etl.entity.ChildEntity</value>
-                <value>org.mcare.etl.entity.MarkerEntity</value>   
-                <value>org.mcare.etl.entity.PSRFEntity</value> 
-                <value>org.mcare.etl.entity.BNFEntity</value>   
-                <value>org.mcare.etl.entity.ENCCEntity</value>  
-                <value>org.mcare.etl.entity.ExceptionEntity</value>                
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
-                </prop>
-                <prop key="hibernate.show_sql">true</prop>
-               <prop key="hibernate.hbm2ddl.auto">create</prop>
-            </props>
-        </property>
-    </bean>
-    <bean name="transmissionServiceFactory" class="org.mcare.etl.transmission.service.TransmissionServiceFactory"/>
+<bean name="transmissionServiceFactory" class="org.mcare.etl.transmission.service.TransmissionServiceFactory"/>
   
 <bean name="householdService" class="org.mcare.etl.service.HouseholdService"/>    
 <bean name="elcoService" class="org.mcare.etl.service.ElcoService"/>
@@ -131,9 +92,7 @@
 <bean name="markerService" class="org.mcare.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.mcare.etl.repository.MarkerRepository"/>
 
-<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-</bean>
+
 		<mvc:annotation-driven></mvc:annotation-driven>
 		<tx:annotation-driven proxy-target-class = "true" />
 		<mvc:resources location="/resources/" mapping="/static/**" />	

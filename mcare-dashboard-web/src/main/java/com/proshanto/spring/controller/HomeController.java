@@ -3,7 +3,7 @@
  */
 package com.proshanto.spring.controller;
 
-import org.mcare.etl.service.UserService;
+import org.mcare.acl.service.DatabaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	
 	@Autowired
-	private UserService userService;
+	private DatabaseServiceImpl userService;
 	@RequestMapping("/")
 	public String showview(Model model) {
 		userService.test();
