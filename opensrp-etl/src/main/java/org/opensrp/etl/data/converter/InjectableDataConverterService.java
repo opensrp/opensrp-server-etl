@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.opensrp.etl.entity.InjectableEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ExceptionService;
-import org.opensrp.etl.service.RegisterServiceImpl;
+import org.opensrp.etl.service.InjectableService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InjectableDataConverterService implements DataConverterService{
@@ -15,7 +15,7 @@ public class InjectableDataConverterService implements DataConverterService{
 	private InjectableEntity injectableEntity;
 	
 	@Autowired
-	private RegisterServiceImpl injectableService;
+	private InjectableService injectableService;
 	
 	@Autowired
 	private ExceptionService exceptionService;
@@ -42,8 +42,8 @@ public class InjectableDataConverterService implements DataConverterService{
 				injectableService.save(injectableEntity);
 			}
 			catch (Exception e) {
-				System.err.println("Exception: " + e);
-				e.printStackTrace();
+				//System.err.println("Exception: " + e);
+				//e.printStackTrace();
 			}
 			
 		}

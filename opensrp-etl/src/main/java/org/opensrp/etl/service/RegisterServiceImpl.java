@@ -1,7 +1,6 @@
 package org.opensrp.etl.service;
 
 import javax.transaction.Transactional;
-
 import org.opensrp.etl.interfaces.RegisterService;
 import org.opensrp.etl.repository.RegisterRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +17,13 @@ public class RegisterServiceImpl<T> implements RegisterService<T>{
 	@Transactional
 	@Override
 	public void save(T entity) {
-		System.out.println("saving Object entity");
 		registerRepositoryImpl.save(entity);
-		//		Object existingEntity = findByCaseIdAndToday(entity.getRelationalid(),
-		//				entity.getToday());
-		//		if (existingEntity == null) {
-		//			injectableRepository.save(entity);
-		//		} else {
-		//			if (delete(existingEntity))
-		//				injectableRepository.save(entity);
-		//		}
-
 	}
 
 	@Transactional
 	@Override
-	public boolean delete(T t) {
-		return registerRepositoryImpl.delete(t);
+	public boolean delete(T entity) {
+		return registerRepositoryImpl.delete(entity);
 	}
 
 	@Override
