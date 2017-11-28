@@ -4,10 +4,56 @@
 		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http />
+	
 
-	<user-service>
+	<!-- <user-service>
 		<user name="user" password="password" authorities="ROLE_USER" />
-	</user-service>
+	</user-service> -->
+<!-- <authentication-manager>
+	        <authentication-provider user-service-ref="userDetailsService">
+	        		<password-encoder ref="passwordEncoder"/>
+	        </authentication-provider>
+	</authentication-manager> -->
+	
+	<!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+	<!-- <b:bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder"/> -->
 
+	 <!-- An in-memory list of users. No need to access an external database layer.
+		    See Spring Security 3.1 Reference 5.2.1 In-Memory Authentication -->
+	 <!-- john's password: admin
+	 		jane's password: user
+	 		mike's password: visitor  -->
+	 <!-- 		
+	 		<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query=
+					"select username,password, enabled from users where username=?"
+				 />
+		</authentication-provider>
+	</authentication-manager> -->
+	<http auto-config="true" use-expressions="true">
+	<logout invalidate-session="true" 
+				logout-success-url="/login" 
+				logout-url="/logout"/>
+				</http>
+	<!--  <user-service id="userDetailsService">
+	    <user name="john" password="$2a$10$RukL4YM4/BM7PjkyDn3lKewlI.xUuVkydvJnkwgSFM38xOGgEMRP2" authorities="ROLE_ADMIN, ROLE_USER, ROLE_VISITOR" />
+	    <user name="jane" password="ee11cbb19052e40b07aac0ca060c23ee" authorities="ROLE_USER, ROLE_VISITOR" />
+	    <user name="mike" password="127870930d65c57ee65fcc47f2170d38" authorities="ROLE_VISITOR" />
+	  </user-service> -->
+	  <b:bean id="myUserDetailsService"  class="org.mcare.acl.service.UserService"/>
+ 
+<authentication-manager>
+    <authentication-provider
+      user-service-ref="myUserDetailsService" >
+       <!--  <password-encoder ref="passwordEncoder">
+        </password-encoder> -->
+    </authentication-provider>
+</authentication-manager>
+     
+<b:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    
+</b:bean> 
+	   
 </b:beans>

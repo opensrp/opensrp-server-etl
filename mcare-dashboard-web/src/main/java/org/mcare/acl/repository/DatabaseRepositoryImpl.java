@@ -27,12 +27,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 	
 	@Override
-	public <T> int save(T t) {
+	public <T> long save(T t) {
 		Session session = sessionFactory.openSession();
-		int returnValue = 0;
+		long returnValue = 0;
 		try {
 			session.beginTransaction();
-			returnValue = (Integer) session.save(t);
+			returnValue = (Long) session.save(t);
 			session.getTransaction().commit();
 		}
 		catch (HibernateException e) {
@@ -53,7 +53,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T findById(int id, String fieldName, Class<?> className) {
+	public <T> T findById(long id, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, id));
@@ -80,6 +80,16 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		
 		return (List<T>) result;
+	}
+	
+	@Override
+	public <T> T findByKey(String value, String fieldName, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq(fieldName, value));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
 }
