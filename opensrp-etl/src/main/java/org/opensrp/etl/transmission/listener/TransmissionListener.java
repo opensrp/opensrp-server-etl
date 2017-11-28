@@ -39,17 +39,18 @@ public class TransmissionListener {
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findById(1);
-		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
+		ViewResult vr = sourceDBRepository.allData(0);
 		List<Row> rows = vr.getRows();
+
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());
-			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+			//long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
 			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
 			
-			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-				markerEntity.setTimeStamp(currentDocumentTimeStamp);
-				markerService.update(markerEntity);
-			}
+//			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+//				markerEntity.setTimeStamp(currentDocumentTimeStamp);
+//				markerService.update(markerEntity);
+//			}
 			
 		}
 		

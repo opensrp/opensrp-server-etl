@@ -40,7 +40,7 @@ public class PNCDataConverterService implements DataConverterService {
 			pncEntity = (PNCEntity) dataConverter.convert(pnc1VisitDoc, PNCEntity, ancObject);
 			pncEntity.setPncName(Keys.PNC1.name());
 			pncEntity.set_id(doc.getString("_id"));
-			pncEntity.setRelationalid(doc.getString("caseId"));
+			pncEntity.setrelationalid(doc.getString("caseId"));
 			pncService.save(pncEntity);
 		}
 		JSONObject pnc2VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit2").toString());
@@ -49,7 +49,7 @@ public class PNCDataConverterService implements DataConverterService {
 			pncEntity = (PNCEntity) dataConverter.convert(pnc2VisitDoc, PNCEntity, ancObject);
 			pncEntity.setPncName(Keys.PNC2.name());
 			pncEntity.set_id(doc.getString("_id"));
-			pncEntity.setRelationalid(doc.getString("caseId"));
+			pncEntity.setrelationalid(doc.getString("caseId"));
 			pncService.save(pncEntity);
 			
 		}
@@ -57,18 +57,18 @@ public class PNCDataConverterService implements DataConverterService {
 		
 		if (pnc3VisitDoc.length() != 0) {
 			pncEntity = (PNCEntity) dataConverter.convert(pnc3VisitDoc, PNCEntity, ancObject);
-			pncEntity.setPncName(Keys.PNC2.name());
+			pncEntity.setPncName(Keys.PNC3.name());
 			pncEntity.set_id(doc.getString("_id"));
-			pncEntity.setRelationalid(doc.getString("caseId"));
+			pncEntity.setrelationalid(doc.getString("caseId"));
 			pncService.save(pncEntity);
 		}
 		JSONObject pnc4VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit4").toString());
 		
 		if (pnc4VisitDoc.length() != 0) {
 			pncEntity = (PNCEntity) dataConverter.convert(pnc4VisitDoc, PNCEntity, ancObject);
-			pncEntity.setPncName(Keys.PNC2.name());
+			pncEntity.setPncName(Keys.PNC4.name());
 			pncEntity.set_id(doc.getString("_id"));
-			pncEntity.setRelationalid(doc.getString("caseId"));
+			pncEntity.setrelationalid(doc.getString("caseId"));
 			pncService.save(pncEntity);
 		}
 	}

@@ -73,7 +73,6 @@
 <bean name="pncService" class="org.opensrp.etl.service.PNCService"/>
 <bean name="bnfService" class="org.opensrp.etl.service.BNFService"/>
 <bean name="childService" class="org.opensrp.etl.service.ChildService"/>
-<bean name="enccService" class="org.opensrp.etl.service.ENCCService"/>
 <bean name="actionService" class="org.opensrp.etl.service.ActionService"/>
 <bean name="adolescentService" class="org.opensrp.etl.service.AdolescentService"/>
 <bean name="injectableService" class="org.opensrp.etl.service.InjectableService"/>

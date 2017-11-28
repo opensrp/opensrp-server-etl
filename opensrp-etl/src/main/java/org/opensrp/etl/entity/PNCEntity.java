@@ -160,7 +160,7 @@ public class PNCEntity {
 		return relationalid;
 	}
 	
-	public void setRelationalid(String relationalid) {
+	public void setrelationalid(String relationalid) {
 		this.relationalid = relationalid;
 	}
 	

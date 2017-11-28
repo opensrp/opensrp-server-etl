@@ -26,7 +26,10 @@ public class ANCEntity {
 	private int id;
 	
 	private String ancName;
-	
+
+	@Column(name = "doc_id")
+	private String _id;
+
 	private String existing_Age_Youngest_Child;
 	
 	private String existing_Mem_Marital_Status;
@@ -156,7 +159,15 @@ public class ANCEntity {
 	public void setAncName(String ancName) {
 		this.ancName = ancName;
 	}
-	
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+
 	public String getExisting_Age_Youngest_Child() {
 		return existing_Age_Youngest_Child;
 	}

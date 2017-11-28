@@ -19,7 +19,10 @@ public class MemberDataConverterService implements DataConverterService {
 	
 	@Autowired
 	private MemberService memberService;
-	
+
+	@Autowired
+	private ANCDataConverterService ancDataConverterService;
+
 	@Autowired
 	private PSRFDataConverterService psrfDataConverterService;
 
@@ -113,13 +116,14 @@ public class MemberDataConverterService implements DataConverterService {
 			ancService.save(ancEntity);
 		}*/
 
-		//pncDataConverterService.convertToEntityAndSave(doc);
-		//nutritionDataConverterService.convertToEntityAndSave(doc);
-		//psrfDataConverterService.convertToEntityAndSave(doc);
-		//bnfDataConverterService.convertToEntityAndSave(doc);
-		//childDataConverterService.convertToEntityAndSave(doc);
-		//adolescentDataConverterService.convertToEntityAndSave(doc);
+		pncDataConverterService.convertToEntityAndSave(doc);
+		nutritionDataConverterService.convertToEntityAndSave(doc);
+		psrfDataConverterService.convertToEntityAndSave(doc);
+		bnfDataConverterService.convertToEntityAndSave(doc);
+		childDataConverterService.convertToEntityAndSave(doc);
+		adolescentDataConverterService.convertToEntityAndSave(doc);
 		injectableDataConverterService.convertToEntityAndSave(doc);
+		ancDataConverterService.convertToEntityAndSave(doc);
 	}
 	
 }
