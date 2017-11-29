@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.mcare.acl.controller;
+package org.mcare.controller;
 
 import org.mcare.acl.entity.UserEntity;
 import org.mcare.acl.service.DatabaseServiceImpl;

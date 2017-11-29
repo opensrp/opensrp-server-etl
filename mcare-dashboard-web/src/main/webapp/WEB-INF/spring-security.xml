@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	
+	<http/>
 
 	<!-- <user-service>
 		<user name="user" password="password" authorities="ROLE_USER" />
@@ -32,11 +32,11 @@
 				 />
 		</authentication-provider>
 	</authentication-manager> -->
-	<http auto-config="true" use-expressions="true">
+	<!-- <http auto-config="true" use-expressions="true">
 	<logout invalidate-session="true" 
 				logout-success-url="/login" 
 				logout-url="/logout"/>
-				</http>
+				</http> -->
 	<!--  <user-service id="userDetailsService">
 	    <user name="john" password="$2a$10$RukL4YM4/BM7PjkyDn3lKewlI.xUuVkydvJnkwgSFM38xOGgEMRP2" authorities="ROLE_ADMIN, ROLE_USER, ROLE_VISITOR" />
 	    <user name="jane" password="ee11cbb19052e40b07aac0ca060c23ee" authorities="ROLE_USER, ROLE_VISITOR" />
