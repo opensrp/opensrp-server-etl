@@ -3,11 +3,7 @@
  */
 package com.proshanto.spring.controller;
 
-import org.mcare.acl.service.DatabaseServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author proshanto
@@ -15,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-	@Autowired
+	/*@Autowired
 	private DatabaseServiceImpl userService;
 	@RequestMapping("/")
 	public String showview(Model model) {
@@ -31,5 +27,5 @@ public class HomeController {
 		model.addAttribute("formatted", "<b>Home</b>");
 		return "index";
 	}
-	
+	*/
 }

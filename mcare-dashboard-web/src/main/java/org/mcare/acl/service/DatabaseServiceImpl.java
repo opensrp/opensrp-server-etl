@@ -27,7 +27,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	@Override
-	public <T> int save(T t) {
+	public <T> long save(T t) {
 		return databaseRepositoryImpl.save(t);
 	}
 	
@@ -40,7 +40,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	@Override
-	public <T> T findById(int id, String fieldName, Class<?> className) {
+	public <T> T findById(long id, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
 		return databaseRepositoryImpl.findById(id, fieldName, className);
 	}
@@ -50,6 +50,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	public <T> List<T> findAll(T t, String tableClass) {
 		return (List<T>) databaseRepositoryImpl.findAll(t, tableClass);
+	}
+	
+	@Override
+	public <T> T findByKey(String value, String fieldName, Class<?> className) {
+		return databaseRepositoryImpl.findByKey(value, fieldName, className);
 	}
 	
 }
