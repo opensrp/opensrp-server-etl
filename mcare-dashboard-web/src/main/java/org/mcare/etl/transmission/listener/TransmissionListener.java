@@ -7,6 +7,7 @@ import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.MarkerEntity;
+import org.mcare.etl.interfaces.TransmissionServices;
 import org.mcare.etl.repository.SourceDBRepository;
 import org.mcare.etl.service.MarkerService;
 import org.mcare.etl.transmission.service.TransmissionServiceFactory;
@@ -36,6 +37,8 @@ public class TransmissionListener {
 	@Autowired
 	private MarkerEntity markerEntity;
 	
+	private TransmissionServices transmissionServices;
+	
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findById(1);
@@ -46,12 +49,14 @@ public class TransmissionListener {
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());
 			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
-			
-			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-				markerEntity.setTimeStamp(currentDocumentTimeStamp);
-				markerService.update(markerEntity);
-			}
+			transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
+			if (transmissionServices!=null) {
+				transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
+				if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+					markerEntity.setTimeStamp(currentDocumentTimeStamp);
+					markerService.update(markerEntity);
+				}
+			}			
 			
 		}
 		

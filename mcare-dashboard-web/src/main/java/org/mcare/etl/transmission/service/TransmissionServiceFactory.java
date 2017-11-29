@@ -27,16 +27,26 @@ public class TransmissionServiceFactory {
 	private TransmissionServices transmissionServices;
 	
 	private TransmissionServices getTransmissionService(String transmissionServiceType) {
-		if (transmissionServiceType.equals("HouseHold"))
+		if (transmissionServiceType.equals("HouseHold")) {
 			transmissionServices = householdTransmissionService;
-		else if (transmissionServiceType.equals("Elco"))
+		}
+		else if (transmissionServiceType.equals("Elco")) {
 			transmissionServices = elcoTransmissionService;
-		else if (transmissionServiceType.equals("Mother"))
+		}
+		else if (transmissionServiceType.equals("Mother")) {
 			transmissionServices = motherTransmissionService;
-		else if (transmissionServiceType.equals("Child"))
+		}
+		else if (transmissionServiceType.equals("Child")) {
 			transmissionServices = childTransmissionService;
-		else if (transmissionServiceType.equals("Action"))
+		}
+		else if (transmissionServiceType.equals("Action")) {
 			transmissionServices = actionTransmissionService;
+		}
+		else {
+			transmissionServices=null;
+			
+		}
+			System.err.println("come:");
 		return transmissionServices;
 		
 	}
