@@ -13,7 +13,10 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+ <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="__csrf_parameter" content="${__csrf_parameter}"/>
     <title>Add user information</title>
     
     <link  type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -23,6 +26,7 @@
   </head>
   <body>
   <c:url var="saveUrl" value="/export" />
+  <c:url var="home" value="/log" scope="request" />
  <div th:fragment="header">
     <!-- this is header -->
     <nav class="navbar navbar-inverse">
@@ -41,26 +45,47 @@
  <div class="container">
      <div class="row">               
          <div class="col-md-12">
-              <form:form  method="POST" action="${saveUrl}">
-	<table>
-		<tr>
-			<td><form:label path="formName">User Name:</form:label></td>
-			<td><form:input path="formName"/></td>
-   <td><form:label path="provider">Password:</form:label></td>
-   <td><form:input path="provider"/></td>
-    <td><form:input  path="start"/></td>
-    <td><form:input  path="endDate"/></td>
-		</tr>
-	</table>
-	
-	<input type="submit" value="Export" />
-</form:form>
+             <form class="form-horizontal" id="search-form">
+             <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label">FormName</label>
+              <div class="col-sm-10">
+               <input type="text" name="formName" class="form-control" id="formName">
+              </div>
+            </div>
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label">Provider</label>
+              <div class="col-sm-10">
+               <input type="text" name="provider" class="form-control" id="provider">
+              </div>
+            </div>
+			<div class="form-group form-group-lg">
+				<label class="col-sm-2 control-label">Start</label>
+				<div class="col-sm-10">
+					<input type=text name="start"  class="form-control" id="start">
+				</div>
+			</div>
+			<div class="form-group form-group-lg">
+				<label class="col-sm-2 control-label">End</label>
+				<div class="col-sm-10">
+					<input type="text" name="end" class="form-control" id="end">
+				</div>
+			</div>
+   
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" id="bth-search"
+						class="btn btn-primary btn-lg">Search</button>
+				</div>
+			</div>
+		</form>
+
         </div>
               
     </div>
  </div> 
 
- 
+ <a href="" id="download">Download</a>
    
   </body>
   
@@ -73,20 +98,78 @@
   $( function() {
 	  var dateToday = new Date();
 	     $('#start').datepicker({
-	        // dateFormat: "yy-mm-dd",
+	        dateFormat: "yy-mm-dd",
 	         minDate: null,
 	         maxDate: dateToday,
 	           onSelect: function(selected) {
-	             $('#endDate').datepicker("option", "minDate",  
-	            		 $("#start").datepicker('getDate') )
+	             $('#end').datepicker("option", "minDate",  
+	            		 $("#start").datepicker('getDate') );
 	          } 
 	     });
 
-	     $('#endDate').datepicker({
-	        // dateFormat: "yy-mm-dd",
+	     $('#end').datepicker({
+	        dateFormat: "yy-mm-dd",
 	         minDate: null,
 	         maxDate: dateToday,
 	     });  
-  } );
+  } ); 
   </script>
+  
+  
+  
+  <script>
+ jQuery(document).ready(function($) {
+
+  $("#search-form").submit(function(event) {
+	 
+   // Disble the search button
+  // enableSearchButton(false);
+
+   // Prevent the form from submitting via the browser.
+   event.preventDefault();
+  /* $("p").text( "Hiiiiiiiiiiiiiii");
+   window.location = "/log?roleName=name"; */
+   searchViaAjax() ;
+  });
+
+ });
+
+ function searchViaAjax() {
+
+ 
+  $.ajax({
+   type : "GET",
+   contentType : "application/json",
+   url : "/search?start="+$("#start").val()+"&end="+$("#end").val()+"&provider="+$("#provider").val()+"&formName="+$("#formName").val(),
+ //  data : JSON.stringify(search),
+   dataType : 'json',
+   timeout : 100000,
+   
+   success : function(data) {
+    console.log("SUCCESS: ", data);
+    $("a#download").attr('href', 
+    '/multimedia/export/'+data);
+   },
+   error : function(e) {
+    console.log("ERROR: ", e);
+    display(e);
+   },
+   done : function(e) {
+    console.log("DONE");
+    //enableSearchButton(true);
+   }
+  });
+
+ }
+
+ function enableSearchButton(flag) {
+  $("#btn-search").prop("disabled", flag);
+ }
+
+ function display(data) {
+  var json = "<h4>Ajax Response</h4><pre>"
+    + JSON.stringify(data, null, 4) + "</pre>";
+  $('#feedback').html(json);
+ }
+</script>
 </html>
