@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.util.ExportKeyMapperSetup;
 import org.mcare.common.util.FormName;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
@@ -34,6 +35,9 @@ public class ANCDataExportServiceImpl implements DataExportService {
 	@Autowired
 	private DataExportEntity dataExportEntity;
 	
+	@Autowired
+	private CSVExportServiceImpl csvExportServiceImpl;
+	
 	@Override
 	public void export(List<Object[]> dataSets, HttpServletResponse response) {
 		String reportName = "anc" + System.currentTimeMillis() + ".csv";
@@ -43,16 +47,7 @@ public class ANCDataExportServiceImpl implements DataExportService {
 		
 		try {
 			writer = new FileWriter("/opt/multimedia" + "/export/" + reportName);
-			writer.append("Beneficiary Name");
-			writer.append(',');// 1
-			writer.append("Identifier");
-			writer.append(',');// 1
-			writer.append("Schedule Status");
-			writer.append(',');// 4
-			writer.append("FWA Name");
-			writer.append(',');// 5
-			writer.append("Upazilla");
-			writer.append(',');// 6
+			csvExportServiceImpl.createHeader(writer, ExportKeyMapperSetup.ANC);
 			
 			writer.append('\n'); // 22
 			
@@ -83,6 +78,7 @@ public class ANCDataExportServiceImpl implements DataExportService {
 		
 	}
 	
+	@SuppressWarnings("resource")
 	@Transactional
 	@Override
 	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response) {
@@ -93,16 +89,8 @@ public class ANCDataExportServiceImpl implements DataExportService {
 		
 		try {
 			writer = new FileWriter("/opt/multimedia" + "/export/" + reportName);
-			writer.append("Beneficiary Name");
-			writer.append(',');// 1
-			writer.append("Identifier");
-			writer.append(',');// 1
-			writer.append("Schedule Status");
-			writer.append(',');// 4
-			writer.append("FWA Name");
-			writer.append(',');// 5
-			writer.append("Upazilla");
-			writer.append(',');// 6
+			
+			writer = csvExportServiceImpl.createHeader(writer, ExportKeyMapperSetup.ANC);
 			
 			writer.append('\n'); // 22
 			
