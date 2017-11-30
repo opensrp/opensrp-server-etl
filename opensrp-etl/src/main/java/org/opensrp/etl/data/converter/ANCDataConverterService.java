@@ -22,7 +22,7 @@ public class ANCDataConverterService implements DataConverterService {
 	public ANCDataConverterService() {
 		
 	}
-	
+
 	@Autowired
 	public void setANCEntity(ANCEntity ancEntity) {
 		this.ancEntity = ancEntity;

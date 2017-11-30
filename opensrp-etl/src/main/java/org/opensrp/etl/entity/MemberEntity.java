@@ -179,7 +179,7 @@ public class MemberEntity {
 		return caseId;
 	}
 	
-	public void setCaseId(String caseId) {
+	public void setcaseId(String caseId) {
 		this.caseId = caseId;
 	}
 	

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MemberService implements RegisterService<MemberEntity> {
 	
 	@Autowired
-	private MemberRepository elcoRepository;
+	private MemberRepository memberRepository;
 	
 	public MemberService() {
 		// TODO Auto-generated constructor stub
@@ -20,27 +20,27 @@ public class MemberService implements RegisterService<MemberEntity> {
 	
 	@Transactional
 	@Override
-	public void save(MemberEntity elcoEntity) {
-		MemberEntity existingMemberEntity = findByCaseId(elcoEntity.getCaseId());
+	public void save(MemberEntity memberEntity) {
+		MemberEntity existingMemberEntity = findByCaseId(memberEntity.getCaseId());
 		if (existingMemberEntity == null) {
-			elcoRepository.save(elcoEntity);
+			memberRepository.save(memberEntity);
 		} else {
 			if (delete(existingMemberEntity))
-				elcoRepository.save(elcoEntity);
+				memberRepository.save(memberEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(MemberEntity elcoEntity) {
-		return elcoRepository.delete(elcoEntity);
+		return memberRepository.delete(elcoEntity);
 		
 	}
 	
 	@Transactional
 	@Override
 	public void update(MemberEntity elcoEntity) {
-		elcoRepository.update(elcoEntity);
+		memberRepository.update(elcoEntity);
 		
 	}
 	
@@ -53,7 +53,7 @@ public class MemberService implements RegisterService<MemberEntity> {
 	@Transactional
 	@Override
 	public MemberEntity findByCaseId(String caseId) {
-		return elcoRepository.findByCaseId(caseId);
+		return memberRepository.findByCaseId(caseId);
 	}
 	
 }

@@ -54,5 +54,7 @@ public class TransmissionListener {
 			
 		}
 		
+		System.out.println("Data transfer completed");
+
 	}
 }

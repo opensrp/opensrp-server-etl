@@ -28,10 +28,10 @@ public class MemberRepository implements RegisterRepository<MemberEntity> {
 	}
 	
 	@Override
-	public void save(MemberEntity elcoEntity) {
+	public void save(MemberEntity memberEntity) {
 		
 		try {
-			getSession().save(elcoEntity);
+			getSession().save(memberEntity);
 			
 		}
 		catch (Exception e) {
