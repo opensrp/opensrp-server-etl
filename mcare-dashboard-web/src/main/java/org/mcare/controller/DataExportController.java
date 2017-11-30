@@ -43,12 +43,13 @@ public class DataExportController {
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
 	                                               String end, String provider, String formName) throws ParseException {
 		//System.err.println("Start:" + start + " end:" + end + " provider:" + provider);
-		
+		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
 		Date endDate = DateUtil.parseDate(end);
 		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider);
-		String reportName = dataExportService.createCSVAndSave(datas, response);
+		System.err.println("Data:" + datas.size());
+		reportName = dataExportService.createCSVAndSave(datas, response);
 		return new ResponseEntity<>(new Gson().toJson(reportName), HttpStatus.OK);
 		
 	}

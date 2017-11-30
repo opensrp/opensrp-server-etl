@@ -93,16 +93,8 @@ public class ANCDataExportServiceImpl implements DataExportService {
 			writer = csvExportServiceImpl.createHeader(writer, ExportKeyMapperSetup.ANC);
 			
 			writer.append('\n'); // 22
+			writer = csvExportServiceImpl.createContent(writer, dataSets);
 			
-			writer.append("Beneficiary Name");
-			writer.append(',');
-			writer.append("Identifier Name");
-			writer.append(',');
-			writer.append("Schedule Name");
-			writer.append(',');
-			writer.append("FWA Name");
-			writer.append(',');
-			writer.append("Upazilla Name");
 			writer.append('\n');
 			writer.flush();
 			writer.close();

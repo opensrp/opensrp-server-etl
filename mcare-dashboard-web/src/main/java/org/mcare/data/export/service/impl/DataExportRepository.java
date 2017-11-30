@@ -19,18 +19,21 @@ public class DataExportRepository {
 	}
 	
 	public List<Object[]> executeSelectQuery(String sqlQuery) {
-		sqlQuery = "select * from anc where id=?";
+		sqlQuery = "select * from anc";
 		
 		List<Object[]> cleanedResults = new ArrayList<Object[]>();
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		query.setParameter(0, 1);
+		//query.setParameter(0, 1);
 		List<Object[]> hibernateResults = query.list();
 		System.err.println("hibernateResults:" + hibernateResults.size());
 		for (Object[] objects : hibernateResults) {
-			System.err.println("" + objects[0]);
+			for (int i = 0; i < objects.length; i++) {
+				System.err.println("" + objects[i]);
+			}
+			//cleanedResults.add(objects);
 		}
 		
-		return cleanedResults;
+		return hibernateResults;
 	}
 }

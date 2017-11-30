@@ -34,7 +34,22 @@ public class CSVExportServiceImpl implements CoreExportService {
 	
 	@Override
 	public FileWriter createContent(FileWriter writer, List<Object[]> dataSets) {
-		// TODO Auto-generated method stub
+		
+		for (Object[] objects : dataSets) {
+			for (int i = 0; i < objects.length; i++) {
+				try {
+					writer.append(objects[i].toString());
+					writer.append(',');
+				}
+				catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			//cleanedResults.add(objects);
+		}
+		
 		return writer;
 	}
 	
