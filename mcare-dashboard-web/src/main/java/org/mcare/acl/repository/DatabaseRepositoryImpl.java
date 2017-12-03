@@ -41,12 +41,11 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			session.clear();
-			session.evict(session);
+			//session.clear();
+			//session.evict(session);
 		}
 		return returnValue;
 	}
-	
 	
 	@Override
 	public <T> long update(T t) {
@@ -64,12 +63,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			session.clear();
-			session.evict(session);
+			//session.clear();
+			//session.evict(session);
 		}
 		return returnValue;
 	}
-
+	
 	@Override
 	public <T> boolean delete(T t) {
 		Session session = sessionFactory.openSession();
@@ -86,8 +85,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			session.clear();
-			session.evict(session);
+			//session.clear();
+			//session.evict(session);
 		}
 		return returnValue;
 	}
@@ -118,8 +117,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			session.clear();
-			session.evict(session);
+			//session.clear();
+			//session.evict(session);
 		}
 		
 		return (List<T>) result;
