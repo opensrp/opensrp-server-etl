@@ -74,7 +74,24 @@ public class ANCDataExportServiceImpl implements DataExportService {
 	@Transactional
 	@Override
 	public List<Object[]> getData(Date start, Date end, String provider) {
-		return dataExportRepository.executeSelectQuery("");
+		String condition = "";
+		
+		if (start != null) {
+			condition = "anc.fwancdate between '" + start + "'and'" + end + "' ";
+		}
+		
+		if (!provider.isEmpty()) {
+			condition = condition + "and mother.provider=:provider";
+		}
+		String sqlQuery = "select mother.case_id,anc.fwancanm,anc.fwancbld,anc.fwancblrvis,anc.fwancconvl,anc.fwancdate,anc.fwancdbt,anc.fwancds1,anc.fwancds2 ,"
+		        + "anc.fwancds3 , anc.fwancds4 , anc.fwancds5 , anc.fwancds6 , anc.fwanchbp , anc.fwanchead , anc.fwancint , anc.fwancknwprvdr ,anc.fwancprob ,anc.fwancremsts ,"
+		        + "anc.fwancswlng ,anc.fwancthy ,anc.fwbpcasstlab ,anc.fwbpcblddnr , anc.fwbpcbldgrp , anc.fwbpcfinargmt ,anc.fwbpclocofdel , anc.fwbpctrnsprt ,"
+		        + "anc.fwconfirmation ,anc.fwdangervalue ,anc.fwedd  ,anc.fwflagvalue ,anc.fwgestationalage,anc.fwhrp ,anc.fwhr_anc , anc.fwhr_psr ,anc.fwhusname ,"
+		        + "anc.fwnoteligible,anc.fwsortvalue ,anc.fwvg ,anc.fwwombid ,anc.fwwomfname ,anc.fwwomnid ,anc.fw_gobhhid ,anc.fw_jivitahhid , anc.ancname , anc.anc_current_formstatus ,"
+		        + "anc.end_time , anc.mauza ,anc.received_time , anc.start , anc.today, anc.user_type from anc inner join mother on anc.relationalid =mother.case_id where "
+		        + condition;
+		
+		return dataExportRepository.executeSelectQuery(provider, sqlQuery);
 		
 	}
 	
@@ -95,13 +112,12 @@ public class ANCDataExportServiceImpl implements DataExportService {
 			writer.append('\n'); // 22
 			writer = csvExportServiceImpl.createContent(writer, dataSets);
 			
-			writer.append('\n');
 			writer.flush();
 			writer.close();
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		dataExportEntity.setFormName(FormName.ANC.name());

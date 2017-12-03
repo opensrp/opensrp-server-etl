@@ -36,12 +36,16 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <a href = "<c:url value = "/"/>">Home</a>
+                    <a href = "<c:url value = "/"/>">Home </a>
                 </ul>
             </div>
         </div>
     </nav>
 </div>
+
+ <%-- <c:out value="${name}" /> --%>
+ 
+  
  <div class="container">
      <div class="row">               
          <div class="col-md-12">
@@ -49,15 +53,17 @@
              <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label">FormName</label>
               <div class="col-sm-10">
-               <input type="text" name="formName" class="form-control" id="formName">
+              <!--  <input type="text" name="formName" class="form-control" > -->
+               <select name="formName" id="formName" required>
+                <option value="">Please Select FormName</option>
+                 <c:forEach items="${formNames}" var="formName">    
+                   <option value="${formName}">${formName}</option>
+                 </c:forEach>
+              
+               </select>
               </div>
             </div>
-            <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label">Provider</label>
-              <div class="col-sm-10">
-               <input type="text" name="provider" class="form-control" id="provider">
-              </div>
-            </div>
+           
 			<div class="form-group form-group-lg">
 				<label class="col-sm-2 control-label">Start</label>
 				<div class="col-sm-10">
@@ -70,7 +76,18 @@
 					<input type="text" name="end" class="form-control" id="end">
 				</div>
 			</div>
-   
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label">Provider</label>
+              <div class="col-sm-10">              
+               <select name="provider"id="provider">
+                <option value="">Please Select Provider</option>
+                 <c:forEach items="${providers}" var="provider">    
+                   <option value="${provider.getProvider()}">${provider.getProvider()}</option>
+                 </c:forEach>
+              
+               </select>
+              </div>
+            </div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">

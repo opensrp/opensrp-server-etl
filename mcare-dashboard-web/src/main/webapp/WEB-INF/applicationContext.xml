@@ -28,7 +28,7 @@
 
  <!--  <import resource="classpath:thyme-leaf-context.xml"/> -->
   <import resource="classpath:mvc-context.xml"/>
-  <import resource="classpath:hibernate-hbm.xml"/>
+  <import resource="classpath:hibernate-cfg.xml"/>
    <import resource="classpath:etl-bean-context.xml"/>
 <import resource="classpath:couchdb-connection-context.xml"/> 
  <import resource="classpath:listener-context.xml"/> 

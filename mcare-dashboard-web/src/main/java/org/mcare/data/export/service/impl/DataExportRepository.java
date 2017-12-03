@@ -1,6 +1,5 @@
 package org.mcare.data.export.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
@@ -18,22 +17,23 @@ public class DataExportRepository {
 		
 	}
 	
-	public List<Object[]> executeSelectQuery(String sqlQuery) {
-		sqlQuery = "select * from anc";
-		
-		List<Object[]> cleanedResults = new ArrayList<Object[]>();
+	@SuppressWarnings("unchecked")
+	public List<Object[]> executeSelectQuery(String provider, String sqlQuery) {
+		//sqlQuery = "select * from anc";
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		//query.setParameter(0, 1);
-		List<Object[]> hibernateResults = query.list();
-		System.err.println("hibernateResults:" + hibernateResults.size());
-		for (Object[] objects : hibernateResults) {
-			for (int i = 0; i < objects.length; i++) {
-				System.err.println("" + objects[i]);
-			}
-			//cleanedResults.add(objects);
+		if (!provider.isEmpty()) {
+			query.setParameter("provider", provider);
 		}
+		List<Object[]> results = query.list();
+		System.err.println("hibernateResults:" + results.size());
+		/*for (Object[] objects : hibernateResults) {
+			for (int i = 0; i < objects.length; i++) {
+				
+			}
+			
+		}*/
 		
-		return hibernateResults;
+		return results;
 	}
 }

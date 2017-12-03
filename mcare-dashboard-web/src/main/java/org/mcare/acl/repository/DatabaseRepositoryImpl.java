@@ -64,7 +64,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> findAll(T t, String tableClass) {
+	public <T> List<T> findAll(String tableClass) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
 		try {

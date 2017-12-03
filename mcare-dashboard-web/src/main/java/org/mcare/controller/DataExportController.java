@@ -9,7 +9,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.mcare.acl.entity.ProviderEntity;
+import org.mcare.acl.service.ProviderServiceImpl;
 import org.mcare.common.util.DateUtil;
+import org.mcare.common.util.FormName;
 import org.mcare.data.export.service.DataExportService;
 import org.mcare.data.export.service.impl.DataExportServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +38,22 @@ public class DataExportController {
 	
 	private DataExportService dataExportService;
 	
+	@Autowired
+	private ProviderEntity providerEntity;
+	
+	@Autowired
+	private ProviderServiceImpl providerServiceImpl;
+	
 	public DataExportController() {
 		
 	}
 	
 	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
-	                                               String end, String provider, String formName) throws ParseException {
+	                                               String end, String provider, String formName, Model model)
+	    throws ParseException {
 		//System.err.println("Start:" + start + " end:" + end + " provider:" + provider);
+		
 		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
@@ -83,10 +94,13 @@ public class DataExportController {
 	*/
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
+		model.addAttribute("formNames", FormName.values());
 		
+		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+		model.addAttribute("providers", providers);
+		System.err.println(providers.toString());
 		return "export/form";
 	}
-	
 	/*@RequestMapping(value = "/export", method = RequestMethod.POST)
 	public ModelAndView dataExportPost(@ModelAttribute("form") FormEntity form, ModelMap model, HttpServletResponse response) {
 		System.err.println("dataExportServiceFactory;"
