@@ -30,6 +30,25 @@ public class ANCEntity {
 	@Column(name = "doc_id")
 	private String _id;
 
+	@Column(name = "end_time")
+	private Date end;
+
+	private Date start;
+
+	private Date received_time;
+
+	@Temporal(TemporalType.DATE)
+	private Date today;
+
+	private Integer Visit_Status;
+
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+
+	private int Is_Reffered;
+
+	private String existing_Caesarean;
+
 	private String existing_Age_Youngest_Child;
 	
 	private String existing_Mem_Marital_Status;
@@ -52,9 +71,7 @@ public class ANCEntity {
 	private String existing_Gravida;
 	
 	private String Confirm_Info;
-	
-	private Integer Visit_Status;
-	
+
 	private Integer Is_Post_Due;
 	
 	private String existing_ELCO_BRID;
@@ -64,13 +81,9 @@ public class ANCEntity {
 	
 	private String Met;
 	
-	private String existing_Caesarean;
-	
 	private String existing_Birth_Outcome;
 	
 	private String existing_Mauzapara;
-	
-	private Date start;
 	
 	private String Convulsions;
 	
@@ -82,23 +95,16 @@ public class ANCEntity {
 	
 	private String existing_GoB_HHID;
 	
-	private String relationalid;
-	
 	private String existing_Couple_No;
 	
 	private String Symptoms;
-	
-	private String Is_Reffered;
 	
 	private String existing_Spouse_Name;
 	
 	private String Is_Critical;
 	
 	private String Is_Expired;
-	
-	@Temporal(TemporalType.DATE)
-	private Date today;
-	
+
 	private Integer Preg_Status;
 	
 	private String existing_ELCO;
@@ -121,20 +127,12 @@ public class ANCEntity {
 	private Date ANC_Post_Due_Date;
 	
 	private String existing_Gestational_Age;
-	
-	@Column(name = "end_time")
-	private Date end;
-	
+
 	private String existing_Prolong_Delivery;
-	
-	private Date received_time;
 	
 	private String existing_HoH_F_Name;
 	
 	private String Prolonged_Delivery;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
 	
 	private String existing_Total_Child_Alive;
 	
@@ -152,6 +150,8 @@ public class ANCEntity {
 	@Temporal(TemporalType.DATE)
 	private Date ANC_Due_Date;
 	
+	private String relationalid;
+
 	public String getAncName() {
 		return ancName;
 	}
@@ -394,11 +394,11 @@ public class ANCEntity {
 		Symptoms = symptoms;
 	}
 	
-	public String getIs_Reffered() {
+	public int getIs_Reffered() {
 		return Is_Reffered;
 	}
 	
-	public void setIs_Reffered(String is_Reffered) {
+	public void setIs_Reffered(int is_Reffered) {
 		Is_Reffered = is_Reffered;
 	}
 	

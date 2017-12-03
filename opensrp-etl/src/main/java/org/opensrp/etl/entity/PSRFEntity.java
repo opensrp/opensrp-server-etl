@@ -26,7 +26,35 @@ public class PSRFEntity {
 	private long id;
 
 	@Temporal(TemporalType.DATE)
+	private Date today;
+
+	@Column(name="end_time")
+	private Date end;
+
+	private Date start;
+
+	private Date Received_Time;
+
+	private String version;
+
+	private long clientVersion;
+
+	private String serverVersion;
+
+	private String changes;
+
+	private Integer Visit_Status;
+
+	@Temporal(TemporalType.DATE)
 	private Date Calc_EDD;
+
+	private Integer Birth_Control;
+
+	private int Using_FP;
+
+	private int TT_Dose;
+
+	private int Preg_Status;
 
 	private String Want_FP_Commodities;
 	
@@ -46,13 +74,9 @@ public class PSRFEntity {
 
 	private String existing_Final_Vill;
 
-	private long clientVersion;
-
 	private String yn_dk_label;
 
 	private String Confirm_Info;
-
-	private int Visit_Status;
 
 	private String Mother_BRID;
 
@@ -71,11 +95,7 @@ public class PSRFEntity {
 	
 	private String Mother_Mauzapara;
 	
-	private Date Received_Time;
-	
 	private String existing_Mauzapara;
-	
-	private Date start;
 
 	private String Want_To_Use;
 	
@@ -106,10 +126,6 @@ public class PSRFEntity {
 	
 	private String ELCO;
 	
-	private String version;
-	
-	private String TT_Dose;
-	
 	private String Prolong_Delivery;
 	
 	private Date Permanent_M_Date;
@@ -117,9 +133,6 @@ public class PSRFEntity {
 	private long existing_ELCO_NID;
 	
 	private String Not_Preg_Note;
-
-	@Column(name="end_time")
-	private Date end;
 
 	private String Provide_Pills_Condoms;
 	
@@ -153,8 +166,6 @@ public class PSRFEntity {
 	
 	private String Select_FP_Method;
 	
-	private int Birth_Control;
-	
 	private String Wom_Met;
 	
 	private int Cond_Given_No;
@@ -172,8 +183,6 @@ public class PSRFEntity {
 	
 	private String Mother_Hus_Name;
 	
-	private String serverVersion;
-	
 	private int Height;
 	
 	private String existing_ELCO_BRID;
@@ -183,9 +192,6 @@ public class PSRFEntity {
 	private String PW;
 	
 	private String Last_Pregnancy;
-	
-	@Temporal(TemporalType.DATE)
-	private Date today;
 	
 	private String existing_Final_Union;
 	
@@ -199,8 +205,6 @@ public class PSRFEntity {
 	private Date Format_Cond_Given_Date;
 	
 	private String Type_Oral_Pill;
-	
-	private int Using_FP;
 	
 	private int Has_Changed;
 	
@@ -217,8 +221,6 @@ public class PSRFEntity {
 	
 	@Temporal(TemporalType.DATE)
 	private Date Cond_Given_Date;
-	
-	private int Preg_Status;
 	
 	private String Live_Birth;
 	
@@ -242,8 +244,6 @@ public class PSRFEntity {
 	private String Mother_F_Name;
 	
 	private int Not_ELCO;
-	
-	private String changes;
 	
 	private String relationalid;
 	
@@ -357,11 +357,11 @@ public class PSRFEntity {
 		Confirm_Info = confirm_Info;
 	}
 
-	public int getVisit_Status() {
+	public Integer getVisit_Status() {
 		return Visit_Status;
 	}
 
-	public void setVisit_Status(int visit_Status) {
+	public void setVisit_Status(Integer visit_Status) {
 		Visit_Status = visit_Status;
 	}
 
@@ -576,11 +576,11 @@ public class PSRFEntity {
 		this.version = version;
 	}
 
-	public String getTT_Dose() {
+	public int getTT_Dose() {
 		return TT_Dose;
 	}
 
-	public void setTT_Dose(String tT_Dose) {
+	public void setTT_Dose(int tT_Dose) {
 		TT_Dose = tT_Dose;
 	}
 
@@ -746,11 +746,11 @@ public class PSRFEntity {
 		Select_FP_Method = select_FP_Method;
 	}
 
-	public int getBirth_Control() {
+	public Integer getBirth_Control() {
 		return Birth_Control;
 	}
 
-	public void setBirth_Control(int birth_Control) {
+	public void setBirth_Control(Integer birth_Control) {
 		Birth_Control = birth_Control;
 	}
 

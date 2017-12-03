@@ -26,6 +26,23 @@ public class BNFEntity {
 	@Column(name="end_time")
 	private Date end;
 
+	@Temporal(TemporalType.DATE)
+	private Date Today;
+
+	private Date start;
+
+	private long clientVersion;
+
+	private long serverVersion;
+
+	private long version;
+
+	private int Where_Delivered;
+
+	private int Who_Delivered;
+
+	private int Misoprostol_Received;
+
 	private String Mem_F_Name;
 
 	private int Is_PNC;
@@ -54,8 +71,6 @@ public class BNFEntity {
 
 	private String existing_Subunit;
 
-	private long clientVersion;
-
 	private String add_child;
 
 	private String Mem_Mauzapara;
@@ -64,15 +79,9 @@ public class BNFEntity {
 
 	private int Visit_Status;
 
-	private String Misoprostol_Received;
-
 	private String Mem_Ward;
 
-	private String Where_Delivered;
-
 	private String Mem_Union;
-
-	private long serverVersion;
 
 	private String existing_GPS;
 
@@ -88,18 +97,11 @@ public class BNFEntity {
 
 	private String existing_Mauzapara;
 
-	private Date start;
-
 	private String DOO;
-
-	@Temporal(TemporalType.DATE)
-	private Date Today;
 
 	private int existing_TT_Count;
 
 	private int Child_Weight;
-
-	private String relationalid;
 
 	private String existing_GoB_HHID;
 
@@ -121,8 +123,6 @@ public class BNFEntity {
 	private Date Member_Reg_Date;
 
 	private String existing_Height;
-
-	private long version;
 
 	private String bnf_current_formStatus;
 
@@ -156,8 +156,6 @@ public class BNFEntity {
 
 	private String Mem_BRID_Concept;
 
-	private String Who_Delivered;
-
 	private long Mem_Mobile_Number;
 
 	private int Calc_Age;
@@ -177,6 +175,8 @@ public class BNFEntity {
 	private int Num_Live_Birth;
 
 	private String changes;
+
+	private String relationalid;
 
 	public long getId() {
 		return id;
@@ -350,11 +350,11 @@ public class BNFEntity {
 		Visit_Status = visit_Status;
 	}
 
-	public String getMisoprostol_Received() {
+	public int getMisoprostol_Received() {
 		return Misoprostol_Received;
 	}
 
-	public void setMisoprostol_Received(String misoprostol_Received) {
+	public void setMisoprostol_Received(int misoprostol_Received) {
 		Misoprostol_Received = misoprostol_Received;
 	}
 
@@ -366,11 +366,11 @@ public class BNFEntity {
 		Mem_Ward = mem_Ward;
 	}
 
-	public String getWhere_Delivered() {
+	public int getWhere_Delivered() {
 		return Where_Delivered;
 	}
 
-	public void setWhere_Delivered(String where_Delivered) {
+	public void setWhere_Delivered(int where_Delivered) {
 		Where_Delivered = where_Delivered;
 	}
 
@@ -712,11 +712,11 @@ public class BNFEntity {
 		Mem_BRID_Concept = mem_BRID_Concept;
 	}
 
-	public String getWho_Delivered() {
+	public int getWho_Delivered() {
 		return Who_Delivered;
 	}
 
-	public void setWho_Delivered(String who_Delivered) {
+	public void setWho_Delivered(int who_Delivered) {
 		Who_Delivered = who_Delivered;
 	}
 

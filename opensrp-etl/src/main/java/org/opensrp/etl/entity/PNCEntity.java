@@ -29,9 +29,30 @@ public class PNCEntity {
 	private String _id;
 	
 	private String pncName;
-	
-	private String relationalid;
-	
+
+	@Temporal(TemporalType.DATE)
+	private Date today;
+
+	@Column(name = "end_time")
+	private Date end;
+
+	private Date start;
+
+	private int Has_PNC_Given_On_Time;
+
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+
+	private Integer Visit_Status;
+
+	private String Visit_No;
+
+	private Integer Is_Cleaned;
+
+	private Integer Chlorhexidin;
+
+	private Integer Breasmilk_Fed;
+
 	private String existing_Couple_No;
 	
 	private String existing_Risky_Preg;
@@ -45,10 +66,6 @@ public class PNCEntity {
 	private String existing_Mauzapara;
 	
 	private String existing_LMP;
-	
-	private Integer Visit_Status;
-	
-	private String Is_Cleaned;
 	
 	private String existing_Visit_Status;
 	
@@ -64,13 +81,9 @@ public class PNCEntity {
 	
 	private String Calc_On_Time;
 	
-	private Integer Chlorhexidin;
-	
 	private String Confirm_Info;
 	
 	private String existing_Final_Vill;
-	
-	private String Visit_No;
 	
 	private String existing_ELCO_BRID;
 	
@@ -87,9 +100,6 @@ public class PNCEntity {
 	
 	private String existing_TT_Count;
 	
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
-	
 	private String Headache_Blur_Vision;
 	
 	private String changes;
@@ -101,14 +111,8 @@ public class PNCEntity {
 	private String existing_Premature_Birth;
 	
 	private String Not_Bathed;
-	
-	@Temporal(TemporalType.DATE)
-	private Date today;
-	
+
 	private String existing_DOO;
-	
-	@Column(name = "end_time")
-	private Date end;
 	
 	private String Is_On_Time;
 	
@@ -130,15 +134,9 @@ public class PNCEntity {
 	
 	private String existing_Num_Live_Birth;
 	
-	private Date start;
-	
 	private String pnc_current_formStatus;
 	
-	private String Breasmilk_Fed;
-	
 	private String Newborn;
-	
-	private String Has_PNC_Given_On_Time;
 	
 	private String existing_HoH_F_Name;
 	
@@ -147,7 +145,9 @@ public class PNCEntity {
 	private String existing_ELCO_Mobile_Number;
 	
 	private String Is_Expired;
-	
+
+	private String relationalid;
+
 	public String getPncName() {
 		return pncName;
 	}
@@ -236,11 +236,11 @@ public class PNCEntity {
 		Visit_Status = visit_Status;
 	}
 	
-	public String getIs_Cleaned() {
+	public Integer getIs_Cleaned() {
 		return Is_Cleaned;
 	}
 	
-	public void setIs_Cleaned(String is_Cleaned) {
+	public void setIs_Cleaned(Integer is_Cleaned) {
 		Is_Cleaned = is_Cleaned;
 	}
 	
@@ -561,11 +561,11 @@ public class PNCEntity {
 		this.pnc_current_formStatus = pnc_current_formStatus;
 	}
 	
-	public String getBreasmilk_Fed() {
+	public Integer getBreasmilk_Fed() {
 		return Breasmilk_Fed;
 	}
 	
-	public void setBreasmilk_Fed(String breasmilk_Fed) {
+	public void setBreasmilk_Fed(Integer breasmilk_Fed) {
 		Breasmilk_Fed = breasmilk_Fed;
 	}
 	
@@ -577,11 +577,11 @@ public class PNCEntity {
 		Newborn = newborn;
 	}
 	
-	public String getHas_PNC_Given_On_Time() {
+	public int getHas_PNC_Given_On_Time() {
 		return Has_PNC_Given_On_Time;
 	}
 	
-	public void setHas_PNC_Given_On_Time(String has_PNC_Given_On_Time) {
+	public void setHas_PNC_Given_On_Time(int has_PNC_Given_On_Time) {
 		Has_PNC_Given_On_Time = has_PNC_Given_On_Time;
 	}
 	
