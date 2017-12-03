@@ -3,9 +3,12 @@ package org.mcare.etl.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp; 
+import org.hibernate.annotations.UpdateTimestamp;
 
 @MappedSuperclass
 public abstract class CommonEntity {
@@ -78,10 +81,12 @@ public abstract class CommonEntity {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
 	private Date created = new Date();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
 	private Date updated = new Date();
 	
 	@Column(name = "received_time")

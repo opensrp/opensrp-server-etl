@@ -29,26 +29,67 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	@Override
 	public <T> long save(T t) {
 		Session session = sessionFactory.openSession();
-		long returnValue = 0;
+		long returnValue = -1;
 		try {
 			session.beginTransaction();
 			returnValue = (Long) session.save(t);
 			session.getTransaction().commit();
 		}
 		catch (HibernateException e) {
-			returnValue = 0;
+			returnValue = -1;
 			session.getTransaction().rollback();
 		}
 		finally {
 			session.close();
+			session.clear();
+			session.evict(session);
 		}
 		return returnValue;
 	}
 	
+	
 	@Override
-	public <T> int delete(T t) {
-		// TODO Auto-generated method stub
-		return 0;
+	public <T> long update(T t) {
+		Session session = sessionFactory.openSession();
+		long returnValue = -1;
+		try {
+			session.beginTransaction();
+			session.update(t);
+			session.getTransaction().commit();
+			returnValue = 1;
+		}
+		catch (HibernateException e) {
+			returnValue = -1;
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.close();
+			session.clear();
+			session.evict(session);
+		}
+		return returnValue;
+	}
+
+	@Override
+	public <T> boolean delete(T t) {
+		Session session = sessionFactory.openSession();
+		boolean returnValue = false;
+		try {
+			session.beginTransaction();
+			session.delete(t);
+			session.getTransaction().commit();
+			returnValue = true;
+		}
+		catch (HibernateException e) {
+			returnValue = false;
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.close();
+			session.clear();
+			session.evict(session);
+		}
+		return returnValue;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -77,6 +118,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
+			session.clear();
+			session.evict(session);
 		}
 		
 		return (List<T>) result;

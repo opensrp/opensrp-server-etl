@@ -39,7 +39,7 @@ public class DataExportController {
 		
 	}
 	
-	@RequestMapping(value = "/search")
+/*	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
 	                                               String end, String provider, String formName) throws ParseException {
 		//System.err.println("Start:" + start + " end:" + end + " provider:" + provider);
@@ -52,7 +52,7 @@ public class DataExportController {
 		reportName = dataExportService.createCSVAndSave(datas, response);
 		return new ResponseEntity<>(new Gson().toJson(reportName), HttpStatus.OK);
 		
-	}
+	}*/
 	
 	/*@RequestMapping(value = "/log", method = RequestMethod.GET)
 	public HttpServletResponse getLogAsCSV(final HttpServletResponse response, @RequestParam String roleName)
