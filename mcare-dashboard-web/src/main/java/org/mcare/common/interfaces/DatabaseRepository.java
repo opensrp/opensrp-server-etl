@@ -5,8 +5,8 @@ import java.util.List;
 public interface DatabaseRepository {
 	
 	public <T> long save(T t);
-	
-	public <T> int delete(T t);
+	public <T> long update(T t);
+	public <T> boolean delete(T t);
 	
 	public <T> T findById(long id, String fieldName, Class<?> className);
 	
