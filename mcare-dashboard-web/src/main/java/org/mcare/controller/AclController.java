@@ -53,7 +53,7 @@ public class AclController {
 		System.err.println("UserName:::" + user.getName());
 		model.addAttribute("name", "Tom");
 		model.addAttribute("formatted", "<b>blue</b>");*/
-		return "home";
+		return "user/home";
 	}
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.GET)
@@ -72,6 +72,11 @@ public class AclController {
 		userEntity.setPassword(new BCryptPasswordEncoder().encode(userEntity.getPassword()));
 		userService.save(userEntity);
 		return new ModelAndView("redirect:/user/add");
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage() {
+		return "user/login";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
