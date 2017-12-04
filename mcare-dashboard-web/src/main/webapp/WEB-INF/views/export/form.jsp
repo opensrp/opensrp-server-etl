@@ -27,28 +27,25 @@
   <body>
   <c:url var="saveUrl" value="/export" />
   <c:url var="home" value="/log" scope="request" />
- <div th:fragment="header">
-    <!-- this is header -->
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-               <a href = "<c:url value = "/"/>">Home</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <a href = "<c:url value = "/"/>">Home </a>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">mCare2 Dashboard</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/logout">Logout</a></li>
+      
+    </ul>
+  </div>
+</nav>
 
  <%-- <c:out value="${name}" /> --%>
  
   
  <div class="container">
      <div class="row">               
-         <div class="col-md-12">
+         <div class="col-md-8">
              <form class="form-horizontal" id="search-form">
              <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label">FormName</label>
@@ -65,15 +62,15 @@
             </div>
            
 			<div class="form-group form-group-lg">
-				<label class="col-sm-2 control-label">Start</label>
+				<label class="col-sm-2 control-label">Start Date</label>
 				<div class="col-sm-10">
-					<input type=text name="start"  class="form-control" id="start">
+					<input type=text name="start"  required id="start">
 				</div>
 			</div>
 			<div class="form-group form-group-lg">
-				<label class="col-sm-2 control-label">End</label>
+				<label class="col-sm-2 control-label">End Date</label>
 				<div class="col-sm-10">
-					<input type="text" name="end" class="form-control" id="end">
+					<input type="text" name="end" required id="end">
 				</div>
 			</div>
             <div class="form-group form-group-lg">
@@ -96,14 +93,36 @@
 				</div>
 			</div>
 		</form>
-
+  
+  <img id="loader" src="/resources/images/loading-middle.gif" style="display: none;" />
+  <table class="table table-hover" id="dev-table">
+      <thead>
+       <tr>        
+        <th>File Name</th>
+        <th>Action</th>
+        
+       </tr>
+      </thead>
+      <tbody>
+       <tr>        
+        <td><p id ="fileName"> </p></td>
+        <td> <a  href="" id="download" style="display: none;">Download</a></td>
+       </tr>
+      
+      </tbody>
+     </table>
+     
+         
+         <a  href="" id="download" style="display: none;">Download</a>
         </div>
+         <div class="col-md-4">
+       
+   
+         </div>
               
     </div>
  </div> 
 
- <a href="" id="download">Download</a>
-   
   </body>
   
   <script src="<c:url value='/resources/js/jquery-1.12.4.js' />"></script>
@@ -112,7 +131,33 @@
     
     
      <script>
-  $( function() {
+     
+     $(function () {
+         $("#start").datepicker({
+        	 dateFormat: "yy-mm-dd",
+        	 maxDate: new Date,
+             onSelect: function (selectedDate) {
+                 var orginalDate = new Date(selectedDate);
+                 var monthsAddedDate = new Date(new Date(orginalDate).setMonth(orginalDate.getMonth() + 3));
+                 
+                 $("#end").datepicker("option", 'minDate', selectedDate);
+                 $("#end").datepicker("option", 'maxDate', monthsAddedDate);
+             }
+         });
+
+         $("#end").datepicker({
+        	 dateFormat: "yy-mm-dd",
+        	 maxDate: new Date,
+             onSelect: function (selectedDate) {
+                 var orginalDate = new Date(selectedDate);
+                 var monthsAddedDate = new Date(new Date(orginalDate).setMonth(orginalDate.getMonth() - 3));
+               
+                 $("#start").datepicker("option", 'minDate', monthsAddedDate);
+                 $("#start").datepicker("option", 'maxDate', selectedDate);
+             }
+         })
+     });
+ /*  $( function() {
 	  var dateToday = new Date();
 	     $('#start').datepicker({
 	        dateFormat: "yy-mm-dd",
@@ -129,7 +174,7 @@
 	         minDate: null,
 	         maxDate: dateToday,
 	     });  
-  } ); 
+  } );  */
   </script>
   
   
@@ -144,8 +189,8 @@
 
    // Prevent the form from submitting via the browser.
    event.preventDefault();
-  /* $("p").text( "Hiiiiiiiiiiiiiii");
-   window.location = "/log?roleName=name"; */
+  
+  // window.location = "/log?roleName=name"; 
    searchViaAjax() ;
   });
 
@@ -161,9 +206,14 @@
  //  data : JSON.stringify(search),
    dataType : 'json',
    timeout : 100000,
-   
+   beforeSend: function() {
+	   $('#loader').show(); 
+   },
    success : function(data) {
     console.log("SUCCESS: ", data);
+    $('#loader').hide();
+    $('#download').show();
+    $('#fileName').html(data);
     $("a#download").attr('href', 
     '/multimedia/export/'+data);
    },
@@ -172,6 +222,7 @@
     display(e);
    },
    done : function(e) {
+	   
     console.log("DONE");
     //enableSearchButton(true);
    }
