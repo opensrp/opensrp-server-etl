@@ -18,16 +18,17 @@ public class DataExportRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Object[]> executeSelectQuery(String provider, String sqlQuery) {
-		//sqlQuery = "select * from anc";
+	public List<Object[]> executeSelectQuery(String provider, String formName, String sqlQuery) {
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
 		if (!provider.isEmpty()) {
 			query.setParameter("provider", provider);
 		}
+		query.setParameter("formName", formName);
 		List<Object[]> results = query.list();
-		System.err.println("hibernateResults:" + results.size());
-		/*for (Object[] objects : hibernateResults) {
+		
+		/*for (Object[] objects : results) {
+			System.err.println("objects:" + objects.length);
 			for (int i = 0; i < objects.length; i++) {
 				
 			}

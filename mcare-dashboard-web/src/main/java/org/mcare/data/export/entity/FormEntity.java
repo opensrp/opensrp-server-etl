@@ -1,4 +1,4 @@
-package org.mcare.data.export.service.impl;
+package org.mcare.data.export.entity;
 
 import java.util.Date;
 

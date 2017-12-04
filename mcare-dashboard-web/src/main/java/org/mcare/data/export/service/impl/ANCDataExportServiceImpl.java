@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.common.util.ExportKeyMapperSetup;
-import org.mcare.common.util.FormName;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,33 +72,32 @@ public class ANCDataExportServiceImpl implements DataExportService {
 	
 	@Transactional
 	@Override
-	public List<Object[]> getData(Date start, Date end, String provider) {
+	public List<Object[]> getData(Date start, Date end, String provider, String formName) {
 		String condition = "";
 		
-		if (start != null) {
-			condition = "anc.fwancdate between '" + start + "'and'" + end + "' ";
-		}
+		condition = "anc.fwancdate between '" + start + "'and'" + end + "' ";
+		condition = condition + " and anc.ancname = :formName ";
 		
 		if (!provider.isEmpty()) {
 			condition = condition + "and mother.provider=:provider";
 		}
-		String sqlQuery = "select mother.case_id,anc.fwancanm,anc.fwancbld,anc.fwancblrvis,anc.fwancconvl,anc.fwancdate,anc.fwancdbt,anc.fwancds1,anc.fwancds2 ,"
-		        + "anc.fwancds3 , anc.fwancds4 , anc.fwancds5 , anc.fwancds6 , anc.fwanchbp , anc.fwanchead , anc.fwancint , anc.fwancknwprvdr ,anc.fwancprob ,anc.fwancremsts ,"
-		        + "anc.fwancswlng ,anc.fwancthy ,anc.fwbpcasstlab ,anc.fwbpcblddnr , anc.fwbpcbldgrp , anc.fwbpcfinargmt ,anc.fwbpclocofdel , anc.fwbpctrnsprt ,"
-		        + "anc.fwconfirmation ,anc.fwdangervalue ,anc.fwedd  ,anc.fwflagvalue ,anc.fwgestationalage,anc.fwhrp ,anc.fwhr_anc , anc.fwhr_psr ,anc.fwhusname ,"
-		        + "anc.fwnoteligible,anc.fwsortvalue ,anc.fwvg ,anc.fwwombid ,anc.fwwomfname ,anc.fwwomnid ,anc.fw_gobhhid ,anc.fw_jivitahhid , anc.ancname , anc.anc_current_formstatus ,"
-		        + "anc.end_time , anc.mauza ,anc.received_time , anc.start , anc.today, anc.user_type from anc inner join mother on anc.relationalid =mother.case_id where "
-		        + condition;
+		String sqlQuery = "select anc.fw_gobhhid,anc.fw_jivitahhid,anc.fwwombid,anc.fwwomnid,anc.fwwomfname,anc.fwhusname,mother.motherwomlmp,anc.fwvg ,"
+		        + "anc.fwhr_psr , anc.fwhrp , anc.fwdangervalue , anc.existing_elco , anc.today , anc.start , anc.end_time , anc.fwancdate ,anc.fwgestationalage ,anc.fwedd ,"
+		        + "anc.fwancremsts ,anc.fwancint ,anc.fwancknwprvdr  ,anc.fwancanm ,anc.fwanchbp,anc.fwancdbt ,anc.fwancthy , anc.fwancprob ,anc.fwanchead ,"
+		        + "anc.fwancblrvis ,anc.fwancswlng ,anc.fwancbld ,anc.fwancconvl , anc.fwancds1 , anc.fwancds2 ,anc.fwancds3 , anc.fwancds4,anc.fwancds5,anc.fwancds6 ,"
+		        
+		        + "anc.fwnoteligible ,anc.fwhr_anc ,anc.fwflagvalue ,anc.fwsortvalue ,anc.user_type ,anc.external_user_id , anc.anc_current_formstatus , anc.relationalid "
+		        + " from anc inner join mother on anc.relationalid =mother.case_id where " + condition;
 		
-		return dataExportRepository.executeSelectQuery(provider, sqlQuery);
+		return dataExportRepository.executeSelectQuery(provider, formName, sqlQuery);
 		
 	}
 	
 	@SuppressWarnings("resource")
 	@Transactional
 	@Override
-	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response) {
-		String reportName = "anc" + System.currentTimeMillis() + ".csv";
+	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName) {
+		String reportName = formName + System.currentTimeMillis() + ".csv";
 		response.setContentType("text/csv");
 		response.setHeader("Content-disposition", "attachment; " + "filename=" + "a");
 		FileWriter writer;
@@ -120,7 +118,7 @@ public class ANCDataExportServiceImpl implements DataExportService {
 			//e.printStackTrace();
 		}
 		
-		dataExportEntity.setFormName(FormName.ANC.name());
+		dataExportEntity.setFormName(formName);
 		dataExportEntity.setReportName(reportName);
 		dataExportEntity.setUser("Admin");
 		databaseRepositoryImpl.save(dataExportEntity);

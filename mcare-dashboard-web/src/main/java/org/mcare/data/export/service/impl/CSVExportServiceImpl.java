@@ -19,20 +19,20 @@ public class CSVExportServiceImpl implements CoreExportService {
 	@Override
 	public FileWriter createHeader(FileWriter writer, List<String> headerKeys) {
 		int headerSize = 0;
+		
 		for (String headerKey : headerKeys) {
-			headerSize++;
 			try {
 				if (headerSize == headerKeys.size()) {
-					writer.append(headerKey);
+					writer.append(headerKey.trim());
 				} else {
-					writer.append(headerKey);
+					writer.append(headerKey.trim());
 					writer.append(',');
 				}
 			}
 			catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
+			headerSize++;
 		}
 		
 		return writer;
@@ -44,11 +44,11 @@ public class CSVExportServiceImpl implements CoreExportService {
 		for (Object[] objects : dataSets) {
 			for (int i = 0; i < objects.length; i++) {
 				if (i == objects.length - 1) {
-					writer.append(objects[i] + "");
+					writer.append(objects[i] + "".trim());
 					writer.append('\n');
 				} else {
 					
-					writer.append(objects[i] + "");
+					writer.append(objects[i] + "".trim());
 					writer.append(',');
 				}
 			}

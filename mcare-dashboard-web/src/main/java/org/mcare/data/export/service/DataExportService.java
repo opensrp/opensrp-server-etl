@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface DataExportService {
 	
-	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response);
+	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName);
 	
 	public void export(List<Object[]> dataSets, HttpServletResponse response);
 	
-	public List<Object[]> getData(Date start, Date end, String provider);
+	public List<Object[]> getData(Date start, Date end, String provider, String formName);
 	
 }

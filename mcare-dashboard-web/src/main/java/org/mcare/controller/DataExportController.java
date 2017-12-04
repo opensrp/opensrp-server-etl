@@ -58,9 +58,9 @@ public class DataExportController {
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
 		Date endDate = DateUtil.parseDate(end);
-		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider);
+		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider, formName);
 		System.err.println("Data:" + datas.size());
-		reportName = dataExportService.createCSVAndSave(datas, response);
+		reportName = dataExportService.createCSVAndSave(datas, response, formName);
 		return new ResponseEntity<>(new Gson().toJson(reportName), HttpStatus.OK);
 		
 	}
