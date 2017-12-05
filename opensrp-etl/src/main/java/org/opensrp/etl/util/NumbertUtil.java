@@ -14,6 +14,9 @@ public class NumbertUtil {
 	
 	public static Long convertToLong(String str) {
 		return Long.parseLong(str);
-		
+	}
+
+	public static Double convertToDouble(String str) {
+		return Double.parseDouble(str);
 	}
 }

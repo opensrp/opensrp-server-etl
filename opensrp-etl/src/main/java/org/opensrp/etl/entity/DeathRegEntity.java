@@ -32,9 +32,9 @@ public class DeathRegEntity {
 
 	private long id;
 
-	private long clientVersion;
+	private Long clientVersion;
 
-	private long serverVersion;
+	private Long serverVersion;
 
 	@Column(name="end_time")
 	private Date end;
@@ -49,14 +49,14 @@ public class DeathRegEntity {
 
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
-	
+
+	private Integer Deceased_Age_Group;
+
 	private String Confirm_Info;
 	
 	private String Date_Death;
 
 	private String Gender_Deceased;
-
-	private String Deceased_Age_Group;
 
 	private String Deceased_Age;
 	
@@ -94,19 +94,19 @@ public class DeathRegEntity {
 		return id;
 	}
 
-	public long getClientVersion() {
+	public Long getClientVersion() {
 		return clientVersion;
 	}
 
-	public void setclientVersion(long clientVersion) {
+	public void setclientVersion(Long clientVersion) {
 		this.clientVersion = clientVersion;
 	}
 
-	public long getServerVersion() {
+	public Long getServerVersion() {
 		return serverVersion;
 	}
 
-	public void setserverVersion(long serverVersion) {
+	public void setserverVersion(Long serverVersion) {
 		this.serverVersion = serverVersion;
 	}
 
@@ -182,11 +182,11 @@ public class DeathRegEntity {
 		Gender_Deceased = gender_Deceased;
 	}
 
-	public String getDeceased_Age_Group() {
+	public Integer getDeceased_Age_Group() {
 		return Deceased_Age_Group;
 	}
 
-	public void setDeceased_Age_Group(String deceased_Age_Group) {
+	public void setDeceased_Age_Group(Integer deceased_Age_Group) {
 		Deceased_Age_Group = deceased_Age_Group;
 	}
 

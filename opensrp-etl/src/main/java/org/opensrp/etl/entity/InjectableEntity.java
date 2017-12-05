@@ -32,11 +32,11 @@ public class InjectableEntity {
 
 	private long id;
 	
-	private long clientVersion;
+	private Long clientVersion;
 	
-	private long serverVersion;
+	private Long serverVersion;
 	
-	private long version;
+	private Long version;
 	
 	@Column(name="end_time")
 	private Date end;
@@ -143,27 +143,27 @@ public class InjectableEntity {
 		return id;
 	}
 
-	public long getClientVersion() {
+	public Long getClientVersion() {
 		return clientVersion;
 	}
 
-	public void setclientVersion(long clientVersion) {
+	public void setclientVersion(Long clientVersion) {
 		this.clientVersion = clientVersion;
 	}
 
-	public long getServerVersion() {
+	public Long getServerVersion() {
 		return serverVersion;
 	}
 
-	public void setserverVersion(long serverVersion) {
+	public void setserverVersion(Long serverVersion) {
 		this.serverVersion = serverVersion;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setversion(long version) {
+	public void setversion(Long version) {
 		this.version = version;
 	}
 

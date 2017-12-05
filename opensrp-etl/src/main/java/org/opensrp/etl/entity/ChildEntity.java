@@ -36,9 +36,11 @@ public class ChildEntity {
 	@Column(name="end_time")
 	private Date end;
 
-	private long clientVersion;
+	private Long version;
 
-	private long serverVersion;
+	private Long clientVersion;
+
+	private Long serverVersion;
 
 	@Temporal(TemporalType.DATE)
 	private Date start;
@@ -53,8 +55,6 @@ public class ChildEntity {
 	private String Met;
 
 	private String Visit_Status;
-
-	private long version;
 
 	private String Vaccines;
 
@@ -285,11 +285,11 @@ public class ChildEntity {
 		this.existing_Final_Vill = existing_Final_Vill;
 	}
 
-	public long getClientVersion() {
+	public Long getClientVersion() {
 		return clientVersion;
 	}
 
-	public void setclientVersion(long clientVersion) {
+	public void setclientVersion(Long clientVersion) {
 		this.clientVersion = clientVersion;
 	}
 
@@ -334,11 +334,11 @@ public class ChildEntity {
 		this.child_today = child_today;
 	}
 
-	public long getServerVersion() {
+	public Long getServerVersion() {
 		return serverVersion;
 	}
 
-	public void setserverVersion(long serverVersion) {
+	public void setserverVersion(Long serverVersion) {
 		this.serverVersion = serverVersion;
 	}
 
@@ -494,11 +494,11 @@ public class ChildEntity {
 		this.existing_Couple_No = existing_Couple_No;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setversion(long version) {
+	public void setversion(Long version) {
 		this.version = version;
 	}
 

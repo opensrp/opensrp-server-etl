@@ -31,23 +31,23 @@ public class BNFEntity {
 
 	private Date start;
 
-	private long clientVersion;
+	private Long clientVersion;
 
-	private long serverVersion;
+	private Long serverVersion;
 
-	private long version;
+	private Long version;
 
-	private int Where_Delivered;
+	private Integer Where_Delivered;
 
-	private int Who_Delivered;
+	private Integer Who_Delivered;
 
-	private int Misoprostol_Received;
+	private Integer Misoprostol_Received;
 
 	private Integer Num_Live_Birth;
 
-	private int Premature_Birth;
+	private Integer Premature_Birth;
 
-	private int Child_Weight;
+	private Double Child_Weight;
 
 	private String Mem_F_Name;
 
@@ -246,11 +246,11 @@ public class BNFEntity {
 		Mother_Status = mother_Status;
 	}
 
-	public int getPremature_Birth() {
+	public Integer getPremature_Birth() {
 		return Premature_Birth;
 	}
 
-	public void setPremature_Birth(int premature_Birth) {
+	public void setPremature_Birth(Integer premature_Birth) {
 		Premature_Birth = premature_Birth;
 	}
 
@@ -310,11 +310,11 @@ public class BNFEntity {
 		this.existing_Subunit = existing_Subunit;
 	}
 
-	public long getClientVersion() {
+	public Long getClientVersion() {
 		return clientVersion;
 	}
 
-	public void setclientVersion(long clientVersion) {
+	public void setclientVersion(Long clientVersion) {
 		this.clientVersion = clientVersion;
 	}
 
@@ -350,11 +350,11 @@ public class BNFEntity {
 		Visit_Status = visit_Status;
 	}
 
-	public int getMisoprostol_Received() {
+	public Integer getMisoprostol_Received() {
 		return Misoprostol_Received;
 	}
 
-	public void setMisoprostol_Received(int misoprostol_Received) {
+	public void setMisoprostol_Received(Integer misoprostol_Received) {
 		Misoprostol_Received = misoprostol_Received;
 	}
 
@@ -366,11 +366,11 @@ public class BNFEntity {
 		Mem_Ward = mem_Ward;
 	}
 
-	public int getWhere_Delivered() {
+	public Integer getWhere_Delivered() {
 		return Where_Delivered;
 	}
 
-	public void setWhere_Delivered(int where_Delivered) {
+	public void setWhere_Delivered(Integer where_Delivered) {
 		Where_Delivered = where_Delivered;
 	}
 
@@ -382,11 +382,11 @@ public class BNFEntity {
 		Mem_Union = mem_Union;
 	}
 
-	public long getServerVersion() {
+	public Long getServerVersion() {
 		return serverVersion;
 	}
 
-	public void setserverVersion(long serverVersion) {
+	public void setserverVersion(Long serverVersion) {
 		this.serverVersion = serverVersion;
 	}
 
@@ -479,11 +479,11 @@ public class BNFEntity {
 		this.existing_TT_Count = existing_TT_Count;
 	}
 
-	public int getChild_Weight() {
+	public Double getChild_Weight() {
 		return Child_Weight;
 	}
 
-	public void setChild_Weight(int child_Weight) {
+	public void setChild_Weight(Double child_Weight) {
 		Child_Weight = child_Weight;
 	}
 
@@ -576,11 +576,11 @@ public class BNFEntity {
 		this.existing_Height = existing_Height;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setversion(long version) {
+	public void setversion(Long version) {
 		this.version = version;
 	}
 
@@ -712,11 +712,11 @@ public class BNFEntity {
 		Mem_BRID_Concept = mem_BRID_Concept;
 	}
 
-	public int getWho_Delivered() {
+	public Integer getWho_Delivered() {
 		return Who_Delivered;
 	}
 
-	public void setWho_Delivered(int who_Delivered) {
+	public void setWho_Delivered(Integer who_Delivered) {
 		Who_Delivered = who_Delivered;
 	}
 

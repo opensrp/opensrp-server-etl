@@ -54,7 +54,9 @@ public class DataConverter {
 						setterMethod.invoke(object, NumbertUtil.convertToInteger(JsonDocument.getString(property)));
 					} else if ("java.lang.Long".equalsIgnoreCase(dataTypeClass)) {
 						setterMethod.invoke(object, NumbertUtil.convertToLong(JsonDocument.getString(property)));
-					} else {
+					} else if ("java.lang.Double".equalsIgnoreCase(dataTypeClass)) {
+						setterMethod.invoke(object, NumbertUtil.convertToDouble(JsonDocument.getString(property)));
+					}else {
 						setterMethod.invoke(object, JsonDocument.getString(property));
 					}
 				}

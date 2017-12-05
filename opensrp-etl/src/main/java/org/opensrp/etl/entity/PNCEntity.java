@@ -38,7 +38,7 @@ public class PNCEntity {
 
 	private Date start;
 
-	private int Has_PNC_Given_On_Time;
+	private Integer Has_PNC_Given_On_Time;
 
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
@@ -577,11 +577,11 @@ public class PNCEntity {
 		Newborn = newborn;
 	}
 	
-	public int getHas_PNC_Given_On_Time() {
+	public Integer getHas_PNC_Given_On_Time() {
 		return Has_PNC_Given_On_Time;
 	}
 	
-	public void setHas_PNC_Given_On_Time(int has_PNC_Given_On_Time) {
+	public void setHas_PNC_Given_On_Time(Integer has_PNC_Given_On_Time) {
 		Has_PNC_Given_On_Time = has_PNC_Given_On_Time;
 	}
 	

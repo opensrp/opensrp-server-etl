@@ -59,12 +59,12 @@ public class AdolescentEntity {
 	private Date adolescent_today;
 	
 	private Date received_time;
-	
+
+	private Integer Councelling;
+
 	private String Confirm_Info;
 	
 	private String Comment;
-	
-	private String Councelling;
 	
 	private String existing_Couple_No;
 	
@@ -215,11 +215,11 @@ public class AdolescentEntity {
 		Comment = comment;
 	}
 
-	public String getCouncelling() {
+	public Integer getCouncelling() {
 		return Councelling;
 	}
 
-	public void setCouncelling(String councelling) {
+	public void setCouncelling(Integer councelling) {
 		Councelling = councelling;
 	}
 

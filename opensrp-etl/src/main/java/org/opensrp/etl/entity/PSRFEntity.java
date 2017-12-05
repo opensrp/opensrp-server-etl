@@ -35,11 +35,11 @@ public class PSRFEntity {
 
 	private Date Received_Time;
 
-	private String version;
+	private Long version;
 
-	private long clientVersion;
+	private Long clientVersion;
 
-	private String serverVersion;
+	private Long serverVersion;
 
 	private String changes;
 
@@ -50,11 +50,11 @@ public class PSRFEntity {
 
 	private Integer Birth_Control;
 
-	private int Using_FP;
+	private Integer Using_FP;
 
-	private int TT_Dose;
+	private Integer TT_Dose;
 
-	private int Preg_Status;
+	private Integer Preg_Status;
 
 	private String Want_FP_Commodities;
 	
@@ -333,11 +333,11 @@ public class PSRFEntity {
 		this.existing_Final_Vill = existing_Final_Vill;
 	}
 
-	public long getClientVersion() {
+	public Long getClientVersion() {
 		return clientVersion;
 	}
 
-	public void setclientVersion(long clientVersion) {
+	public void setclientVersion(Long clientVersion) {
 		this.clientVersion = clientVersion;
 	}
 
@@ -568,19 +568,19 @@ public class PSRFEntity {
 		ELCO = eLCO;
 	}
 
-	public String getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setversion(String version) {
+	public void setversion(Long version) {
 		this.version = version;
 	}
 
-	public int getTT_Dose() {
+	public Integer getTT_Dose() {
 		return TT_Dose;
 	}
 
-	public void setTT_Dose(int tT_Dose) {
+	public void setTT_Dose(Integer tT_Dose) {
 		TT_Dose = tT_Dose;
 	}
 
@@ -819,11 +819,11 @@ public class PSRFEntity {
 		Mother_Hus_Name = mother_Hus_Name;
 	}
 
-	public String getServerVersion() {
+	public Long getServerVersion() {
 		return serverVersion;
 	}
 
-	public void setserverVersion(String serverVersion) {
+	public void setserverVersion(Long serverVersion) {
 		this.serverVersion = serverVersion;
 	}
 
@@ -925,11 +925,11 @@ public class PSRFEntity {
 		Type_Oral_Pill = type_Oral_Pill;
 	}
 
-	public int getUsing_FP() {
+	public Integer getUsing_FP() {
 		return Using_FP;
 	}
 
-	public void setUsing_FP(int using_FP) {
+	public void setUsing_FP(Integer using_FP) {
 		Using_FP = using_FP;
 	}
 
@@ -991,11 +991,11 @@ public class PSRFEntity {
 		Cond_Given_Date = cond_Given_Date;
 	}
 
-	public int getPreg_Status() {
+	public Integer getPreg_Status() {
 		return Preg_Status;
 	}
 
-	public void setPreg_Status(int preg_Status) {
+	public void setPreg_Status(Integer preg_Status) {
 		Preg_Status = preg_Status;
 	}
 

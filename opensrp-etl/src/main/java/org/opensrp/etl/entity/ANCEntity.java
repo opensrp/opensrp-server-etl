@@ -45,7 +45,7 @@ public class ANCEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
 
-	private int Is_Reffered;
+	private Integer Is_Reffered;
 
 	private Integer Preg_Status;
 
@@ -394,11 +394,11 @@ public class ANCEntity {
 		Symptoms = symptoms;
 	}
 	
-	public int getIs_Reffered() {
+	public Integer getIs_Reffered() {
 		return Is_Reffered;
 	}
 	
-	public void setIs_Reffered(int is_Reffered) {
+	public void setIs_Reffered(Integer is_Reffered) {
 		Is_Reffered = is_Reffered;
 	}
 	
