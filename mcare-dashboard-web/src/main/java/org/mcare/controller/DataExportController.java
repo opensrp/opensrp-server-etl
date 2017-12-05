@@ -52,16 +52,14 @@ public class DataExportController {
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
 	                                               String end, String provider, String formName, Model model)
 	    throws ParseException {
-		//System.err.println("Start:" + start + " end:" + end + " provider:" + provider);
 		
 		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
 		Date endDate = DateUtil.parseDate(end);
 		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider, formName);
-		System.err.println("Data:" + datas.size());
 		reportName = dataExportService.createCSVAndSave(datas, response, formName);
-		return new ResponseEntity<>(new Gson().toJson(reportName), HttpStatus.OK);
+		return new ResponseEntity<String>(new Gson().toJson(reportName), HttpStatus.OK);
 		
 	}
 	
@@ -98,8 +96,8 @@ public class DataExportController {
 		
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
 		model.addAttribute("providers", providers);
-		System.err.println(providers.toString());
-		return "export/form";
+		
+		return "export/exportForm";
 	}
 	/*@RequestMapping(value = "/export", method = RequestMethod.POST)
 	public ModelAndView dataExportPost(@ModelAttribute("form") FormEntity form, ModelMap model, HttpServletResponse response) {

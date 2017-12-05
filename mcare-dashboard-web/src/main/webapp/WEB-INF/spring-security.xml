@@ -60,8 +60,8 @@
 	    </authentication-provider>
 	</authentication-manager>
 	     
-	<b:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	<!-- <b:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	    
-	</b:bean> 
+	</b:bean>  -->
 	   
 </b:beans>

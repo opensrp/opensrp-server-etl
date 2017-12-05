@@ -24,24 +24,27 @@
     <link  type="text/css" href="<c:url value="/resources/css/jquery-ui.css"/>" rel="stylesheet">
 
   </head>
+ <%--  <c:set var="url" value="<c:url value="/" />" /> --%>
   <body>
   <c:url var="saveUrl" value="/export" />
+  <c:url var="homeUrl" value="/" />
   <c:url var="home" value="/log" scope="request" />
  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">mCare2 Dashboard</a>
+      <a class="navbar-brand" href="<c:url value="/"/>">mCare2 Dashboard</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
-      <li><a href="/export">CSV Export</a></li>
-      <li><a href="/logout">Logout</a></li>
+      <li class="active"><a href="<c:url value="/"/>">Home</a></li>
+      <li><a href="<c:url value="/export"/>">CSV Export</a></li>
+      <li><a href="<c:url value="/logout"/>">Logout</a></li>
       
     </ul>
   </div>
 </nav>
 
  <%-- <c:out value="${name}" /> --%>
+ 
  
   
  <div class="container">
@@ -95,8 +98,8 @@
 			</div>
 		</form>
   
-  <img id="loader" src="/resources/images/loading-middle.gif" style="display: none;" />
-  <table class="table table-hover" id="dev-table">
+  <img id="loader" src="<c:url value="/"/>resources/images/loading-middle.gif" style="display: none;" />
+  <table class="table table-hover" id="dev-table" style="display: none;">
       <thead>
        <tr>        
         <th>File Name</th>
@@ -114,12 +117,9 @@
      </table>
      
          
-         <a  href="" id="download" style="display: none;">Download</a>
+         
         </div>
-         <div class="col-md-4">
-       
-   
-         </div>
+        
               
     </div>
  </div> 
@@ -203,20 +203,23 @@
   $.ajax({
    type : "GET",
    contentType : "application/json",
-   url : "/search?start="+$("#start").val()+"&end="+$("#end").val()+"&provider="+$("#provider").val()+"&formName="+$("#formName").val(),
+   url : "${homeUrl}search?start="+$("#start").val()+"&end="+$("#end").val()+"&provider="+$("#provider").val()+"&formName="+$("#formName").val(),
  //  data : JSON.stringify(search),
    dataType : 'json',
    timeout : 100000,
    beforeSend: function() {
+	   
+	   $('#dev-table').hide(); 
 	   $('#loader').show(); 
    },
    success : function(data) {
     console.log("SUCCESS: ", data);
     $('#loader').hide();
+    $('#dev-table').show(); 
     $('#download').show();
     $('#fileName').html(data);
     $("a#download").attr('href', 
-    '/multimedia/export/'+data);
+    '/opt/multimedia/export/'+data);
    },
    error : function(e) {
     console.log("ERROR: ", e);

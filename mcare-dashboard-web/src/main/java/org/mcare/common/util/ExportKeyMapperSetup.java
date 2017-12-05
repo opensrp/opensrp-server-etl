@@ -82,6 +82,8 @@ public class ExportKeyMapperSetup {
 		PNC.add("FWPNCREMSTS");
 		PNC.add("FWPNCINT");
 		PNC.add("FWPNCKNWPRVDR");
+		PNC.add("FWPNCFVR");
+		PNC.add("FWPNCTEMP");
 		PNC.add("FWPNCDNGRSIGN");
 		PNC.add("FWPNCDELCOMP");
 		PNC.add("FWPNCDELTYPE");

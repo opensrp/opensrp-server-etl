@@ -58,8 +58,8 @@ public class PNCDataExportServiceImpl implements DataExportService {
 		if (!provider.isEmpty()) {
 			condition = condition + "and mother.provider=:provider";
 		}
-		String sqlQuery = "select pnc.fw_gobhhid,pnc.fw_jivitahhid,pnc.fw_womfname,pnc.fw_husname,pnc.fw_womnid,pnc.fw_wombid,pnc.fwbnfdtoo,pnc.fwbnfsts ,"
-		        + "pnc.today , pnc.start , pnc.end_time , pnc.fwpncdate , pnc.fwpncremsts , pnc.fwpncint , pnc.fwpncknwprvdr , pnc.fwpncdngrsign ,pnc.fwpncdelcomp ,pnc.fwpncdeltype, "
+		String sqlQuery = "select pnc.fw_gobhhid,pnc.fw_jivitahhid,pnc.fw_womfname,pnc.fw_husname,mother.motherwomnid,pnc.motherwombid,pnc.fwbnfdtoo,pnc.fwbnfsts ,"
+		        + "pnc.today , pnc.start , pnc.end_time , pnc.fwpncdate , pnc.fwpncremsts , pnc.fwpncint , pnc.fwpncknwprvdr,pnc.fwpncfvr,pnc.fwpnctemp , pnc.fwpncdngrsign ,pnc.fwpncdelcomp ,pnc.fwpncdeltype, "
 		        + "pnc.user_type ,pnc.pnc_current_formstatus ,pnc.relationalid  "
 		        + " from pnc inner join mother on pnc.relationalid =mother.case_id where " + condition;
 		

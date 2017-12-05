@@ -28,7 +28,7 @@ public class MyUserPrincipal implements UserDetails {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return user.getUsername();
+		return user.getPassword();
 	}
 	
 	@Override

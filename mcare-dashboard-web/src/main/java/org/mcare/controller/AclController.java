@@ -12,7 +12,6 @@ import org.mcare.acl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +68,7 @@ public class AclController {
 		userEntity.setUsername(userEntity.getUsername());
 		userEntity.setEnabled(true);
 		
-		userEntity.setPassword(new BCryptPasswordEncoder().encode(userEntity.getPassword()));
+		userEntity.setPassword(userEntity.getPassword());
 		userService.save(userEntity);
 		return new ModelAndView("redirect:/user/add");
 	}
