@@ -208,7 +208,7 @@
 </dependency>
 	</dependencies>
   <build>
-  <finalName>opensrp-web</finalName>
+  <finalName>mcare2</finalName>
   <resources>
  	
   	<resource>

@@ -2,6 +2,7 @@ target/
 .project
 .classpath
 .settings/
+*.metadata/
 .DS_Store
 .idea/
 *.iml

@@ -54,7 +54,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 
 	
-	
 	@Override
 	public <T> int update(T t) {
 		Session session = sessionFactory.openSession();
@@ -76,7 +75,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-
+	
 	@Override
 	public <T> boolean delete(T t) {
 		Session session = sessionFactory.openSession();
@@ -95,6 +94,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
+
 		}
 		return returnValue;
 	}
@@ -113,7 +113,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> findAll(T t, String tableClass) {
+	public <T> List<T> findAll(String tableClass) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
 		try {

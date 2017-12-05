@@ -12,5 +12,5 @@ public interface DatabaseService {
 	
 	public <T> T findByKey(String value, String fieldName, Class<?> className);
 	
-	public <T> List<T> findAll(T t, String tableClass);
+	public <T> List<T> findAll(String tableClass);
 }

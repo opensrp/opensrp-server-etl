@@ -24,11 +24,17 @@ public class DataExportServiceFactory {
 	}
 	
 	private DataExportService setDataExportServiceWithFormName(String formName) {
-		if (FormName.ANC.name().equalsIgnoreCase(formName)) {
+		if (FormName.ancVisitOne.name().equalsIgnoreCase(formName) || FormName.ancVisitTwo.name().equalsIgnoreCase(formName)
+		        || FormName.ancVisitThree.name().equalsIgnoreCase(formName)
+		        || FormName.ancVisitFour.name().equalsIgnoreCase(formName)) {
 			dataExportService = ancDataExportServiceImpl;
-		} else if (FormName.PNC.name().equalsIgnoreCase(formName)) {
+		} else if (FormName.pncVisitOne.name().equalsIgnoreCase(formName)
+		        || FormName.pncVisitTwo.name().equalsIgnoreCase(formName)
+		        || FormName.pncVisitThree.name().equalsIgnoreCase(formName)) {
 			dataExportService = pncDataExportServiceImpl;
-		} else if (FormName.ENCC.name().equalsIgnoreCase(formName)) {
+		} else if (FormName.enccVisitOne.name().equalsIgnoreCase(formName)
+		        || FormName.enccVisitTwo.name().equalsIgnoreCase(formName)
+		        || FormName.enccVisitThree.name().equalsIgnoreCase(formName)) {
 			dataExportService = enccDataExportServiceImpl;
 		} else {
 			

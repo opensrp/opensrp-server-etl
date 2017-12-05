@@ -48,8 +48,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public <T> List<T> findAll(T t, String tableClass) {
-		return (List<T>) databaseRepositoryImpl.findAll(t, tableClass);
+	public <T> List<T> findAll(String tableClass) {
+		return (List<T>) databaseRepositoryImpl.findAll(tableClass);
 	}
 	
 	@Override

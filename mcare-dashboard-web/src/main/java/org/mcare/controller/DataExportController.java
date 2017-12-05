@@ -9,7 +9,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.mcare.acl.entity.ProviderEntity;
+import org.mcare.acl.service.ProviderServiceImpl;
 import org.mcare.common.util.DateUtil;
+import org.mcare.common.util.FormName;
 import org.mcare.data.export.service.DataExportService;
 import org.mcare.data.export.service.impl.DataExportServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,24 +38,30 @@ public class DataExportController {
 	
 	private DataExportService dataExportService;
 	
+	@Autowired
+	private ProviderEntity providerEntity;
+	
+	@Autowired
+	private ProviderServiceImpl providerServiceImpl;
+	
 	public DataExportController() {
 		
 	}
 	
-/*	@RequestMapping(value = "/search")
+	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
-	                                               String end, String provider, String formName) throws ParseException {
-		//System.err.println("Start:" + start + " end:" + end + " provider:" + provider);
+	                                               String end, String provider, String formName, Model model)
+	    throws ParseException {
+		
 		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
 		Date endDate = DateUtil.parseDate(end);
-		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider);
-		System.err.println("Data:" + datas.size());
-		reportName = dataExportService.createCSVAndSave(datas, response);
-		return new ResponseEntity<>(new Gson().toJson(reportName), HttpStatus.OK);
+		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider, formName);
+		reportName = dataExportService.createCSVAndSave(datas, response, formName);
+		return new ResponseEntity<String>(new Gson().toJson(reportName), HttpStatus.OK);
 		
-	}*/
+	}
 	
 	/*@RequestMapping(value = "/log", method = RequestMethod.GET)
 	public HttpServletResponse getLogAsCSV(final HttpServletResponse response, @RequestParam String roleName)
@@ -83,10 +92,13 @@ public class DataExportController {
 	*/
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
+		model.addAttribute("formNames", FormName.values());
 		
-		return "export/form";
+		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+		model.addAttribute("providers", providers);
+		
+		return "export/exportForm";
 	}
-	
 	/*@RequestMapping(value = "/export", method = RequestMethod.POST)
 	public ModelAndView dataExportPost(@ModelAttribute("form") FormEntity form, ModelMap model, HttpServletResponse response) {
 		System.err.println("dataExportServiceFactory;"

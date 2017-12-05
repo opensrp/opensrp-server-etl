@@ -17,41 +17,49 @@
     <title>Add user information</title>
     
     <link  type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet">
 
   </head>
   <body>
   <c:url var="saveUrl" value="/user/add" />
- <div th:fragment="header">
-    <!-- this is header -->
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-               <a href = "<c:url value = "/"/>">Home</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <a href = "<c:url value = "/"/>">Home</a>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<c:url value="/"/>">mCare2 Dashboard</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="<c:url value="/"/>">Home</a></li>
+      <li><a href="<c:url value="/export"/>">CSV Export</a></li>
+      <li><a href="<c:url value="/logout"/>">Logout</a></li>
+      
+    </ul>
+  </div>
+</nav>
+
  <div class="container">
      <div class="row">               
          <div class="col-md-12">
               <form:form  method="POST" action="${saveUrl}">
-	<table>
-		<tr>
-			<td><form:label path="username">User Name:</form:label></td>
-			<td><form:input path="username"/></td>
-   <td><form:label path="password">Password:</form:label></td>
-   <td><form:input path="password"/></td>
-		</tr>
-	</table>
+              
+              <div class="form-group form-group-lg">
+                 <label class="col-sm-2 control-label">User Name</label>
+                 <div class="col-sm-10">
+                   <form:input path="username"/>
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label class="col-sm-2 control-label">Password</label>
+                 <div class="col-sm-10">
+                  <form:input path="password"/>
+                 </div>
+             </div>
+   	         <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+              <input type="submit" value="Save" />
+              </div>
+             </div>
 	
-	<input type="submit" value="Save" />
-</form:form>
+	
+    </form:form>
         </div>
               
     </div>
