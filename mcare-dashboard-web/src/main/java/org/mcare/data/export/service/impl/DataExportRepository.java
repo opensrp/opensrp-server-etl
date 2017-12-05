@@ -19,7 +19,7 @@ public class DataExportRepository {
 	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String provider, String formName, String sqlQuery) {
-		
+		System.err.println("provider;" + provider);
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
 		if (!provider.isEmpty()) {
 			query.setParameter("provider", provider);

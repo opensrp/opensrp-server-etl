@@ -13,6 +13,7 @@ import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.ProviderServiceImpl;
 import org.mcare.common.util.DateUtil;
 import org.mcare.common.util.FormName;
+import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
 import org.mcare.data.export.service.impl.DataExportServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,15 @@ public class DataExportController {
 		return response;
 	}
 	*/
+	
+	@RequestMapping(value = "/export/list", method = RequestMethod.GET)
+	public String dataExportGetList(Model model) {
+		List<DataExportEntity> exports = providerServiceImpl.findAll("DataExportEntity");
+		System.err.println("" + exports.toString());
+		model.addAttribute("exports", exports);
+		return "export/list";
+	}
+	
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
 		model.addAttribute("formNames", FormName.values());

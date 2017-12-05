@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +32,8 @@ public class DataExportEntity {
 	
 	private String reportName;
 	
-	@Column(name = "craeted", insertable = true, updatable = false)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
 	private Date craeted;
 	
 	private String formName;
@@ -56,7 +58,7 @@ public class DataExportEntity {
 	}
 	
 	public void setCraeted(Date craeted) {
-		this.craeted = craeted;
+		this.craeted = new Date();
 	}
 	
 	public String getFormName() {
@@ -77,6 +79,12 @@ public class DataExportEntity {
 	
 	public long getId() {
 		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return "DataExportEntity [id=" + id + ", reportName=" + reportName + ", craeted=" + craeted + ", formName="
+		        + formName + ", user=" + user + "]";
 	}
 	
 }

@@ -18,14 +18,11 @@ public class ExportKeyMapperSetup {
 		ANC.add("existing_first_name");
 		ANC.add("existing_husname");
 		ANC.add("existing_psrlmp");
-		
 		ANC.add("existing_FWVG");
 		ANC.add("existing_FWHR_PSR");
 		ANC.add("existing_FWHRP");
-		
 		ANC.add("existing_dangervalue");
 		ANC.add("existing_ELCO");
-		
 		ANC.add("today");
 		ANC.add("start");
 		ANC.add("end");
@@ -42,7 +39,6 @@ public class ExportKeyMapperSetup {
 		ANC.add("FWANCPROB");
 		ANC.add("FWANCHEAD");
 		ANC.add("FWANCBLRVIS");
-		
 		ANC.add("FWANCSWLNG");
 		ANC.add("FWANCBLD");
 		ANC.add("FWANCCONVL");
@@ -53,12 +49,10 @@ public class ExportKeyMapperSetup {
 		ANC.add("FWANCDS5");
 		ANC.add("FWANCDS6");
 		ANC.add("FWNOTELIGIBLE");
-		
 		ANC.add("FWHR_ANC");
 		ANC.add("FWFLAGVALUE");
 		ANC.add("FWSORTVALUE");
 		ANC.add("user_type");
-		
 		ANC.add("external_user_ID");
 		ANC.add("anc_current_formStatus");
 		ANC.add("relationalid");
@@ -102,24 +96,18 @@ public class ExportKeyMapperSetup {
 		ENCC.add("FWENCSTS");
 		ENCC.add("FWENCBFINTN");
 		ENCC.add("FWENCPRLCTL");
-		
 		ENCC.add("FWENCDRYWM");
 		ENCC.add("FWENCHDCOV");
 		ENCC.add("FWENCBTHD");
-		
 		ENCC.add("FWENCUMBS");
 		ENCC.add("FWENCTEMP");
-		
 		ENCC.add("FWENCDSFOULUMBS");
 		ENCC.add("FWENCDSLIMBLUE");
 		ENCC.add("FWENCDSSKNYLW");
 		ENCC.add("FWENCDSLETH");
 		ENCC.add("FWENCDSDIFBRTH");
 		ENCC.add("FWENCDSCONVL");
-		
 		ENCC.add("FWENCDELCOMP");
-		
-		ENCC.add("encc_current_formStatus");
-		
+		ENCC.add("encc_current_formStatus");		
 	}
 }
