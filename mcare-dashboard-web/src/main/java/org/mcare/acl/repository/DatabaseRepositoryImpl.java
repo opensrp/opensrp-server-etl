@@ -11,8 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
-import org.mcare.etl.entity.HouseholdEntity;
-import org.mcare.etl.entity.PNCEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,18 +28,17 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		System.err.println("sessionFactory:" + sessionFactory);
 	}
 	
-
 	@Override
 	public <T> long save(T t) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = null;  
+		Transaction tx = null;
 		long returnValue = -1;
 		try {
 			tx = session.beginTransaction();
-			 session.save(t);
-			 returnValue = 1;
+			session.save(t);
+			returnValue = 1;
 			if (!tx.wasCommitted())
-			    tx.commit();
+				tx.commit();
 		}
 		catch (HibernateException e) {
 			returnValue = -1;
@@ -52,19 +49,18 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-
 	
 	@Override
 	public <T> int update(T t) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = null;  
+		Transaction tx = null;
 		int returnValue = -1;
 		try {
 			tx = session.beginTransaction();
 			session.update(t);
 			if (!tx.wasCommitted())
-			    tx.commit();
-			returnValue=1;
+				tx.commit();
+			returnValue = 1;
 		}
 		catch (HibernateException e) {
 			returnValue = -1;
@@ -79,14 +75,14 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	@Override
 	public <T> boolean delete(T t) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = null;  
+		Transaction tx = null;
 		boolean returnValue = false;
 		try {
 			tx = session.beginTransaction();
 			session.delete(t);
 			if (!tx.wasCommitted())
-			    tx.commit();
-			returnValue= true;
+				tx.commit();
+			returnValue = true;
 		}
 		catch (HibernateException e) {
 			returnValue = false;
@@ -94,7 +90,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-
+			
 		}
 		return returnValue;
 	}
@@ -117,7 +113,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
 		try {
-			Query query = session.createQuery("from " + tableClass);
+			Query query = session.createQuery("from " + tableClass + " t order by t.id desc");
+			query.setFirstResult(0);
 			query.setMaxResults(10);
 			result = (List<T>) query.list();
 		}
@@ -134,16 +131,17 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		System.out.println("finding caseId:" + value);
-		Session session = sessionFactory.openSession();		
+		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
-		criteria.add(Restrictions.eq(fieldName, value));		
+		criteria.add(Restrictions.eq(fieldName, value));
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
 		System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	public <T> T findByCaseIdAndToday(String relationalId, Date today,Class<?> className) {
+	
+	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
 		System.out.println("finding caseId and today relationalId:" + relationalId);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);

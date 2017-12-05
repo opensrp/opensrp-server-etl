@@ -52,6 +52,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return (List<T>) databaseRepositoryImpl.findAll(tableClass);
 	}
 	
+	@Transactional
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		return databaseRepositoryImpl.findByKey(value, fieldName, className);

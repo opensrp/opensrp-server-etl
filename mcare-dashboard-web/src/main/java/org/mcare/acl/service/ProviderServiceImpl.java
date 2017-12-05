@@ -2,6 +2,8 @@ package org.mcare.acl.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.common.interfaces.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,7 @@ public class ProviderServiceImpl implements DatabaseService {
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);

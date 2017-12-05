@@ -13,6 +13,7 @@ import org.mcare.common.util.ExportKeyMapperSetup;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -80,13 +81,12 @@ public class ENCCDataExportServiceImpl implements DataExportService {
 			writer.close();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			
 		}
 		
 		dataExportEntity.setFormName(formName);
 		dataExportEntity.setReportName(reportName);
-		dataExportEntity.setUser("Admin");
+		dataExportEntity.setUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		databaseRepositoryImpl.save(dataExportEntity);
 		return reportName;
 		

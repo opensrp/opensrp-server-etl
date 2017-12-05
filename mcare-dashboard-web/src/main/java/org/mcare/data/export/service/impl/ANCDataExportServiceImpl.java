@@ -16,6 +16,7 @@ import org.mcare.common.util.ExportKeyMapperSetup;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -120,7 +121,7 @@ public class ANCDataExportServiceImpl implements DataExportService {
 		
 		dataExportEntity.setFormName(formName);
 		dataExportEntity.setReportName(reportName);
-		dataExportEntity.setUser("Admin");
+		dataExportEntity.setUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		databaseRepositoryImpl.save(dataExportEntity);
 		return reportName;
 	}

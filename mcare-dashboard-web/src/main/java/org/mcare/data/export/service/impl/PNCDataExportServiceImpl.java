@@ -16,6 +16,7 @@ import org.mcare.common.util.ExportKeyMapperSetup;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -58,7 +59,7 @@ public class PNCDataExportServiceImpl implements DataExportService {
 		if (!provider.isEmpty()) {
 			condition = condition + "and mother.provider=:provider";
 		}
-		String sqlQuery = "select pnc.fw_gobhhid,pnc.fw_jivitahhid,pnc.fw_womfname,pnc.fw_husname,mother.motherwomnid,pnc.motherwombid,pnc.fwbnfdtoo,pnc.fwbnfsts ,"
+		String sqlQuery = "select pnc.fw_gobhhid,pnc.fw_jivitahhid,pnc.fw_womfname,pnc.fw_husname,mother.motherwomnid,mother.motherwombid,pnc.fwbnfdtoo,pnc.fwbnfsts ,"
 		        + "pnc.today , pnc.start , pnc.end_time , pnc.fwpncdate , pnc.fwpncremsts , pnc.fwpncint , pnc.fwpncknwprvdr,pnc.fwpncfvr,pnc.fwpnctemp , pnc.fwpncdngrsign ,pnc.fwpncdelcomp ,pnc.fwpncdeltype, "
 		        + "pnc.user_type ,pnc.pnc_current_formstatus ,pnc.relationalid  "
 		        + " from pnc inner join mother on pnc.relationalid =mother.case_id where " + condition;
@@ -93,7 +94,7 @@ public class PNCDataExportServiceImpl implements DataExportService {
 		
 		dataExportEntity.setFormName(formName);
 		dataExportEntity.setReportName(reportName);
-		dataExportEntity.setUser("Admin");
+		dataExportEntity.setUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		databaseRepositoryImpl.save(dataExportEntity);
 		return reportName;
 		
