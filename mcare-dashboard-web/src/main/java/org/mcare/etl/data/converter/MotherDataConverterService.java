@@ -1,7 +1,5 @@
 package org.mcare.etl.data.converter;
 
-import java.text.ParseException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.MotherEntity;
@@ -110,11 +108,8 @@ public class MotherDataConverterService implements DataConverterService {
 			motherToANCConverter.ancVisitSave(doc);
 			motherToPNCConverter.pncVisitSave(doc);
 		}
-		catch (JSONException e) {
+		catch (Exception e) {
 			
-			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
-		}
-		catch (ParseException e) {
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
 		}
 		

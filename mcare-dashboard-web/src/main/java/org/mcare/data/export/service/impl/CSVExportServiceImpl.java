@@ -19,12 +19,9 @@ public class CSVExportServiceImpl implements CoreExportService {
 	@Override
 	public FileWriter createHeader(FileWriter writer, List<String> headerKeys) {
 		int headerSize = 0;
-		System.err.println("headerKeys.size():" + headerKeys.size());
 		for (String headerKey : headerKeys) {
-			System.err.println("headerSize:" + headerSize);
 			try {
 				if (headerSize == headerKeys.size() - 1) {
-					System.err.println(headerSize + "  " + (headerKeys.size() - 1));
 					writer.append(headerKey.trim());
 				} else {
 					writer.append(headerKey.trim());

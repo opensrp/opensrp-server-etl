@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ExceptionEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.ExceptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ExceptionService implements RegisterService<ExceptionEntity> {
 	
@@ -29,7 +29,11 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 			exceptionEntity.setCaseId(doc.getString("caseId"));
 			exceptionEntity.setBenificiaryType(benificiaryType);
 			exceptionEntity.setErrorMessage(message);
-			exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
+			if (doc.has("INSTANCEID")) {
+				exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
+			} else {
+				exceptionEntity.setInstanceId("");
+			}
 			exceptionEntity.setDocId(doc.getString("_id"));
 			save(exceptionEntity);
 		}
@@ -92,7 +96,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	@Override
 	public ExceptionEntity findByCaseId(String caseId) {
 		
-		return databaseRepositoryImpl.findByKey(caseId,"caseId",ExceptionEntity.class);
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", ExceptionEntity.class);
 	}
 	
 }
