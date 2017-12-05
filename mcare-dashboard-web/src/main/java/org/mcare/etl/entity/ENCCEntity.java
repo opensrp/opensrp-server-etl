@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "encc")
 public class ENCCEntity {
@@ -80,18 +83,16 @@ public class ENCCEntity {
 	private String relationalId;
 	
 	private String enccName;
-	
+			
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
 	private Date created = new Date();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
 	private Date updated = new Date();
-	
-	/*@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "child_id", referencedColumnName = "id")
-	private ChildEntity child;*/
 	
 	public String getRelationalId() {
 		return relationalId;
