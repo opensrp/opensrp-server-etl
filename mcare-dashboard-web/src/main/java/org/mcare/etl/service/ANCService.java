@@ -6,11 +6,10 @@ import javax.transaction.Transactional;
 
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ANCEntity;
-import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.ANCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ANCService implements RegisterService<ANCEntity> {
 	
@@ -60,6 +59,6 @@ public class ANCService implements RegisterService<ANCEntity> {
 	
 	@Transactional
 	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
-		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, BNFEntity.class);
+		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, ANCEntity.class);
 	}
 }

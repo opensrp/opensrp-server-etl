@@ -75,7 +75,7 @@ public class PNCEntity {
 	
 	private String pnc_current_formStatus;//variable
 	
-	private String relationalid;
+	private String relationalId;
 	
 	private String user_type;
 	
@@ -288,11 +288,11 @@ public class PNCEntity {
 	}
 	
 	public String getRelationalid() {
-		return relationalid;
+		return relationalId;
 	}
 	
 	public void setRelationalid(String relationalid) {
-		this.relationalid = relationalid;
+		this.relationalId = relationalid;
 	}
 	
 	public String getUser_type() {

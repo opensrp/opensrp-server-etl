@@ -18,8 +18,8 @@ public class DateUtil {
 	private final static SimpleDateFormat getYYYYMMDDFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private final static SimpleDateFormat getYYYYMMDDHHMMSSFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private final static  SimpleDateFormat getEddMMMyyyyhhmmssz =
-            new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss z");
+	
+	private final static SimpleDateFormat getEddMMMyyyyhhmmssz = new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss z");
 	
 	public static Date getDateFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
@@ -40,8 +40,10 @@ public class DateUtil {
 	
 	public static Date getDateFromGMTString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
-		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()&& !"Invalid Date".equalsIgnoreCase(doc.getString(key))) {
-			date = getEddMMMyyyyhhmmssz.parse(doc.getString(key));			
+		
+		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()
+		        && !"Invalid Date".equalsIgnoreCase(doc.getString(key))) {
+			date = getEddMMMyyyyhhmmssz.parse(doc.getString(key));
 			return getYYYYMMDDFormat.parse(getYYYYMMDDFormat.format(date));
 		}
 		return date;

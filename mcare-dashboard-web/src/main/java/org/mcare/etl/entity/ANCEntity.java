@@ -116,7 +116,7 @@ public class ANCEntity {
 	
 	private String external_user_ID;
 	
-	private String relationalid;
+	private String relationalId;
 	
 	private String FW_GOBHHID;
 	
@@ -509,11 +509,11 @@ public class ANCEntity {
 	}
 	
 	public String getRelationalid() {
-		return relationalid;
+		return relationalId;
 	}
 	
 	public void setRelationalid(String relationalid) {
-		this.relationalid = relationalid;
+		this.relationalId = relationalid;
 	}
 	
 	public String getFW_GOBHHID() {

@@ -45,18 +45,18 @@ public class TransmissionListener {
 		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
 		
 		List<Row> rows = vr.getRows();
-		System.err.println("rows:"+rows.size());
+		System.err.println("rows:" + rows.size());
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());
 			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
 			transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
-			if (transmissionServices!=null) {
+			if (transmissionServices != null) {
 				transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
 				if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
 					markerEntity.setTimeStamp(currentDocumentTimeStamp);
 					markerService.update(markerEntity);
 				}
-			}			
+			}
 			
 		}
 		

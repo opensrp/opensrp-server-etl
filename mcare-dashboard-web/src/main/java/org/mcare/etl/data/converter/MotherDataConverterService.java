@@ -11,6 +11,7 @@ import org.mcare.etl.service.MotherService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class MotherDataConverterService implements DataConverterService {
 	
@@ -45,9 +46,9 @@ public class MotherDataConverterService implements DataConverterService {
 			motherEntity.setCaseId(doc.getString("caseId"));
 			motherEntity.setClientVersion(doc.getLong("clientVersion"));
 			if (doc.has("FWWOMDISTRICT"))
-			motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
+				motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
 			if (doc.has("FWWOMUPAZILLA"))
-			motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
+				motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
 			
 			motherEntity.setCountry("BANGLADESH");
 			motherEntity.setCurrentFormStatus("");
@@ -69,7 +70,7 @@ public class MotherDataConverterService implements DataConverterService {
 				motherEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
 			if (doc.has("FWWOMUNION"))
 				motherEntity.setUnion(doc.getString("FWWOMUNION"));
-			motherEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
+			
 			if (doc.has("FWWOMWARD"))
 				motherEntity.setWard(doc.getString("FWWOMWARD"));
 			motherEntity.setMotherGOBHHID(doc.getString("mother_gobhhid"));
@@ -110,6 +111,7 @@ public class MotherDataConverterService implements DataConverterService {
 			motherToPNCConverter.pncVisitSave(doc);
 		}
 		catch (JSONException e) {
+			
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "mother");
 		}
 		catch (ParseException e) {
