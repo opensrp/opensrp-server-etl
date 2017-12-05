@@ -1,5 +1,7 @@
 package org.mcare.etl.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "marker")
@@ -29,6 +36,16 @@ public class MarkerEntity {
 	
 	@Column(name = "time_stamp")
 	private long timeStamp;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 	
 	public int getId() {
 		return id;
@@ -62,11 +79,30 @@ public class MarkerEntity {
 		this.name = name;
 	}
 	
-	@Override
-	public String toString() {
-		return "MarkerEntity [id=" + id + ", type=" + type + ", name=" + name + ", timeStamp=" + timeStamp + "]";
+	
+	
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
+	@Override
+	public String toString() {
+		return "MarkerEntity [id=" + id + ", type=" + type + ", name=" + name + ", timeStamp=" + timeStamp
+				+ ", created=" + created + ", updated=" + updated + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
