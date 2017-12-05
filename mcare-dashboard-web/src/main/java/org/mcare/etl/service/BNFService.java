@@ -4,7 +4,9 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.BNFEntity;
+import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.BNFRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +15,23 @@ import org.springframework.stereotype.Service;
 public class BNFService implements RegisterService<BNFEntity> {
 	
 	@Autowired
-	private BNFRepository bnfRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public BNFService() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setBnfRepository(BNFRepository bnfRepository) {
-		this.bnfRepository = bnfRepository;
-	}
+
 	
 	@Transactional
 	@Override
 	public void save(BNFEntity bnffEntity) {
 		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
 		if (existingbnfEntity == null) {
-			bnfRepository.save(bnffEntity);
+			databaseRepositoryImpl.save(bnffEntity);
 		} else {
 			if (delete(existingbnfEntity))
-				bnfRepository.save(bnffEntity);
+				databaseRepositoryImpl.save(bnffEntity);
 		}
 		
 	}
@@ -39,7 +39,7 @@ public class BNFService implements RegisterService<BNFEntity> {
 	@Transactional
 	@Override
 	public boolean delete(BNFEntity bnffEntity) {
-		return bnfRepository.delete(bnffEntity);
+		return databaseRepositoryImpl.delete(bnffEntity);
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public class BNFService implements RegisterService<BNFEntity> {
 	
 	@Transactional
 	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
-		return bnfRepository.findByCaseIdAndToday(relationalId, FWBNFDATE);
+		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, FWBNFDATE, BNFEntity.class);
 	}
 	
 	@Override

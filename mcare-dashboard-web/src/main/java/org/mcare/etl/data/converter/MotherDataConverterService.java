@@ -44,7 +44,9 @@ public class MotherDataConverterService implements DataConverterService {
 			JSONObject details = new JSONObject(doc.getString("details"));
 			motherEntity.setCaseId(doc.getString("caseId"));
 			motherEntity.setClientVersion(doc.getLong("clientVersion"));
+			if (doc.has("FWWOMDISTRICT"))
 			motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
+			if (doc.has("FWWOMUPAZILLA"))
 			motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
 			
 			motherEntity.setCountry("BANGLADESH");

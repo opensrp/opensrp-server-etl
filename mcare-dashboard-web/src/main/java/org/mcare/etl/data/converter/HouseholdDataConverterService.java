@@ -95,7 +95,9 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdEntity.setFWGOBHHID(doc.getString("FWGOBHHID"));
 			JSONObject details = new JSONObject(doc.getString("details"));
 			householdEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
+			System.out.println("saving household entity");
 			householdService.save(householdEntity);
+			
 		}
 		catch (JSONException e) {
 			e.printStackTrace();

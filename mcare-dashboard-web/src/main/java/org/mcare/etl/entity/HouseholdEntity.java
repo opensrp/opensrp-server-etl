@@ -32,9 +32,6 @@ public class HouseholdEntity extends CommonEntity {
 	@Column(name = "elco")
 	private int ELCO;
 	
-	/*@OneToMany(targetEntity = ElcoEntity.class, mappedBy = "id", fetch = FetchType.EAGER)
-	private List<ElcoEntity> elco;
-	*/
 	public int getId() {
 		return id;
 	}

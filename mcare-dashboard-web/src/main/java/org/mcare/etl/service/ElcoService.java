@@ -2,9 +2,9 @@ package org.mcare.etl.service;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ElcoEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.ElcoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ElcoService implements RegisterService<ElcoEntity> {
 	
 	@Autowired
-	private ElcoRepository elcoRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public ElcoService() {
 		// TODO Auto-generated constructor stub
@@ -23,24 +23,24 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 	public void save(ElcoEntity elcoEntity) {
 		ElcoEntity existingElcoEntity = findByCaseId(elcoEntity.caseId);
 		if (existingElcoEntity == null) {
-			elcoRepository.save(elcoEntity);
+			databaseRepositoryImpl.save(elcoEntity);
 		} else {
 			if (delete(existingElcoEntity))
-				elcoRepository.save(elcoEntity);
+				databaseRepositoryImpl.save(elcoEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(ElcoEntity elcoEntity) {
-		return elcoRepository.delete(elcoEntity);
+		return databaseRepositoryImpl.delete(elcoEntity);
 		
 	}
 	
 	@Transactional
 	@Override
 	public void update(ElcoEntity elcoEntity) {
-		elcoRepository.update(elcoEntity);
+		databaseRepositoryImpl.update(elcoEntity);
 		
 	}
 	
@@ -53,7 +53,7 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 	@Transactional
 	@Override
 	public ElcoEntity findByCaseId(String caseId) {
-		return elcoRepository.findByCaseId(caseId);
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", ElcoEntity.class);
 	}
 	
 }

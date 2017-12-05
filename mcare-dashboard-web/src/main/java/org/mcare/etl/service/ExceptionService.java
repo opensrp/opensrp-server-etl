@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ExceptionEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.ExceptionRepository;
@@ -16,7 +17,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	private ExceptionEntity exceptionEntity;
 	
 	@Autowired
-	private ExceptionRepository exceptionRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public ExceptionService() {
 		// TODO Auto-generated constructor stub
@@ -60,10 +61,10 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 		
 		ExceptionEntity existingExceptionEntity = findByCaseId(exceptionEntity.getCaseId());
 		if (existingExceptionEntity == null) {
-			exceptionRepository.save(exceptionEntity);
+			databaseRepositoryImpl.save(exceptionEntity);
 		} else {
 			if (delete(existingExceptionEntity))
-				exceptionRepository.save(exceptionEntity);
+				databaseRepositoryImpl.save(exceptionEntity);
 			
 		}
 		
@@ -72,7 +73,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	@Transactional
 	@Override
 	public boolean delete(ExceptionEntity exceptionEntity) {
-		return exceptionRepository.delete(exceptionEntity);
+		return databaseRepositoryImpl.delete(exceptionEntity);
 	}
 	
 	@Override
@@ -91,7 +92,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	@Override
 	public ExceptionEntity findByCaseId(String caseId) {
 		
-		return exceptionRepository.findByCaseId(caseId);
+		return databaseRepositoryImpl.findByKey(caseId,"caseId",ExceptionEntity.class);
 	}
 	
 }

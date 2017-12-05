@@ -22,17 +22,21 @@ public class HouseholdServiceTest {
 	@Autowired
 	private HouseholdService householdService;
 	
-
+@Ignore
 	@Test
 	public void saveTest() throws ParseException {
-		String caseId = "e599f590-4e10-408d-b3f3-ebdf4d3b69c3";
-		HouseholdEntity he = new HouseholdEntity();
+		String caseId = "e599f590-4e10-408d-b3f3-bedf4d3b69c4";
+/*		HouseholdEntity he = new HouseholdEntity();
 		he = householdService.findByCaseId(caseId);
 		System.out.println(he.toString());
-		householdService.update(he);
-/*		HouseholdEntity he = new HouseholdEntity();
-		he.setCaseId(caseId
-		householdService.save(he);*/
+		householdService.update(he);*/
+		HouseholdEntity he = new HouseholdEntity();
+		he.setCaseId(caseId);
+		try {
+			householdService.save(he);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

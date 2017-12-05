@@ -2,7 +2,9 @@ package org.mcare.etl.service;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ChildEntity;
+import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.ChildRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ChildService implements RegisterService<ChildEntity> {
 	
 	@Autowired
-	private ChildRepository childRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public ChildService() {
 		
@@ -22,10 +24,10 @@ public class ChildService implements RegisterService<ChildEntity> {
 	public void save(ChildEntity childEntity) {
 		ChildEntity existingCHildEntity = findByCaseId(childEntity.caseId);
 		if (existingCHildEntity == null) {
-			childRepository.save(childEntity);
+			databaseRepositoryImpl.save(childEntity);
 		} else {
 			if (delete(existingCHildEntity))
-				childRepository.save(childEntity);
+				databaseRepositoryImpl.save(childEntity);
 			
 		}
 	}
@@ -33,14 +35,14 @@ public class ChildService implements RegisterService<ChildEntity> {
 	@Transactional
 	@Override
 	public boolean delete(ChildEntity childEntity) {
-		return childRepository.delete(childEntity);
+		return databaseRepositoryImpl.delete(childEntity);
 		
 	}
 	
 	@Transactional
 	@Override
 	public void update(ChildEntity childEntity) {
-		childRepository.delete(childEntity);
+		databaseRepositoryImpl.delete(childEntity);
 		
 	}
 	
@@ -53,7 +55,7 @@ public class ChildService implements RegisterService<ChildEntity> {
 	@Transactional
 	@Override
 	public ChildEntity findByCaseId(String caseId) {
-		return childRepository.findByCaseId(caseId);
+		return databaseRepositoryImpl.findByKey(caseId,"caseId", ChildEntity.class);
 	}
 	
 }

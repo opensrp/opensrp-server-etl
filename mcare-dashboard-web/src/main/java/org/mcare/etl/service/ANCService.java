@@ -4,7 +4,9 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ANCEntity;
+import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.ANCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class ANCService implements RegisterService<ANCEntity> {
 	
 	@Autowired
-	private ANCRepository ancRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public ANCService() {
 		// TODO Auto-generated constructor stub
@@ -24,10 +26,10 @@ public class ANCService implements RegisterService<ANCEntity> {
 	public void save(ANCEntity ancEntity) {
 		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
 		if (existingancEntity == null) {
-			ancRepository.save(ancEntity);
+			databaseRepositoryImpl.save(ancEntity);
 		} else {
 			if (delete(existingancEntity))
-				ancRepository.save(ancEntity);
+				databaseRepositoryImpl.save(ancEntity);
 		}
 		
 	}
@@ -35,7 +37,7 @@ public class ANCService implements RegisterService<ANCEntity> {
 	@Transactional
 	@Override
 	public boolean delete(ANCEntity ancEntity) {
-		return ancRepository.delete(ancEntity);
+		return databaseRepositoryImpl.delete(ancEntity);
 	}
 	
 	@Override
@@ -53,11 +55,11 @@ public class ANCService implements RegisterService<ANCEntity> {
 	@Transactional
 	@Override
 	public ANCEntity findByCaseId(String caseId) {
-		return ancRepository.findByCaseId(caseId);
+		return null;
 	}
 	
 	@Transactional
 	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
-		return ancRepository.findByCaseIdAndToday(relationalId, today);
+		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, BNFEntity.class);
 	}
 }

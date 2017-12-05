@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.PSRFRepository;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class PSRFService implements RegisterService<PSRFEntity> {
 	
 	@Autowired
-	private PSRFRepository psrfRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public PSRFService() {
 		// TODO Auto-generated constructor stub
@@ -24,24 +25,24 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	public void save(PSRFEntity psrfEntity) {
 		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalId(), psrfEntity.getToday());
 		if (existingPSRFEntity == null) {
-			psrfRepository.save(psrfEntity);
+			databaseRepositoryImpl.save(psrfEntity);
 		} else {
 			if (delete(existingPSRFEntity))
-				psrfRepository.save(psrfEntity);
+				databaseRepositoryImpl.save(psrfEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(PSRFEntity psrfEntity) {
-		return psrfRepository.delete(psrfEntity);
+		return databaseRepositoryImpl.delete(psrfEntity);
 		
 	}
 	
 	@Transactional
 	@Override
 	public void update(PSRFEntity psrfEntity) {
-		psrfRepository.update(psrfEntity);
+		databaseRepositoryImpl.update(psrfEntity);
 		
 	}
 	
@@ -53,7 +54,7 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	
 	@Transactional
 	public PSRFEntity findByCaseIdAndToday(String relationalId, Date today) {
-		return psrfRepository.findByCaseIdAndToday(relationalId, today);
+		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, PSRFEntity.class);
 	}
 	
 	@Override

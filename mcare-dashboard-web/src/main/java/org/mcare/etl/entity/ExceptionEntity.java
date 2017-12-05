@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "exception")
 public class ExceptionEntity {
@@ -33,8 +36,7 @@ public class ExceptionEntity {
 	
 	@Column(name = "case_id")
 	private String caseId;
-	
-	//@Type(type = "text")
+
 	@Column(name = "error_message")
 	private String errorMessage;
 	
@@ -43,10 +45,12 @@ public class ExceptionEntity {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
 	private Date created = new Date();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
 	private Date updated = new Date();
 	
 	public Date getCreated() {

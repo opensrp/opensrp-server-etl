@@ -26,10 +26,14 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	public void save(HouseholdEntity householdEntity) {
 		HouseholdEntity existingHouseholdEntity = findByCaseId(householdEntity.caseId);
 		if (existingHouseholdEntity == null) {
+			System.out.println("existingHouseholdEntity is null saving");
 			databaseRepositoryImpl.save(householdEntity);
 		} else {
-			if (delete(existingHouseholdEntity))
+			System.out.println("existingHouseholdEntity exists");
+			if (delete(existingHouseholdEntity)) {
+				System.out.println("delete successfull  now saving");
 				databaseRepositoryImpl.save(householdEntity);
+			}
 		}
 	}
 	
@@ -56,7 +60,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	@Transactional
 	@Override
 	public HouseholdEntity findByCaseId(String caseId) {
-		return databaseRepositoryImpl.findByKey(caseId,caseId, HouseholdEntity.class);
+		return databaseRepositoryImpl.findByKey(caseId,"caseId", HouseholdEntity.class);
 	}
 	
 	public List<HouseholdEntity> list() {

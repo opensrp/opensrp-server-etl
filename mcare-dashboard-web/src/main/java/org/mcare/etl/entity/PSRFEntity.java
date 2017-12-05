@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "psrf")
 public class PSRFEntity {
@@ -126,6 +129,16 @@ public class PSRFEntity {
 	private String received_time;
 	
 	private long timeStamp;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "elco_id", referencedColumnName = "id")
@@ -532,5 +545,23 @@ public class PSRFEntity {
 	public void setToday(Date today) {
 		this.today = today;
 	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	
+	
 	
 }

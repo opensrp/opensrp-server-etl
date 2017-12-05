@@ -2,6 +2,8 @@ package org.mcare.etl.service;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.etl.entity.ElcoEntity;
 import org.mcare.etl.entity.MotherEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.MotherRepository;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class MotherService implements RegisterService<MotherEntity> {
 	
 	@Autowired
-	private MotherRepository motherRepository;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public MotherService() {
 		
@@ -22,24 +24,24 @@ public class MotherService implements RegisterService<MotherEntity> {
 	public void save(MotherEntity motherEntity) {
 		MotherEntity existingMotherEntity = findByCaseId(motherEntity.getCaseId());
 		if (existingMotherEntity == null) {
-			motherRepository.save(motherEntity);
+			databaseRepositoryImpl.save(motherEntity);
 		} else {
 			if (delete(existingMotherEntity))
-				motherRepository.save(motherEntity);
+				databaseRepositoryImpl.save(motherEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(MotherEntity motherEntity) {
-		return motherRepository.delete(motherEntity);
+		return databaseRepositoryImpl.delete(motherEntity);
 		
 	}
 	
 	@Transactional
 	@Override
 	public void update(MotherEntity motherEntity) {
-		motherRepository.update(motherEntity);
+		databaseRepositoryImpl.update(motherEntity);
 		
 	}
 	
@@ -52,7 +54,7 @@ public class MotherService implements RegisterService<MotherEntity> {
 	@Transactional
 	@Override
 	public MotherEntity findByCaseId(String caseId) {
-		return motherRepository.findByCaseId(caseId);
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", MotherEntity.class);
 	}
 	
 }
