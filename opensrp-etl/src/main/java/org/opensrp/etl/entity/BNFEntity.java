@@ -43,6 +43,12 @@ public class BNFEntity {
 
 	private int Misoprostol_Received;
 
+	private Integer Num_Live_Birth;
+
+	private int Premature_Birth;
+
+	private int Child_Weight;
+
 	private String Mem_F_Name;
 
 	private int Is_PNC;
@@ -55,8 +61,6 @@ public class BNFEntity {
 
 	private String Mother_Status;
 
-	private String Premature_Birth;
-
 	private String existing_location;
 
 	private String existing_District;
@@ -65,7 +69,7 @@ public class BNFEntity {
 
 	private int Count_Misorpostol;
 
-	private int Member_Age;
+	private Integer Member_Age;
 
 	private String existing_Final_Vill;
 
@@ -100,8 +104,6 @@ public class BNFEntity {
 	private String DOO;
 
 	private int existing_TT_Count;
-
-	private int Child_Weight;
 
 	private String existing_GoB_HHID;
 
@@ -171,8 +173,6 @@ public class BNFEntity {
 	private String existing_Upazilla;
 
 	private String Child_Name;
-
-	private int Num_Live_Birth;
 
 	private String changes;
 
@@ -246,11 +246,11 @@ public class BNFEntity {
 		Mother_Status = mother_Status;
 	}
 
-	public String getPremature_Birth() {
+	public int getPremature_Birth() {
 		return Premature_Birth;
 	}
 
-	public void setPremature_Birth(String premature_Birth) {
+	public void setPremature_Birth(int premature_Birth) {
 		Premature_Birth = premature_Birth;
 	}
 
@@ -286,11 +286,11 @@ public class BNFEntity {
 		Count_Misorpostol = count_Misorpostol;
 	}
 
-	public int getMember_Age() {
+	public Integer getMember_Age() {
 		return Member_Age;
 	}
 
-	public void setMember_Age(int member_Age) {
+	public void setMember_Age(Integer member_Age) {
 		Member_Age = member_Age;
 	}
 
@@ -778,11 +778,11 @@ public class BNFEntity {
 		Child_Name = child_Name;
 	}
 
-	public int getNum_Live_Birth() {
+	public Integer getNum_Live_Birth() {
 		return Num_Live_Birth;
 	}
 
-	public void setNum_Live_Birth(int num_Live_Birth) {
+	public void setNum_Live_Birth(Integer num_Live_Birth) {
 		Num_Live_Birth = num_Live_Birth;
 	}
 

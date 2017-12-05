@@ -47,6 +47,8 @@ public class ANCEntity {
 
 	private int Is_Reffered;
 
+	private Integer Preg_Status;
+
 	private String existing_Caesarean;
 
 	private String existing_Age_Youngest_Child;
@@ -104,8 +106,6 @@ public class ANCEntity {
 	private String Is_Critical;
 	
 	private String Is_Expired;
-
-	private Integer Preg_Status;
 	
 	private String existing_ELCO;
 	

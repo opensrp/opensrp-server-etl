@@ -24,21 +24,32 @@ public class NutritionEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nutrition_id_seq")
 	@SequenceGenerator(name = "nutrition_id_seq", sequenceName = "nutrition_id_seq", allocationSize = 1)
 	private int id;
-	
+
+	@Column(name = "end_time")
+	private Date end;
+
+	private Date start;
+
 	private String doc_id;
-	
+
+	private Integer Mother_Nutrition;
+
+	private Integer Child_Nutrition;
+
 	private String existing_TT_Count;
-	
+
 	private Long serverVersion;
-	
+
+	private String changes;
+
+	private Integer Distrinuted_Nutrition;
+
 	private String existing_Couple_No;
 	
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
 	
 	private String existing_Union;
-	
-	private String changes;
 	
 	private String existing_Child_Father;
 	
@@ -63,25 +74,14 @@ public class NutritionEntity {
 	
 	private String VitA_Minarals;
 	
-	private String Mother_Nutrition;
-	
 	private String IFA_Tablets;
-	
-	@Column(name = "end_time")
-	private Date end;
 	
 	@Temporal(TemporalType.DATE)
 	private Date existing_Injection_Date;
 	
-	private String Child_Nutrition;
-	
-	private String relationalid;
-	
 	private String existing_Upazilla;
 	
 	private String existing_Ward;
-	
-	private String Distrinuted_Nutrition;
 	
 	private String existing_Subunit;
 	
@@ -90,8 +90,6 @@ public class NutritionEntity {
 	private String existing_District;
 	
 	private String existing_Child_Mother;
-	
-	private Date start;
 	
 	@Temporal(TemporalType.DATE)
 	private Date existing_Calc_Dob_Confirm;
@@ -107,21 +105,19 @@ public class NutritionEntity {
 	private String existing_ELCO_Mobile_Number;
 	
 	private String existing_Country;
-	
+
+	private String relationalid;
+
+	public int getId() {
+		return id;
+	}
+
 	public String getDoc_id() {
 		return doc_id;
 	}
 	
 	public void setDoc_id(String doc_id) {
 		this.doc_id = doc_id;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public String getExisting_TT_Count() {
@@ -262,11 +258,11 @@ public class NutritionEntity {
 		VitA_Minarals = vitA_Minarals;
 	}
 	
-	public String getMother_Nutrition() {
+	public Integer getMother_Nutrition() {
 		return Mother_Nutrition;
 	}
 	
-	public void setMother_Nutrition(String mother_Nutrition) {
+	public void setMother_Nutrition(Integer mother_Nutrition) {
 		Mother_Nutrition = mother_Nutrition;
 	}
 	
@@ -295,11 +291,11 @@ public class NutritionEntity {
 		this.existing_Injection_Date = existing_Injection_Date;
 	}
 	
-	public String getChild_Nutrition() {
+	public Integer getChild_Nutrition() {
 		return Child_Nutrition;
 	}
 	
-	public void setChild_Nutrition(String child_Nutrition) {
+	public void setChild_Nutrition(Integer child_Nutrition) {
 		Child_Nutrition = child_Nutrition;
 	}
 	
@@ -327,11 +323,11 @@ public class NutritionEntity {
 		this.existing_Ward = existing_Ward;
 	}
 	
-	public String getDistrinuted_Nutrition() {
+	public Integer getDistrinuted_Nutrition() {
 		return Distrinuted_Nutrition;
 	}
 	
-	public void setDistrinuted_Nutrition(String distrinuted_Nutrition) {
+	public void setDistrinuted_Nutrition(Integer distrinuted_Nutrition) {
 		Distrinuted_Nutrition = distrinuted_Nutrition;
 	}
 	

@@ -56,6 +56,10 @@ public class ChildEntity {
 
 	private long version;
 
+	private String Vaccines;
+
+	private Integer Diseases_Prob;
+
 	private String existing_HR;
 
 	@Temporal(TemporalType.DATE)
@@ -110,13 +114,9 @@ public class ChildEntity {
 
 	private String existing_Child_Mother;
 
-	private String Diseases_Prob;
-
 	private String existing_Mauzapara;
 
 	private String BCG;
-
-	private String Vaccines;
 
 	private String existing_GoB_HHID;
 
@@ -366,11 +366,11 @@ public class ChildEntity {
 		Met = met;
 	}
 
-	public String getDiseases_Prob() {
+	public Integer getDiseases_Prob() {
 		return Diseases_Prob;
 	}
 
-	public void setDiseases_Prob(String diseases_Prob) {
+	public void setDiseases_Prob(Integer diseases_Prob) {
 		Diseases_Prob = diseases_Prob;
 	}
 

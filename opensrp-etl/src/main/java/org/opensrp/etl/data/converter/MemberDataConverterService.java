@@ -6,8 +6,6 @@ import org.opensrp.etl.entity.MemberEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.MemberService;
-import org.opensrp.etl.util.DateUtil;
-import org.opensrp.etl.util.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MemberDataConverterService implements DataConverterService {
@@ -35,6 +33,9 @@ public class MemberDataConverterService implements DataConverterService {
 
 	@Autowired
 	private InjectableDataConverterService injectableDataConverterService;
+
+	@Autowired
+	private DeathRegDataConverterService deathRegDataConverterService;
 
 	@Autowired
 	private ExceptionService exceptionService;
@@ -65,21 +66,6 @@ public class MemberDataConverterService implements DataConverterService {
 			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), Keys.HOUSEHOLD.name());
 		}
 
-		/*Class<MemberEntity> className = MemberEntity.class;
-		Object object = memberEntity;
-		memberEntity = (MemberEntity) dataConverter.convert(doc, className, object);
-		try {
-			JSONObject details = doc.getJSONObject("details");
-			memberEntity.setStart(DateUtil.getDateTimeFromString(details, "start"));
-			memberEntity.setEnd(DateUtil.getDateTimeFromString(details, "end"));
-			memberEntity.setRelationalid(details.getString("womanrelationalid"));
-			memberService.save(memberEntity);
-			
-		}
-		catch (Exception e) {
-			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), Keys.MEMBER.name());
-		}*/
-
 		pncDataConverterService.convertToEntityAndSave(doc);
 		nutritionDataConverterService.convertToEntityAndSave(doc);
 		psrfDataConverterService.convertToEntityAndSave(doc);
@@ -88,6 +74,7 @@ public class MemberDataConverterService implements DataConverterService {
 		adolescentDataConverterService.convertToEntityAndSave(doc);
 		injectableDataConverterService.convertToEntityAndSave(doc);
 		ancDataConverterService.convertToEntityAndSave(doc);
+		deathRegDataConverterService.convertToEntityAndSave(doc);
 	}
 	
 }

@@ -50,6 +50,7 @@
                 <value>org.opensrp.etl.entity.ExceptionEntity</value>
                 <value>org.opensrp.etl.entity.AdolescentEntity</value>
                 <value>org.opensrp.etl.entity.InjectableEntity</value>
+                <value>org.opensrp.etl.entity.DeathRegEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -78,7 +79,7 @@
 <bean name="injectableService" class="org.opensrp.etl.service.InjectableService"/>
 <bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
 <bean name="registerServiceImpl" class="org.opensrp.etl.service.RegisterServiceImpl"/>
-
+<bean name="deathRegService" class="org.opensrp.etl.service.DeathRegService"/>
 
 <bean name="householdRepository" class="org.opensrp.etl.repository.HouseholdRepository"/>
 <bean name="memberRepository" class="org.opensrp.etl.repository.MemberRepository"/>
@@ -93,6 +94,7 @@
 <bean name="adolescentRepository" class="org.opensrp.etl.repository.AdolescentRepository"/>
 <bean name="injectableRepository" class="org.opensrp.etl.repository.InjectableRepository"/>
 <bean name="registerRepositoryImpl" class="org.opensrp.etl.repository.RegisterRepositoryImpl"/>
+<bean name="deathRegRepository" class="org.opensrp.etl.repository.DeathRegRepository"/>
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="memberTransmissionService" class="org.opensrp.etl.transmission.service.MemberTransmissionService"/>
@@ -109,6 +111,7 @@
 <bean name="childDataConverterService" class="org.opensrp.etl.data.converter.ChildDataConverterService"/>
 <bean name="adolescentDataConverterService" class="org.opensrp.etl.data.converter.AdolescentDataConverterService"/>
 <bean name="injectableDataConverterService" class="org.opensrp.etl.data.converter.InjectableDataConverterService"/>
+<bean name="deathRegDataConverterService" class="org.opensrp.etl.data.converter.DeathRegDataConverterService"/>
 
 <bean name="dataConverter" class="org.opensrp.etl.data.converter.DataConverter"/>
 
@@ -125,6 +128,7 @@
 <bean name="actionEntity" class="org.opensrp.etl.entity.ActionEntity"/>
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
 <bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
+<bean name="deathRegEntity" class="org.opensrp.etl.entity.DeathRegEntity"/>
 
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>

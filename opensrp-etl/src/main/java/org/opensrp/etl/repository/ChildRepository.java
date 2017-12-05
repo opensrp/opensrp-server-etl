@@ -63,9 +63,8 @@ public class ChildRepository implements RegisterRepository<ChildEntity> {
 		Criteria listChildCr = getSession().createCriteria(ChildEntity.class);
 		listChildCr.add(Restrictions.eq("relationalid", relationalId));
 		listChildCr.add(Restrictions.eq("Today", today));
-		System.out.println("before caseId: " + relationalId + " today: " + today);
+
 		List<ChildEntity> listChild = listChildCr.list();
-		System.out.println("after caseId: " + relationalId);
 		return listChild.size() > 0 ? (ChildEntity) listChild.get(0) : null;
 	}
 
