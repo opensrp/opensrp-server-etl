@@ -114,8 +114,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<T> result = null;
 		try {
 			Query query = session.createQuery("from " + tableClass + " t order by t.id desc");
-			query.setFirstResult(0);
-			query.setMaxResults(10);
+			//query.setFirstResult(0);
+			//query.setMaxResults(10);
 			result = (List<T>) query.list();
 		}
 		catch (Exception e) {
