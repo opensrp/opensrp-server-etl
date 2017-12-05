@@ -1,6 +1,9 @@
 package org.mpower.etl.service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,5 +41,37 @@ public class HouseholdServiceTest {
 			e.printStackTrace();
 		}
 	}
+@Ignore 
+@Test
+public void dateConverStingToDate () {
+	
+	 final Date currentTime = new Date();
+
+	    final SimpleDateFormat sdf =
+	            new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss z");
+
+	    // Give it to me in GMT time.
+	    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+	    System.out.println("GMT time: " + sdf.format(currentTime));
+	    
+	    
+	//SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd yyyy HH:mm:ss z");
+	  //formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+	SimpleDateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+    String dateInString = "Sat, 09 Sep 2017 00:00:00 GMT"; //
+    
+  
+
+    try {
+
+        Date date = sdf.parse(dateInString);
+        System.out.println(date);
+        System.out.println(sdf.format(date));
+       System.out.println(formatter1.format(date));
+
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+}
 	
 }

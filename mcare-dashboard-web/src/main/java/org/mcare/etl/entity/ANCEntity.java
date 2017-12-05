@@ -39,7 +39,8 @@ public class ANCEntity {
 	
 	private String FWGESTATIONALAGE;
 	
-	private String FWEDD;
+	@Temporal(TemporalType.DATE)
+	private Date FWEDD;
 	
 	private String FWANCREMSTS;
 	
@@ -203,11 +204,11 @@ public class ANCEntity {
 		FWGESTATIONALAGE = fWGESTATIONALAGE;
 	}
 	
-	public String getFWEDD() {
+	public Date getFWEDD() {
 		return FWEDD;
 	}
 	
-	public void setFWEDD(String fWEDD) {
+	public void setFWEDD(Date fWEDD) {
 		FWEDD = fWEDD;
 	}
 	

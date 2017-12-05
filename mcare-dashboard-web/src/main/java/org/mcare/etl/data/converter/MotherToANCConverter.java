@@ -247,7 +247,7 @@ public class MotherToANCConverter {
 		ancEntity.setAnc_current_formStatus(ancVisit.getString(anc_current_status));
 		ancEntity.setFWCONFIRMATION(ancVisit.getString(ancVisitKeyMap.get("FWCONFIRMATION")));
 		ancEntity.setFWGESTATIONALAGE(ancVisit.getString(ancVisitKeyMap.get("FWGESTATIONALAGE")));
-		ancEntity.setFWEDD(ancVisit.getString(ancVisitKeyMap.get("FWEDD")));
+		ancEntity.setFWEDD(DateUtil.getDateFromGMTString(ancVisit,ancVisit.getString(ancVisitKeyMap.get("FWEDD"))));
 		ancEntity.setFWANCREMSTS(ancVisit.getString(ancVisitKeyMap.get("FWANCREMSTS")));
 		ancEntity.setFWANCINT(ancVisit.getString(ancVisitKeyMap.get("FWANCINT")));
 		ancEntity.setFWANCANM(ancVisit.getString(ancVisitKeyMap.get("FWANCANM")));
