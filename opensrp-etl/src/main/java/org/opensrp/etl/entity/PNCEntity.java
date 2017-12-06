@@ -23,7 +23,7 @@ public class PNCEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pnc_id_seq")
 	@SequenceGenerator(name = "pnc_id_seq", sequenceName = "pnc_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 	
 	@Column(name = "doc_id")
 	private String _id;
@@ -36,22 +36,37 @@ public class PNCEntity {
 	@Column(name = "end_time")
 	private Date end;
 
+	private Date received_time;
+
 	private Date start;
 
 	private Integer Has_PNC_Given_On_Time;
-
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
-
-	private Integer Visit_Status;
-
-	private String Visit_No;
 
 	private Integer Is_Cleaned;
 
 	private Integer Chlorhexidin;
 
 	private Integer Breasmilk_Fed;
+
+	private Integer Visit_Status;
+
+	private Integer Menstruation;
+
+	private Integer High_Fever;
+
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Expired_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Due_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Post_Due_Date;
+
+	private String Visit_No;
 
 	private String existing_Couple_No;
 	
@@ -70,13 +85,9 @@ public class PNCEntity {
 	private String existing_Visit_Status;
 	
 	private String exising_Union;
-	
-	private Integer Menstruation;
-	
+
 	private String existing_Spouse_Name;
-	
-	private Integer High_Fever;
-	
+
 	private String existing_ELCO;
 	
 	private String Calc_On_Time;
@@ -86,10 +97,7 @@ public class PNCEntity {
 	private String existing_Final_Vill;
 	
 	private String existing_ELCO_BRID;
-	
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Expired_Date;
-	
+
 	private String Convulsions;
 	
 	private String Met;
@@ -104,8 +112,6 @@ public class PNCEntity {
 	
 	private String changes;
 	
-	private Date received_time;
-	
 	private String existing_Total_Child_Alive;
 	
 	private String existing_Premature_Birth;
@@ -117,13 +123,7 @@ public class PNCEntity {
 	private String Is_On_Time;
 	
 	private String Is_Critical;
-	
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Due_Date;
-	
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Post_Due_Date;
-	
+
 	private String yn_dk_label;
 	
 	private String existing_Delivery_Type;
@@ -147,6 +147,10 @@ public class PNCEntity {
 	private String Is_Expired;
 
 	private String relationalid;
+
+	public long getId() {
+		return id;
+	}
 
 	public String getPncName() {
 		return pncName;
@@ -616,13 +620,4 @@ public class PNCEntity {
 	public void setIs_Expired(String is_Expired) {
 		Is_Expired = is_Expired;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 }

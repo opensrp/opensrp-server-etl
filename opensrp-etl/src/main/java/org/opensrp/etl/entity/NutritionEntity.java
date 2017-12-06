@@ -23,14 +23,18 @@ public class NutritionEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nutrition_id_seq")
 	@SequenceGenerator(name = "nutrition_id_seq", sequenceName = "nutrition_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 
 	@Column(name = "end_time")
 	private Date end;
 
 	private Date start;
 
+	private Long serverVersion;
+
 	private String doc_id;
+
+	private String changes;
 
 	private Integer Mother_Nutrition;
 
@@ -38,17 +42,24 @@ public class NutritionEntity {
 
 	private String existing_TT_Count;
 
-	private Long serverVersion;
-
-	private String changes;
-
 	private Integer Distrinuted_Nutrition;
 
-	private String existing_Couple_No;
-	
+	private Integer Visit_Status;
+
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
-	
+
+	@Temporal(TemporalType.DATE)
+	private Date Calc_Dob_Confirm;
+
+	@Temporal(TemporalType.DATE)
+	private Date existing_Injection_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date existing_Calc_Dob_Confirm;
+
+	private String existing_Couple_No;
+
 	private String existing_Union;
 	
 	private String existing_Child_Father;
@@ -64,21 +75,13 @@ public class NutritionEntity {
 	private String existing_Mauzapara;
 	
 	private String Supplementary_Food;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Calc_Dob_Confirm;
-	
+
 	private String Refer;
-	
-	private Integer Visit_Status;
 	
 	private String VitA_Minarals;
 	
 	private String IFA_Tablets;
-	
-	@Temporal(TemporalType.DATE)
-	private Date existing_Injection_Date;
-	
+
 	private String existing_Upazilla;
 	
 	private String existing_Ward;
@@ -90,25 +93,22 @@ public class NutritionEntity {
 	private String existing_District;
 	
 	private String existing_Child_Mother;
-	
-	@Temporal(TemporalType.DATE)
-	private Date existing_Calc_Dob_Confirm;
-	
+
 	private String existing_HoH_F_Name;
-	
+
 	private String Confirm_Info;
-	
+
 	private String existing_Final_Vill;
-	
+
 	private String Met;
-	
+
 	private String existing_ELCO_Mobile_Number;
-	
+
 	private String existing_Country;
 
 	private String relationalid;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

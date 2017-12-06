@@ -21,8 +21,6 @@ public class BNFEntity {
 	@SequenceGenerator(name = "bnf_id_seq", sequenceName = "bnf_id_seq", allocationSize = 1)
 	private long id;
 
-	private String Outcome_Occured;
-
 	@Column(name="end_time")
 	private Date end;
 
@@ -30,6 +28,8 @@ public class BNFEntity {
 	private Date Today;
 
 	private Date start;
+
+	private Date Received_Time;
 
 	private Long clientVersion;
 
@@ -49,13 +49,35 @@ public class BNFEntity {
 
 	private Double Child_Weight;
 
+	private Long existing_ELCO_Mobile_Number;
+
+	private Long Mem_BRID;
+
+	private Long Member_GoB_HHID;
+
+	private Long Retype_Mem_BRID;
+
+	private Long Mem_Mobile_Number;
+
+	private Integer Is_PNC;
+
+	private Integer Count_Misorpostol;
+
+	private Integer Member_Age;
+
+	private Integer Visit_Status;
+
+	private Integer existing_TT_Count;
+
+	private Integer existing_Couple_No;
+
+	private Integer Calc_Age;
+
+	private String Outcome_Occured;
+
 	private String Mem_F_Name;
 
-	private int Is_PNC;
-
 	private String Misoprostol_Given;
-
-	private long existing_ELCO_Mobile_Number;
 
 	private String Mem_Upazilla;
 
@@ -67,10 +89,6 @@ public class BNFEntity {
 
 	private String Mem_District;
 
-	private int Count_Misorpostol;
-
-	private Integer Member_Age;
-
 	private String existing_Final_Vill;
 
 	private String existing_Subunit;
@@ -80,8 +98,6 @@ public class BNFEntity {
 	private String Mem_Mauzapara;
 
 	private String Confirm_Info;
-
-	private int Visit_Status;
 
 	private String Mem_Ward;
 
@@ -93,8 +109,6 @@ public class BNFEntity {
 
 	private String existing_EDD;
 
-	private Date Received_Time;
-
 	private String existing_Ward;
 
 	private String existing_Country;
@@ -103,13 +117,9 @@ public class BNFEntity {
 
 	private String DOO;
 
-	private int existing_TT_Count;
-
 	private String existing_GoB_HHID;
 
 	private String Mem_GPS;
-
-	private int existing_Couple_No;
 
 	private String Mem_Division;
 
@@ -121,18 +131,11 @@ public class BNFEntity {
 
 	private String Mem_L_Name;
 
-	@Temporal(TemporalType.DATE)
-	private Date Member_Reg_Date;
-
 	private String existing_Height;
 
 	private String bnf_current_formStatus;
 
-	private long Mem_BRID;
-
 	private String existing_Union;
-
-	private long Member_GoB_HHID;
 
 	private String existing_Mem_F_Name;
 
@@ -152,17 +155,17 @@ public class BNFEntity {
 
 	private String existing_HoH_F_Name;
 
-	private long Retype_Mem_BRID;
-
 	private String existing_Division;
 
 	private String Mem_BRID_Concept;
 
-	private long Mem_Mobile_Number;
-
-	private int Calc_Age;
-
 	private String Reg_Newborn;
+
+	private String existing_Upazilla;
+
+	private String Child_Name;
+
+	private String changes;
 
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
@@ -170,11 +173,8 @@ public class BNFEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Member_Birth_Date;
 
-	private String existing_Upazilla;
-
-	private String Child_Name;
-
-	private String changes;
+	@Temporal(TemporalType.DATE)
+	private Date Member_Reg_Date;
 
 	private String relationalid;
 
@@ -206,11 +206,11 @@ public class BNFEntity {
 		Mem_F_Name = mem_F_Name;
 	}
 
-	public int getIs_PNC() {
+	public Integer getIs_PNC() {
 		return Is_PNC;
 	}
 
-	public void setIs_PNC(int is_PNC) {
+	public void setIs_PNC(Integer is_PNC) {
 		Is_PNC = is_PNC;
 	}
 
@@ -222,11 +222,11 @@ public class BNFEntity {
 		Misoprostol_Given = misoprostol_Given;
 	}
 
-	public long getExisting_ELCO_Mobile_Number() {
+	public Long getExisting_ELCO_Mobile_Number() {
 		return existing_ELCO_Mobile_Number;
 	}
 
-	public void setexisting_ELCO_Mobile_Number(long existing_ELCO_Mobile_Number) {
+	public void setexisting_ELCO_Mobile_Number(Long existing_ELCO_Mobile_Number) {
 		this.existing_ELCO_Mobile_Number = existing_ELCO_Mobile_Number;
 	}
 
@@ -278,11 +278,11 @@ public class BNFEntity {
 		Mem_District = mem_District;
 	}
 
-	public int getCount_Misorpostol() {
+	public Integer getCount_Misorpostol() {
 		return Count_Misorpostol;
 	}
 
-	public void setCount_Misorpostol(int count_Misorpostol) {
+	public void setCount_Misorpostol(Integer count_Misorpostol) {
 		Count_Misorpostol = count_Misorpostol;
 	}
 
@@ -342,11 +342,11 @@ public class BNFEntity {
 		Confirm_Info = confirm_Info;
 	}
 
-	public int getVisit_Status() {
+	public Integer getVisit_Status() {
 		return Visit_Status;
 	}
 
-	public void setVisit_Status(int visit_Status) {
+	public void setVisit_Status(Integer visit_Status) {
 		Visit_Status = visit_Status;
 	}
 
@@ -471,11 +471,11 @@ public class BNFEntity {
 		Today = today;
 	}
 
-	public int getExisting_TT_Count() {
+	public Integer getExisting_TT_Count() {
 		return existing_TT_Count;
 	}
 
-	public void setexisting_TT_Count(int existing_TT_Count) {
+	public void setexisting_TT_Count(Integer existing_TT_Count) {
 		this.existing_TT_Count = existing_TT_Count;
 	}
 
@@ -511,11 +511,11 @@ public class BNFEntity {
 		Mem_GPS = mem_GPS;
 	}
 
-	public int getExisting_Couple_No() {
+	public Integer getExisting_Couple_No() {
 		return existing_Couple_No;
 	}
 
-	public void setexisting_Couple_No(int existing_Couple_No) {
+	public void setexisting_Couple_No(Integer existing_Couple_No) {
 		this.existing_Couple_No = existing_Couple_No;
 	}
 
@@ -592,11 +592,11 @@ public class BNFEntity {
 		this.bnf_current_formStatus = bnf_current_formStatus;
 	}
 
-	public long getMem_BRID() {
+	public Long getMem_BRID() {
 		return Mem_BRID;
 	}
 
-	public void setMem_BRID(long mem_BRID) {
+	public void setMem_BRID(Long mem_BRID) {
 		Mem_BRID = mem_BRID;
 	}
 
@@ -608,11 +608,11 @@ public class BNFEntity {
 		this.existing_Union = existing_Union;
 	}
 
-	public long getMember_GoB_HHID() {
+	public Long getMember_GoB_HHID() {
 		return Member_GoB_HHID;
 	}
 
-	public void setMember_GoB_HHID(long member_GoB_HHID) {
+	public void setMember_GoB_HHID(Long member_GoB_HHID) {
 		Member_GoB_HHID = member_GoB_HHID;
 	}
 
@@ -688,11 +688,11 @@ public class BNFEntity {
 		this.existing_HoH_F_Name = existing_HoH_F_Name;
 	}
 
-	public long getRetype_Mem_BRID() {
+	public Long getRetype_Mem_BRID() {
 		return Retype_Mem_BRID;
 	}
 
-	public void setRetype_Mem_BRID(long retype_Mem_BRID) {
+	public void setRetype_Mem_BRID(Long retype_Mem_BRID) {
 		Retype_Mem_BRID = retype_Mem_BRID;
 	}
 
@@ -720,19 +720,19 @@ public class BNFEntity {
 		Who_Delivered = who_Delivered;
 	}
 
-	public long getMem_Mobile_Number() {
+	public Long getMem_Mobile_Number() {
 		return Mem_Mobile_Number;
 	}
 
-	public void setMem_Mobile_Number(long mem_Mobile_Number) {
+	public void setMem_Mobile_Number(Long mem_Mobile_Number) {
 		Mem_Mobile_Number = mem_Mobile_Number;
 	}
 
-	public int getCalc_Age() {
+	public Integer getCalc_Age() {
 		return Calc_Age;
 	}
 
-	public void setCalc_Age(int calc_Age) {
+	public void setCalc_Age(Integer calc_Age) {
 		Calc_Age = calc_Age;
 	}
 

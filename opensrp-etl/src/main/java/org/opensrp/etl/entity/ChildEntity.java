@@ -24,7 +24,6 @@ public class ChildEntity {
 
 	public static ChildEntity getInstance() {
 		return INSTANCE;
-		
 	}
 
 	@Id
@@ -48,31 +47,65 @@ public class ChildEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 
-	private String changes;
-
 	private Date received_time;
-
-	private String Met;
-
-	private String Visit_Status;
-
-	private String Vaccines;
 
 	private Integer Diseases_Prob;
 
-	private String existing_HR;
+	private String Vaccines;
 
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
+	private Long existing_Mem_BRID;
+
+	private Long existing_Mem_Mobile_Number;
+
+	private Long existing_ELCO_NID;
+
+	private String Met;
+
+	private String changes;
+
+	private String Visit_Status;
+
+	private String existing_HR;
 
 	private String Note;
 
-	@Temporal(TemporalType.DATE)
-	private Date child_today;
+	private String existing_Final_Vill;
+
+	private String Confirm_Info;
+
+	private String Child_Vaccination;
+
+	private String existing_ELCO_BRID;
+
+	private String existing_Child_Mother;
+
+	private String existing_Mauzapara;
+
+	private String BCG;
+
+	private String existing_GoB_HHID;
 
 	private String existing_Child_Father;
 
 	private String child_current_form_status;
+
+	private String existing_Premature_Birth;
+
+	private String existing_Couple_No;
+
+	private String Has_Referred;
+
+	private String existing_Mem_F_Name;
+
+	private String Detail_Diseases_Prob;
+
+	private Date existing_Member_Birth_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date child_today;
 
 	@Temporal(TemporalType.DATE)
 	private Date OPV0;
@@ -98,28 +131,6 @@ public class ChildEntity {
 	@Temporal(TemporalType.DATE)
 	private Date DOO_441;
 
-	private long existing_Mem_BRID;
-
-	private long existing_Mem_Mobile_Number;
-
-	private String existing_Final_Vill;
-
-	private Date existing_Member_Birth_Date;
-
-	private String Confirm_Info;
-
-	private String Child_Vaccination;
-
-	private String existing_ELCO_BRID;
-
-	private String existing_Child_Mother;
-
-	private String existing_Mauzapara;
-
-	private String BCG;
-
-	private String existing_GoB_HHID;
-
 	@Temporal(TemporalType.DATE)
 	private Date PCV1;
 
@@ -138,26 +149,14 @@ public class ChildEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Penta3;
 
-	private String existing_Premature_Birth;
-
-	private String existing_Couple_No;
-
-	private String Has_Referred;
-
-	private String existing_Mem_F_Name;
-
 	@Temporal(TemporalType.DATE)
 	private Date Measles1;
 
 	@Temporal(TemporalType.DATE)
 	private Date Measles2;
 
-	private long existing_ELCO_NID;
-
 	@Temporal(TemporalType.DATE)
 	private Date IPV;
-
-	private String Detail_Diseases_Prob;
 
 	private String relationalid;
 
@@ -261,19 +260,19 @@ public class ChildEntity {
 		DOO_441 = dOO_441;
 	}
 
-	public long getExisting_Mem_BRID() {
+	public Long getExisting_Mem_BRID() {
 		return existing_Mem_BRID;
 	}
 
-	public void setexisting_Mem_BRID(long existing_Mem_BRID) {
+	public void setexisting_Mem_BRID(Long existing_Mem_BRID) {
 		this.existing_Mem_BRID = existing_Mem_BRID;
 	}
 
-	public long getExisting_Mem_Mobile_Number() {
+	public Long getExisting_Mem_Mobile_Number() {
 		return existing_Mem_Mobile_Number;
 	}
 
-	public void setexisting_Mem_Mobile_Number(long existing_Mem_Mobile_Number) {
+	public void setexisting_Mem_Mobile_Number(Long existing_Mem_Mobile_Number) {
 		this.existing_Mem_Mobile_Number = existing_Mem_Mobile_Number;
 	}
 
@@ -552,11 +551,11 @@ public class ChildEntity {
 		Measles2 = measles2;
 	}
 
-	public long getExisting_ELCO_NID() {
+	public Long getExisting_ELCO_NID() {
 		return existing_ELCO_NID;
 	}
 
-	public void setexisting_ELCO_NID(long existing_ELCO_NID) {
+	public void setexisting_ELCO_NID(Long existing_ELCO_NID) {
 		this.existing_ELCO_NID = existing_ELCO_NID;
 	}
 

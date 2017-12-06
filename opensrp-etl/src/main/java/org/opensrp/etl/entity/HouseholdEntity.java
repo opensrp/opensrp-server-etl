@@ -23,7 +23,7 @@ public class HouseholdEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "household_id_seq")
 	@SequenceGenerator(name = "household_id_seq", sequenceName = "household_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 	
 	private String caseId;
 	
@@ -112,7 +112,7 @@ public class HouseholdEntity {
 	
 	private String HH_Status;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	

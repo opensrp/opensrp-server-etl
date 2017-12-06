@@ -41,8 +41,6 @@ public class DeathRegEntity {
 
 	private Date start;
 
-	private String changes;
-
 	private Date death_today;
 
 	private Date received_time;
@@ -51,6 +49,8 @@ public class DeathRegEntity {
 	private Date Visit_Date;
 
 	private Integer Deceased_Age_Group;
+
+	private String changes;
 
 	private String Confirm_Info;
 	

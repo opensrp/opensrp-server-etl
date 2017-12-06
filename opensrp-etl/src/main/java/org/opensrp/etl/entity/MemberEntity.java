@@ -29,7 +29,7 @@ public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq")
 	@SequenceGenerator(name = "member_id_seq", sequenceName = "member_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 	
 	@Column(name = "doc_id")
 	private String _id;
@@ -166,7 +166,11 @@ public class MemberEntity {
 	private String BD_Citizen;
 	
 	private String Occupation;
-	
+
+	public long getId() {
+		return id;
+	}
+
 	public String get_id() {
 		return _id;
 	}
@@ -690,9 +694,4 @@ public class MemberEntity {
 	public void setOccupation(String occupation) {
 		Occupation = occupation;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	
 }

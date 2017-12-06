@@ -41,12 +41,7 @@ public class PSRFEntity {
 
 	private Long serverVersion;
 
-	private String changes;
-
 	private Integer Visit_Status;
-
-	@Temporal(TemporalType.DATE)
-	private Date Calc_EDD;
 
 	private Integer Birth_Control;
 
@@ -56,6 +51,96 @@ public class PSRFEntity {
 
 	private Integer Preg_Status;
 
+	private Integer Gestational_Age;
+
+	private Integer ELCO_Followup_Logic;
+
+	private Integer Want_Change;
+
+	private Integer Age_Youngest_Child;
+
+	private Integer Total_Child_Alive;
+
+	private Integer Married_Life;
+
+	private Integer existing_Couple_No;
+
+	private Integer Mother_Age;
+
+	private Integer Mother_GoB_HHID;
+
+	private Integer TT_Count;
+
+	private Integer TT_Status;
+
+	private Integer Gravida;
+
+	private Integer Pill_Given_No;
+
+	private Integer Cond_Given_No;
+
+	private Integer Is_Eligible_Injectables;
+
+	private Integer Risky_Preg;
+
+	private Integer Height;
+
+	private Integer Eligible;
+
+	private Integer Has_Changed;
+
+	private Integer Mother_Valid;
+
+	private Integer Not_ELCO;
+
+	private Long existing_ELCO_Mobile_Number;
+
+	private Long Mother_NID;
+
+	private Long existing_ELCO_NID;
+
+	private Date Format_Injection_Date;
+
+	private Date Next_Injection_Date;
+
+	private Date Format_Pill_Given_Date;
+
+	private Date Permanent_M_Date;
+
+	private Date Format_Permanent_M_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Calc_EDD;
+
+	@Temporal(TemporalType.DATE)
+	private Date Mother_LMP;
+
+	@Temporal(TemporalType.DATE)
+	private Date Calc_FP_Given_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Injection_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Marriage_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Format_Cond_Given_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Cond_Given_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date LMP;
+
+	@Temporal(TemporalType.DATE)
+	private Date ELCO_Date;
+
+	@Temporal(TemporalType.DATE)
+	private Date Pill_Given_Date;
+
+	private String changes;
+
 	private String Want_FP_Commodities;
 	
 	private String existing_Mem_Marital_Status;
@@ -64,11 +149,7 @@ public class PSRFEntity {
 
 	private String existing_location;
 
-	private int Gestational_Age;
-
 	private String Current_Form_Status;
-
-	private int ELCO_Followup_Logic;
 
 	private String Refer;
 
@@ -80,46 +161,20 @@ public class PSRFEntity {
 
 	private String Mother_BRID;
 
-	private int Want_Change;
-
-	private int Age_Youngest_Child;
-
 	private String Refer_FWV;
 
 	private String Changed_FP_Method;
 
-	@Temporal(TemporalType.DATE)
-	private Date Calc_FP_Given_Date;
-	
-	private int Total_Child_Alive;
-	
 	private String Mother_Mauzapara;
 	
 	private String existing_Mauzapara;
 
 	private String Want_To_Use;
-	
-	private int Married_Life;
 
-	private Date Format_Injection_Date;
-
-	private int existing_Couple_No;
-	
 	private String Source_BC_Product;
 	
-	private int Mother_Age;
-	
 	private String existing_Final_Dist;
-	
-	private int Mother_GoB_HHID;
-	
-	private int TT_Count;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Mother_LMP;
-	
-	private int TT_Status;
-	
+
 	private String existing_ELCO;
 	
 	private String Preg_Note;
@@ -128,62 +183,29 @@ public class PSRFEntity {
 	
 	private String Prolong_Delivery;
 	
-	private Date Permanent_M_Date;
-	
-	private long existing_ELCO_NID;
-	
 	private String Not_Preg_Note;
 
 	private String Provide_Pills_Condoms;
 	
-	private int Gravida;
-	
-	private int Pill_Given_No;
-	
 	private String Last_FP_Method;
-	
-	private Date Format_Permanent_M_Date;
 	
 	private String Type_Implant;
 	
 	private String existing_Calc_Age_Confirm;
-	
-	private Date Next_Injection_Date;
 
-	private Date Format_Pill_Given_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date Injection_Date;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Marriage_Date;
-	
-	private long existing_ELCO_Mobile_Number;
-	
-	private int Is_Eligible_Injectables;
-	
 	private String Injetable;
 	
 	private String Select_FP_Method;
-	
-	private String Wom_Met;
-	
-	private int Cond_Given_No;
 
-	@Temporal(TemporalType.DATE)
-	private Date Pill_Given_Date;
+	private String Wom_Met;
 
 	private String Heavy_Blood_Flow;
-	
-	private int Risky_Preg;
 	
 	private String Caesarean;
 	
 	private String Counselling;
 	
 	private String Mother_Hus_Name;
-	
-	private int Height;
 	
 	private String existing_ELCO_BRID;
 	
@@ -201,15 +223,7 @@ public class PSRFEntity {
 	
 	private String existing_GoB_HHID;
 	
-	@Temporal(TemporalType.DATE)
-	private Date Format_Cond_Given_Date;
-	
 	private String Type_Oral_Pill;
-	
-	private int Has_Changed;
-	
-	@Temporal(TemporalType.DATE)
-	private Date ELCO_Date;
 	
 	private String existing_Spouse_Name;
 	
@@ -218,40 +232,25 @@ public class PSRFEntity {
 	private String Child_Alive_Girl;
 	
 	private String Birth_Outcome;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Cond_Given_Date;
-	
+
 	private String Live_Birth;
 	
 	private String existing_Mem_F_Name;
-	
-	private long Mother_NID;
-	
-	private int Eligible;
-	
-	@Temporal(TemporalType.DATE)
-	private Date LMP;
-	
+
 	private String existing_HoH_F_Name;
-	
-	private int Mother_Valid;
-	
+
 	private String Pregnancy_Reg;
 	
 	private String Dead_Child;
-	
+
 	private String Mother_F_Name;
-	
-	private int Not_ELCO;
-	
+
 	private String relationalid;
 	
 	public long getId() {
 		return id;
 	}
 
-	
 	@Temporal(TemporalType.DATE)
 	public Date getCalc_EDD() {
 		return Calc_EDD;
@@ -293,11 +292,11 @@ public class PSRFEntity {
 		this.existing_location = existing_location;
 	}
 
-	public int getGestational_Age() {
+	public Integer getGestational_Age() {
 		return Gestational_Age;
 	}
 
-	public void setGestational_Age(int gestational_Age) {
+	public void setGestational_Age(Integer gestational_Age) {
 		Gestational_Age = gestational_Age;
 	}
 
@@ -309,11 +308,11 @@ public class PSRFEntity {
 		Current_Form_Status = current_Form_Status;
 	}
 
-	public int getELCO_Followup_Logic() {
+	public Integer getELCO_Followup_Logic() {
 		return ELCO_Followup_Logic;
 	}
 
-	public void setELCO_Followup_Logic(int eLCO_Followup_Logic) {
+	public void setELCO_Followup_Logic(Integer eLCO_Followup_Logic) {
 		ELCO_Followup_Logic = eLCO_Followup_Logic;
 	}
 
@@ -373,19 +372,19 @@ public class PSRFEntity {
 		Mother_BRID = mother_BRID;
 	}
 
-	public int getWant_Change() {
+	public Integer getWant_Change() {
 		return Want_Change;
 	}
 
-	public void setWant_Change(int want_Change) {
+	public void setWant_Change(Integer want_Change) {
 		Want_Change = want_Change;
 	}
 
-	public int getAge_Youngest_Child() {
+	public Integer getAge_Youngest_Child() {
 		return Age_Youngest_Child;
 	}
 
-	public void setAge_Youngest_Child(int age_Youngest_Child) {
+	public void setAge_Youngest_Child(Integer age_Youngest_Child) {
 		Age_Youngest_Child = age_Youngest_Child;
 	}
 
@@ -414,11 +413,11 @@ public class PSRFEntity {
 		Calc_FP_Given_Date = calc_FP_Given_Date;
 	}
 
-	public int getTotal_Child_Alive() {
+	public Integer getTotal_Child_Alive() {
 		return Total_Child_Alive;
 	}
 
-	public void setTotal_Child_Alive(int total_Child_Alive) {
+	public void setTotal_Child_Alive(Integer total_Child_Alive) {
 		Total_Child_Alive = total_Child_Alive;
 	}
 
@@ -463,11 +462,11 @@ public class PSRFEntity {
 		Want_To_Use = want_To_Use;
 	}
 
-	public int getMarried_Life() {
+	public Integer getMarried_Life() {
 		return Married_Life;
 	}
 
-	public void setMarried_Life(int married_Life) {
+	public void setMarried_Life(Integer married_Life) {
 		Married_Life = married_Life;
 	}
 
@@ -479,11 +478,11 @@ public class PSRFEntity {
 		Format_Injection_Date = format_Injection_Date;
 	}
 
-	public int getExisting_Couple_No() {
+	public Integer getExisting_Couple_No() {
 		return existing_Couple_No;
 	}
 
-	public void setexisting_Couple_No(int existing_Couple_No) {
+	public void setexisting_Couple_No(Integer existing_Couple_No) {
 		this.existing_Couple_No = existing_Couple_No;
 	}
 
@@ -495,11 +494,11 @@ public class PSRFEntity {
 		Source_BC_Product = source_BC_Product;
 	}
 
-	public int getMother_Age() {
+	public Integer getMother_Age() {
 		return Mother_Age;
 	}
 
-	public void setMother_Age(int mother_Age) {
+	public void setMother_Age(Integer mother_Age) {
 		Mother_Age = mother_Age;
 	}
 
@@ -511,19 +510,19 @@ public class PSRFEntity {
 		this.existing_Final_Dist = existing_Final_Dist;
 	}
 
-	public int getMother_GoB_HHID() {
+	public Integer getMother_GoB_HHID() {
 		return Mother_GoB_HHID;
 	}
 
-	public void setMother_GoB_HHID(int mother_GoB_HHID) {
+	public void setMother_GoB_HHID(Integer mother_GoB_HHID) {
 		Mother_GoB_HHID = mother_GoB_HHID;
 	}
 
-	public int getTT_Count() {
+	public Integer getTT_Count() {
 		return TT_Count;
 	}
 
-	public void setTT_Count(int tT_Count) {
+	public void setTT_Count(Integer tT_Count) {
 		TT_Count = tT_Count;
 	}
 
@@ -536,11 +535,11 @@ public class PSRFEntity {
 		Mother_LMP = mother_LMP;
 	}
 
-	public int getTT_Status() {
+	public Integer getTT_Status() {
 		return TT_Status;
 	}
 
-	public void setTT_Status(int tT_Status) {
+	public void setTT_Status(Integer tT_Status) {
 		TT_Status = tT_Status;
 	}
 
@@ -600,11 +599,11 @@ public class PSRFEntity {
 		Permanent_M_Date = permanent_M_Date;
 	}
 
-	public long getExisting_ELCO_NID() {
+	public Long getExisting_ELCO_NID() {
 		return existing_ELCO_NID;
 	}
 
-	public void setexisting_ELCO_NID(long existing_ELCO_NID) {
+	public void setexisting_ELCO_NID(Long existing_ELCO_NID) {
 		this.existing_ELCO_NID = existing_ELCO_NID;
 	}
 
@@ -632,19 +631,19 @@ public class PSRFEntity {
 		Provide_Pills_Condoms = provide_Pills_Condoms;
 	}
 
-	public int getGravida() {
+	public Integer getGravida() {
 		return Gravida;
 	}
 
-	public void setGravida(int gravida) {
+	public void setGravida(Integer gravida) {
 		Gravida = gravida;
 	}
 
-	public int getPill_Given_No() {
+	public Integer getPill_Given_No() {
 		return Pill_Given_No;
 	}
 
-	public void setPill_Given_No(int pill_Given_No) {
+	public void setPill_Given_No(Integer pill_Given_No) {
 		Pill_Given_No = pill_Given_No;
 	}
 
@@ -714,19 +713,19 @@ public class PSRFEntity {
 		Marriage_Date = marriage_Date;
 	}
 
-	public long getExisting_ELCO_Mobile_Number() {
+	public Long getExisting_ELCO_Mobile_Number() {
 		return existing_ELCO_Mobile_Number;
 	}
 
-	public void setexisting_ELCO_Mobile_Number(long existing_ELCO_Mobile_Number) {
+	public void setexisting_ELCO_Mobile_Number(Long existing_ELCO_Mobile_Number) {
 		this.existing_ELCO_Mobile_Number = existing_ELCO_Mobile_Number;
 	}
 
-	public int getIs_Eligible_Injectables() {
+	public Integer getIs_Eligible_Injectables() {
 		return Is_Eligible_Injectables;
 	}
 
-	public void setIs_Eligible_Injectables(int is_Eligible_Injectables) {
+	public void setIs_Eligible_Injectables(Integer is_Eligible_Injectables) {
 		Is_Eligible_Injectables = is_Eligible_Injectables;
 	}
 
@@ -762,11 +761,11 @@ public class PSRFEntity {
 		Wom_Met = wom_Met;
 	}
 
-	public int getCond_Given_No() {
+	public Integer getCond_Given_No() {
 		return Cond_Given_No;
 	}
 
-	public void setCond_Given_No(int cond_Given_No) {
+	public void setCond_Given_No(Integer cond_Given_No) {
 		Cond_Given_No = cond_Given_No;
 	}
 
@@ -787,11 +786,11 @@ public class PSRFEntity {
 		Heavy_Blood_Flow = heavy_Blood_Flow;
 	}
 
-	public int getRisky_Preg() {
+	public Integer getRisky_Preg() {
 		return Risky_Preg;
 	}
 
-	public void setRisky_Preg(int risky_Preg) {
+	public void setRisky_Preg(Integer risky_Preg) {
 		Risky_Preg = risky_Preg;
 	}
 
@@ -827,11 +826,11 @@ public class PSRFEntity {
 		this.serverVersion = serverVersion;
 	}
 
-	public int getHeight() {
+	public Integer getHeight() {
 		return Height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(Integer height) {
 		Height = height;
 	}
 
@@ -933,11 +932,11 @@ public class PSRFEntity {
 		Using_FP = using_FP;
 	}
 
-	public int getHas_Changed() {
+	public Integer getHas_Changed() {
 		return Has_Changed;
 	}
 
-	public void setHas_Changed(int has_Changed) {
+	public void setHas_Changed(Integer has_Changed) {
 		Has_Changed = has_Changed;
 	}
 
@@ -1015,19 +1014,19 @@ public class PSRFEntity {
 		this.existing_Mem_F_Name = existing_Mem_F_Name;
 	}
 
-	public long getMother_NID() {
+	public Long getMother_NID() {
 		return Mother_NID;
 	}
 
-	public void setMother_NID(long mother_NID) {
+	public void setMother_NID(Long mother_NID) {
 		Mother_NID = mother_NID;
 	}
 
-	public int getEligible() {
+	public Integer getEligible() {
 		return Eligible;
 	}
 
-	public void setEligible(int eligible) {
+	public void setEligible(Integer eligible) {
 		Eligible = eligible;
 	}
 
@@ -1048,11 +1047,11 @@ public class PSRFEntity {
 		this.existing_HoH_F_Name = existing_HoH_F_Name;
 	}
 
-	public int getMother_Valid() {
+	public Integer getMother_Valid() {
 		return Mother_Valid;
 	}
 
-	public void setMother_Valid(int mother_Valid) {
+	public void setMother_Valid(Integer mother_Valid) {
 		Mother_Valid = mother_Valid;
 	}
 
@@ -1080,11 +1079,11 @@ public class PSRFEntity {
 		Mother_F_Name = mother_F_Name;
 	}
 
-	public int getNot_ELCO() {
+	public Integer getNot_ELCO() {
 		return Not_ELCO;
 	}
 
-	public void setNot_ELCO(int not_ELCO) {
+	public void setNot_ELCO(Integer not_ELCO) {
 		Not_ELCO = not_ELCO;
 	}
 

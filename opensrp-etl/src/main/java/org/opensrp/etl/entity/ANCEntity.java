@@ -23,7 +23,7 @@ public class ANCEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "anc_id_seq")
 	@SequenceGenerator(name = "anc_id_seq", sequenceName = "anc_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 	
 	private String ancName;
 
@@ -146,7 +146,11 @@ public class ANCEntity {
 	private String Menstruation;
 	
 	private String High_Fever;
-	
+
+	public long getId() {
+		return id;
+	}
+
 	@Temporal(TemporalType.DATE)
 	private Date ANC_Due_Date;
 	
@@ -631,9 +635,4 @@ public class ANCEntity {
 	public void setANC_Due_Date(Date aNC_Due_Date) {
 		ANC_Due_Date = aNC_Due_Date;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	
 }

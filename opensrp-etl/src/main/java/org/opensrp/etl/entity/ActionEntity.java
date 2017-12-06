@@ -31,7 +31,7 @@ public class ActionEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "action_id_seq")
 	@SequenceGenerator(name = "action_id_seq", sequenceName = "action_id_seq", allocationSize = 1)
-	private int id;
+	private long id;
 	
 	@Column(name = "provider")
 	private String provider;
@@ -78,7 +78,11 @@ public class ActionEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	private Date updated = new Date();
-	
+
+	public long getId() {
+		return id;
+	}
+
 	public String getCaseId() {
 		return caseId;
 	}
@@ -102,15 +106,7 @@ public class ActionEntity {
 	public void setUpdated() {
 		this.updated = new Date();
 	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+
 	public String getProvider() {
 		return provider;
 	}

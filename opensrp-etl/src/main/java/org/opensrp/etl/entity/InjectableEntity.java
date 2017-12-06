@@ -31,18 +31,18 @@ public class InjectableEntity {
 	@SequenceGenerator(name = "injectable_id_seq", sequenceName = "injectable_id_seq", allocationSize = 1)
 
 	private long id;
-	
+
 	private Long clientVersion;
-	
+
 	private Long serverVersion;
-	
+
 	private Long version;
-	
+
 	@Column(name="end_time")
 	private Date end;
-	
+
 	private Date start;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 	
@@ -50,42 +50,41 @@ public class InjectableEntity {
 	
 	private String Visit_Status;
 
+	private Integer existing_Dose_No;
+
+	private Integer Todays_Dose_No;
+
+	private Integer Side_Effects;
+
+	private Integer Is_Due;
+
+	private Integer Is_Post_Due;
+	
+	private Long existing_Mem_NID;
+	
+	private Long existing_ELCO_Mobile_Number;
+
+	private Long existing_Mem_BRID;
+
 	@Temporal(TemporalType.DATE)
 	private Date Visit_Date;
-	
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date injectable_Today;
-	
+
 	private Date received_time;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Injection_Date;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Next_Injection_Date;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date Format_Next_Injection_Date;
 
 	@Temporal(TemporalType.DATE)
 	private Date existing_Injection_Date;
-	
-	private int existing_Dose_No;
-	
-	private int Todays_Dose_No;
-
-	private int Side_Effects;
-	
-	private int Is_Due;
-
-	private int Is_Post_Due;
-	
-	private long existing_Mem_NID;
-	
-	private long existing_ELCO_Mobile_Number;
-
-	private long existing_Mem_BRID;
 
 	private String existing_TT_Count;
 	
@@ -270,67 +269,67 @@ public class InjectableEntity {
 		this.existing_Injection_Date = existing_Injection_Date;
 	}
 
-	public int getExisting_Dose_No() {
+	public Integer getExisting_Dose_No() {
 		return existing_Dose_No;
 	}
 
-	public void setexisting_Dose_No(int existing_Dose_No) {
+	public void setexisting_Dose_No(Integer existing_Dose_No) {
 		this.existing_Dose_No = existing_Dose_No;
 	}
 
-	public int getTodays_Dose_No() {
+	public Integer getTodays_Dose_No() {
 		return Todays_Dose_No;
 	}
 
-	public void setTodays_Dose_No(int todays_Dose_No) {
+	public void setTodays_Dose_No(Integer todays_Dose_No) {
 		Todays_Dose_No = todays_Dose_No;
 	}
 
-	public int getSide_Effects() {
+	public Integer getSide_Effects() {
 		return Side_Effects;
 	}
 
-	public void setSide_Effects(int side_Effects) {
+	public void setSide_Effects(Integer side_Effects) {
 		Side_Effects = side_Effects;
 	}
 
-	public int getIs_Due() {
+	public Integer getIs_Due() {
 		return Is_Due;
 	}
 
-	public void setIs_Due(int is_Due) {
+	public void setIs_Due(Integer is_Due) {
 		Is_Due = is_Due;
 	}
 
-	public int getIs_Post_Due() {
+	public Integer getIs_Post_Due() {
 		return Is_Post_Due;
 	}
 
-	public void setIs_Post_Due(int is_Post_Due) {
+	public void setIs_Post_Due(Integer is_Post_Due) {
 		Is_Post_Due = is_Post_Due;
 	}
 
-	public long getExisting_Mem_NID() {
+	public Long getExisting_Mem_NID() {
 		return existing_Mem_NID;
 	}
 
-	public void setexisting_Mem_NID(long existing_Mem_NID) {
+	public void setexisting_Mem_NID(Long existing_Mem_NID) {
 		this.existing_Mem_NID = existing_Mem_NID;
 	}
 
-	public long getExisting_ELCO_Mobile_Number() {
+	public Long getExisting_ELCO_Mobile_Number() {
 		return existing_ELCO_Mobile_Number;
 	}
 
-	public void setexisting_ELCO_Mobile_Number(long existing_ELCO_Mobile_Number) {
+	public void setexisting_ELCO_Mobile_Number(Long existing_ELCO_Mobile_Number) {
 		this.existing_ELCO_Mobile_Number = existing_ELCO_Mobile_Number;
 	}
 
-	public long getExisting_Mem_BRID() {
+	public Long getExisting_Mem_BRID() {
 		return existing_Mem_BRID;
 	}
 
-	public void setexisting_Mem_BRID(long existing_Mem_BRID) {
+	public void setexisting_Mem_BRID(Long existing_Mem_BRID) {
 		this.existing_Mem_BRID = existing_Mem_BRID;
 	}
 
