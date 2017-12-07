@@ -23,7 +23,8 @@
        xmlns:avalon="http://cocoon.apache.org/schema/avalon"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
-<import resource="classpath:thyme-leaf-context.xml"/>
+<!-- <import resource="classpath:thyme-leaf-context.xml"/> -->
+<import resource="classpath:mvc-context.xml"/>
 <import resource="classpath:report-appication.context.xml"/>
 <import resource="classpath:application-etl-context.xml"/>
 <import resource="classpath:application-couchdb-context.xml"/>
