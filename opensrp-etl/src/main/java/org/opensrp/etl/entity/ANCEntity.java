@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "anc")
 public class ANCEntity {
@@ -144,22 +147,32 @@ public class ANCEntity {
 	private String Position_Child_During_Delivery;
 	
 	private String Menstruation;
-	
+
 	private String High_Fever;
+
+	@Temporal(TemporalType.DATE)
+	private Date ANC_Due_Date;
+
+	private String relationalid;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 
 	public long getId() {
 		return id;
 	}
 
-	@Temporal(TemporalType.DATE)
-	private Date ANC_Due_Date;
-	
-	private String relationalid;
-
 	public String getAncName() {
 		return ancName;
 	}
-	
+
 	public void setAncName(String ancName) {
 		this.ancName = ancName;
 	}
@@ -634,5 +647,21 @@ public class ANCEntity {
 	
 	public void setANC_Due_Date(Date aNC_Due_Date) {
 		ANC_Due_Date = aNC_Due_Date;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 }

@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "nutrition")
 public class NutritionEntity {
@@ -107,6 +110,16 @@ public class NutritionEntity {
 	private String existing_Country;
 
 	private String relationalid;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 
 	public long getId() {
 		return id;
@@ -426,6 +439,22 @@ public class NutritionEntity {
 	
 	public void setexisting_Country(String existing_Country) {
 		this.existing_Country = existing_Country;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 }

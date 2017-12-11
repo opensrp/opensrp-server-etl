@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "bnf")
 public class BNFEntity {
@@ -177,6 +180,16 @@ public class BNFEntity {
 	private Date Member_Reg_Date;
 
 	private String relationalid;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 
 	public long getId() {
 		return id;
@@ -792,5 +805,21 @@ public class BNFEntity {
 
 	public void setchanges(String changes) {
 		this.changes = changes;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 }

@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "deathReg")
 public class DeathRegEntity {
@@ -89,6 +92,16 @@ public class DeathRegEntity {
 	private String existing_Mauzapara;
 
 	private String relationalid;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
 
 	public long getId() {
 		return id;
@@ -316,5 +329,21 @@ public class DeathRegEntity {
 
 	public void setRelationalid(String relationalid) {
 		this.relationalid = relationalid;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 }
