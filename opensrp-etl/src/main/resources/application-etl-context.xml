@@ -95,6 +95,7 @@
 <bean name="injectableRepository" class="org.opensrp.etl.repository.InjectableRepository"/>
 <bean name="registerRepositoryImpl" class="org.opensrp.etl.repository.RegisterRepositoryImpl"/>
 <bean name="deathRegRepository" class="org.opensrp.etl.repository.DeathRegRepository"/>
+<bean name="queryRepository" class="org.opensrp.etl.repository.QueryRepository"/>
 
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="memberTransmissionService" class="org.opensrp.etl.transmission.service.MemberTransmissionService"/>

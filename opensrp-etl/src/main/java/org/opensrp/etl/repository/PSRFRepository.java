@@ -78,17 +78,4 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Transactional
-	public int calculateBirthControlMethodUsages(int birth_control) {
-		String sql = "SELECT * FROM psrf WHERE birth_control = :Birth_Control";
-		SQLQuery query = getSession().createSQLQuery(sql);
-		query.addEntity(PSRFEntity.class);
-		query.setParameter("Birth_Control", birth_control);
-		List results = query.list();
-		int count = results.size();
-		System.out.print("birth control: " + count);
-		return count;
-	}
-
 }
