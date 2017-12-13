@@ -2,11 +2,17 @@ package org.opensrp.etl.report;
 
 public class MIS1Report {
 
+    private int division;
+    private int district;
+    private int upazilla;
+    private int ward;
+    private int union;
+    private int unit;
 	private FamilyPlanningReport familyPlanningReport;
-    private MaternityCareReport maternityCareReport;
-    private BirthAndDeathReport birthAndDeathReport;
-    private ChildCareReport childCareReport;
-    private NutritionReport nutritionReport;
+    //private MaternityCareReport maternityCareReport;
+    //private BirthAndDeathReport birthAndDeathReport;
+    //private ChildCareReport childCareReport;
+    //private NutritionReport nutritionReport;
 
 	public MIS1Report() {
 		// TODO Auto-generated constructor stub
@@ -20,36 +26,52 @@ public class MIS1Report {
 		this.familyPlanningReport = familyPlanningReport;
 	}
 
-	public MaternityCareReport getMaternityCareReport() {
-		return maternityCareReport;
-	}
+    public int getDivision() {
+        return division;
+    }
 
-	public void setMaternityCareReport(MaternityCareReport maternityCareReport) {
-		this.maternityCareReport = maternityCareReport;
-	}
+    public void setDivision(int division) {
+        this.division = division;
+    }
 
-	public BirthAndDeathReport getBirthAndDeathReport() {
-		return birthAndDeathReport;
-	}
+    public int getDistrict() {
+        return district;
+    }
 
-	public void setBirthAndDeathReport(BirthAndDeathReport birthAndDeathReport) {
-		this.birthAndDeathReport = birthAndDeathReport;
-	}
+    public void setDistrict(int district) {
+        this.district = district;
+    }
 
-	public ChildCareReport getChildCareReport() {
-		return childCareReport;
-	}
+    public int getUpazilla() {
+        return upazilla;
+    }
 
-	public void setChildCareReport(ChildCareReport childCareReport) {
-		this.childCareReport = childCareReport;
-	}
+    public void setUpazilla(int upazilla) {
+        this.upazilla = upazilla;
+    }
 
-	public NutritionReport getNutritionReport() {
-		return nutritionReport;
-	}
+    public int getWard() {
+        return ward;
+    }
 
-	public void setNutritionReport(NutritionReport nutritionReport) {
-		this.nutritionReport = nutritionReport;
-	}
+    public void setWard(int ward) {
+        this.ward = ward;
+    }
+
+    public int getUnion() {
+        return union;
+    }
+
+    public void setUnion(int union) {
+        this.union = union;
+    }
+
+    public int getUnit() {
+        return unit;
+    }
+
+    public void setUnit(int unit) {
+        this.unit = unit;
+    }
 
 }
