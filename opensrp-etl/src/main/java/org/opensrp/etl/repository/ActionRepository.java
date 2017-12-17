@@ -28,9 +28,11 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 	
 	@Override
 	public void save(ActionEntity actionEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(actionEntity);
-		
+		try {
+		    getSession().save(actionEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	@Override

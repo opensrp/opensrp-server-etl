@@ -29,16 +29,12 @@ public class MemberRepository implements RegisterRepository<MemberEntity> {
 	
 	@Override
 	public void save(MemberEntity memberEntity) {
-		
 		try {
 			getSession().save(memberEntity);
-			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override

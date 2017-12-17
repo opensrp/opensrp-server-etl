@@ -24,8 +24,7 @@ public class InjectableRepository implements RegisterRepository<InjectableEntity
 	@Override
 	public void save(InjectableEntity injectableEntity) {
 		try {
-			Session session = this.sessionFactory.getCurrentSession();
-			session.save(injectableEntity);
+			getSession().save(injectableEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

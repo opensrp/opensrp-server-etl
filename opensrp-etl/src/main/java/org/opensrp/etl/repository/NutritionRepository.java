@@ -22,8 +22,11 @@ public class NutritionRepository implements RegisterRepository<NutritionEntity> 
 	
 	@Override
 	public void save(NutritionEntity nutritionEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(nutritionEntity);
+		try {
+            getSession().save(nutritionEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 	}
 	

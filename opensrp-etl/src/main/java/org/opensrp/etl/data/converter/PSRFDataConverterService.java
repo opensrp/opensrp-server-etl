@@ -37,7 +37,8 @@ public class PSRFDataConverterService implements DataConverterService {
 			try {
 				psrfService.save(psrfEntity);
 			} catch (Exception e) {
-				System.err.println("Exception: " + e);
+			    exceptionService.generatedEntityAndSaveForAction(doc, e
+                        .fillInStackTrace().toString(), "psrf");
 			}
 		}
 	}

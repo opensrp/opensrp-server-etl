@@ -28,7 +28,7 @@ public class MISReportEntity {
     private String unit;
     private int month;
     private int year;
-    private int oldPillUsages;
+    private int fpOldPillUsages;
 
     public long getId() {
         return id;
@@ -99,11 +99,11 @@ public class MISReportEntity {
     }
 
     public int getOldPillUsages() {
-        return oldPillUsages;
+        return fpOldPillUsages;
     }
 
     public void setOldPillUsages(int oldPillUsages) {
-        this.oldPillUsages = oldPillUsages;
+        this.fpOldPillUsages = oldPillUsages;
     }
 
 }

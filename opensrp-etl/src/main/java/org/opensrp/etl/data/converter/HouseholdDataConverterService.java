@@ -37,8 +37,8 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdService.save(householdEntity);
 		}
 		catch (Exception e) {
+		    e.printStackTrace();
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), Keys.HOUSEHOLD.name());
 		}
-		
 	}
 }

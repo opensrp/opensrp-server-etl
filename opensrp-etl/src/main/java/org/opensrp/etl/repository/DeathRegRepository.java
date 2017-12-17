@@ -23,8 +23,11 @@ public class DeathRegRepository implements RegisterRepository<DeathRegEntity>{
 
 	@Override
 	public void save(DeathRegEntity deathRegEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(deathRegEntity);
+		try {
+            getSession().save(deathRegEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 	}
 

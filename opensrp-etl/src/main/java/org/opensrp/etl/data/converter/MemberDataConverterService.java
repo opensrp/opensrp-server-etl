@@ -63,7 +63,8 @@ public class MemberDataConverterService implements DataConverterService {
 			memberService.save(memberEntity);
 		}
 		catch (Exception e) {
-			//exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), Keys.HOUSEHOLD.name());
+		    exceptionService.generatedEntityAndSaveForAction(doc, e
+                    .fillInStackTrace().toString(), "member");
 		}
 
 		pncDataConverterService.convertToEntityAndSave(doc);

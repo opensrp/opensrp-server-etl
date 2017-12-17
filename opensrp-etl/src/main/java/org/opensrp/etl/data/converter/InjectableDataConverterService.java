@@ -42,8 +42,8 @@ public class InjectableDataConverterService implements DataConverterService{
 				injectableService.save(injectableEntity);
 			}
 			catch (Exception e) {
-				//System.err.println("Exception: " + e);
-				//e.printStackTrace();
+			    exceptionService.generatedEntityAndSaveForAction(doc, e
+                        .fillInStackTrace().toString(), "injectable");
 			}
 			
 		}

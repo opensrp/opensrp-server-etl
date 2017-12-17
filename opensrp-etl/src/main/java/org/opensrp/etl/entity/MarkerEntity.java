@@ -59,7 +59,7 @@ public class MarkerEntity {
 		return type;
 	}
 	
-	public void setType(String type) {
+	public void settype(String type) {
 		this.type = type;
 	}
 	
@@ -67,7 +67,7 @@ public class MarkerEntity {
 		return timeStamp;
 	}
 	
-	public void setTimeStamp(long timeStamp) {
+	public void settimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 	
@@ -75,7 +75,7 @@ public class MarkerEntity {
 		return name;
 	}
 	
-	public void setName(String name) {
+	public void setname(String name) {
 		this.name = name;
 	}
 	
@@ -125,7 +125,7 @@ public class MarkerEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setcreated(Date created) {
 		this.created = created;
 	}
 
@@ -133,7 +133,7 @@ public class MarkerEntity {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setupdated(Date updated) {
 		this.updated = updated;
 	}
 	

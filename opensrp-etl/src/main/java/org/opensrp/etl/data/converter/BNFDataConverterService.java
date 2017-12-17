@@ -42,7 +42,8 @@ public class BNFDataConverterService implements DataConverterService {
 				bnfService.save(bnfEntity);
 			}
 			catch (Exception e) {
-				//exceptionService.generatedEntityAndSave(bnf, e.fillInStackTrace().toString(), "bnf");
+			    exceptionService.generatedEntityAndSaveForAction(doc, e
+                        .fillInStackTrace().toString(), "bnf");
 			}
 			
 		}

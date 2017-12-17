@@ -3,11 +3,8 @@ package org.opensrp.etl.repository;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -26,10 +23,8 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
 	
 	@Override
 	public void save(PSRFEntity psrfEntity) {
-		System.err.println("save");
 		try {
-			Session session = this.sessionFactory.getCurrentSession();
-			session.save(psrfEntity);
+			getSession().save(psrfEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -24,7 +24,6 @@ public class DateUtil {
 		
 		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
 			date = getYYYYMMDDFormat.parse(doc.getString(key));
-			System.err.println(date);
 			return date;
 		}
 		return date;

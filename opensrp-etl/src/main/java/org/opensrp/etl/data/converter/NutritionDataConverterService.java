@@ -29,8 +29,6 @@ public class NutritionDataConverterService implements DataConverterService {
 	
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		
-		//JSONArray nutritions = new JSONArray(doc.getString("nutrition").toString());
 		JSONArray nutritions = new JSONArray();
 		nutritions = doc.getJSONArray("nutrition");
 
@@ -41,7 +39,12 @@ public class NutritionDataConverterService implements DataConverterService {
 			nutritionEntity = (NutritionEntity) dataConverter.convert(nutrition, className, object);
 			nutritionEntity.setRelationalid(doc.getString("caseId"));
 			nutritionEntity.setDoc_id(doc.getString("_id"));
-			nutritionService.save(nutritionEntity);
+			try {
+                nutritionService.save(nutritionEntity);
+            } catch (Exception e) {
+                exceptionService.generatedEntityAndSaveForAction(doc, e
+                        .fillInStackTrace().toString(), "nutrition");
+            }
 			
 		}
 	}

@@ -24,8 +24,7 @@ public class AdolescentRepository implements RegisterRepository<AdolescentEntity
 	@Override
 	public void save(AdolescentEntity adolescentEntity) {
 		try {
-			Session session = this.sessionFactory.getCurrentSession();
-			session.save(adolescentEntity);
+			getSession().save(adolescentEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

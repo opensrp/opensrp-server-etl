@@ -26,8 +26,11 @@ public class ANCRepository implements RegisterRepository<ANCEntity> {
 	
 	@Override
 	public void save(ANCEntity ancEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(ancEntity);
+		try {
+            getSession().save(ancEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 	}
 	

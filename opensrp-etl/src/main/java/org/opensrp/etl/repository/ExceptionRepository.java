@@ -31,8 +31,11 @@ public class ExceptionRepository implements RegisterRepository<ExceptionEntity> 
 	
 	@Override
 	public void save(ExceptionEntity exceptionEntity) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(exceptionEntity);
+		try {
+            getSession().save(exceptionEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 	}
 	

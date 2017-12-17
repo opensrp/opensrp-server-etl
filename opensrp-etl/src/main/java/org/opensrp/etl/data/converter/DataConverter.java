@@ -43,10 +43,8 @@ public class DataConverter {
 						Method readMethod = pd.getReadMethod();
 						Class<Temporal> c = (Class<Temporal>) Class.forName("javax.persistence.Temporal");
 						if (readMethod.isAnnotationPresent(c)) {
-							System.err.println("P:" + property);
 							setterMethod.invoke(object, DateUtil.getDateFromString(JsonDocument, property));
 						} else {
-							//System.err.println("PD:" + property);
 							setterMethod.invoke(object, DateUtil.getDateTimeFromString(JsonDocument, property));
 						}
 						
