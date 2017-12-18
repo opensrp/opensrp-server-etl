@@ -29,6 +29,12 @@ public class MISReportEntity {
     private int month;
     private int year;
     private int fpOldPillUsages;
+    private int fpNewPillUsages;
+    private int fpCurrentTotalPillUsages;
+    private int fpPrevTotalPillUsages;
+    private int fpTotalPillUsages;
+    private int fpLeftPillAndStartedNone;
+    private int fpLeftPillAndStartedOther;
 
     public long getId() {
         return id;
@@ -98,12 +104,60 @@ public class MISReportEntity {
         this.year = year;
     }
 
-    public int getOldPillUsages() {
+    public int getFpOldPillUsages() {
         return fpOldPillUsages;
     }
 
-    public void setOldPillUsages(int oldPillUsages) {
+    public void setFpOldPillUsages(int oldPillUsages) {
         this.fpOldPillUsages = oldPillUsages;
+    }
+
+    public int getFpNewPillUsages() {
+        return fpNewPillUsages;
+    }
+
+    public void setFpNewPillUsages(int fpNewPillUsages) {
+        this.fpNewPillUsages = fpNewPillUsages;
+    }
+
+    public int getFpCurrentTotalPillUsages() {
+        return fpCurrentTotalPillUsages;
+    }
+
+    public void setFpCurrentTotalPillUsages(int fpCurrentTotalPillUsages) {
+        this.fpCurrentTotalPillUsages = fpCurrentTotalPillUsages;
+    }
+
+    public int getFpPrevTotalPillUsages() {
+        return fpPrevTotalPillUsages;
+    }
+
+    public void setFpPrevTotalPillUsages(int fpPrevTotalPillUsages) {
+        this.fpPrevTotalPillUsages = fpPrevTotalPillUsages;
+    }
+
+    public int getFpTotalPillUsages() {
+        return fpTotalPillUsages;
+    }
+
+    public void setFpTotalPillUsages(int fpTotalPillUsages) {
+        this.fpTotalPillUsages = fpTotalPillUsages;
+    }
+
+    public int getFpLeftPillAndStartedNone() {
+        return fpLeftPillAndStartedNone;
+    }
+
+    public void setFpLeftPillAndStartedNone(int fpLeftPillAndStartedNone) {
+        this.fpLeftPillAndStartedNone = fpLeftPillAndStartedNone;
+    }
+
+    public int getFpLeftPillAndStartedOther() {
+        return fpLeftPillAndStartedOther;
+    }
+
+    public void setFpLeftPillAndStartedOther(int fpLeftPillAndStartedOther) {
+        this.fpLeftPillAndStartedOther = fpLeftPillAndStartedOther;
     }
 
 }
