@@ -50,7 +50,7 @@ public class ANCDataConverterService implements DataConverterService {
             try {
                 ancService.save(ancEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "anc1");
             }
         }
@@ -66,7 +66,7 @@ public class ANCDataConverterService implements DataConverterService {
             try {
                 ancService.save(ancEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "anc2");
             }
         }
@@ -82,7 +82,7 @@ public class ANCDataConverterService implements DataConverterService {
             try {
                 ancService.save(ancEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "anc3");
             }
         }
@@ -98,7 +98,7 @@ public class ANCDataConverterService implements DataConverterService {
             try {
                 ancService.save(ancEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "anc4");
             }
         }

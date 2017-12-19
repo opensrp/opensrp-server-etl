@@ -41,7 +41,7 @@ public class ChildDataConverterService implements DataConverterService {
 			try {
 				childService.save(childEntity);
 			} catch (Exception e) {
-			    exceptionService.generatedEntityAndSaveForAction(doc, e
+			    exceptionService.generatedEntityAndSave(doc, e
 	                    .fillInStackTrace().toString(), "child");
 			}
 		}

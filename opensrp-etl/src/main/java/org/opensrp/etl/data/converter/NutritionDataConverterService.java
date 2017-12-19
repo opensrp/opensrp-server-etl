@@ -42,7 +42,7 @@ public class NutritionDataConverterService implements DataConverterService {
 			try {
                 nutritionService.save(nutritionEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "nutrition");
             }
 			

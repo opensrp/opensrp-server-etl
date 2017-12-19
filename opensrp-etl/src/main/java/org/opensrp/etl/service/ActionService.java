@@ -19,17 +19,19 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	@Override
 	public void save(ActionEntity actionEntity) {
-		if (!isActionExist(actionEntity)) {
-			actionRepository.save(actionEntity);
-		} else {
-			System.out.println("Action already exists in database!!!");
-		}
+	    ActionEntity existingActionEntity = findByCaseId(actionEntity.getCaseId());
+        if (existingActionEntity == null) {
+            actionRepository.save(actionEntity);
+        } else {
+            if (delete(existingActionEntity))
+                actionRepository.save(actionEntity);
+        }
 		
 	}
 	
 	@Transactional
 	public boolean isActionExist(ActionEntity actionEntity) {
-		return actionRepository.isActionExist(actionEntity.getCaseID(), actionEntity.getVisitCode(),
+		return actionRepository.isActionExist(actionEntity.getCaseId(), actionEntity.getVisitCode(),
 		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
 		
 	}

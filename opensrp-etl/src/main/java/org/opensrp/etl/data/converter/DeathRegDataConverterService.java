@@ -29,16 +29,19 @@ public class DeathRegDataConverterService implements DataConverterService {
     @Override
     public void convertToEntityAndSave(JSONObject doc) throws JSONException {
         JSONObject deathReg = doc.getJSONObject("DeathReg");
-        Class<DeathRegEntity> className = DeathRegEntity.class;
-        Object object = deathRegEntity;
-        deathRegEntity = (DeathRegEntity) dataConverter.convert(deathReg,
-                className, object);
-        deathRegEntity.setRelationalid(doc.getString("caseId"));
-        try {
-            deathRegService.save(deathRegEntity);
-        } catch (Exception e) {
-            exceptionService.generatedEntityAndSaveForAction(doc, e
-                    .fillInStackTrace().toString(), "deathReg");
+
+        if (deathReg.length() != 0) {
+            Class<DeathRegEntity> className = DeathRegEntity.class;
+            Object object = deathRegEntity;
+            deathRegEntity = (DeathRegEntity) dataConverter.convert(deathReg,
+                    className, object);
+            deathRegEntity.setRelationalid(doc.getString("caseId"));
+            try {
+                deathRegService.save(deathRegEntity);
+            } catch (Exception e) {
+                exceptionService.generatedEntityAndSave(doc, e
+                        .fillInStackTrace().toString(), "deathReg");
+            }
         }
 
     }

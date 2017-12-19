@@ -21,6 +21,7 @@ public class ChildService implements RegisterService<ChildEntity> {
 	public void save(ChildEntity childEntity) {
 		ChildEntity existingCHildEntity = findByCaseIdAndToday(childEntity.getRelationalid(),
 				childEntity.getChild_today());
+
 		if (existingCHildEntity == null) {
 			childRepository.save(childEntity);
 		} else {

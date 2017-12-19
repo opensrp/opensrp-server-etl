@@ -119,15 +119,7 @@ public class ActionEntity {
 	public void setProvider(String provider) {
 		this.provider = provider;
 	}
-	
-	public String getCaseID() {
-		return caseId;
-	}
-	
-	public void setCaseID(String caseID) {
-		this.caseId = caseID;
-	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}

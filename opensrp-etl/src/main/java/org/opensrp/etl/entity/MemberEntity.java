@@ -38,7 +38,9 @@ public class MemberEntity {
 	private String _id;
 	
 	private String caseId;
-	
+
+    private String relationalid;
+
 	private String INSTANCEID;
 	
 	private String PROVIDERID;
@@ -48,12 +50,10 @@ public class MemberEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 	
-	private Date Start;
+	private Date start;
 	
 	@Column(name = "end_time")
 	private Date End;
-	
-	private String relationalid;
 	
 	private String Member_GoB_HHID;
 	
@@ -234,11 +234,11 @@ public class MemberEntity {
 	}
 	
 	public Date getStart() {
-		return Start;
+		return start;
 	}
 	
-	public void setStart(Date start) {
-		Start = start;
+	public void setstart(Date start) {
+		this.start = start;
 	}
 	
 	public Date getEnd() {
@@ -253,7 +253,7 @@ public class MemberEntity {
 		return relationalid;
 	}
 	
-	public void setRelationalid(String relationalid) {
+	public void setrelationalid(String relationalid) {
 		this.relationalid = relationalid;
 	}
 	
@@ -713,7 +713,7 @@ public class MemberEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setcreated(Date created) {
 		this.created = created;
 	}
 
@@ -721,7 +721,7 @@ public class MemberEntity {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setupdated(Date updated) {
 		this.updated = updated;
 	}
 	

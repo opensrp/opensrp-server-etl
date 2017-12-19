@@ -46,7 +46,7 @@ public class ENCCConverterTest {
 			
 			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
 			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-				markerEntity.setTimeStamp(currentDocumentTimeStamp);
+				markerEntity.settimeStamp(currentDocumentTimeStamp);
 				//markerService.update(markerEntity);
 			}
 			

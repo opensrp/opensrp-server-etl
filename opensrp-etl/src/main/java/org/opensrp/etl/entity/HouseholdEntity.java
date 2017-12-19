@@ -133,7 +133,7 @@ public class HouseholdEntity {
 		return caseId;
 	}
 	
-	public void setCaseId(String caseId) {
+	public void setcaseId(String caseId) {
 		this.caseId = caseId;
 	}
 	
@@ -157,7 +157,7 @@ public class HouseholdEntity {
 		return existing_location;
 	}
 	
-	public void setExisting_location(String existing_location) {
+	public void setexisting_location(String existing_location) {
 		this.existing_location = existing_location;
 	}
 	
@@ -165,7 +165,7 @@ public class HouseholdEntity {
 		return existing_Country;
 	}
 	
-	public void setExisting_Country(String existing_Country) {
+	public void setexisting_Country(String existing_Country) {
 		this.existing_Country = existing_Country;
 	}
 	
@@ -173,7 +173,7 @@ public class HouseholdEntity {
 		return existing_Division;
 	}
 	
-	public void setExisting_Division(String existing_Division) {
+	public void setexisting_Division(String existing_Division) {
 		this.existing_Division = existing_Division;
 	}
 	
@@ -181,7 +181,7 @@ public class HouseholdEntity {
 		return existing_District;
 	}
 	
-	public void setExisting_District(String existing_District) {
+	public void setexisting_District(String existing_District) {
 		this.existing_District = existing_District;
 	}
 	
@@ -189,7 +189,7 @@ public class HouseholdEntity {
 		return existing_Upazilla;
 	}
 	
-	public void setExisting_Upazilla(String existing_Upazilla) {
+	public void setexisting_Upazilla(String existing_Upazilla) {
 		this.existing_Upazilla = existing_Upazilla;
 	}
 	
@@ -197,7 +197,7 @@ public class HouseholdEntity {
 		return existing_Union;
 	}
 	
-	public void setExisting_Union(String existing_Union) {
+	public void setexisting_Union(String existing_Union) {
 		this.existing_Union = existing_Union;
 	}
 	
@@ -205,7 +205,7 @@ public class HouseholdEntity {
 		return existing_Ward;
 	}
 	
-	public void setExisting_Ward(String existing_Ward) {
+	public void setexisting_Ward(String existing_Ward) {
 		this.existing_Ward = existing_Ward;
 	}
 	
@@ -456,7 +456,7 @@ public class HouseholdEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setcreated(Date created) {
 		this.created = created;
 	}
 
@@ -464,7 +464,7 @@ public class HouseholdEntity {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setupdated(Date updated) {
 		this.updated = updated;
 	}
 }

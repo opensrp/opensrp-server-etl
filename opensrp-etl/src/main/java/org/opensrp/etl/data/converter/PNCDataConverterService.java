@@ -48,7 +48,7 @@ public class PNCDataConverterService implements DataConverterService {
             try {
                 pncService.save(pncEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc1");
             }
         }
@@ -62,7 +62,7 @@ public class PNCDataConverterService implements DataConverterService {
             try {
                 pncService.save(pncEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc2");
             }
 
@@ -77,7 +77,7 @@ public class PNCDataConverterService implements DataConverterService {
             try {
                 pncService.save(pncEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc3");
             }
         }
@@ -91,7 +91,7 @@ public class PNCDataConverterService implements DataConverterService {
             try {
                 pncService.save(pncEntity);
             } catch (Exception e) {
-                exceptionService.generatedEntityAndSaveForAction(doc, e
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc4");
             }
         }

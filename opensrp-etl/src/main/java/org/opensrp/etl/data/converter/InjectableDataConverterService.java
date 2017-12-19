@@ -42,7 +42,7 @@ public class InjectableDataConverterService implements DataConverterService{
 				injectableService.save(injectableEntity);
 			}
 			catch (Exception e) {
-			    exceptionService.generatedEntityAndSaveForAction(doc, e
+			    exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "injectable");
 			}
 			

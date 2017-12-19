@@ -63,7 +63,7 @@ public class MemberDataConverterService implements DataConverterService {
 			memberService.save(memberEntity);
 		}
 		catch (Exception e) {
-		    exceptionService.generatedEntityAndSaveForAction(doc, e
+		    exceptionService.generatedEntityAndSave(doc, e
                     .fillInStackTrace().toString(), "member");
 		}
 

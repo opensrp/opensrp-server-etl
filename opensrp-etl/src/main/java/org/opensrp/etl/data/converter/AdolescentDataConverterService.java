@@ -42,7 +42,7 @@ public class AdolescentDataConverterService implements DataConverterService{
 				adolescentService.save(adolescentEntity);
 			}
 			catch (Exception e) {
-			    exceptionService.generatedEntityAndSaveForAction(doc, e
+			    exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "adolescent");
 			}
 			

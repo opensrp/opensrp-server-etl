@@ -73,9 +73,10 @@ public class QueryRepository implements RegisterRepository<Object> {
     @Transactional
     public int calculateNewBirthControlMethodUsages(int birth_control,
             String district, int year, int month) {
-        String sql = "SELECT * FROM psrf WHERE birth_control = :Birth_Control"
-                + " AND EXTRACT(MONTH FROM today) = :month"
-                + " AND EXTRACT(YEAR FROM today) = :year";
+        String sql = "SELECT * FROM psrf p1"
+                + " WHERE (p1.birth_control = :Birth_Control)"
+                + " AND EXTRACT(MONTH FROM p1.today) = :month"
+                + " AND EXTRACT(YEAR FROM p1.today) = :year";
         List results = getSession().createSQLQuery(sql)
                 .addEntity(PSRFEntity.class)
                 .setParameter("Birth_Control", birth_control)
