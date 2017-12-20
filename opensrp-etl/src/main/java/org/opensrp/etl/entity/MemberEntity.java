@@ -45,8 +45,6 @@ public class MemberEntity {
 	
 	private String PROVIDERID;
 	
-	private String LOCATIONID;
-	
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 	
@@ -70,7 +68,9 @@ public class MemberEntity {
 	private String Member_Age;
 	
 	private String Calc_Age;
-	
+
+    private Integer ELCO;
+
 	@Temporal(TemporalType.DATE)
 	private Date Calc_Dob_Confirm;
 	
@@ -109,9 +109,7 @@ public class MemberEntity {
 	private String Eligible;
 	
 	private String Eligible2;
-	
-	private String ELCO;
-	
+
 	private String ELCO_Note;
 	
 	private String Mem_Country;
@@ -141,8 +139,6 @@ public class MemberEntity {
 	private String ELCO_BRID;
 	
 	private String ELCO_Mobile_Number;
-	
-	private String Member_Detail;
 	
 	private String Permanent_Address;
 	
@@ -214,14 +210,6 @@ public class MemberEntity {
 	
 	public void setPROVIDERID(String pROVIDERID) {
 		PROVIDERID = pROVIDERID;
-	}
-	
-	public String getLOCATIONID() {
-		return LOCATIONID;
-	}
-	
-	public void setLOCATIONID(String lOCATIONID) {
-		LOCATIONID = lOCATIONID;
 	}
 	
 	@Temporal(TemporalType.DATE)
@@ -468,11 +456,11 @@ public class MemberEntity {
 		Eligible2 = eligible2;
 	}
 	
-	public String getELCO() {
+	public Integer getELCO() {
 		return ELCO;
 	}
 	
-	public void setELCO(String eLCO) {
+	public void setELCO(Integer eLCO) {
 		ELCO = eLCO;
 	}
 	
@@ -594,14 +582,6 @@ public class MemberEntity {
 	
 	public void setELCO_Mobile_Number(String eLCO_Mobile_Number) {
 		ELCO_Mobile_Number = eLCO_Mobile_Number;
-	}
-	
-	public String getMember_Detail() {
-		return Member_Detail;
-	}
-	
-	public void setMember_Detail(String member_Detail) {
-		Member_Detail = member_Detail;
 	}
 	
 	public String getPermanent_Address() {

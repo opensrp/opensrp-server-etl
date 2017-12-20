@@ -50,9 +50,9 @@ public class PSRFEntity {
 
 	private Integer Using_FP;
 
-	private Integer TT_Dose;
-
 	private Integer Preg_Status;
+
+    private Integer Total_Child_Alive;
 
 	private Integer Gestational_Age;
 
@@ -61,8 +61,6 @@ public class PSRFEntity {
 	private Integer Want_Change;
 
 	private Integer Age_Youngest_Child;
-
-	private Integer Total_Child_Alive;
 
 	private Integer Married_Life;
 
@@ -78,12 +76,6 @@ public class PSRFEntity {
 
 	private Integer Gravida;
 
-	private Integer Pill_Given_No;
-
-	private Integer Cond_Given_No;
-
-	private Integer Is_Eligible_Injectables;
-
 	private Integer Risky_Preg;
 
 	private Integer Height;
@@ -94,6 +86,8 @@ public class PSRFEntity {
 
 	private Integer Mother_Valid;
 
+	private Integer ELCO;
+
 	private Integer Not_ELCO;
 
 	private Long existing_ELCO_Mobile_Number;
@@ -102,15 +96,9 @@ public class PSRFEntity {
 
 	private Long existing_ELCO_NID;
 
-	private Date Format_Injection_Date;
-
 	private Date Next_Injection_Date;
 
-	private Date Format_Pill_Given_Date;
-
-	private Date Permanent_M_Date;
-
-	private Date Format_Permanent_M_Date;
+    private Date Permanent_M_Date;
 
 	@Temporal(TemporalType.DATE)
 	private Date Calc_EDD;
@@ -128,9 +116,6 @@ public class PSRFEntity {
 	private Date Marriage_Date;
 
 	@Temporal(TemporalType.DATE)
-	private Date Format_Cond_Given_Date;
-
-	@Temporal(TemporalType.DATE)
 	private Date Cond_Given_Date;
 
 	@Temporal(TemporalType.DATE)
@@ -141,6 +126,23 @@ public class PSRFEntity {
 
 	@Temporal(TemporalType.DATE)
 	private Date Pill_Given_Date;
+
+    @Temporal(TemporalType.DATE)
+    private Date Format_Cond_Given_Date;
+
+    private Date Format_Pill_Given_Date;
+
+    private Date Format_Injection_Date;
+
+    private Date Format_Permanent_M_Date;
+
+    private String TT_Dose;
+
+    private String Pill_Given_No;
+
+    private String Cond_Given_No;
+
+    private String Is_Eligible_Injectables;
 
 	private String changes;
 
@@ -181,9 +183,7 @@ public class PSRFEntity {
 	private String existing_ELCO;
 	
 	private String Preg_Note;
-	
-	private String ELCO;
-	
+
 	private String Prolong_Delivery;
 	
 	private String Not_Preg_Note;
@@ -572,11 +572,11 @@ public class PSRFEntity {
 		Preg_Note = preg_Note;
 	}
 
-	public String getELCO() {
+	public Integer getELCO() {
 		return ELCO;
 	}
 
-	public void setELCO(String eLCO) {
+	public void setELCO(Integer eLCO) {
 		ELCO = eLCO;
 	}
 
@@ -588,11 +588,11 @@ public class PSRFEntity {
 		this.version = version;
 	}
 
-	public Integer getTT_Dose() {
+	public String getTT_Dose() {
 		return TT_Dose;
 	}
 
-	public void setTT_Dose(Integer tT_Dose) {
+	public void setTT_Dose(String tT_Dose) {
 		TT_Dose = tT_Dose;
 	}
 
@@ -652,11 +652,11 @@ public class PSRFEntity {
 		Gravida = gravida;
 	}
 
-	public Integer getPill_Given_No() {
+	public String getPill_Given_No() {
 		return Pill_Given_No;
 	}
 
-	public void setPill_Given_No(Integer pill_Given_No) {
+	public void setPill_Given_No(String pill_Given_No) {
 		Pill_Given_No = pill_Given_No;
 	}
 
@@ -734,11 +734,11 @@ public class PSRFEntity {
 		this.existing_ELCO_Mobile_Number = existing_ELCO_Mobile_Number;
 	}
 
-	public Integer getIs_Eligible_Injectables() {
+	public String getIs_Eligible_Injectables() {
 		return Is_Eligible_Injectables;
 	}
 
-	public void setIs_Eligible_Injectables(Integer is_Eligible_Injectables) {
+	public void setIs_Eligible_Injectables(String is_Eligible_Injectables) {
 		Is_Eligible_Injectables = is_Eligible_Injectables;
 	}
 
@@ -774,11 +774,11 @@ public class PSRFEntity {
 		Wom_Met = wom_Met;
 	}
 
-	public Integer getCond_Given_No() {
+	public String getCond_Given_No() {
 		return Cond_Given_No;
 	}
 
-	public void setCond_Given_No(Integer cond_Given_No) {
+	public void setCond_Given_No(String cond_Given_No) {
 		Cond_Given_No = cond_Given_No;
 	}
 
