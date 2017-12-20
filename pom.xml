@@ -5,7 +5,7 @@
   <artifactId>mcare-dashboard</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>mcare 2 dashboard</name>
+  <name>unicef dashboard</name>
   <modules>
     <module>mcare-dashboard-web</module>
     <module>mcare-etl</module>

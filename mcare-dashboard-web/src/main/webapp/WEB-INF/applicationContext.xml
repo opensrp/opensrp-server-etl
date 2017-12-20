@@ -33,8 +33,8 @@
 <import resource="classpath:couchdb-connection-context.xml"/> 
  <import resource="classpath:listener-context.xml"/> 
 
-<context:component-scan base-package="org.mcare.etl.entity" />
-<context:component-scan base-package="org.mcare.etl.repository" />
-<context:component-scan base-package="org.mcare.etl.service" />
+<context:component-scan base-package="org.unicef.etl.entity" />
+<context:component-scan base-package="org.unicef.etl.repository" />
+<context:component-scan base-package="org.unicef.etl.service" />
 
 </beans>

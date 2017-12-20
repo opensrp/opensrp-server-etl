@@ -26,21 +26,15 @@
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
             <list>
-             <value>org.mcare.data.export.entity.DataExportEntity</value>
-               <value>org.mcare.acl.entity.ProviderEntity</value>
-                <value>org.mcare.acl.entity.UserEntity</value>
-                 <value>org.mcare.etl.entity.HouseholdEntity</value>
-                <value>org.mcare.etl.entity.ElcoEntity</value>
-                <value>org.mcare.etl.entity.ActionEntity</value>
-                <value>org.mcare.etl.entity.MotherEntity</value>
-                <value>org.mcare.etl.entity.ANCEntity</value>
-                 <value>org.mcare.etl.entity.PNCEntity</value>                 
-                <value>org.mcare.etl.entity.ChildEntity</value>
-                <value>org.mcare.etl.entity.MarkerEntity</value>   
-                <value>org.mcare.etl.entity.PSRFEntity</value> 
-                <value>org.mcare.etl.entity.BNFEntity</value>   
-                <value>org.mcare.etl.entity.ENCCEntity</value>  
-                <value>org.mcare.etl.entity.ExceptionEntity</value>                
+             <value>org.unicef.data.export.entity.DataExportEntity</value>
+               <value>org.unicef.acl.entity.ProviderEntity</value>
+                <value>org.unicef.acl.entity.UserEntity</value>
+                 <value>org.unicef.etl.entity.ClientEntity</value>
+                 <value>org.unicef.etl.entity.EventEntity</value>
+                  <value>org.unicef.etl.entity.MyEntity</value>
+                <value>org.unicef.etl.entity.ActionEntity</value>
+                <value>org.unicef.etl.entity.MarkerEntity</value>  
+                <value>org.unicef.etl.entity.ExceptionEntity</value>                
             </list>
         </property>
         <property name="hibernateProperties">

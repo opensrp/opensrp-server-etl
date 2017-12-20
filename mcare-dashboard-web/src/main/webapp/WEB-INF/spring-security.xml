@@ -50,7 +50,7 @@
 	    <user name="jane" password="ee11cbb19052e40b07aac0ca060c23ee" authorities="ROLE_USER, ROLE_VISITOR" />
 	    <user name="mike" password="127870930d65c57ee65fcc47f2170d38" authorities="ROLE_VISITOR" />
 	  </user-service> -->
-	  <b:bean id="myUserDetailsService"  class="org.mcare.acl.service.UserService"/>
+	  <b:bean id="myUserDetailsService"  class="org.unicef.acl.service.UserService"/>
  
 	<authentication-manager>
 	    <authentication-provider

@@ -11,9 +11,9 @@
 
 
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="org.mcare.etl.repository"></context:component-scan>
+	<context:component-scan base-package="org.unicef.etl.repository"></context:component-scan>
 	<util:properties id="couchdbProperties" location="classpath:/couchdb.properties"/>
-	<bean id="httpClient" class="org.mcare.etl.util.OpenSRPHttpClientFactoryBean" />
+	<bean id="httpClient" class="org.unicef.etl.util.OpenSRPHttpClientFactoryBean" />
 
 	<bean id="couchDbInstance" class="org.ektorp.impl.StdCouchDbInstance">
 		<constructor-arg ref="httpClient" />
@@ -23,8 +23,4 @@
 		<constructor-arg value="opensrp" />
 		<constructor-arg ref="couchDbInstance" />
 	</bean>
-	
-	<!-- <util:properties id="couchdbProperties" location="classpath:/couchdb.properties"/>
-	
-	<couchdb:database id="blogPostDatabase" name="jack" url="http://192.168.22.152:5984"/> -->
 </beans>
