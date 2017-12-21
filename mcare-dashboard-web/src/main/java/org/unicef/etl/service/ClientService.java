@@ -36,9 +36,10 @@ public class ClientService implements RegisterService<ClientEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
-	public void update(ClientEntity t) {
-		// TODO Auto-generated method stub
+	public void update(ClientEntity clientEntity) {
+		commonDatabaseRepository.update(clientEntity);
 		
 	}
 	

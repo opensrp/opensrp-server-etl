@@ -62,7 +62,7 @@ public class ClientEntity {
 	public String upazila;
 	
 	@Column(name = "client_union")
-	public String client_union;
+	public String union;
 	
 	@Column(name = "ward")
 	public String ward;
@@ -85,6 +85,9 @@ public class ClientEntity {
 	@Column(name = "national_id")
 	public String nationalId;
 	
+	@Column(name = "gender")
+	public String gender;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
@@ -102,6 +105,9 @@ public class ClientEntity {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_edited")
 	private Date dateEdited;
+	
+	@Column(name = "entity_type")
+	public String entityType;
 	
 	public String getFirstName() {
 		return firstName;
@@ -247,12 +253,12 @@ public class ClientEntity {
 		this.upazila = upazila;
 	}
 	
-	public String getClient_union() {
-		return client_union;
+	public String getUnion() {
+		return union;
 	}
 	
-	public void setClient_union(String client_union) {
-		this.client_union = client_union;
+	public void setUnion(String union) {
+		this.union = union;
 	}
 	
 	public String getWard() {
@@ -295,15 +301,32 @@ public class ClientEntity {
 		this.country = country;
 	}
 	
+	public String getEntityType() {
+		return entityType;
+	}
+	
+	public void setEntityType(String entityType) {
+		this.entityType = entityType;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
 	@Override
 	public String toString() {
 		return "ClientEntity [_id=" + _id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthdate="
 		        + birthdate + ", baseEntityId=" + baseEntityId + ", serverVersion=" + serverVersion + ", spouseName="
-		        + spouseName + ", householdCode=" + householdCode + ", addressType=" + addressType + ", division=" + division
-		        + ", district=" + district + ", upazila=" + upazila + ", client_union=" + client_union + ", ward=" + ward
+		        + spouseName + ", householdCode=" + householdCode + ", addressType=" + addressType + ", division="
+		        + division + ", district=" + district + ", upazila=" + upazila + ", union=" + union + ", ward=" + ward
 		        + ", subunit=" + subunit + ", mauzapara=" + mauzapara + ", gobhhid=" + gobhhid + ", country=" + country
-		        + ", phoneNumber=" + phoneNumber + ", nationalId=" + nationalId + ", created=" + created + ", updated="
-		        + updated + ", dateCreated=" + dateCreated + ", dateEdited=" + dateEdited + "]";
+		        + ", phoneNumber=" + phoneNumber + ", nationalId=" + nationalId + ", gender=" + gender + ", created="
+		        + created + ", updated=" + updated + ", dateCreated=" + dateCreated + ", dateEdited=" + dateEdited
+		        + ", entityType=" + entityType + "]";
 	}
 	
 }

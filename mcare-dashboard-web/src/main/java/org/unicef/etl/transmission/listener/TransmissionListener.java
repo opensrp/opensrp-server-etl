@@ -42,30 +42,34 @@ public class TransmissionListener {
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findById(1);
-		ViewResult vr = sourceDBRepository.allData(0);
-		
-		List<Row> rows = vr.getRows();
-		System.err.println("rows:" + rows.size());
-		for (Row row : rows) {
-			try {
-				JSONObject jsonData = new JSONObject(row.getValue());
-				System.out.println("jsonData: " + jsonData);
-				long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("serverVersion"));
-				transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
-				if (transmissionServices != null) {
-					transmissionServiceFactory.getTransmissionType(jsonData.getString("type"))
-					        .convertDataJsonToEntity(jsonData);
-					if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-						markerEntity.setTimeStamp(currentDocumentTimeStamp);
-						markerService.update(markerEntity);
+		ViewResult vr = null;
+		if (markerEntity != null) {
+			vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
+			List<Row> rows = vr.getRows();
+			System.err.println("unicef etl process started rows:" + rows.size());
+			for (Row row : rows) {
+				try {
+					JSONObject jsonData = new JSONObject(row.getValue());
+					System.out.println("jsonData: " + jsonData);
+					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("serverVersion"));
+					transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
+					if (transmissionServices != null) {
+						transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(
+						    jsonData);
+						if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+							markerEntity.setTimeStamp(currentDocumentTimeStamp);
+							markerService.update(markerEntity);
+						}
 					}
 				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
+				catch (Exception e) {
+					e.printStackTrace();
+					
+				}
 				
 			}
-			
+		} else {
+			System.err.println("unicef etl process started marker not defined yet!!!!");
 		}
 	}
 }

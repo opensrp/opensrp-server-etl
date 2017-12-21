@@ -23,6 +23,7 @@ public class EventService implements RegisterService<EventEntity> {
 	public void save(EventEntity eventEntity) {
 		if (findBybaseEntityId(eventEntity.getBaseEntityId()) == null) {
 			commonDatabaseRepository.save(eventEntity);
+			
 		} else {
 			System.out.println("event already exists in database!!!");
 		}

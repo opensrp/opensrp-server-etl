@@ -3,15 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.mpower.mcare</groupId>
-    <artifactId>mcare-dashboard</artifactId>
+    <groupId>org.mpower.unicef</groupId>
+    <artifactId>unicef-dashboard</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>org.mpower.mcare</groupId>
-  <artifactId>mcare-dashboard-web</artifactId>
+  <artifactId>unicef-dashboard-web</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>mcare-dashboard-web</name>
+  <name>unicef-dashboard-web</name>
   
  
   <properties>

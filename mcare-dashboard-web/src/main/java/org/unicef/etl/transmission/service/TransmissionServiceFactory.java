@@ -23,6 +23,7 @@ public class TransmissionServiceFactory {
 	private TransmissionServices transmissionServices;
 	
 	private TransmissionServices getTransmissionService(String transmissionServiceType) {
+		System.err.println("getTransmissionService");
 		if (transmissionServiceType.equals("Client")) {
 			transmissionServices = clientTransmissionService;
 		} else if (transmissionServiceType.equals("Event")) {

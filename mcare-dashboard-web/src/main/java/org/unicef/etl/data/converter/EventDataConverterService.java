@@ -8,8 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.unicef.etl.entity.ClientEntity;
 import org.unicef.etl.entity.EventEntity;
 import org.unicef.etl.interfaces.DataConverterService;
+import org.unicef.etl.service.ClientService;
 import org.unicef.etl.service.EventService;
 import org.unicef.etl.service.ExceptionService;
 
@@ -27,6 +29,12 @@ public class EventDataConverterService implements DataConverterService {
 	
 	@Autowired
 	private ExceptionService exceptionService;
+	
+	@Autowired
+	private ClientEntity clientEntity;
+	
+	@Autowired
+	private ClientService clientService;
 	
 	public EventDataConverterService() {
 		
@@ -66,6 +74,16 @@ public class EventDataConverterService implements DataConverterService {
 			System.out.println("obsMap: " + obsMap.toString());
 			eventEntity.setObs(obsMap);
 			eventService.save(eventEntity);
+			
+			clientEntity = clientService.findBybaseEntityId(eventEntity.getBaseEntityId());
+			if (clientEntity != null && !"Vaccination".equals(eventEntity.getEntityType())) {
+				clientEntity.setEntityType(eventEntity.getEntityType());
+				clientService.update(clientEntity);
+				System.out.println("update client with entityType client id: " + eventEntity.getBaseEntityId()
+				        + " ,entityType:" + eventEntity.getEntityType());
+				
+			}
+			
 		}
 		catch (JSONException e) {
 			System.out.println("event data converter services: " + e.fillInStackTrace().toString());
@@ -73,5 +91,4 @@ public class EventDataConverterService implements DataConverterService {
 		}
 		
 	}
-	
 }

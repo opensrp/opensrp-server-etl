@@ -71,12 +71,12 @@ public class ClientDataConverterService implements DataConverterService {
 				addressJson.put("upazila", addressFieldUpazila);
 				String addressFieldsUnions = addressFields.getString("address1");
 				addressJson.put("union", addressFieldsUnions);
-				String addressFieldsWard = addressFields.getString("address2");
-				addressJson.put("ward", addressFieldsWard);
-				String addressFieldsSubunit = addressFields.getString("address3");
-				addressJson.put("subunit", addressFieldsSubunit);
-				String addressFieldsMauzaPara = addressFields.getString("address4");
-				addressJson.put("mauzapara", addressFieldsMauzaPara);
+				String[] addressFieldsWard = addressFields.getString("address2").split(":");
+				addressJson.put("ward", addressFieldsWard[addressFieldsWard.length - 1]);
+				String[] addressFieldsSubunit = addressFields.getString("address3").split(":");
+				addressJson.put("subunit", addressFieldsSubunit[addressFieldsSubunit.length - 1]);
+				String[] addressFieldsMauzaPara = addressFields.getString("address4").split(":");
+				addressJson.put("mauzapara", addressFieldsMauzaPara[addressFieldsMauzaPara.length - 1]);
 				String addressFieldsGoBHHID = addressFields.getString("address5");
 				addressJson.put("gobhhid", addressFieldsGoBHHID);
 				String addressFieldscountry = addressFields.getString("country");
