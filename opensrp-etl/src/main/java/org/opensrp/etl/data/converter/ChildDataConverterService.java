@@ -35,7 +35,7 @@ public class ChildDataConverterService implements DataConverterService {
 		for (int i = 0; i < childArray.length(); i++) {
 			JSONObject child = childArray.getJSONObject(i);
 			Class<ChildEntity> className = ChildEntity.class;
-			Object object = childEntity;
+			Object object = new ChildEntity();
 			childEntity = (ChildEntity) dataConverter.convert(child, className, object);
 			childEntity.setrelationalid(doc.getString("caseId"));
 			try {

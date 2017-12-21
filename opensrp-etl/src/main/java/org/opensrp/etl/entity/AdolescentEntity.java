@@ -21,7 +21,7 @@ public class AdolescentEntity {
 	
 	private static final AdolescentEntity INSTANCE = new AdolescentEntity();
 	
-	private AdolescentEntity() {
+	public AdolescentEntity() {
 		
 	}
 

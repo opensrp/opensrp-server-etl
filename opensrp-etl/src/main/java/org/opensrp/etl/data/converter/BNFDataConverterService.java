@@ -35,7 +35,7 @@ public class BNFDataConverterService implements DataConverterService {
 		for (int i = 0; i < bnfs.length(); i++) {
 			JSONObject bnf = bnfs.getJSONObject(i);
 			Class<BNFEntity> className = BNFEntity.class;
-			Object object = bnfEntity;
+			Object object = new BNFEntity();
 			bnfEntity = (BNFEntity) dataConverter.convert(bnf, className, object);
 			bnfEntity.setrelationalid(doc.getString("caseId"));
 			try {

@@ -72,7 +72,7 @@ public class ActionEntity {
 	private Boolean isActionActive;
 	
 	@Column(name = "time_stamp")
-	private long timeStamp;
+	private Long timeStamp;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -172,7 +172,7 @@ public class ActionEntity {
 		return actionTarget;
 	}
 	
-	public void setActionTarget(String actionTarget) {
+	public void setactionTarget(String actionTarget) {
 		this.actionTarget = actionTarget;
 	}
 	
@@ -180,7 +180,7 @@ public class ActionEntity {
 		return actionType;
 	}
 	
-	public void setActionType(String actionType) {
+	public void setactionType(String actionType) {
 		this.actionType = actionType;
 	}
 	
@@ -188,15 +188,15 @@ public class ActionEntity {
 		return isActionActive;
 	}
 	
-	public void setIsActionActive(Boolean isActionActive) {
+	public void setisActionActive(Boolean isActionActive) {
 		this.isActionActive = isActionActive;
 	}
 	
-	public long getTimeStamp() {
+	public Long getTimeStamp() {
 		return timeStamp;
 	}
 	
-	public void setTimeStamp(long timeStamp) {
+	public void settimeStamp(Long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 	

@@ -36,7 +36,7 @@ public class ANCDataConverterService implements DataConverterService {
     public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 
         Class<ANCEntity> className = ANCEntity.class;
-        Object ancObject = ancEntity;
+        Object ancObject = new ANCEntity();
 
         JSONObject anc1VisitDoc = new JSONObject(doc.getString("ANCVisit1")
                 .toString());

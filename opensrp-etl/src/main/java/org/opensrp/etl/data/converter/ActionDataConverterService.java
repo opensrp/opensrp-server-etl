@@ -30,13 +30,12 @@ public class ActionDataConverterService implements DataConverterService {
     @Override
     public void convertToEntityAndSave(JSONObject doc) throws JSONException {
         try {
+            Class<ActionEntity> className = ActionEntity.class;
+            Object object = new ActionEntity();
+            actionEntity = (ActionEntity) dataConverter.convert(doc, className, object);
             JSONObject data = new JSONObject(doc.getString("data"));
-            actionEntity.setActionTarget(doc.getString("actionTarget"));
             actionEntity.setProvider(doc.getString("anmIdentifier"));
             actionEntity.setCaseId(doc.getString("caseID"));
-            actionEntity.setActionType(doc.getString("actionType"));
-            actionEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
-            actionEntity.setIsActionActive(Boolean.parseBoolean(doc.getString("isActionActive")));
             actionEntity.setAlertStatus(data.getString("alertStatus"));
             actionEntity.setVisitCode(data.getString("visitCode"));
             actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));

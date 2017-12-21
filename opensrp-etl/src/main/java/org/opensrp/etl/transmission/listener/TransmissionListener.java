@@ -46,11 +46,11 @@ public class TransmissionListener {
 			JSONObject jsonData = new JSONObject(row.getValue());
 			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
 
-//	        long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-//			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-//				markerEntity.settimeStamp(currentDocumentTimeStamp);
-//				markerService.update(markerEntity);
-//			}
+	        long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+				markerEntity.settimeStamp(currentDocumentTimeStamp);
+				markerService.update(markerEntity);
+			}
 			
 		}
 		

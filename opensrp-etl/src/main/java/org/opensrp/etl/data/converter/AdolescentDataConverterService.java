@@ -35,7 +35,7 @@ public class AdolescentDataConverterService implements DataConverterService{
 		for (int i = 0; i < adolescents.length(); i++) {
 			JSONObject adolescent = adolescents.getJSONObject(i);
 			Class<AdolescentEntity> className = AdolescentEntity.class;
-			Object object = adolescentEntity;
+			Object object = new AdolescentEntity();
 			adolescentEntity = (AdolescentEntity) dataConverter.convert(adolescent, className, object);
 			adolescentEntity.setrelationalid(doc.getString("caseId"));
 			try {

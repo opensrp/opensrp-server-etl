@@ -31,7 +31,7 @@ public class PSRFDataConverterService implements DataConverterService {
 		for (int i = 0; i < psrfs.length(); i++) {
 			JSONObject psrf = psrfs.getJSONObject(i);
 			Class<PSRFEntity> className = PSRFEntity.class;
-			Object object = psrfEntity;
+			Object object = new PSRFEntity();
 			psrfEntity = (PSRFEntity) dataConverter.convert(psrf, className, object);		
 			psrfEntity.setRelationalid(doc.getString("caseId"));
 			try {

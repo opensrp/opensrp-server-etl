@@ -35,7 +35,7 @@ public class InjectableDataConverterService implements DataConverterService{
 		for (int i = 0; i < injectables.length(); i++) {
 			JSONObject injectable = injectables.getJSONObject(i);
 			Class<InjectableEntity> className = InjectableEntity.class;
-			Object object = injectableEntity;
+			Object object = new InjectableEntity();
 			injectableEntity = (InjectableEntity) dataConverter.convert(injectable, className, object);
 			injectableEntity.setrelationalid(doc.getString("caseId"));
 			try {

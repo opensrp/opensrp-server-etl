@@ -21,7 +21,7 @@ public class ChildEntity {
 	
 	private static final ChildEntity INSTANCE = new ChildEntity();
 	
-	private ChildEntity() {
+	public ChildEntity() {
 		
 	}
 

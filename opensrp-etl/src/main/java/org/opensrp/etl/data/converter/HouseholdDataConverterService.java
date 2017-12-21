@@ -31,7 +31,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) {
 		Class<HouseholdEntity> className = HouseholdEntity.class;
-		Object object = householdEntity;
+		Object object = new HouseholdEntity();
 		householdEntity = (HouseholdEntity) dataConverter.convert(doc, className, object);
 		try {
 			householdService.save(householdEntity);

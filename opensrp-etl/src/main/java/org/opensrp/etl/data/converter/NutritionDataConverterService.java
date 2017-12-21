@@ -35,7 +35,7 @@ public class NutritionDataConverterService implements DataConverterService {
 		for (int i = 0; i < nutritions.length(); i++) {
 			JSONObject nutrition = nutritions.getJSONObject(i);
 			Class<NutritionEntity> className = NutritionEntity.class;
-			Object object = nutritionEntity;
+			Object object = new NutritionEntity();
 			nutritionEntity = (NutritionEntity) dataConverter.convert(nutrition, className, object);
 			nutritionEntity.setRelationalid(doc.getString("caseId"));
 			nutritionEntity.setDoc_id(doc.getString("_id"));

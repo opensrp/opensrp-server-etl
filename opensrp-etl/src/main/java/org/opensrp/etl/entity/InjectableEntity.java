@@ -21,7 +21,7 @@ public class InjectableEntity {
 
 	private static final InjectableEntity INSTANCE = new InjectableEntity();
 
-	private InjectableEntity() {
+	public InjectableEntity() {
 		// TODO Auto-generated constructor stub
 	}
 

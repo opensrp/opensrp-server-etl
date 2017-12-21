@@ -32,7 +32,7 @@ public class DeathRegDataConverterService implements DataConverterService {
 
         if (deathReg.length() != 0) {
             Class<DeathRegEntity> className = DeathRegEntity.class;
-            Object object = deathRegEntity;
+            Object object = new DeathRegEntity();
             deathRegEntity = (DeathRegEntity) dataConverter.convert(deathReg,
                     className, object);
             deathRegEntity.setRelationalid(doc.getString("caseId"));

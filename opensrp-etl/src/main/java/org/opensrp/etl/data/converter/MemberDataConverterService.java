@@ -56,7 +56,7 @@ public class MemberDataConverterService implements DataConverterService {
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 		Class<MemberEntity> className = MemberEntity.class;
-		Object object = memberEntity;
+		Object object = new MemberEntity();
 		memberEntity = (MemberEntity) dataConverter.convert(doc, className, object);
 		memberEntity.setcaseId(doc.getString("caseId"));
 		try {

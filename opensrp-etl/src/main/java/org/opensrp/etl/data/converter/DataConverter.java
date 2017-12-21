@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import javax.persistence.Temporal;
 
 import org.json.JSONObject;
+import org.opensrp.etl.util.BooleanUtil;
 import org.opensrp.etl.util.DateUtil;
 import org.opensrp.etl.util.NumbertUtil;
 
@@ -54,7 +55,9 @@ public class DataConverter {
 						setterMethod.invoke(object, NumbertUtil.convertToLong(JsonDocument.getString(property)));
 					} else if ("java.lang.Double".equalsIgnoreCase(dataTypeClass)) {
 						setterMethod.invoke(object, NumbertUtil.convertToDouble(JsonDocument.getString(property)));
-					}else {
+					}else if ("java.lang.Boolean".equalsIgnoreCase(dataTypeClass)) {
+                        setterMethod.invoke(object, BooleanUtil.convertToBoolean(JsonDocument.getString(property)));
+                    }else {
 						setterMethod.invoke(object, JsonDocument.getString(property));
 					}
 				}

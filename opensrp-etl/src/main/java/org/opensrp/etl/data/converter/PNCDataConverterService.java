@@ -36,7 +36,7 @@ public class PNCDataConverterService implements DataConverterService {
     public void convertToEntityAndSave(JSONObject doc) throws JSONException {
 
         Class<PNCEntity> PNCEntity = PNCEntity.class;
-        Object ancObject = pncEntity;
+        Object ancObject = new PNCEntity();
 
         JSONObject pnc1VisitDoc = new JSONObject(doc.getString("PNCVisit1").toString());
 
