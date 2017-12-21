@@ -39,22 +39,28 @@ public class TransmissionListener {
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findById(1);
-		ViewResult vr = sourceDBRepository.allData(0);
-		List<Row> rows = vr.getRows();
+		if (markerEntity != null) {
+            ViewResult vr = sourceDBRepository.allData(markerEntity
+                    .getTimeStamp());
+            List<Row> rows = vr.getRows();
+            for (Row row : rows) {
+                JSONObject jsonData = new JSONObject(row.getValue());
+                transmissionServiceFactory.getTransmissionType(
+                        jsonData.getString("type")).convertDataJsonToEntity(
+                        jsonData);
 
-		for (Row row : rows) {
-			JSONObject jsonData = new JSONObject(row.getValue());
-			transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
+                long currentDocumentTimeStamp = Long.parseLong(jsonData
+                        .getString("timeStamp"));
 
-	        long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
-			if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-				markerEntity.settimeStamp(currentDocumentTimeStamp);
-				markerService.update(markerEntity);
-			}
-			
-		}
-		
-		System.out.println("Data transfer completed");
+                if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+                    markerEntity.settimeStamp(currentDocumentTimeStamp);
+                    markerService.update(markerEntity);
+                }
+            }
+            System.out.println("Data transfer completed");
+        } else {
+            System.out.println("DGFP ETL process started, marker not initialized");
+        }
 
 	}
 }

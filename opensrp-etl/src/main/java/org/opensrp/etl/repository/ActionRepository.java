@@ -82,4 +82,15 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 		List<ActionEntity> listAction = listActionCr.list();
 		return listAction.size() > 0 ? (ActionEntity) listAction.get(0) : null;
 	}
+
+    public ActionEntity findByCaseIdAndAlertStatusAndVisitCode(String caseId,
+            String alertStatus, String visitCode, Date startDate) {
+        Criteria listActionCr = getSession().createCriteria(ActionEntity.class);
+        listActionCr.add(Restrictions.eq("caseId", caseId));
+        listActionCr.add(Restrictions.eq("alertStatus", alertStatus));
+        listActionCr.add(Restrictions.eq("visitCode", visitCode));
+        listActionCr.add(Restrictions.eq("startDate", startDate));
+        List<ActionEntity> listAction = listActionCr.list();
+        return listAction.size() > 0 ? (ActionEntity) listAction.get(0) : null;
+    }
 }
