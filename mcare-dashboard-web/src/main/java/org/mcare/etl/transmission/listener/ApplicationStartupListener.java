@@ -1,9 +1,8 @@
 package org.mcare.etl.transmission.listener;
 
-import java.util.List;
-
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.service.MarkerService;
+import org.mcare.etl.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,14 +19,13 @@ public class ApplicationStartupListener implements ApplicationListener<ContextRe
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		System.out.println("Application Stating............");
+		System.out.println(CommonConstant.MCARE.name() + "Application Stating............"
+		        + event.getApplicationContext().getId());
 		MarkerEntity entity = new MarkerEntity();
-		entity.setName("gg");
-		entity.setTimeStamp(111);
-		entity.setId(1);
-		List<MarkerEntity> markerEntity = markerService.getAllMarker();
-		System.err.println("LL:" + markerEntity);
-		if (markerEntity.size() == 0) {
+		entity.setName(CommonConstant.MCARE.name());
+		entity.setTimeStamp(0);
+		MarkerEntity markerEntity = markerService.findByName(CommonConstant.MCARE.name());
+		if (markerEntity == null) {
 			markerService.save(entity);
 		}
 	}

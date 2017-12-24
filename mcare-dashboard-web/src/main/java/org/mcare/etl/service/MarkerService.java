@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.etl.repository.MarkerRepository;
@@ -15,6 +16,9 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 	
 	@Autowired
 	private MarkerRepository markerRepository;
+	
+	@Autowired
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public MarkerService() {
 		// TODO Auto-generated constructor stub
@@ -63,6 +67,12 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 		
 		// TODO Auto-generated method stub
 		return markerRepository.getCurrentTimeStampFromMarker();
+	}
+	
+	@Transactional
+	public MarkerEntity findByName(String name) {
+		// TODO Auto-generated method stub
+		return databaseRepositoryImpl.findByKey(name, "name", MarkerEntity.class);
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.interfaces.RegisterRepository;
@@ -79,6 +80,15 @@ public class MarkerRepository implements RegisterRepository<MarkerEntity> {
 	@Override
 	public MarkerEntity findByCaseId(String caseID) {
 		return null;
+	}
+	
+	public MarkerEntity findByName(String name) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(MarkerEntity.class);
+		criteria.add(Restrictions.eq("name", name));
+		MarkerEntity result = (MarkerEntity) criteria.list();
+		session.close();
+		return result;
 	}
 	
 }

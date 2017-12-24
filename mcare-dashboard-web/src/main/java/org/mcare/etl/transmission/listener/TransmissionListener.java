@@ -11,6 +11,7 @@ import org.mcare.etl.interfaces.TransmissionServices;
 import org.mcare.etl.repository.SourceDBRepository;
 import org.mcare.etl.service.MarkerService;
 import org.mcare.etl.transmission.service.TransmissionServiceFactory;
+import org.mcare.etl.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -39,11 +40,9 @@ public class TransmissionListener {
 	
 	private TransmissionServices transmissionServices;
 	
-	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
-		markerEntity = markerService.findById(1);
+		markerEntity = markerService.findByName(CommonConstant.MCARE.name());
 		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
-		
 		List<Row> rows = vr.getRows();
 		System.err.println("rows:" + rows.size());
 		for (Row row : rows) {
