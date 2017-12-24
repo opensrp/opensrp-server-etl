@@ -8,6 +8,6 @@
   <name>unicef dashboard</name>
   <modules>
     <module>unicef-dashboard-web</module>
-    <module>unicef-etl</module>
+   
   </modules>
 </project>
