@@ -40,9 +40,11 @@ public class TransmissionListener {
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findById(1);
 		if (markerEntity != null) {
+		    System.out.println("DGFP Data transfer started...");
             ViewResult vr = sourceDBRepository.allData(markerEntity
                     .getTimeStamp());
             List<Row> rows = vr.getRows();
+
             for (Row row : rows) {
                 JSONObject jsonData = new JSONObject(row.getValue());
                 transmissionServiceFactory.getTransmissionType(
@@ -57,7 +59,7 @@ public class TransmissionListener {
                     markerService.update(markerEntity);
                 }
             }
-            System.out.println("Data transfer completed");
+            System.out.println("DGFP Data transfer completed");
         } else {
             System.out.println("DGFP ETL process started, marker not initialized");
         }

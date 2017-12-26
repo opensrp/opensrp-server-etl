@@ -38,9 +38,9 @@ public class MemberRepository implements RegisterRepository<MemberEntity> {
 	}
 	
 	@Override
-	public boolean delete(MemberEntity elcoEntity) {
+	public boolean delete(MemberEntity memberEntity) {
 		Query query = getSession().createQuery("delete MemberEntity where id = :ID");
-		query.setParameter("ID", elcoEntity.getId());
+		query.setParameter("ID", memberEntity.getId());
 		int result = query.executeUpdate();
 		
 		if (result == 1) {

@@ -32,15 +32,15 @@ public class MemberService implements RegisterService<MemberEntity> {
 	
 	@Transactional
 	@Override
-	public boolean delete(MemberEntity elcoEntity) {
-		return memberRepository.delete(elcoEntity);
+	public boolean delete(MemberEntity memberEntity) {
+		return memberRepository.delete(memberEntity);
 		
 	}
 	
 	@Transactional
 	@Override
-	public void update(MemberEntity elcoEntity) {
-		memberRepository.update(elcoEntity);
+	public void update(MemberEntity memberEntity) {
+		memberRepository.update(memberEntity);
 		
 	}
 	

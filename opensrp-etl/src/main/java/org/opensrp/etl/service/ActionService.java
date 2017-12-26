@@ -30,7 +30,6 @@ public class ActionService implements RegisterService<ActionEntity> {
             if (delete(existingActionEntity))
                 actionRepository.save(actionEntity);
         }
-
     }
 
     @Transactional
@@ -42,10 +41,8 @@ public class ActionService implements RegisterService<ActionEntity> {
     }
 
     @Override
-    public boolean delete(ActionEntity t) {
-        return true;
-        // TODO Auto-generated method stub
-
+    public boolean delete(ActionEntity actionEntity) {
+        return actionRepository.delete(actionEntity);
     }
 
     @Override

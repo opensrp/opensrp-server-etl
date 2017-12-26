@@ -36,10 +36,15 @@ public class ActionRepository implements RegisterRepository<ActionEntity> {
 	}
 	
 	@Override
-	public boolean delete(ActionEntity t) {
-		return true;
-		// TODO Auto-generated method stub
-		
+	public boolean delete(ActionEntity actionEntity) {
+	    Query query = getSession().createQuery("delete ActionEntity where id = :ID");
+        query.setParameter("ID", actionEntity.getId());
+        int result = query.executeUpdate();
+        if (result == 1) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	
 	@Override
