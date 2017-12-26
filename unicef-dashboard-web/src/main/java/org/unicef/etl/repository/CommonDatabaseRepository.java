@@ -167,15 +167,16 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
-	public int isActionExist(String caseId, String visitCode, String alertStatus, Date startDate) {
+	public int isActionExist(String baseEntityId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
 		int actionExist = 0;
 		try {
-			String hql = "select A.caseId from " + "ActionEntity A " + "where A.caseId = :case_id "
-			        + "and A.visitCode = :visit_code " + "and A.alertStatus = :alert_status "
+			String hql = "select A.baseEntityId from " + "ActionEntity A " + "where A.baseEntityId = :base_entity_id "
+			        + "and A.visitCode = :visit_code " 
+			+ "and A.alertStatus = :alert_status "
 			        + " and A.startDate = :start_date";
 			Query query = session.createQuery(hql);
-			query.setParameter("case_id", caseId);
+			query.setParameter("base_entity_id", baseEntityId);
 			query.setParameter("visit_code", visitCode);
 			query.setParameter("alert_status", alertStatus);
 			query.setParameter("start_date", startDate);

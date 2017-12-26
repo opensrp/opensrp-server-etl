@@ -34,17 +34,38 @@ public class ActionDataConverterService implements DataConverterService {
 			
 			JSONObject data = new JSONObject(doc.getString("data"));
 			actionEntity.setActionTarget(doc.getString("actionTarget"));
-			actionEntity.setProvider(doc.getString("anmIdentifier"));
-			actionEntity.setCaseID(doc.getString("caseID"));
+			actionEntity.setBaseEntityId(doc.getString("baseEntityId"));
+			actionEntity.setProviderId(doc.getString("providerId"));
 			actionEntity.setActionType(doc.getString("actionType"));
 			actionEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
 			actionEntity.setIsActionActive(Boolean.parseBoolean(doc.getString("isActionActive")));
-			actionEntity.setAlertStatus(data.getString("alertStatus"));
-			actionEntity.setVisitCode(data.getString("visitCode"));
-			actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
-			actionEntity.setScheduleName(data.getString("scheduleName"));
-			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
-			actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+			if (data.has("alertStatus")) {
+				actionEntity.setAlertStatus(data.getString("alertStatus"));
+			}
+			if (data.has("visitCode")) {
+				actionEntity.setVisitCode(data.getString("visitCode"));
+			}
+			
+			if (data.has("expiryDate")) {
+				actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
+			}
+			
+			if (data.has("scheduleName")) {
+				actionEntity.setScheduleName(data.getString("scheduleName"));
+			}
+			
+			if (data.has("beneficiaryType")) {
+				actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
+			}
+			
+			if (data.has("startDate")) {
+				actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+			}
+			
+			if (data.has("completionDate")) {
+				actionEntity.setCompletionDate(DateUtil.getDateFromString(data, "completionDate"));
+			}			
+			
 			actionService.save(actionEntity);
 		}
 		catch (JSONException e) {

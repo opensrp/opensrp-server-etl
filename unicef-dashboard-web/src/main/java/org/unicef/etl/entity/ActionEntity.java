@@ -23,28 +23,25 @@ public class ActionEntity {
 		
 	}
 	
-	@Override
-	public String toString() {
-		return "ActionEntity [id=" + id + ", provider=" + provider + ", caseID=" + caseId + ", startDate=" + startDate
-		        + ", beneficiaryType=" + beneficiaryType + ", scheduleName=" + scheduleName + ", expiryDate=" + expiryDate
-		        + ", visitCode=" + visitCode + ", alertStatus=" + alertStatus + ", actionTarget=" + actionTarget
-		        + ", actionType=" + actionType + ", isActionActive=" + isActionActive + ", timeStamp=" + timeStamp + "]";
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "action_id_seq")
 	@SequenceGenerator(name = "action_id_seq", sequenceName = "action_id_seq", allocationSize = 1)
 	private int id;
 	
-	@Column(name = "provider")
-	private String provider;
+	@Column(name = "provider_id")
+	private String providerId;
 	
-	@Column(name = "case_id")
-	private String caseId;
+	@Column(name = "base_entity_id")
+	private String baseEntityId;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
 	private Date startDate;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "completion_date")
+	private Date completionDate;
 	
 	@Column(name = "beneficiary_type")
 	private String beneficiaryType;
@@ -84,13 +81,7 @@ public class ActionEntity {
 	@UpdateTimestamp
 	private Date updated = new Date();
 	
-	public String getCaseId() {
-		return caseId;
-	}
-	
-	public void setCaseId(String caseId) {
-		this.caseId = caseId;
-	}
+
 	
 	public Date getCreated() {
 		return created;
@@ -114,22 +105,6 @@ public class ActionEntity {
 	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public String getProvider() {
-		return provider;
-	}
-	
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
-	
-	public String getCaseID() {
-		return caseId;
-	}
-	
-	public void setCaseID(String caseID) {
-		this.caseId = caseID;
 	}
 	
 	public Date getStartDate() {
@@ -211,5 +186,52 @@ public class ActionEntity {
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+
+	
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getBaseEntityId() {
+		return baseEntityId;
+	}
+
+	public void setBaseEntityId(String baseEntityId) {
+		this.baseEntityId = baseEntityId;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	
+	
+	public Date getCompletionDate() {
+		return completionDate;
+	}
+
+	public void setCompletionDate(Date completionDate) {
+		this.completionDate = completionDate;
+	}
+
+	@Override
+	public String toString() {
+		return "ActionEntity [providerId=" + providerId + ", baseEntityId=" + baseEntityId + ", startDate=" + startDate
+				+ ", completionDate=" + completionDate + ", beneficiaryType=" + beneficiaryType + ", scheduleName="
+				+ scheduleName + ", expiryDate=" + expiryDate + ", visitCode=" + visitCode + ", alertStatus="
+				+ alertStatus + ", actionTarget=" + actionTarget + ", actionType=" + actionType + ", isActionActive="
+				+ isActionActive + ", timeStamp=" + timeStamp + ", created=" + created + ", updated=" + updated + "]";
+	}
+
+
+	
+	
 	
 }

@@ -4,15 +4,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.unicef.acl.repository.DatabaseRepositoryImpl;
 import org.unicef.etl.entity.ActionEntity;
 import org.unicef.etl.interfaces.RegisterService;
+import org.unicef.etl.repository.CommonDatabaseRepository;
 
 @Service
 public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Autowired
-	private DatabaseRepositoryImpl databaseRepositoryImpl;
+	private CommonDatabaseRepository commonDatabaseRepository;
 	
 	public ActionService() {
 		// TODO Auto-generated constructor stub
@@ -22,7 +22,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Override
 	public void save(ActionEntity actionEntity) {
 		if (!isActionExist(actionEntity)) {
-			databaseRepositoryImpl.save(actionEntity);
+			commonDatabaseRepository.save(actionEntity);
 		} else {
 			System.out.println("Action already exists in database!!!");
 		}
@@ -31,7 +31,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Transactional
 	public boolean isActionExist(ActionEntity actionEntity) {
-		return databaseRepositoryImpl.isActionExist(actionEntity.getCaseID(), actionEntity.getVisitCode(),
+		return commonDatabaseRepository.isActionExist(actionEntity.getBaseEntityId(), actionEntity.getVisitCode(),
 		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
 		
 	}
@@ -57,8 +57,8 @@ public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Transactional
 	@Override
-	public ActionEntity findBybaseEntityId(String caseId) {
-		return databaseRepositoryImpl.findByKey(caseId, "caseId", ActionEntity.class);
+	public ActionEntity findBybaseEntityId(String baseEntityId) {
+		return commonDatabaseRepository.findByKey(baseEntityId, "baseEntityId", ActionEntity.class);
 	}
 	
 }
