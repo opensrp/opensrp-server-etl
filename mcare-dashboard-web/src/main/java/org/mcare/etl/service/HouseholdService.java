@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.HouseholdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +59,22 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	@Transactional
 	@Override
 	public HouseholdEntity findByCaseId(String caseId) {
-		return databaseRepositoryImpl.findByKey(caseId,"caseId", HouseholdEntity.class);
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", HouseholdEntity.class);
 	}
 	
 	public List<HouseholdEntity> list() {
 		//householdRepository.
 		return null;
 		
+	}
+	
+	@Transactional
+	public List<HouseholdEntity> list(Integer offset, Integer maxResults, Class<?> entityClassName) {
+		return databaseRepositoryImpl.list(offset, maxResults, entityClassName);
+	}
+	
+	@Transactional
+	public int count() {
+		return databaseRepositoryImpl.count();
 	}
 }
