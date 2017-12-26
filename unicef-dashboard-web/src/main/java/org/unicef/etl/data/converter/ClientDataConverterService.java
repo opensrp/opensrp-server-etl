@@ -12,32 +12,30 @@ import org.unicef.etl.service.ExceptionService;
 
 @Service
 public class ClientDataConverterService implements DataConverterService {
-	
+
 	@Autowired
 	private ClientEntity clientEntity;
-	
+
 	@Autowired
 	private ClientService clientService;
-	
+
 	@Autowired
 	private DataConverter dataConverter;
-	
+
 	@Autowired
 	private ExceptionService exceptionService;
-	
+
 	public ClientDataConverterService() {
-		
+
 	}
-	
+
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		
+
 		try {
 			Class<ClientEntity> className = ClientEntity.class;
 			Object object = clientEntity;
 			clientEntity = (ClientEntity) dataConverter.convert(doc, className, object);
-			System.out.println("clientEntity: " + clientEntity.toString());
-			
 			JSONObject identifiers = new JSONObject(doc.getString("identifiers"));
 			if (doc.has("identifiers") && doc.isNull("identifiers") || doc.getJSONObject("identifiers").length() == 0) {
 				System.out.println("identifiers key does not exists!!");
@@ -45,7 +43,7 @@ public class ClientDataConverterService implements DataConverterService {
 				System.out.println("identifiers key exists!!");
 				clientEntity = (ClientEntity) dataConverter.convert(identifiers, className, object);
 			}
-			
+
 			JSONObject attributes = new JSONObject(doc.getString("attributes"));
 			if (doc.has("attributes") && doc.isNull("attributes") || doc.getJSONObject("attributes").length() == 0) {
 				System.out.println("attributes key does not exists!!");
@@ -53,11 +51,10 @@ public class ClientDataConverterService implements DataConverterService {
 				System.out.println("attributes key exists!!");
 				clientEntity = (ClientEntity) dataConverter.convert(attributes, className, object);
 			}
-			
+
 			JSONArray addresses = doc.getJSONArray("addresses");
 			JSONObject addressJson = new JSONObject();
-			
-			System.out.println("addresses" + addresses.toString());
+
 			for (int i = 0; i < addresses.length(); i++) {
 				JSONObject addressesObj = addresses.getJSONObject(i);
 				String addressType = addressesObj.getString("addressType");
@@ -77,22 +74,22 @@ public class ClientDataConverterService implements DataConverterService {
 				addressJson.put("subunit", addressFieldsSubunit[addressFieldsSubunit.length - 1]);
 				String[] addressFieldsMauzaPara = addressFields.getString("address4").split(":");
 				addressJson.put("mauzapara", addressFieldsMauzaPara[addressFieldsMauzaPara.length - 1]);
-				String addressFieldsGoBHHID = addressFields.getString("address5");
-				addressJson.put("gobhhid", addressFieldsGoBHHID);
+				if (addressFields.has("address5")) {
+					String addressFieldsGoBHHID = addressFields.getString("address5");
+					addressJson.put("gobhhid", addressFieldsGoBHHID);
+				}
 				String addressFieldscountry = addressFields.getString("country");
 				addressJson.put("country", addressFieldscountry);
-				
+
 			}
-			System.out.println("addressJson" + addressJson.toString());
 			clientEntity = (ClientEntity) dataConverter.convert(addressJson, className, object);
 			System.out.println("clientEntity: " + clientEntity.toString());
 			clientService.save(clientEntity);
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			System.out.println("client data converter services: " + e.fillInStackTrace().toString());
-			//exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "client");
+			exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "client");
 		}
-		
+
 	}
-	
+
 }

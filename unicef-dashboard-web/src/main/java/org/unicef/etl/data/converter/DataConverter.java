@@ -38,9 +38,8 @@ public class DataConverter {
 					setterMethod = pd.getWriteMethod();
 					String dataTypeClass = pd.getPropertyType().getName();
 					property = pd.getName();
-					
 					System.out.println(
-					    "setterMethod: " + setterMethod + " ,dataTypeClass: " + dataTypeClass + " ,property:" + property);
+						    "setterMethod: " + setterMethod + " ,dataTypeClass: " + dataTypeClass + " ,property:" + property);
 					if (setterMethod == null) {
 						System.err.println("setter method  does not exist for property: " + property);
 						continue;
@@ -48,36 +47,31 @@ public class DataConverter {
 						System.err.println("key does not exist in  json for property: " + property);
 						continue;
 						
-					}
-					
-					System.out.println(
-					    "setterMethod: " + setterMethod + " ,dataTypeClass: " + dataTypeClass + " ,property:" + property);
+					} else if ("obs".equals(property)) {
+						System.err.println("custom json type will not set from converter property: " + property);
+						continue;
+						
+					}					
 					
 					if ("java.util.Date".equalsIgnoreCase(dataTypeClass)) {
 						Method readMethod = pd.getReadMethod();
 						Class<Temporal> c = (Class<Temporal>) Class.forName("javax.persistence.Temporal");
 						if (readMethod.isAnnotationPresent(c)) {
 							setterMethod.invoke(object, DateUtil.getDateFromString(JsonDocument, property));
-							System.out.println(" set property successfully: " + property);
 						} else {
 							setterMethod.invoke(object, DateUtil.getDateTFromString(JsonDocument, property));
-							System.out.println(" set property successfully: " + property);
 						}
 						
 					} else if ("java.lang.Integer".equalsIgnoreCase(dataTypeClass)
 					        || "int".equalsIgnoreCase(dataTypeClass)) {
 						setterMethod.invoke(object, NumbertUtil.convertToInteger(JsonDocument.getString(property)));
-						System.out.println(" set property successfully: " + property);
 					} else if ("java.lang.Long".equalsIgnoreCase(dataTypeClass) || "long".equalsIgnoreCase(dataTypeClass)) {
 						setterMethod.invoke(object, NumbertUtil.convertToLong(JsonDocument.getString(property)));
-						System.out.println(" set property successfully: " + property);
 					} else if ("java.lang.Double".equalsIgnoreCase(dataTypeClass)) {
 						setterMethod.invoke(object, NumbertUtil.convertToDouble(JsonDocument.getString(property)));
-						System.out.println(" set property successfully: " + property);
 					} else {
 						if (JsonDocument.has(property)) {
 							setterMethod.invoke(object, JsonDocument.getString(property));
-							System.out.println(" set property successfully: " + property);
 						}
 					}
 				}

@@ -24,10 +24,10 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	}
 	
 	@Transactional
-	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String benificiaryType) {
+	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String docType) {
 		try {
-			exceptionEntity.setCaseId(doc.getString("caseId"));
-			exceptionEntity.setBenificiaryType(benificiaryType);
+			exceptionEntity.setBaseEntityId(doc.getString("baseEntityId"));
+			exceptionEntity.setDocType(docType);
 			exceptionEntity.setErrorMessage(message);
 			if (doc.has("INSTANCEID")) {
 				exceptionEntity.setInstanceId(doc.getString("INSTANCEID"));
@@ -47,10 +47,10 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	}
 	
 	@Transactional
-	public ExceptionEntity generatedEntityAndSaveForAction(JSONObject doc, String message, String benificiaryType)
+	public ExceptionEntity generatedEntityAndSaveForAction(JSONObject doc, String message, String docType)
 	    throws JSONException {
-		exceptionEntity.setCaseId(doc.getString("caseID"));
-		exceptionEntity.setBenificiaryType(benificiaryType);
+		exceptionEntity.setBaseEntityId(doc.getString("baseEntityId"));
+		exceptionEntity.setDocType(docType);
 		exceptionEntity.setErrorMessage(message);
 		exceptionEntity.setInstanceId("");
 		exceptionEntity.setDocId(doc.getString("_id"));
@@ -63,7 +63,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	@Override
 	public void save(ExceptionEntity exceptionEntity) {
 		
-		ExceptionEntity existingExceptionEntity = findBybaseEntityId(exceptionEntity.getCaseId());
+		ExceptionEntity existingExceptionEntity = findBybaseEntityId(exceptionEntity.getBaseEntityId());
 		if (existingExceptionEntity == null) {
 			commonDatabaseRepository.save(exceptionEntity);
 		} else {

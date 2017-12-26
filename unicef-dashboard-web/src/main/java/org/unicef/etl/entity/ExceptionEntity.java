@@ -31,11 +31,11 @@ public class ExceptionEntity {
 	@Column(name = "doc_id")
 	private String docId;
 	
-	@Column(name = "benificiary_type")
-	private String benificiaryType;
+	@Column(name = "doc_type")
+	private String docType;
 	
-	@Column(name = "case_id")
-	private String caseId;
+	@Column(name = "base_entity_id")
+	private String baseEntityId;
 
 	@Column(name = "error_message")
 	private String errorMessage;
@@ -81,22 +81,28 @@ public class ExceptionEntity {
 		this.id = id;
 	}
 	
-	public String getBenificiaryType() {
-		return benificiaryType;
-	}
+
 	
-	public void setBenificiaryType(String benificiaryType) {
-		this.benificiaryType = benificiaryType;
+	public String getDocType() {
+		return docType;
 	}
-	
-	public String getCaseId() {
-		return caseId;
+
+	public void setDocType(String docType) {
+		this.docType = docType;
 	}
-	
-	public void setCaseId(String caseId) {
-		this.caseId = caseId;
+
+	public String getBaseEntityId() {
+		return baseEntityId;
 	}
-	
+
+	public void setBaseEntityId(String baseEntityId) {
+		this.baseEntityId = baseEntityId;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}

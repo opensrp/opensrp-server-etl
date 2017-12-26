@@ -31,8 +31,7 @@
                 <value>org.unicef.acl.entity.UserEntity</value>
                  <value>org.unicef.etl.entity.ClientEntity</value>
                  <value>org.unicef.etl.entity.EventEntity</value>
-                  <value>org.unicef.etl.entity.MyEntity</value>
-                <value>org.unicef.etl.entity.ActionEntity</value>
+                 <value>org.unicef.etl.entity.ActionEntity</value>
                 <value>org.unicef.etl.entity.MarkerEntity</value>  
                 <value>org.unicef.etl.entity.ExceptionEntity</value>                
             </list>

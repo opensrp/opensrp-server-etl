@@ -18,6 +18,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "event")
 @TypeDef(name = "MyJsonType", typeClass = MyJsonType.class)
@@ -77,9 +79,33 @@ public class EventEntity {
 	@Column(name = "date_edited")
 	private Date dateEdited;
 	
+	@JsonIgnoreProperties
 	@Column(name = "observations")
 	@Type(type = "MyJsonType")
 	private Map<String, String> obs;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "start")
+	private Date start;
+	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "end_time")
+	private Date end;
+	
+	
+	@Column(name = "vaccination_name")
+	public String vaccinationName;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "vaccination_date")
+	public Date vaccinationDate;
+	
+	@Column(name = "vaccination_dose")
+	public int vaccinationDose;
+	
+	@Column(name = "vaccination_dose_name")
+	public String vaccinationDoseName;
 	
 	public String get_id() {
 		return _id;
@@ -199,14 +225,68 @@ public class EventEntity {
 	
 	public void setObs(Map<String, String> obs) {
 		this.obs = obs;
-	}
+	}	
 	
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+
+	public String getVaccinationName() {
+		return vaccinationName;
+	}
+
+	public void setVaccinationName(String vaccinationName) {
+		this.vaccinationName = vaccinationName;
+	}
+
+	public Date getVaccinationDate() {
+		return vaccinationDate;
+	}
+
+	public void setVaccinationDate(Date vaccinationDate) {
+		this.vaccinationDate = vaccinationDate;
+	}
+
+	public int getVaccinationDose() {
+		return vaccinationDose;
+	}
+
+	public void setVaccinationDose(int vaccinationDose) {
+		this.vaccinationDose = vaccinationDose;
+	}
+
+		
+	public String getVaccinationDoseName() {
+		return vaccinationDoseName;
+	}
+
+	public void setVaccinationDoseName(String vaccinationDoseName) {
+		this.vaccinationDoseName = vaccinationDoseName;
+	}
+
 	@Override
 	public String toString() {
 		return "EventEntity [_id=" + _id + ", baseEntityId=" + baseEntityId + ", locationId=" + locationId
-		        + ", serverVersion=" + serverVersion + ", version=" + version + ", entityType=" + entityType + ", eventType="
-		        + eventType + ", providerId=" + providerId + ", duration=" + duration + ", created=" + created + ", updated="
-		        + updated + ", eventDate=" + eventDate + ", dateCreated=" + dateCreated + ", dateEdited=" + dateEdited + "]";
+				+ ", serverVersion=" + serverVersion + ", version=" + version + ", entityType=" + entityType
+				+ ", eventType=" + eventType + ", providerId=" + providerId + ", duration=" + duration + ", created="
+				+ created + ", updated=" + updated + ", eventDate=" + eventDate + ", dateCreated=" + dateCreated
+				+ ", dateEdited=" + dateEdited + ", obs=" + obs + ", start=" + start + ", end=" + end
+				+ ", vaccinationName=" + vaccinationName + ", vaccinationDate=" + vaccinationDate + ", vaccinationDose="
+				+ vaccinationDose + ", vaccinationDoseName=" + vaccinationDoseName + "]";
 	}
+
+
 	
 }

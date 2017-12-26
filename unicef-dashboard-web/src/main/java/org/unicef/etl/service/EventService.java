@@ -21,7 +21,8 @@ public class EventService implements RegisterService<EventEntity> {
 	@Transactional
 	@Override
 	public void save(EventEntity eventEntity) {
-		if (findBybaseEntityId(eventEntity.getBaseEntityId()) == null) {
+		System.out.println("event exist: " + isEventExist(eventEntity.getBaseEntityId(), eventEntity.getServerVersion()));
+		if (isEventExist(eventEntity.getBaseEntityId(), eventEntity.getServerVersion()) <= 0) {
 			commonDatabaseRepository.save(eventEntity);
 			
 		} else {
@@ -53,6 +54,16 @@ public class EventService implements RegisterService<EventEntity> {
 	@Override
 	public EventEntity findBybaseEntityId(String baseEntityId) {
 		return commonDatabaseRepository.findByKey(baseEntityId, "baseEntityId", EventEntity.class);
+	}
+	
+	@Transactional
+	public EventEntity findByBaseEntityIdAndServerVersion(String baseEntityId, long serverVersion) {
+		return commonDatabaseRepository.findByBaseEntityIdAndServerVersion(baseEntityId, serverVersion, EventEntity.class);
+	}
+	
+	@Transactional
+	public int isEventExist(String baseEntityId, long serverVersion) {
+		return commonDatabaseRepository.isEventExist(baseEntityId, serverVersion);
 	}
 	
 }

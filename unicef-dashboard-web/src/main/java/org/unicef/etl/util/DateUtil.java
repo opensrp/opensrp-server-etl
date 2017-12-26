@@ -34,6 +34,15 @@ public class DateUtil {
 		return date;
 	}
 	
+	public static Date getStringToDate( String str) throws ParseException, JSONException {
+		Date date = null;
+		if (!"null".equalsIgnoreCase(str) && !str.isEmpty()) {
+			date = getYYYYMMDDFormat.parse(str);
+			return date;
+		}
+		return date;
+	}
+	
 	public static Date getDDMMYYYYDateFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
 		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {

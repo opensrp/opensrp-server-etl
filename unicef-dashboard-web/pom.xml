@@ -217,13 +217,13 @@
   <resources>
  	
   	<resource>
-		<directory>../mcare-etl/src/main/resources</directory>
+		<directory>../unicef-etl/src/main/resources</directory>
 	</resource>
 	  	<resource>
-		<directory>../mcare-etl/src/test/resources</directory>
+		<directory>../unicef-etl/src/test/resources</directory>
 	</resource>
 	<resource>
-		<directory>../mcare-dashboard-web/src/main/resources</directory>
+		<directory>../unicef-dashboard-web/src/main/resources</directory>
 	</resource>
   </resources>
     <plugins>

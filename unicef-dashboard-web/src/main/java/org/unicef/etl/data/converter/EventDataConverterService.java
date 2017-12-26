@@ -1,5 +1,6 @@
 package org.unicef.etl.data.converter;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.unicef.etl.interfaces.DataConverterService;
 import org.unicef.etl.service.ClientService;
 import org.unicef.etl.service.EventService;
 import org.unicef.etl.service.ExceptionService;
+import org.unicef.etl.util.DateUtil;
 
 @Service
 public class EventDataConverterService implements DataConverterService {
@@ -47,7 +49,7 @@ public class EventDataConverterService implements DataConverterService {
 			Class<EventEntity> className = EventEntity.class;
 			Object object = eventEntity;
 			eventEntity = (EventEntity) dataConverter.convert(doc, className, object);
-			System.out.println("eventEntity: " + eventEntity.toString());
+			//System.out.println("eventEntity: " + eventEntity.toString());
 			
 			JSONObject obsJson = new JSONObject();
 			Map<String, String> obsMap = new HashMap<String, String>();
@@ -61,18 +63,36 @@ public class EventDataConverterService implements DataConverterService {
 					String obsfieldCode = obsFields.getString("fieldCode");
 					obsJson.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
 					obsMap.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
+					
 				} else if ("concept".equals(obsfieldType)) {
 					String obsfieldCode = obsFields.getString("formSubmissionField");
 					obsJson.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
 					obsMap.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
+					if ("vaccination".equals(eventEntity.getEntityType())) {
+						if(obsfieldCode.endsWith("_dose")) {
+							eventEntity.setVaccinationDoseName(obsfieldCode);
+							eventEntity.setVaccinationDose(Integer.parseInt(obsFieldsvaluesAr.get(0).toString()));
+						}else {
+							eventEntity.setVaccinationName(obsfieldCode);						
+							eventEntity.setVaccinationDate(DateUtil.getStringToDate(obsFieldsvaluesAr.get(0).toString()));
+						}
+					}
 					
 				}
 				
 			}
 			
-			System.out.println("obsJson: " + obsJson.toString());
-			System.out.println("obsMap: " + obsMap.toString());
+			//System.out.println("obsJson: " + obsJson.toString());
+			//System.out.println("obsMap: " + obsMap.toString());
 			eventEntity.setObs(obsMap);
+			
+			try {
+				eventEntity.setStart(DateUtil.getDateTimeFromString(obsJson, "start"));
+				eventEntity.setEnd(DateUtil.getDateTimeFromString(obsJson, "end")); 
+			} catch (ParseException e) {
+				System.err.println("error: " + e.getMessage());
+			} 
+			
 			eventService.save(eventEntity);
 			
 			clientEntity = clientService.findBybaseEntityId(eventEntity.getBaseEntityId());
@@ -85,9 +105,9 @@ public class EventDataConverterService implements DataConverterService {
 			}
 			
 		}
-		catch (JSONException e) {
+		catch (JSONException | ParseException e) {
 			System.out.println("event data converter services: " + e.fillInStackTrace().toString());
-			//exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "event");
+			exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "event");
 		}
 		
 	}

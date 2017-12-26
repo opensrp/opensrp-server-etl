@@ -1,7 +1,8 @@
 package org.unicef.etl.entity;
-
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 public class MyJson implements Serializable {
 
 	private String stringProp;

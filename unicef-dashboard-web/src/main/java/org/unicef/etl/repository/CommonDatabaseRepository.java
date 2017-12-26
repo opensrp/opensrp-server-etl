@@ -154,6 +154,19 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
+	public <T> T findByBaseEntityIdAndServerVersion(String baseEntityId, long serverVersion, Class<?> className) {
+		System.out.println("finding by baseEntityId and serverVersion:" + baseEntityId);
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("baseEntityId", baseEntityId));
+		criteria.add(Restrictions.eq("serverVersion", serverVersion));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		//System.out.println("finding result:" + result.toString());
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
 	public int isActionExist(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
 		int actionExist = 0;
@@ -175,5 +188,26 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		} // TODO Auto-generated method stub
 		
 		return actionExist;
+	}
+	
+	public int isEventExist(String baseEntityId, long serverVersion) {
+		Session session = sessionFactory.openSession();
+		int eventExist = 0;
+		try {
+			String hql = "select E.baseEntityId from " + "EventEntity E " + "where E.baseEntityId = :base_entity_id "
+					+ "and E.serverVersion = :server_version ";
+			Query query = session.createQuery(hql);
+			query.setParameter("base_entity_id", baseEntityId);
+			query.setParameter("server_version", serverVersion);
+			System.out.println("query: " + query);
+			eventExist = query.list().size();
+			session.close();
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		} // TODO Auto-generated method stub
+		
+		return eventExist;
 	}
 }
