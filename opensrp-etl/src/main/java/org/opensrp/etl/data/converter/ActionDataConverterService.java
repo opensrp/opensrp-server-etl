@@ -6,7 +6,9 @@ import org.opensrp.etl.entity.ActionEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
 import org.opensrp.etl.service.ActionService;
 import org.opensrp.etl.service.ExceptionService;
+import org.opensrp.etl.util.BooleanUtil;
 import org.opensrp.etl.util.DateUtil;
+import org.opensrp.etl.util.NumbertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionDataConverterService implements DataConverterService {
@@ -30,18 +32,23 @@ public class ActionDataConverterService implements DataConverterService {
     @Override
     public void convertToEntityAndSave(JSONObject doc) throws JSONException {
         try {
-            Class<ActionEntity> className = ActionEntity.class;
-            Object object = new ActionEntity();
-            actionEntity = (ActionEntity) dataConverter.convert(doc, className, object);
-            JSONObject data = new JSONObject(doc.getString("data"));
-            actionEntity.setProvider(doc.getString("anmIdentifier"));
+            //Class<ActionEntity> className = ActionEntity.class;
+            //Object object = new ActionEntity();
+            //actionEntity = (ActionEntity) dataConverter.convert(doc, className, object);
+            actionEntity.setanmIdentifier(doc.getString("anmIdentifier"));
             actionEntity.setCaseId(doc.getString("caseID"));
-            actionEntity.setAlertStatus(data.getString("alertStatus"));
-            actionEntity.setVisitCode(data.getString("visitCode"));
-            actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
-            actionEntity.setScheduleName(data.getString("scheduleName"));
-            actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
-            actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+            actionEntity.setactionTarget(doc.getString("actionTarget"));
+            actionEntity.setactionType(doc.getString("actionType"));
+            actionEntity.setisActionActive(BooleanUtil.convertToBoolean(doc.getString("isActionActive")));
+            actionEntity.settimeStamp(NumbertUtil.convertToLong(doc.getString("timeStamp")));
+            JSONObject data = new JSONObject(doc.getString("data"));
+           
+            actionEntity.setalertStatus(data.getString("alertStatus"));
+            actionEntity.setvisitCode(data.getString("visitCode"));
+            actionEntity.setexpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
+            actionEntity.setscheduleName(data.getString("scheduleName"));
+            actionEntity.setbeneficiaryType(data.getString("beneficiaryType"));
+            actionEntity.setstartDate(DateUtil.getDateFromString(data, "startDate"));
             actionService.save(actionEntity);
         } catch (Exception e) {
             exceptionService.generatedEntityAndSaveForAction(doc, e

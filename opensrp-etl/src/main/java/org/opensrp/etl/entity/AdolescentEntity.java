@@ -49,6 +49,10 @@ public class AdolescentEntity {
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 	
+	private String INSTANCEID;
+
+	private String _id;
+
 	private String changes;
 	
 	private String Met;
@@ -371,6 +375,22 @@ public class AdolescentEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 	
 	
 }

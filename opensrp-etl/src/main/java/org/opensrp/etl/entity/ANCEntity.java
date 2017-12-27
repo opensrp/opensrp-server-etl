@@ -52,6 +52,8 @@ public class ANCEntity {
 
 	private Integer Preg_Status;
 
+	private String INSTANCEID;
+
 	private String existing_Caesarean;
 
 	private String existing_Age_Youngest_Child;
@@ -664,4 +666,12 @@ public class ANCEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
 }

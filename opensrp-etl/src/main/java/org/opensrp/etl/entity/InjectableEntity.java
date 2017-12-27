@@ -87,7 +87,11 @@ public class InjectableEntity {
 	private Date Format_Next_Injection_Date;
 
 	@Temporal(TemporalType.DATE)
-	private Date existing_Injection_Date;
+    private Date existing_Injection_Date;
+
+    private String INSTANCEID;
+
+    private String _id;
 
 	private String existing_TT_Count;
 	
@@ -570,4 +574,20 @@ public class InjectableEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 }

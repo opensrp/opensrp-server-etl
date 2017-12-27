@@ -44,10 +44,12 @@ public class ANCDataConverterService implements DataConverterService {
         if (anc1VisitDoc.length() != 0) {
             ancEntity = (ANCEntity) dataConverter.convert(anc1VisitDoc,
                     className, ancObject);
-            ancEntity.setAncName(Keys.ANC1.name());
-            ancEntity.set_id(doc.getString("_id"));
-            ancEntity.setrelationalid(doc.getString("caseId"));
+
             try {
+                ancEntity.setAncName(Keys.ANC1.name());
+                ancEntity.set_id(doc.getString("_id"));
+                ancEntity.setrelationalid(doc.getString("caseId"));
+                ancEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 ancService.save(ancEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
@@ -60,10 +62,12 @@ public class ANCDataConverterService implements DataConverterService {
         if (anc2VisitDoc.length() != 0) {
             ancEntity = (ANCEntity) dataConverter.convert(anc2VisitDoc,
                     className, ancObject);
-            ancEntity.setAncName(Keys.ANC2.name());
-            ancEntity.set_id(doc.getString("_id"));
-            ancEntity.setrelationalid(doc.getString("caseId"));
+
             try {
+                ancEntity.setAncName(Keys.ANC2.name());
+                ancEntity.set_id(doc.getString("_id"));
+                ancEntity.setrelationalid(doc.getString("caseId"));
+                ancEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 ancService.save(ancEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
@@ -76,10 +80,12 @@ public class ANCDataConverterService implements DataConverterService {
         if (anc3VisitDoc.length() != 0) {
             ancEntity = (ANCEntity) dataConverter.convert(anc3VisitDoc,
                     className, ancObject);
-            ancEntity.setAncName(Keys.ANC3.name());
-            ancEntity.set_id(doc.getString("_id"));
-            ancEntity.setrelationalid(doc.getString("caseId"));
+
             try {
+                ancEntity.setAncName(Keys.ANC3.name());
+                ancEntity.set_id(doc.getString("_id"));
+                ancEntity.setrelationalid(doc.getString("caseId"));
+                ancEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 ancService.save(ancEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
@@ -92,10 +98,12 @@ public class ANCDataConverterService implements DataConverterService {
         if (anc4VisitDoc.length() != 0) {
             ancEntity = (ANCEntity) dataConverter.convert(anc4VisitDoc,
                     className, ancObject);
-            ancEntity.setAncName(Keys.ANC4.name());
-            ancEntity.set_id(doc.getString("_id"));
-            ancEntity.setrelationalid(doc.getString("caseId"));
+
             try {
+                ancEntity.setAncName(Keys.ANC4.name());
+                ancEntity.set_id(doc.getString("_id"));
+                ancEntity.setrelationalid(doc.getString("caseId"));
+                ancEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 ancService.save(ancEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e

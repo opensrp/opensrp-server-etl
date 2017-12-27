@@ -35,8 +35,11 @@ public class DeathRegDataConverterService implements DataConverterService {
             Object object = new DeathRegEntity();
             deathRegEntity = (DeathRegEntity) dataConverter.convert(deathReg,
                     className, object);
-            deathRegEntity.setRelationalid(doc.getString("caseId"));
+
             try {
+                deathRegEntity.setRelationalid(doc.getString("caseId"));
+                deathRegEntity.set_id(doc.getString("_id"));
+                deathRegEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 deathRegService.save(deathRegEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e

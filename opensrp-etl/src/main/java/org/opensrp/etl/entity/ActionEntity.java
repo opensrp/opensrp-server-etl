@@ -25,7 +25,7 @@ public class ActionEntity {
 	
 	@Override
 	public String toString() {
-		return "ActionEntity [id=" + id + ", provider=" + provider + ", caseID=" + caseId + ", startDate=" + startDate
+		return "ActionEntity [id=" + id + ", provider=" + anmIdentifier + ", caseID=" + caseId + ", startDate=" + startDate
 		        + ", beneficiaryType=" + beneficiaryType + ", scheduleName=" + scheduleName + ", expiryDate=" + expiryDate
 		        + ", visitCode=" + visitCode + ", alertStatus=" + alertStatus + ", actionTarget=" + actionTarget
 		        + ", actionType=" + actionType + ", isActionActive=" + isActionActive + ", timeStamp=" + timeStamp + "]";
@@ -37,7 +37,7 @@ public class ActionEntity {
 	private long id;
 	
 	@Column(name = "provider")
-	private String provider;
+	private String anmIdentifier;
 	
 	@Column(name = "case_id")
 	private String caseId;
@@ -100,31 +100,23 @@ public class ActionEntity {
 		return created;
 	}
 	
-	public void setCreated() {
-		this.created = new Date();
-	}
-	
 	public Date getUpdated() {
 		return updated;
 	}
-	
-	public void setUpdated() {
-		this.updated = new Date();
-	}
 
-	public String getProvider() {
-		return provider;
+	public String getAnmIdentifier() {
+		return anmIdentifier;
 	}
 	
-	public void setProvider(String provider) {
-		this.provider = provider;
+	public void setanmIdentifier(String provider) {
+		this.anmIdentifier = provider;
 	}
 
 	public Date getStartDate() {
 		return startDate;
 	}
 	
-	public void setStartDate(Date startDate) {
+	public void setstartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	
@@ -132,7 +124,7 @@ public class ActionEntity {
 		return beneficiaryType;
 	}
 	
-	public void setBeneficiaryType(String beneficiaryType) {
+	public void setbeneficiaryType(String beneficiaryType) {
 		this.beneficiaryType = beneficiaryType;
 	}
 	
@@ -140,7 +132,7 @@ public class ActionEntity {
 		return scheduleName;
 	}
 	
-	public void setScheduleName(String scheduleName) {
+	public void setscheduleName(String scheduleName) {
 		this.scheduleName = scheduleName;
 	}
 	
@@ -148,7 +140,7 @@ public class ActionEntity {
 		return expiryDate;
 	}
 	
-	public void setExpiryDate(Date expiryDate) {
+	public void setexpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	
@@ -156,7 +148,7 @@ public class ActionEntity {
 		return visitCode;
 	}
 	
-	public void setVisitCode(String visitCode) {
+	public void setvisitCode(String visitCode) {
 		this.visitCode = visitCode;
 	}
 	
@@ -164,7 +156,7 @@ public class ActionEntity {
 		return alertStatus;
 	}
 	
-	public void setAlertStatus(String alertStatus) {
+	public void setalertStatus(String alertStatus) {
 		this.alertStatus = alertStatus;
 	}
 	

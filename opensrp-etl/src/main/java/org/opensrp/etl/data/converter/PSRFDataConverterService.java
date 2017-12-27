@@ -11,35 +11,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PSRFDataConverterService implements DataConverterService {
 
-	@Autowired
-	private PSRFEntity psrfEntity;
+    @Autowired
+    private PSRFEntity psrfEntity;
 
-	@Autowired
-	private PSRFService psrfService;
+    @Autowired
+    private PSRFService psrfService;
 
-	@Autowired
-	private ExceptionService exceptionService;
+    @Autowired
+    private ExceptionService exceptionService;
 
-	@Autowired
-	private DataConverter dataConverter;
+    @Autowired
+    private DataConverter dataConverter;
 
-	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		JSONArray psrfs = new JSONArray();
-		psrfs = doc.getJSONArray("elco_Followup");
+    @Override
+    public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+        JSONArray psrfs = new JSONArray();
+        psrfs = doc.getJSONArray("elco_Followup");
 
-		for (int i = 0; i < psrfs.length(); i++) {
-			JSONObject psrf = psrfs.getJSONObject(i);
-			Class<PSRFEntity> className = PSRFEntity.class;
-			Object object = new PSRFEntity();
-			psrfEntity = (PSRFEntity) dataConverter.convert(psrf, className, object);		
-			psrfEntity.setRelationalid(doc.getString("caseId"));
-			try {
-				psrfService.save(psrfEntity);
-			} catch (Exception e) {
-			    exceptionService.generatedEntityAndSave(doc, e
+        for (int i = 0; i < psrfs.length(); i++) {
+            JSONObject psrf = psrfs.getJSONObject(i);
+            Class<PSRFEntity> className = PSRFEntity.class;
+            Object object = new PSRFEntity();
+            psrfEntity = (PSRFEntity) dataConverter.convert(psrf, className,
+                    object);
+
+            try {
+                psrfEntity.setRelationalid(doc.getString("caseId"));
+                psrfEntity.set_id(doc.getString("_id"));
+                psrfEntity.setINSTANCEID(doc.getString("INSTANCEID"));
+                psrfService.save(psrfEntity);
+            } catch (Exception e) {
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "psrf");
-			}
-		}
-	}
+            }
+        }
+    }
 }

@@ -10,13 +10,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
+import org.opensrp.etl.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BNFRepository implements RegisterRepository<BNFEntity> {
-	
-	@Autowired
-	private SessionFactory sessionFactory;
-	
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    private ExceptionService exceptionService;
+
 	public BNFRepository() {
 		// TODO Auto-generated constructor stub
 	}
@@ -26,7 +30,10 @@ public class BNFRepository implements RegisterRepository<BNFEntity> {
 		try {
 			getSession().save(bnfEntity);
 		} catch (Exception e) {
-			e.printStackTrace();
+		    exceptionService.generatedEntityAndSave(bnfEntity
+                    .getRelationalid(), e.fillInStackTrace().toString(),
+                    "BNFRepository", bnfEntity.getINSTANCEID(),
+                    bnfEntity.get_id());
 		}
 
 	}

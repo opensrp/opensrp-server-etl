@@ -9,27 +9,30 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.opensrp.etl.entity.ANCEntity;
 import org.opensrp.etl.interfaces.RegisterRepository;
+import org.opensrp.etl.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ANCRepository implements RegisterRepository<ANCEntity> {
-	
+
+    @Autowired
 	private SessionFactory sessionFactory;
-	
+
+    @Autowired
+    private ExceptionService exceptionService;
+
 	public ANCRepository() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
-	}
-	
+
 	@Override
 	public void save(ANCEntity ancEntity) {
 		try {
             getSession().save(ancEntity);
         } catch (Exception e) {
-            e.printStackTrace();
+            exceptionService.generatedEntityAndSave(ancEntity
+                    .getRelationalid(), e.fillInStackTrace().toString(),
+                    "ANCRepository", ancEntity.getINSTANCEID(),
+                    ancEntity.get_id());
         }
 		
 	}

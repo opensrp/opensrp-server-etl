@@ -29,8 +29,10 @@ public class PNCEntity {
 	private long id;
 	
 	@Column(name = "doc_id")
-	private String _id;
-	
+    private String _id;
+
+    private String INSTANCEID;
+
 	private String pncName;
 
 	@Temporal(TemporalType.DATE)
@@ -649,4 +651,12 @@ public class PNCEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
 }

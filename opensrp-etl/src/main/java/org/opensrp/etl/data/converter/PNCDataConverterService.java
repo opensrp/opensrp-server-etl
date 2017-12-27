@@ -38,28 +38,36 @@ public class PNCDataConverterService implements DataConverterService {
         Class<PNCEntity> PNCEntity = PNCEntity.class;
         Object ancObject = new PNCEntity();
 
-        JSONObject pnc1VisitDoc = new JSONObject(doc.getString("PNCVisit1").toString());
+        JSONObject pnc1VisitDoc = new JSONObject(doc.getString("PNCVisit1")
+                .toString());
 
         if (pnc1VisitDoc.length() != 0) {
-            pncEntity = (PNCEntity) dataConverter.convert(pnc1VisitDoc, PNCEntity, ancObject);
-            pncEntity.setPncName(Keys.PNC1.name());
-            pncEntity.set_id(doc.getString("_id"));
-            pncEntity.setrelationalid(doc.getString("caseId"));
+            pncEntity = (PNCEntity) dataConverter.convert(pnc1VisitDoc,
+                    PNCEntity, ancObject);
+
             try {
+                pncEntity.setPncName(Keys.PNC1.name());
+                pncEntity.set_id(doc.getString("_id"));
+                pncEntity.setrelationalid(doc.getString("caseId"));
+                pncEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 pncService.save(pncEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc1");
             }
         }
-        JSONObject pnc2VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit2").toString());
+        JSONObject pnc2VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit2")
+                .toString());
 
         if (pnc2VisitDoc.length() != 0) {
-            pncEntity = (PNCEntity) dataConverter.convert(pnc2VisitDoc, PNCEntity, ancObject);
-            pncEntity.setPncName(Keys.PNC2.name());
-            pncEntity.set_id(doc.getString("_id"));
-            pncEntity.setrelationalid(doc.getString("caseId"));
+            pncEntity = (PNCEntity) dataConverter.convert(pnc2VisitDoc,
+                    PNCEntity, ancObject);
+
             try {
+                pncEntity.setPncName(Keys.PNC2.name());
+                pncEntity.set_id(doc.getString("_id"));
+                pncEntity.setrelationalid(doc.getString("caseId"));
+                pncEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 pncService.save(pncEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
@@ -67,28 +75,36 @@ public class PNCDataConverterService implements DataConverterService {
             }
 
         }
-        JSONObject pnc3VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit3").toString());
+        JSONObject pnc3VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit3")
+                .toString());
 
         if (pnc3VisitDoc.length() != 0) {
-            pncEntity = (PNCEntity) dataConverter.convert(pnc3VisitDoc, PNCEntity, ancObject);
-            pncEntity.setPncName(Keys.PNC3.name());
-            pncEntity.set_id(doc.getString("_id"));
-            pncEntity.setrelationalid(doc.getString("caseId"));
+            pncEntity = (PNCEntity) dataConverter.convert(pnc3VisitDoc,
+                    PNCEntity, ancObject);
+
             try {
+                pncEntity.setPncName(Keys.PNC3.name());
+                pncEntity.set_id(doc.getString("_id"));
+                pncEntity.setrelationalid(doc.getString("caseId"));
+                pncEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 pncService.save(pncEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "pnc3");
             }
         }
-        JSONObject pnc4VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit4").toString());
+        JSONObject pnc4VisitDoc = new JSONObject(doc.getJSONObject("PNCVisit4")
+                .toString());
 
         if (pnc4VisitDoc.length() != 0) {
-            pncEntity = (PNCEntity) dataConverter.convert(pnc4VisitDoc, PNCEntity, ancObject);
-            pncEntity.setPncName(Keys.PNC4.name());
-            pncEntity.set_id(doc.getString("_id"));
-            pncEntity.setrelationalid(doc.getString("caseId"));
+            pncEntity = (PNCEntity) dataConverter.convert(pnc4VisitDoc,
+                    PNCEntity, ancObject);
+
             try {
+                pncEntity.setPncName(Keys.PNC4.name());
+                pncEntity.set_id(doc.getString("_id"));
+                pncEntity.setrelationalid(doc.getString("caseId"));
+                pncEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 pncService.save(pncEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e

@@ -9,45 +9,48 @@ import org.opensrp.etl.service.ExceptionService;
 import org.opensrp.etl.service.InjectableService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class InjectableDataConverterService implements DataConverterService{
-	
-	@Autowired
-	private InjectableEntity injectableEntity;
-	
-	@Autowired
-	private InjectableService injectableService;
-	
-	@Autowired
-	private ExceptionService exceptionService;
-	
-	@Autowired
-	private DataConverter dataConverter;
-	
-	public InjectableDataConverterService() {
-		// TODO Auto-generated constructor stub
-	}
+public class InjectableDataConverterService implements DataConverterService {
 
-	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		JSONArray injectables = new JSONArray();
-		injectables = doc.getJSONArray("injecTables");
+    @Autowired
+    private InjectableEntity injectableEntity;
 
-		for (int i = 0; i < injectables.length(); i++) {
-			JSONObject injectable = injectables.getJSONObject(i);
-			Class<InjectableEntity> className = InjectableEntity.class;
-			Object object = new InjectableEntity();
-			injectableEntity = (InjectableEntity) dataConverter.convert(injectable, className, object);
-			injectableEntity.setrelationalid(doc.getString("caseId"));
-			try {
-				injectableService.save(injectableEntity);
-			}
-			catch (Exception e) {
-			    exceptionService.generatedEntityAndSave(doc, e
+    @Autowired
+    private InjectableService injectableService;
+
+    @Autowired
+    private ExceptionService exceptionService;
+
+    @Autowired
+    private DataConverter dataConverter;
+
+    public InjectableDataConverterService() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+        JSONArray injectables = new JSONArray();
+        injectables = doc.getJSONArray("injecTables");
+
+        for (int i = 0; i < injectables.length(); i++) {
+            JSONObject injectable = injectables.getJSONObject(i);
+            Class<InjectableEntity> className = InjectableEntity.class;
+            Object object = new InjectableEntity();
+            injectableEntity = (InjectableEntity) dataConverter.convert(
+                    injectable, className, object);
+
+            try {
+                injectableEntity.setrelationalid(doc.getString("caseId"));
+                injectableEntity.set_id(doc.getString("_id"));
+                injectableEntity.setINSTANCEID(doc.getString("INSTANCEID"));
+                injectableService.save(injectableEntity);
+            } catch (Exception e) {
+                exceptionService.generatedEntityAndSave(doc, e
                         .fillInStackTrace().toString(), "injectable");
-			}
-			
-		}
-		
-	}
+            }
+
+        }
+
+    }
 
 }

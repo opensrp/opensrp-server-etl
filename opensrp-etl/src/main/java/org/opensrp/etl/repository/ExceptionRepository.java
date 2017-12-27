@@ -12,16 +12,12 @@ import org.opensrp.etl.interfaces.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExceptionRepository implements RegisterRepository<ExceptionEntity> {
-	
+
+    @Autowired
 	private SessionFactory sessionFactory;
 	
 	public ExceptionRepository() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
 	}
 	
 	private Session getSession() {
@@ -66,11 +62,9 @@ public class ExceptionRepository implements RegisterRepository<ExceptionEntity> 
 	
 	@Override
 	public ExceptionEntity findByCaseId(String caseID) {
-		Session session = this.sessionFactory.getCurrentSession();
 		Criteria listChildCr = getSession().createCriteria(ExceptionEntity.class);
 		listChildCr.add(Restrictions.eq("caseId", caseID));
 		List<ExceptionEntity> listException = listChildCr.list();
 		return listException.size() > 0 ? (ExceptionEntity) listException.get(0) : null;
 	}
-	
 }

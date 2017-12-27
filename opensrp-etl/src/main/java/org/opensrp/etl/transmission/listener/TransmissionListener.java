@@ -63,6 +63,5 @@ public class TransmissionListener {
         } else {
             System.out.println("DGFP ETL process started, marker not initialized");
         }
-
 	}
 }

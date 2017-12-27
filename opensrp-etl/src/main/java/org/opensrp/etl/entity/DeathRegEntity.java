@@ -53,6 +53,10 @@ public class DeathRegEntity {
 
 	private Integer Deceased_Age_Group;
 
+    private String INSTANCEID;
+
+    private String _id;
+
 	private String changes;
 
 	private String Confirm_Info;
@@ -346,4 +350,20 @@ public class DeathRegEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 }

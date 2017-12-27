@@ -248,8 +248,12 @@ public class PSRFEntity {
 
 	private String Mother_F_Name;
 
-	private String relationalid;
-	
+    private String relationalid;
+
+    private String INSTANCEID;
+
+    private String _id;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
@@ -1132,7 +1136,23 @@ public class PSRFEntity {
 		this.updated = updated;
 	}
 	
-	@Override
+	public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    @Override
 	public String toString() {
 		return "PSRFEntity [id=" + id + ", Calc_EDD=" + Calc_EDD
 				+ ", Want_FP_Commodities=" + Want_FP_Commodities

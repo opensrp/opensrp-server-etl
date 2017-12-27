@@ -456,15 +456,7 @@ public class HouseholdEntity {
 		return created;
 	}
 
-	public void setcreated(Date created) {
-		this.created = created;
-	}
-
 	public Date getUpdated() {
 		return updated;
-	}
-
-	public void setupdated(Date updated) {
-		this.updated = updated;
 	}
 }

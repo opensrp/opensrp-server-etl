@@ -109,7 +109,9 @@ public class NutritionEntity {
 
 	private String existing_Country;
 
-	private String relationalid;
+    private String relationalid;
+
+    private String INSTANCEID;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -456,5 +458,13 @@ public class NutritionEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
 	
 }

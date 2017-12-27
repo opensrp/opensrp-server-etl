@@ -62,6 +62,10 @@ public class ChildEntity {
 
 	private Long existing_ELCO_NID;
 
+    private String INSTANCEID;
+
+    private String _id;
+
 	private String Met;
 
 	private String changes;
@@ -637,4 +641,20 @@ public class ChildEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+    public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 }
