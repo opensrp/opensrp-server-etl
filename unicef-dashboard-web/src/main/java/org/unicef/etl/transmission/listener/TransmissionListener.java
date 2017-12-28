@@ -47,16 +47,18 @@ public class TransmissionListener {
 			vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
 			List<Row> rows = vr.getRows();
 			System.err.println("unicef etl process started rows:" + rows.size());
+			int rowSize = rows.size();
 			for (Row row : rows) {
 				try {
 					JSONObject jsonData = new JSONObject(row.getValue());
-					//System.out.println("jsonData: " + jsonData);
-					System.err.println("unicef etl process started rows:" + rows.size());
+					System.err.println("transfer started:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
 					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("serverVersion"));
 					transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
 					if (transmissionServices != null) {
 						transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(
 						    jsonData);
+						System.err.println("transfer end:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
+						rowSize--;
 						if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
 							markerEntity.setTimeStamp(currentDocumentTimeStamp);
 							markerService.update(markerEntity);

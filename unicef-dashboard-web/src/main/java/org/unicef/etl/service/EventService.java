@@ -21,8 +21,8 @@ public class EventService implements RegisterService<EventEntity> {
 	@Transactional
 	@Override
 	public void save(EventEntity eventEntity) {
-		System.out.println("event exist: " + isEventExist(eventEntity.getBaseEntityId(), eventEntity.getServerVersion()));
-		if (isEventExist(eventEntity.getBaseEntityId(), eventEntity.getServerVersion()) <= 0) {
+		System.out.println("event exist: " + isEventExist(eventEntity.getBaseEntityId(), eventEntity.getVersion()));
+		if (isEventExist(eventEntity.getBaseEntityId(), eventEntity.getVersion()) <= 0) {
 			commonDatabaseRepository.save(eventEntity);
 			
 		} else {
@@ -62,8 +62,8 @@ public class EventService implements RegisterService<EventEntity> {
 	}
 	
 	@Transactional
-	public int isEventExist(String baseEntityId, long serverVersion) {
-		return commonDatabaseRepository.isEventExist(baseEntityId, serverVersion);
+	public int isEventExist(String baseEntityId, long version) {
+		return commonDatabaseRepository.isEventExist(baseEntityId, version);
 	}
 	
 }

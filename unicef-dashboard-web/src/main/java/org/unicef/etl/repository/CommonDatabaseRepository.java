@@ -191,15 +191,15 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		return actionExist;
 	}
 	
-	public int isEventExist(String baseEntityId, long serverVersion) {
+	public int isEventExist(String baseEntityId, long version) {
 		Session session = sessionFactory.openSession();
 		int eventExist = 0;
 		try {
 			String hql = "select E.baseEntityId from " + "EventEntity E " + "where E.baseEntityId = :base_entity_id "
-					+ "and E.serverVersion = :server_version ";
+					+ "and E.version = :version ";
 			Query query = session.createQuery(hql);
 			query.setParameter("base_entity_id", baseEntityId);
-			query.setParameter("server_version", serverVersion);
+			query.setParameter("version", version);
 			System.out.println("query: " + query);
 			eventExist = query.list().size();
 			session.close();
