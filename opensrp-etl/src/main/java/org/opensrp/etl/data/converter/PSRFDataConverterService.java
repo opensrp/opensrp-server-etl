@@ -36,9 +36,9 @@ public class PSRFDataConverterService implements DataConverterService {
                     object);
 
             try {
-                psrfEntity.setRelationalid(doc.getString("caseId"));
+                psrfEntity.setrelationalid(doc.getString("caseId"));
                 psrfEntity.set_id(doc.getString("_id"));
-                psrfEntity.setINSTANCEID(doc.getString("INSTANCEID"));
+                //psrfEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 psrfService.save(psrfEntity);
             } catch (Exception e) {
                 exceptionService.generatedEntityAndSave(doc, e

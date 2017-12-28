@@ -42,69 +42,32 @@ public class DataConverter {
 
                     if (setterMethod == null) {
                         continue;
+                    } else if (JsonDocument.isNull(property)) {
+                        continue;
                     } else if ("java.util.Date".equalsIgnoreCase(dataTypeClass)) {
                         Method readMethod = pd.getReadMethod();
                         Class<Temporal> c = (Class<Temporal>) Class.forName("javax.persistence.Temporal");
                         if (readMethod.isAnnotationPresent(c)) {
-                            try {
-                                setterMethod.invoke(object, DateUtil.getDateFromString(JsonDocument, property));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }catch (NullPointerException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            setterMethod.invoke(object, DateUtil.getDateFromString(JsonDocument, property));
                         } else {
-                            try {
-                                setterMethod.invoke(object, DateUtil.getDateTimeFromString(JsonDocument, property));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }catch (NullPointerException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            setterMethod.invoke(object, DateUtil.getDateTimeFromString(JsonDocument, property));
                         }
-
                     } else if ("java.lang.Integer".equalsIgnoreCase(dataTypeClass)) {
                         setterMethod.invoke(object, NumbertUtil.convertToInteger(JsonDocument.getString(property)));
                     } else if ("java.lang.Long".equalsIgnoreCase(dataTypeClass)) {
-                        try {
-                            setterMethod.invoke(object, NumbertUtil.convertToLong(JsonDocument.getString(property)));
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        setterMethod.invoke(object, NumbertUtil.convertToLong(JsonDocument.getString(property)));
                     } else if ("java.lang.Double".equalsIgnoreCase(dataTypeClass)) {
-                        try {
-                            setterMethod.invoke(object, NumbertUtil.convertToDouble(JsonDocument.getString(property)));
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        setterMethod.invoke(object, NumbertUtil.convertToDouble(JsonDocument.getString(property)));
                     }else if ("java.lang.Boolean".equalsIgnoreCase(dataTypeClass)) {
-                        try {
-                            setterMethod.invoke(object, BooleanUtil.convertToBoolean(JsonDocument.getString(property)));
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        setterMethod.invoke(object, BooleanUtil.convertToBoolean(JsonDocument.getString(property)));
                     }else {
-                        try {
-                            setterMethod.invoke(object, JsonDocument.getString(property));
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        setterMethod.invoke(object, JsonDocument.getString(property));
                     }
                 }
                 catch (Exception e) {
-                    e.printStackTrace();
+                    //System.out.println("className: "+ className.getName());
+                    //System.out.println("property: " + property);
+                    //System.out.println(e.toString());
                 }
             }
         }

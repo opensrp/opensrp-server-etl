@@ -331,7 +331,7 @@ public class DeathRegEntity {
 		return relationalid;
 	}
 
-	public void setRelationalid(String relationalid) {
+	public void setrelationalid(String relationalid) {
 		this.relationalid = relationalid;
 	}
 
@@ -339,16 +339,8 @@ public class DeathRegEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
 	public Date getUpdated() {
 		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
     public String getINSTANCEID() {

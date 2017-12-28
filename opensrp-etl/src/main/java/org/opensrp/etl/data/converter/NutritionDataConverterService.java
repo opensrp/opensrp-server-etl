@@ -40,7 +40,7 @@ public class NutritionDataConverterService implements DataConverterService {
                     nutrition, className, object);
 
             try {
-                nutritionEntity.setRelationalid(doc.getString("caseId"));
+                nutritionEntity.setrelationalid(doc.getString("caseId"));
                 nutritionEntity.setDoc_id(doc.getString("_id"));
                 nutritionEntity.setINSTANCEID(doc.getString("INSTANCEID"));
                 nutritionService.save(nutritionEntity);

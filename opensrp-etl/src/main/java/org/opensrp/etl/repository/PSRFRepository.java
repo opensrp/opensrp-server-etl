@@ -30,10 +30,10 @@ public class PSRFRepository implements RegisterRepository<PSRFEntity> {
         try {
             getSession().save(psrfEntity);
         } catch (Exception e) {
-            exceptionService.generatedEntityAndSave(psrfEntity
-                    .getRelationalid(), e.fillInStackTrace().toString(),
-                    "PSRFRepository", psrfEntity.getINSTANCEID(), psrfEntity
-                            .get_id());
+//            exceptionService.generatedEntityAndSave(psrfEntity
+//                    .getRelationalid(), e.fillInStackTrace().toString(),
+//                    "PSRFRepository", psrfEntity.getINSTANCEID(), psrfEntity
+//                            .get_id());
         }
     }
 

@@ -58,7 +58,6 @@ public class MemberDataConverterService implements DataConverterService {
 		Class<MemberEntity> className = MemberEntity.class;
 		Object object = new MemberEntity();
 		memberEntity = (MemberEntity) dataConverter.convert(doc, className, object);
-		memberEntity.setcaseId(doc.getString("caseId"));
 		try {
 			memberService.save(memberEntity);
 		}

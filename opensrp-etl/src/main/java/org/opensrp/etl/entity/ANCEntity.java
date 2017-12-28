@@ -655,16 +655,8 @@ public class ANCEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
 	public Date getUpdated() {
 		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
     public String getINSTANCEID() {

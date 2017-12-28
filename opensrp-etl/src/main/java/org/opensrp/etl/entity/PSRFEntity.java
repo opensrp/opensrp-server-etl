@@ -250,7 +250,7 @@ public class PSRFEntity {
 
     private String relationalid;
 
-    private String INSTANCEID;
+   // private String INSTANCEID;
 
     private String _id;
 
@@ -1116,7 +1116,7 @@ public class PSRFEntity {
 		return relationalid;
 	}
 
-	public void setRelationalid(String relationalid) {
+	public void setrelationalid(String relationalid) {
 		this.relationalid = relationalid;
 	}
 
@@ -1124,25 +1124,17 @@ public class PSRFEntity {
 		return created;
 	}
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
 	public Date getUpdated() {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-	
-	public String getINSTANCEID() {
-        return INSTANCEID;
-    }
-
-    public void setINSTANCEID(String iNSTANCEID) {
-        INSTANCEID = iNSTANCEID;
-    }
+//	public String getINSTANCEID() {
+//        return INSTANCEID;
+//    }
+//
+//    public void setINSTANCEID(String iNSTANCEID) {
+//        INSTANCEID = iNSTANCEID;
+//    }
 
     public String get_id() {
         return _id;
