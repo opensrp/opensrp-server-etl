@@ -1,23 +1,13 @@
 package org.opensrp.etl.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "misreport")
 public class MISReportEntity {
 
     public MISReportEntity() {
-        // TODO Auto-generated constructor stub
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "misreport_id_seq")
-    @SequenceGenerator(name = "misreport_id_seq", sequenceName = "misreport_id_seq", allocationSize = 1)
     private long id;
 
     private String division;
@@ -38,6 +28,10 @@ public class MISReportEntity {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDivision() {

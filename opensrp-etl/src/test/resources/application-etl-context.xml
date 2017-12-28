@@ -51,7 +51,6 @@
                 <value>org.opensrp.etl.entity.AdolescentEntity</value>
                 <value>org.opensrp.etl.entity.InjectableEntity</value>
                 <value>org.opensrp.etl.entity.DeathRegEntity</value>
-                <value>org.opensrp.etl.entity.MISReportEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
