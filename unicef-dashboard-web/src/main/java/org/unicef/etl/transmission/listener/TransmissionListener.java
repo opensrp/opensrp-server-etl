@@ -52,7 +52,7 @@ public class TransmissionListener {
 					JSONObject jsonData = new JSONObject(row.getValue());
 					//System.out.println("jsonData: " + jsonData);
 					System.err.println("unicef etl process started rows:" + rows.size());
-					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("serverVersion"));
 					transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
 					if (transmissionServices != null) {
 						transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(

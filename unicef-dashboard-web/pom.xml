@@ -213,7 +213,7 @@
 </dependency>
 	</dependencies>
   <build>
-  <finalName>mcare2</finalName>
+  <finalName>unicef-vaccination</finalName>
   <resources>
  	
   	<resource>
@@ -252,3 +252,4 @@
     </plugins>
   </build>
 </project>
+
