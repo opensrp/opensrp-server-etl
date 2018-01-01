@@ -12,4 +12,5 @@ logfile
 *.log*
 .springBeans
 assets/multimedia/
+*Servers
 

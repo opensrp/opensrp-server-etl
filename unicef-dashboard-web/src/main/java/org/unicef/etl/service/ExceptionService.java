@@ -94,9 +94,9 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	
 	@Transactional
 	@Override
-	public ExceptionEntity findBybaseEntityId(String caseId) {
+	public ExceptionEntity findBybaseEntityId(String baseEntityId) {
 		
-		return commonDatabaseRepository.findByKey(caseId, "caseId", ExceptionEntity.class);
+		return commonDatabaseRepository.findByKey(baseEntityId, "baseEntityId", ExceptionEntity.class);
 	}
 	
 }

@@ -69,11 +69,11 @@ public class EventDataConverterService implements DataConverterService {
 					obsJson.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
 					obsMap.put(obsfieldCode, obsFieldsvaluesAr.get(0).toString());
 					if ("vaccination".equals(eventEntity.getEntityType())) {
-						if(obsfieldCode.endsWith("_dose")) {
+						if (obsfieldCode.endsWith("_dose")) {
 							eventEntity.setVaccinationDoseName(obsfieldCode);
 							eventEntity.setVaccinationDose(Integer.parseInt(obsFieldsvaluesAr.get(0).toString()));
-						}else {
-							eventEntity.setVaccinationName(obsfieldCode);						
+						} else {
+							eventEntity.setVaccinationName(obsfieldCode);
 							eventEntity.setVaccinationDate(DateUtil.getStringToDate(obsFieldsvaluesAr.get(0).toString()));
 						}
 					}
@@ -88,16 +88,23 @@ public class EventDataConverterService implements DataConverterService {
 			
 			try {
 				eventEntity.setStart(DateUtil.getDateTimeFromString(obsJson, "start"));
-				eventEntity.setEnd(DateUtil.getDateTimeFromString(obsJson, "end")); 
-			} catch (ParseException e) {
+				eventEntity.setEnd(DateUtil.getDateTimeFromString(obsJson, "end"));
+			}
+			catch (ParseException e) {
 				System.err.println("error: " + e.getMessage());
-			} 
+			}
 			
 			eventService.save(eventEntity);
 			
 			clientEntity = clientService.findBybaseEntityId(eventEntity.getBaseEntityId());
-			if (clientEntity != null && !"Vaccination".equals(eventEntity.getEntityType())) {
+			if (clientEntity != null && !"vaccination".equals(eventEntity.getEntityType())) {
 				clientEntity.setEntityType(eventEntity.getEntityType());
+				if (obsJson.has("maritial_status")) {
+					clientEntity.setMaritial_status(obsJson.getString("maritial_status"));
+				}
+				clientEntity.setLatest_lmp(DateUtil.getDDMMYYYYDateFromString(obsJson, "latest_lmp"));
+				clientEntity.setMember_Reg_Date(DateUtil.getDDMMYYYYDateFromString(obsJson, "member_Reg_Date"));
+				clientEntity.setProviderId(eventEntity.getProviderId());
 				clientService.update(clientEntity);
 				System.out.println("update client with entityType client id: " + eventEntity.getBaseEntityId()
 				        + " ,entityType:" + eventEntity.getEntityType());

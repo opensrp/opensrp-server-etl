@@ -30,6 +30,9 @@ public class ClientEntity {
 	@Column(name = "first_name")
 	private String firstName;
 	
+	@Column(name = "provider_id")
+	public String providerId;
+	
 	@Column(name = "last_name")
 	private String lastName;
 	
@@ -108,6 +111,20 @@ public class ClientEntity {
 	
 	@Column(name = "entity_type")
 	public String entityType;
+	
+	@Column(name = "maritial_status")
+	public String maritial_status;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "member_reg_date")
+	public Date member_Reg_Date;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "latest_lmp")
+	public Date latest_lmp;
+	
+	@Column(name = "relationships_id")
+	public String relationships;
 	
 	public String getFirstName() {
 		return firstName;
@@ -317,16 +334,57 @@ public class ClientEntity {
 		this.gender = gender;
 	}
 	
+	public String getMaritial_status() {
+		return maritial_status;
+	}
+	
+	public void setMaritial_status(String maritial_status) {
+		this.maritial_status = maritial_status;
+	}
+	
+	public Date getMember_Reg_Date() {
+		return member_Reg_Date;
+	}
+	
+	public void setMember_Reg_Date(Date member_Reg_Date) {
+		this.member_Reg_Date = member_Reg_Date;
+	}
+	
+	public Date getLatest_lmp() {
+		return latest_lmp;
+	}
+	
+	public void setLatest_lmp(Date latest_lmp) {
+		this.latest_lmp = latest_lmp;
+	}
+	
+	public String getRelationships() {
+		return relationships;
+	}
+	
+	public void setRelationships(String relationships) {
+		this.relationships = relationships;
+	}
+	
+	public String getProviderId() {
+		return providerId;
+	}
+	
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+	
 	@Override
 	public String toString() {
-		return "ClientEntity [_id=" + _id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthdate="
-		        + birthdate + ", baseEntityId=" + baseEntityId + ", serverVersion=" + serverVersion + ", spouseName="
-		        + spouseName + ", householdCode=" + householdCode + ", addressType=" + addressType + ", division="
-		        + division + ", district=" + district + ", upazila=" + upazila + ", union=" + union + ", ward=" + ward
-		        + ", subunit=" + subunit + ", mauzapara=" + mauzapara + ", gobhhid=" + gobhhid + ", country=" + country
-		        + ", phoneNumber=" + phoneNumber + ", nationalId=" + nationalId + ", gender=" + gender + ", created="
-		        + created + ", updated=" + updated + ", dateCreated=" + dateCreated + ", dateEdited=" + dateEdited
-		        + ", entityType=" + entityType + "]";
+		return "ClientEntity [_id=" + _id + ", firstName=" + firstName + ", providerId=" + providerId + ", lastName="
+		        + lastName + ", birthdate=" + birthdate + ", baseEntityId=" + baseEntityId + ", serverVersion="
+		        + serverVersion + ", spouseName=" + spouseName + ", householdCode=" + householdCode + ", addressType="
+		        + addressType + ", division=" + division + ", district=" + district + ", upazila=" + upazila + ", union="
+		        + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzapara=" + mauzapara + ", gobhhid=" + gobhhid
+		        + ", country=" + country + ", phoneNumber=" + phoneNumber + ", nationalId=" + nationalId + ", gender="
+		        + gender + ", created=" + created + ", updated=" + updated + ", dateCreated=" + dateCreated + ", dateEdited="
+		        + dateEdited + ", entityType=" + entityType + ", maritial_status=" + maritial_status + ", member_Reg_Date="
+		        + member_Reg_Date + ", latest_lmp=" + latest_lmp + ", relationships=" + relationships + "]";
 	}
 	
 }

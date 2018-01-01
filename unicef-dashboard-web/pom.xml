@@ -7,7 +7,7 @@
     <artifactId>unicef-dashboard</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>org.mpower.unicef</groupId>
+  <groupId>org.mpower.unicef.web</groupId>
   <artifactId>unicef-dashboard-web</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -238,13 +238,14 @@
               <maxIdleTime>30000</maxIdleTime>
             </connector>
           </connectors>
-          <webAppSourceDirectory>${project.build.directory}/${pom.artifactId}-${pom.version}</webAppSourceDirectory>
+          <webAppSourceDirectory>${project.build.directory}/${project.artifactId}-${project.version}</webAppSourceDirectory>
           <contextPath>/</contextPath>
         </configuration>
       </plugin>
       <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>

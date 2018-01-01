@@ -15,6 +15,7 @@
 	 
 	 <task:scheduled-tasks scheduler="scheduler">
         <task:scheduled ref="transmissionListener" method="dataListener" cron="0 0/1 * * * ?" />
+        <task:scheduled ref="transmissionListener" method="dataListenerActions" cron="0 0/1 * * * ?" />
     </task:scheduled-tasks>
     
    <task:scheduler pool-size="1" id="scheduler"/>

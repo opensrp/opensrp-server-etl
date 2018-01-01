@@ -12,49 +12,66 @@ import org.unicef.etl.service.ExceptionService;
 
 @Service
 public class ClientDataConverterService implements DataConverterService {
-
+	
 	@Autowired
 	private ClientEntity clientEntity;
-
+	
 	@Autowired
 	private ClientService clientService;
-
+	
 	@Autowired
 	private DataConverter dataConverter;
-
+	
 	@Autowired
 	private ExceptionService exceptionService;
-
+	
 	public ClientDataConverterService() {
-
+		
 	}
-
+	
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-
+		
 		try {
 			Class<ClientEntity> className = ClientEntity.class;
 			Object object = clientEntity;
 			clientEntity = (ClientEntity) dataConverter.convert(doc, className, object);
-			JSONObject identifiers = new JSONObject(doc.getString("identifiers"));
+			
 			if (doc.has("identifiers") && doc.isNull("identifiers") || doc.getJSONObject("identifiers").length() == 0) {
 				System.out.println("identifiers key does not exists!!");
 			} else {
+				JSONObject identifiers = new JSONObject(doc.getString("identifiers"));
 				System.out.println("identifiers key exists!!");
 				clientEntity = (ClientEntity) dataConverter.convert(identifiers, className, object);
 			}
-
-			JSONObject attributes = new JSONObject(doc.getString("attributes"));
+			
 			if (doc.has("attributes") && doc.isNull("attributes") || doc.getJSONObject("attributes").length() == 0) {
 				System.out.println("attributes key does not exists!!");
 			} else {
+				JSONObject attributes = new JSONObject(doc.getString("attributes"));
 				System.out.println("attributes key exists!!");
 				clientEntity = (ClientEntity) dataConverter.convert(attributes, className, object);
 			}
-
+			
+			if (!doc.has("relationships") || doc.has("relationships")
+			        && (doc.isNull("relationships") || doc.getJSONObject("relationships").length() == 0)) {
+				System.out.println("relationships key does not exists!!");
+			} else {
+				System.out.println("relationships key exists!!");
+				JSONObject relationships = new JSONObject(doc.getString("relationships"));
+				JSONArray relationshipAr = null;
+				if (relationships.has("mother")) {
+					relationshipAr = relationships.getJSONArray("mother");
+				} else if (relationships.has("household")) {
+					relationshipAr = relationships.getJSONArray("household");
+					
+				}
+				clientEntity.setRelationships(relationshipAr.get(0).toString());
+			}
+			
 			JSONArray addresses = doc.getJSONArray("addresses");
 			JSONObject addressJson = new JSONObject();
-
+			
 			for (int i = 0; i < addresses.length(); i++) {
 				JSONObject addressesObj = addresses.getJSONObject(i);
 				String addressType = addressesObj.getString("addressType");
@@ -80,16 +97,17 @@ public class ClientDataConverterService implements DataConverterService {
 				}
 				String addressFieldscountry = addressFields.getString("country");
 				addressJson.put("country", addressFieldscountry);
-
+				
 			}
 			clientEntity = (ClientEntity) dataConverter.convert(addressJson, className, object);
 			System.out.println("clientEntity: " + clientEntity.toString());
 			clientService.save(clientEntity);
-		} catch (JSONException e) {
+		}
+		catch (JSONException e) {
 			System.out.println("client data converter services: " + e.fillInStackTrace().toString());
 			exceptionService.generatedEntityAndSaveForAction(doc, e.fillInStackTrace().toString(), "client");
 		}
-
+		
 	}
-
+	
 }

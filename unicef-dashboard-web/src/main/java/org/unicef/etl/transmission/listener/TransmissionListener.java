@@ -16,6 +16,7 @@ import org.unicef.etl.interfaces.TransmissionServices;
 import org.unicef.etl.repository.SourceDBRepository;
 import org.unicef.etl.service.MarkerService;
 import org.unicef.etl.transmission.service.TransmissionServiceFactory;
+import org.unicef.etl.util.CommonConstant;
 
 @Service
 @EnableScheduling
@@ -41,7 +42,7 @@ public class TransmissionListener {
 	
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
-		markerEntity = markerService.findById(1);
+		markerEntity = markerService.findByName(CommonConstant.UNICEF.name());
 		ViewResult vr = null;
 		if (markerEntity != null) {
 			vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
@@ -51,13 +52,15 @@ public class TransmissionListener {
 			for (Row row : rows) {
 				try {
 					JSONObject jsonData = new JSONObject(row.getValue());
-					System.err.println("transfer started:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
+					System.err
+					        .println("transfer started:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
 					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("serverVersion"));
 					transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
 					if (transmissionServices != null) {
-						transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(
-						    jsonData);
-						System.err.println("transfer end:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
+						transmissionServiceFactory.getTransmissionType(jsonData.getString("type"))
+						        .convertDataJsonToEntity(jsonData);
+						System.err
+						        .println("transfer end:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
 						rowSize--;
 						if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
 							markerEntity.setTimeStamp(currentDocumentTimeStamp);
@@ -72,7 +75,45 @@ public class TransmissionListener {
 				
 			}
 		} else {
-			System.err.println("unicef etl process started marker not defined yet!!!!");
+			System.err.println("unicef etl process started no more client/event to transfer!!!");
+		}
+	}
+	
+	public void dataListenerActions() throws JSONException {
+		markerEntity = markerService.findByName(CommonConstant.ACTIONS.name());
+		ViewResult vr = null;
+		if (markerEntity != null) {
+			vr = sourceDBRepository.getAllActionsByTimeStamp(markerEntity.getTimeStamp());
+			List<Row> rows = vr.getRows();
+			System.err.println("unicef etl process started rows:" + rows.size());
+			int rowSize = rows.size();
+			for (Row row : rows) {
+				try {
+					JSONObject jsonData = new JSONObject(row.getValue());
+					System.err
+					        .println("transfer started:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
+					long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+					transmissionServices = transmissionServiceFactory.getTransmissionType(jsonData.getString("type"));
+					if (transmissionServices != null) {
+						transmissionServiceFactory.getTransmissionType(jsonData.getString("type"))
+						        .convertDataJsonToEntity(jsonData);
+						System.err
+						        .println("transfer end:" + rowSize + " ,baseEntityId:" + jsonData.getString("baseEntityId"));
+						rowSize--;
+						if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+							markerEntity.setTimeStamp(currentDocumentTimeStamp);
+							markerService.update(markerEntity);
+						}
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					
+				}
+				
+			}
+		} else {
+			System.err.println("unicef etl process started no more actions to transfer!!!");
 		}
 	}
 }
