@@ -10,14 +10,14 @@ public class MISReportEntity {
 
     private long id;
 
-    private String division;
-    private String district;
-    private String upazilla;
-    private String ward;
-    private String unionName;
-    private String unit;
-    private int month;
-    private int year;
+    private String mis_division;
+    private String mis_district;
+    private String mis_upazilla;
+    private String mis_ward;
+    private String mis_unionname;
+    private String mis_unit;
+    private int mis_currentMonth;
+    private int mis_currentYear;
     private int fpOldPillUsages;
     private int fpNewPillUsages;
     private int fpCurrentTotalPillUsages;
@@ -34,68 +34,68 @@ public class MISReportEntity {
         this.id = id;
     }
 
-    public String getDivision() {
-        return division;
+    public String getMis_division() {
+        return mis_division;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
+    public void setMis_division(String mis_division) {
+        this.mis_division = mis_division;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getMis_district() {
+        return mis_district;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setMis_district(String mis_district) {
+        this.mis_district = mis_district;
     }
 
-    public String getUpazilla() {
-        return upazilla;
+    public String getMis_upazilla() {
+        return mis_upazilla;
     }
 
-    public void setUpazilla(String upazilla) {
-        this.upazilla = upazilla;
+    public void setMis_upazilla(String mis_upazilla) {
+        this.mis_upazilla = mis_upazilla;
     }
 
-    public String getWard() {
-        return ward;
+    public String getMis_ward() {
+        return mis_ward;
     }
 
-    public void setWard(String ward) {
-        this.ward = ward;
+    public void setMis_ward(String mis_ward) {
+        this.mis_ward = mis_ward;
     }
 
-    public String getUnion() {
-        return unionName;
+    public String getMis_unionname() {
+        return mis_unionname;
     }
 
-    public void setUnion(String union) {
-        this.unionName = union;
+    public void setMis_unionname(String mis_unionname) {
+        this.mis_unionname = mis_unionname;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getMis_unit() {
+        return mis_unit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setMis_unit(String mis_unit) {
+        this.mis_unit = mis_unit;
     }
 
-    public int getMonth() {
-        return month;
+    public int getMis_currentMonth() {
+        return mis_currentMonth;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setMis_currentMonth(int mis_currentMonth) {
+        this.mis_currentMonth = mis_currentMonth;
     }
 
-    public int getYear() {
-        return year;
+    public int getMis_currentYear() {
+        return mis_currentYear;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setMis_currentYear(int mis_currentYear) {
+        this.mis_currentYear = mis_currentYear;
     }
 
     public int getFpOldPillUsages() {

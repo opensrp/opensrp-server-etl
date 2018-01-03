@@ -158,4 +158,16 @@ public class QueryRepository implements RegisterRepository<Object> {
     public int calculateleftPillAndStartedNone() {
         return calculateOldBirthControlMethodUsages(BIRTH_CONTROL_PILL);
     }
+
+    @Transactional
+    public int getNewPillUsage(String district, int year, int month) {
+        String sql = "SELECT fpTotalPillUsages FROM misreport m1"
+                + " WHERE mis_currentMonth = :month"
+                + " AND mis_currentYear = :year";
+        List results = getSession().createSQLQuery(sql)
+                .setParameter("month", month).setParameter("year", year).list();
+        System.out.println("result: " + results.get(0).toString());
+        int count = results.size();
+        return count;
+    }
 }

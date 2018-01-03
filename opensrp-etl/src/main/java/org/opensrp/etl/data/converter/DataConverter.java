@@ -42,8 +42,9 @@ public class DataConverter {
 
                     if (setterMethod == null) {
                         continue;
-                    } else if (JsonDocument.isNull(property)) {
-                        continue;
+                    } else if (JsonDocument.isNull(property) || !JsonDocument.has(property)) {
+                        System.out.println("className: "+ className.getName() + " property: " + property + " null");
+                        setterMethod.invoke(object, new Object[]{ null });
                     } else if ("java.util.Date".equalsIgnoreCase(dataTypeClass)) {
                         Method readMethod = pd.getReadMethod();
                         Class<Temporal> c = (Class<Temporal>) Class.forName("javax.persistence.Temporal");
@@ -65,9 +66,9 @@ public class DataConverter {
                     }
                 }
                 catch (Exception e) {
-                    //System.out.println("className: "+ className.getName());
-                    //System.out.println("property: " + property);
-                    //System.out.println(e.toString());
+                    System.out.println("className: "+ className.getName());
+                    System.out.println("property: " + property);
+                    System.out.println(e.toString());
                 }
             }
         }
