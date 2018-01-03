@@ -45,7 +45,7 @@ public class MisReportController {
                 + " year: " + year);
 
         FamilyPlanningReport fpr = new FamilyPlanningReport();
-        fpr.setNewPillUsages(queryRepository.calculateNewPillUsages(district,
+        fpr.setNewPillUsages(queryRepository.getNewPillUsage(district,
                 year, month));
         fpr.setOldCondomUsages(queryRepository.calculateOldCondomUsages());
         fpr.setOldFemalePermanentMethodUsages(queryRepository

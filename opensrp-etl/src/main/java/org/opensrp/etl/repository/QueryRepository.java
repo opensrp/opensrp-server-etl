@@ -166,8 +166,12 @@ public class QueryRepository implements RegisterRepository<Object> {
                 + " AND mis_currentYear = :year";
         List results = getSession().createSQLQuery(sql)
                 .setParameter("month", month).setParameter("year", year).list();
-        System.out.println("result: " + results.get(0).toString());
-        int count = results.size();
-        return count;
+
+        int fpTotalPillUsages = 0;
+        if (results.size() > 0) {
+            fpTotalPillUsages = Integer.parseInt(results.get(0).toString());
+            System.out.println("fpTotalPillUsages: " + fpTotalPillUsages);
+        }
+        return fpTotalPillUsages;
     }
 }
