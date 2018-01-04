@@ -130,10 +130,13 @@ public class PSRFEntity {
     @Temporal(TemporalType.DATE)
     private Date Format_Cond_Given_Date;
 
+    @Temporal(TemporalType.DATE)
     private Date Format_Pill_Given_Date;
 
+    @Temporal(TemporalType.DATE)
     private Date Format_Injection_Date;
 
+    @Temporal(TemporalType.DATE)
     private Date Format_Permanent_M_Date;
 
     private String TT_Dose;
@@ -487,6 +490,7 @@ public class PSRFEntity {
 		Married_Life = married_Life;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getFormat_Injection_Date() {
 		return Format_Injection_Date;
 	}
@@ -696,6 +700,7 @@ public class PSRFEntity {
 		this.existing_Calc_Age_Confirm = existing_Calc_Age_Confirm;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getNext_Injection_Date() {
 		return Next_Injection_Date;
 	}
@@ -704,6 +709,7 @@ public class PSRFEntity {
 		Next_Injection_Date = next_Injection_Date;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getFormat_Pill_Given_Date() {
 		return Format_Pill_Given_Date;
 	}

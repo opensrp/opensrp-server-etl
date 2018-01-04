@@ -7,11 +7,7 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.text.ParseException;
-
 import javax.persistence.Temporal;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.util.BooleanUtil;
 import org.opensrp.etl.util.DateUtil;
@@ -37,15 +33,20 @@ public class DataConverter {
                 try {
                     setterMethod = pd.getWriteMethod();
                     String dataTypeClass = pd.getPropertyType().getName();
+                    if (setterMethod == null) {
+                        System.err.println("setterMethod: " + setterMethod + " ,dataTypeClass:" + dataTypeClass);
+                        continue;
+                    }
                     String[] properties = setterMethod.getName().split("set");
                     property = properties[1];
 
-                    if (setterMethod == null) {
+                    if (!JsonDocument.has(property)) {
+                        System.err.println("key does not exist in  json for property: " + property);
                         continue;
-                    } else if (JsonDocument.isNull(property) || !JsonDocument.has(property)) {
-                        System.out.println("className: "+ className.getName() + " property: " + property + " null");
-                        setterMethod.invoke(object, new Object[]{ null });
-                    } else if ("java.util.Date".equalsIgnoreCase(dataTypeClass)) {
+
+                    }
+
+                    if ("java.util.Date".equalsIgnoreCase(dataTypeClass)) {
                         Method readMethod = pd.getReadMethod();
                         Class<Temporal> c = (Class<Temporal>) Class.forName("javax.persistence.Temporal");
                         if (readMethod.isAnnotationPresent(c)) {
@@ -66,9 +67,10 @@ public class DataConverter {
                     }
                 }
                 catch (Exception e) {
-                    System.out.println("className: "+ className.getName());
-                    System.out.println("property: " + property);
-                    System.out.println(e.toString());
+                    //System.out.println("className: "+ className.getName());
+                    //System.out.println("property: " + property);
+                    //System.out.println(e.toString());
+                    e.printStackTrace();
                 }
             }
         }
