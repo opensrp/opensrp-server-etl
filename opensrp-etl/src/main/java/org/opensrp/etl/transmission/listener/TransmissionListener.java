@@ -10,6 +10,7 @@ import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.repository.SourceDBRepository;
 import org.opensrp.etl.service.MarkerService;
 import org.opensrp.etl.transmission.service.TransmissionServiceFactory;
+import org.opensrp.etl.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -38,7 +39,7 @@ public class TransmissionListener {
 	
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
-		markerEntity = markerService.findById(1);
+		markerEntity = markerService.findByName(CommonConstant.DGFP.name());
 		if (markerEntity != null) {
 		    System.out.println("DGFP Data transfer started...");
             ViewResult vr = sourceDBRepository.allData(markerEntity
