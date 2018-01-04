@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.interfaces.RegisterService;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.opensrp.etl.repository.MarkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 	@Autowired
 	private MarkerRepository markerRepository;
 	
+	@Autowired
+	private CommonDatabaseRepository commonDatabaseRepository;
+	
 	public MarkerService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -23,7 +27,7 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 	@Transactional
 	@Override
 	public void save(MarkerEntity markerEntity) {
-		markerRepository.save(markerEntity);
+		commonDatabaseRepository.save(markerEntity);
 		
 	}
 	
@@ -63,6 +67,12 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 		
 		// TODO Auto-generated method stub
 		return markerRepository.getCurrentTimeStampFromMarker();
+	}
+	
+	@Transactional
+	public MarkerEntity findByName(String name) {
+	
+		return commonDatabaseRepository.findByKey(name, "name", MarkerEntity.class);
 	}
 	
 }

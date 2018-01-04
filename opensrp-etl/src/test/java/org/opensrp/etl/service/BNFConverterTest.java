@@ -40,7 +40,7 @@ public class BNFConverterTest {
 	@Autowired
 	private ExceptionService exceptionService;
 	
-	@Test
+	@Ignore
 	public void saveTest() throws ParseException, JSONException {
 		markerEntity = markerService.findById(1);
 		ViewResult vr = sourceDBRepository.allData(0);
