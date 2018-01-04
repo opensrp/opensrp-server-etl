@@ -1,0 +1,334 @@
+-- Procedure for generating misreport
+   CREATE OR REPLACE FUNCTION create_mis_report(division VARCHAR(70), district VARCHAR(70)
+                                                , upazilla VARCHAR(70), ward VARCHAR(70)
+                                                , unionname VARCHAR(70), unit VARCHAR(70)
+                                                , currentMonth integer, currentYear integer)
+   RETURNS void AS $$
+    declare
+    fpOldPillUsage integer := 0;
+    fpNewPillUsage integer := 0;
+    fpCurrentTotalPillUsages integer := 0;
+    fpPrevTotalPillUsages integer := 0;
+    fpTotalPillUsages integer := 0;
+    fpLeftPillAndStartedNone integer := 0;
+    fpLeftPillAndStartedOther integer := 0;
+    
+    fpOldCondomUsage integer := 0;
+    fpNewCondomUsage integer := 0;
+    fpCurrentTotalCondomUsages integer := 0;
+    fpPrevTotalCondomUsages integer := 0;
+    fpTotalCondomUsages integer := 0;
+    fpLeftCondomAndStartedNone integer := 0;
+    fpLeftCondomAndStartedOther integer := 0;
+    
+    fpOldInjectableUsage integer := 0;
+    fpNewInjectableUsage integer := 0;
+    fpCurrentTotalInjectableUsages integer := 0;
+    fpPrevTotalInjectableUsages integer := 0;
+    fpTotalInjectableUsages integer := 0;
+    fpLeftInjectableAndStartedNone integer := 0;
+    fpLeftInjectableAndStartedOther integer := 0;
+    
+    fpOldIUDUsage integer := 0;
+    fpNewIUDUsage integer := 0;
+    fpCurrentTotalIUDUsages integer := 0;
+    fpPrevTotalIUDUsages integer := 0;
+    fpTotalIUDUsages integer := 0;
+    fpLeftIUDAndStartedNone integer := 0;
+    fpLeftIUDAndStartedOther integer := 0;
+  
+    fpOldImplantUsage integer := 0;
+    fpNewImplantUsage integer := 0;
+    fpCurrentTotalImplantUsages integer := 0;
+    fpPrevTotalImplantUsages integer := 0;
+    fpTotalImplantUsages integer := 0;
+    fpLeftImplantAndStartedNone integer := 0;
+    fpLeftImplantAndStartedOther integer := 0;
+  
+    fpOldMalePermanentUsage integer := 0;
+    fpNewMalePermanentUsage integer := 0;
+    fpCurrentTotalMalePermanentUsages integer := 0;
+    fpPrevTotalMalePermanentUsages integer := 0;
+    fpTotalMalePermanentUsages integer := 0;
+  
+    fpOldFemalePermanentUsage integer := 0;
+    fpNewFemalePermanentUsage integer := 0;
+    fpCurrentTotalFemalePermanentUsages integer := 0;
+    fpPrevTotalFemalePermanentUsages integer := 0;
+    fpTotalFemalePermanentUsages integer := 0;
+  
+    fpCurrentEligibleCoupleCount integer := 0;
+    fpPrevEligibleCoupleCount integer := 0;
+    fpTotalEligibleCoupleCount integer := 0;
+    fpNewEligibleCoupleCount integer := 0;
+    
+    fpTotalOldUsages integer := 0;
+    fpTotalNewUsages integer := 0;
+    fpTotalCurrentUsages integer := 0;
+    fpTotalPrevUsages integer := 0;
+    fpTotalUsages integer := 0;
+    
+    recordExists integer := 0;
+    prevRecordCount integer := 0;
+    prevMonth integer := currentMonth - 1;
+    prevYear integer := currentYear;
+
+   BEGIN
+
+    EXECUTE format('
+       CREATE TABLE IF NOT EXISTS %I (
+        id serial PRIMARY KEY,
+        fpOldPillUsage int,
+        fpNewPillUsage int,
+        fpCurrentTotalPillUsages int,
+        fpPrevTotalPillUsages int,
+        fpTotalPillUsages int,
+        fpLeftPillAndStartedNone int,
+        fpLeftPillAndStartedOther int,
+        fpOldCondomUsage int,
+        fpNewCondomUsage int,
+        fpCurrentTotalCondomUsages int,
+        fpPrevTotalCondomUsages int,
+        fpTotalCondomUsages int,
+        fpLeftCondomAndStartedNone int,
+        fpLeftCondomAndStartedOther int,
+        fpOldInjectableUsage int,
+        fpNewInjectableUsage int,
+        fpCurrentTotalInjectableUsages int,
+        fpPrevTotalInjectableUsages int,
+        fpTotalInjectableUsages int,
+        fpLeftInjectableAndStartedNone int,
+        fpLeftInjectableAndStartedOther int,
+        fpOldIUDUsage int,
+        fpNewIUDUsage int,
+        fpCurrentTotalIUDUsages int,
+        fpPrevTotalIUDUsages int,
+        fpTotalIUDUsages int,
+        fpLeftIUDAndStartedNone int,
+        fpLeftIUDAndStartedOther int,      
+        fpOldImplantUsage int,
+        fpNewImplantUsage int,
+        fpCurrentTotalImplantUsages int,
+        fpPrevTotalImplantUsages int,
+        fpTotalImplantUsages int,
+        fpLeftImplantAndStartedNone int,
+        fpLeftImplantAndStartedOther int,
+        fpOldMalePermanentUsage int,
+        fpNewMalePermanentUsage int,
+        fpCurrentTotalMalePermanentUsages int,
+        fpPrevTotalMalePermanentUsages int,
+        fpTotalMalePermanentUsages int,
+        fpOldFemalePermanentUsage int,
+        fpNewFemalePermanentUsage int,
+        fpCurrentTotalFemalePermanentUsages int,
+        fpPrevTotalFemalePermanentUsages int,
+        fpTotalFemalePermanentUsages int,
+        fpCurrentEligibleCoupleCount int,
+        fpPrevEligibleCoupleCount int,
+        fpTotalEligibleCoupleCount int,
+        fpNewEligibleCoupleCount int,
+        fpTotalOldUsages int,
+        fpTotalNewUsages int,
+    	fpTotalCurrentUsages int,
+    	fpTotalPrevUsages int,
+    	fpTotalUsages int,
+        mis_division varchar(30),
+        mis_district varchar(30),
+        mis_upazilla varchar(70),
+        mis_ward varchar(70),
+        mis_unionname varchar(70),
+        mis_unit varchar(70),
+        mis_currentMonth int,
+        mis_currentYear int
+       )', 'misreport');
+
+        select count(*) from misreport into recordExists
+        where misreport.mis_division=division
+        and misreport.mis_district=district
+        and misreport.mis_upazilla=upazilla
+        and misreport.mis_ward=ward
+        and misreport.mis_unionname=unionname
+        and misreport.mis_unit=unit
+        and misreport.mis_currentmonth=currentMonth
+        and misreport.mis_currentyear=currentYear;
+
+        IF recordExists = 0 THEN
+    
+            IF currentMonth = 1 THEN
+                prevMonth := 12;
+                prevYear := currentYear - 1;
+            END IF;
+
+			SELECT count(distinct p1.relationalid) INTO prevRecordCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (EXTRACT(MONTH FROM p1.today) = prevMonth
+                    AND EXTRACT(YEAR FROM p1.today) = prevYear)
+            and member.mem_division=division
+            and member.mem_district=district
+            and member.mem_upazilla=upazilla
+            and member.mem_ward=ward
+            and member.mem_union=unionname
+            and member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpOldPillUsage FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control=1 
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=1
+                   AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                   AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+            
+            IF prevRecordCount = 0 THEN
+				SELECT COUNT(distinct p1.relationalid) INTO fpNewPillUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE (p1.birth_control=1 
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;          
+            ELSE   
+                SELECT COUNT(distinct p1.relationalid) INTO fpNewPillUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE ( p1.birth_control=1 
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND (not p2.birth_control=1
+                        AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                        AND EXTRACT(YEAR FROM p2.today)=prevYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            END IF;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalPillUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=1 
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalPillUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=1 
+                    AND EXTRACT(MONTH FROM p1.today)=prevMonth
+                    AND EXTRACT(YEAR FROM p1.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpTotalPillUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=1 
+                    AND EXTRACT(MONTH FROM p1.today) <= currentMonth
+                    AND EXTRACT(YEAR FROM p1.today) <= currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpLeftPillAndStartedNone FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE ( p1.using_fp = 0
+                   AND p1.birth_control = 99
+                   AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                   AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=1
+                 AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                 AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpLeftPillAndStartedOther FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control IN (2,3,4,5,6)
+                   AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                   AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=1 
+                 AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                 AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+
+           fpTotalOldUsages := fpOldPillUsage + fpOldCondomUsage + fpOldInjectableUsage
+           			+ fpOldIUDUsage + fpOldImplantUsage
+                                + fpOldMalePermanentUsage + fpOldFemalePermanentUsage;
+
+           INSERT INTO misreport VALUES (default, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
+                                         , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
+                                         , fpLeftPillAndStartedOther
+                                         , fpOldCondomUsage, fpNewCondomUsage
+                                         , fpCurrentTotalCondomUsages, fpPrevTotalCondomUsages
+                                         , fpTotalCondomUsages, fpLeftCondomAndStartedNone
+                                         , fpLeftCondomAndStartedOther
+                                         , fpOldInjectableUsage, fpNewInjectableUsage
+                                         , fpCurrentTotalInjectableUsages, fpPrevTotalInjectableUsages
+                                         , fpTotalInjectableUsages, fpLeftInjectableAndStartedNone
+                                         , fpLeftInjectableAndStartedOther
+                                         , fpOldIUDUsage, fpNewIUDUsage
+                                         , fpCurrentTotalIUDUsages, fpPrevTotalIUDUsages
+                                         , fpTotalIUDUsages, fpLeftIUDAndStartedNone
+                                         , fpLeftIUDAndStartedOther
+                                         , fpOldImplantUsage, fpNewImplantUsage
+                                         , fpCurrentTotalImplantUsages, fpPrevTotalImplantUsages
+                                         , fpTotalImplantUsages, fpLeftImplantAndStartedNone
+                                         , fpLeftImplantAndStartedOther
+                                         , fpOldMalePermanentUsage, fpNewMalePermanentUsage
+                                         , fpCurrentTotalMalePermanentUsages, fpPrevTotalMalePermanentUsages
+                                         , fpTotalMalePermanentUsages
+                                         , fpOldFemalePermanentUsage, fpNewFemalePermanentUsage
+                                         , fpCurrentTotalFemalePermanentUsages, fpPrevTotalFemalePermanentUsages
+                                         , fpTotalFemalePermanentUsages
+                                         , fpCurrentEligibleCoupleCount, fpPrevEligibleCoupleCount
+                                         , fpTotalEligibleCoupleCount, fpNewEligibleCoupleCount
+                                         , fpTotalOldUsages, fpTotalNewUsages
+    									 , fpTotalCurrentUsages, fpTotalPrevUsages
+    									 , fpTotalUsages
+                                         , division, district, upazilla, ward, unionname
+                                         , unit, currentMonth, currentYear);
+       ELSE
+        RAISE NOTICE 'record already exist %', recordExists;
+       END IF;
+
+   END;
+   $$ LANGUAGE plpgsql;
+  
+  
+  
