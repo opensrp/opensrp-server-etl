@@ -68,8 +68,32 @@
     fpTotalCurrentUsages integer := 0;
     fpTotalPrevUsages integer := 0;
     fpTotalUsages integer := 0;
+    fpTotalStartedNone integer := 0;
+    fpTotalStartedOther integer := 0;
 
     fpCAR float := 0;
+
+    /*Maternity Care Report Variables*/
+    mcCurrentNewPregnantCount integer := 0;
+    mcCurrentOldPregnantCount integer := 0;
+    mcCurrentTotalPregnantCount integer := 0;
+
+    mcPrevPregnantCount integer := 0;
+    mcTotalPregnantCount integer := 0;
+
+    mcANCVisit1 integer := 0;
+    mcANCVisit2 integer := 0;
+    mcANCVisit3 integer := 0;
+    mcANCVisit4 integer := 0;
+
+    mcBirthAtHomeWithTrainedPerson integer := 0;
+    mcNormalBirthAtHospitalOrClinic integer := 0;
+    mcCesareanBirthAtHospitalOrClinic integer := 0;
+
+    mcMotherPNCVisit1 integer := 0;
+    mcMotherPNCVisit2 integer := 0;
+    mcMotherPNCVisit3 integer := 0;
+    mcMotherPNCVisit4 integer := 0;
 
     recordExists integer := 0;
     prevRecordCount integer := 0;
@@ -135,7 +159,25 @@
     	fpTotalCurrentUsages int,
     	fpTotalPrevUsages int,
     	fpTotalUsages int,
+        fpTotalStartedNone int,
+        fpTotalStartedOther int,
         fpCAR float,
+        mcCurrentNewPregnantCount int,
+        mcCurrentOldPregnantCount int,
+        mcCurrentTotalPregnantCount int,
+        mcPrevPregnantCount int,
+        mcTotalPregnantCount int,
+        mcANCVisit1 int,
+        mcANCVisit2 int,
+        mcANCVisit3 int,
+        mcANCVisit4 int,
+        mcBirthAtHomeWithTrainedPerson int,
+        mcNormalBirthAtHospitalOrClinic int,
+        mcCesareanBirthAtHospitalOrClinic int,
+        mcMotherPNCVisit1 int,
+        mcMotherPNCVisit2 int,
+        mcMotherPNCVisit3 int,
+        mcMotherPNCVisit4 int,
         mis_division varchar(30),
         mis_district varchar(30),
         mis_upazilla varchar(70),
@@ -648,6 +690,290 @@
             AND member.mem_subunit=unit;
 
 
+	    /*Implant Usage queries*/
+            SELECT COUNT(distinct p1.relationalid) INTO fpOldImplantUsage FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control=5
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=5
+                   AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                   AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            IF prevRecordCount = 0 THEN
+				SELECT COUNT(distinct p1.relationalid) INTO fpNewImplantUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                WHERE (p1.birth_control=5
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            ELSE
+                SELECT COUNT(distinct p1.relationalid) INTO fpNewImplantUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE ( p1.birth_control=5
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND (not p2.birth_control=5
+                        AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                        AND EXTRACT(YEAR FROM p2.today)=prevYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            END IF;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalImplantUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=5
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalImplantUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=5
+                    AND EXTRACT(MONTH FROM p1.today)=prevMonth
+                    AND EXTRACT(YEAR FROM p1.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpTotalImplantUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=5
+                    AND EXTRACT(MONTH FROM p1.today) <= currentMonth
+                    AND EXTRACT(YEAR FROM p1.today) <= currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpLeftImplantAndStartedNone FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE ( p1.using_fp = 0
+                   AND p1.birth_control = 99
+                   AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                   AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=5
+                 AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                 AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpLeftImplantAndStartedOther FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control IN (1,2,3,4,6,7)
+                   AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                   AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=5
+                 AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                 AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+
+            /*MalePermanent Method Usage queries*/
+            SELECT COUNT(distinct p1.relationalid) INTO fpOldMalePermanentUsage FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control=6
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=6
+                   AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                   AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            IF prevRecordCount = 0 THEN
+				SELECT COUNT(distinct p1.relationalid) INTO fpNewMalePermanentUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                WHERE (p1.birth_control=6
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            ELSE
+                SELECT COUNT(distinct p1.relationalid) INTO fpNewMalePermanentUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE ( p1.birth_control=6
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND (not p2.birth_control=6
+                        AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                        AND EXTRACT(YEAR FROM p2.today)=prevYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            END IF;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalMalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=6
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalMalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=6
+                    AND EXTRACT(MONTH FROM p1.today)=prevMonth
+                    AND EXTRACT(YEAR FROM p1.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpTotalMalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=6
+                    AND EXTRACT(MONTH FROM p1.today) <= currentMonth
+                    AND EXTRACT(YEAR FROM p1.today) <= currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+
+            /*FemalePermanent Method Usage queries*/
+            SELECT COUNT(distinct p1.relationalid) INTO fpOldFemalePermanentUsage FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+            WHERE (p1.birth_control=7
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND (p2.birth_control=7
+                   AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                   AND EXTRACT(YEAR FROM p2.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            IF prevRecordCount = 0 THEN
+				SELECT COUNT(distinct p1.relationalid) INTO fpNewFemalePermanentUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                WHERE (p1.birth_control=7
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            ELSE
+                SELECT COUNT(distinct p1.relationalid) INTO fpNewFemalePermanentUsage FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE ( p1.birth_control=7
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND (not p2.birth_control=7
+                        AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                        AND EXTRACT(YEAR FROM p2.today)=prevYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            END IF;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalFemalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=7
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalFemalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=7
+                    AND EXTRACT(MONTH FROM p1.today)=prevMonth
+                    AND EXTRACT(YEAR FROM p1.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO fpTotalFemalePermanentUsages FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE ( p1.birth_control=7
+                    AND EXTRACT(MONTH FROM p1.today) <= currentMonth
+                    AND EXTRACT(YEAR FROM p1.today) <= currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
 
 	    /*Eligible Couple queries*/
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentEligibleCoupleCount FROM psrf p1
@@ -685,6 +1011,16 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
+			SELECT COUNT(distinct p1.relationalid) INTO fpNewEligibleCoupleCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (EXTRACT(MONTH FROM member.today) = currentMonth
+                    AND EXTRACT(YEAR FROM member.today) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
 
 	   /*Total counts queries*/
            fpTotalOldUsages := fpOldPillUsage + fpOldCondomUsage + fpOldInjectableUsage
@@ -708,9 +1044,99 @@
                                 + fpTotalIUDUsages + fpTotalImplantUsages
                                 + fpTotalMalePermanentUsages + fpTotalFemalePermanentUsages;
 
+           fpTotalStartedNone := fpLeftPillAndStartedNone + fpLeftCondomAndStartedNone
+                                 + fpLeftInjectableAndStartedNone + fpLeftIUDAndStartedNone
+                                 + fpLeftImplantAndStartedNone;
+
+
+           fpTotalStartedOther := fpLeftPillAndStartedOther + fpLeftCondomAndStartedOther
+                                  + fpLeftInjectableAndStartedOther + fpLeftIUDAndStartedOther
+                                  + fpLeftImplantAndStartedOther;
+
            IF fpTotalEligibleCoupleCount != 0 THEN
 	       fpCAR := (fpTotalUsages/fpTotalEligibleCoupleCount) * 100;
            END IF;
+
+
+           /*Maternity Care Report Queries*/
+           IF prevRecordCount = 0 THEN
+				SELECT COUNT(distinct p1.relationalid) INTO mcCurrentNewPregnantCount FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                WHERE (p1.preg_status=1
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            ELSE
+                SELECT COUNT(distinct p1.relationalid) INTO mcCurrentNewPregnantCount FROM psrf p1
+                JOIN member ON (p1.relationalid= member.caseid)
+                JOIN psrf p2 ON (p1.relationalid= p2.relationalid)
+                WHERE ( p1.preg_status=1
+                        AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                        AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                AND (not p2.preg_status=0
+                        AND EXTRACT(MONTH FROM p2.today)=prevMonth
+                        AND EXTRACT(YEAR FROM p2.today)=prevYear)
+                AND member.mem_district=district
+                AND member.mem_division=division
+                AND member.mem_upazilla=upazilla
+                AND member.mem_ward=ward
+                AND member.mem_union=unionname
+                AND member.mem_subunit=unit;
+            END IF;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcCurrentOldPregnantCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.preg_status=1
+                    AND EXTRACT(MONTH FROM p1.today)<currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)<currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcCurrentTotalPregnantCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.preg_status=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcPrevPregnantCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.preg_status=1
+                    AND EXTRACT(MONTH FROM p1.today)=prevMonth
+                    AND EXTRACT(YEAR FROM p1.today)=prevYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1 FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (ancName='ANC1'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
 
            INSERT INTO misreport VALUES (default, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
@@ -742,7 +1168,17 @@
                                          , fpTotalOldUsages, fpTotalNewUsages
                                          , fpTotalCurrentUsages, fpTotalPrevUsages
                                          , fpTotalUsages
+                                         , fpTotalStartedNone, fpTotalStartedOther
                                          , fpCAR
+                                         , mcCurrentNewPregnantCount, mcCurrentOldPregnantCount
+                                         , mcCurrentTotalPregnantCount, mcPrevPregnantCount
+                                         , mcTotalPregnantCount
+                                         , mcANCVisit1, mcANCVisit2
+                                         , mcANCVisit3, mcANCVisit4
+                                         , mcBirthAtHomeWithTrainedPerson, mcNormalBirthAtHospitalOrClinic
+                                         , mcCesareanBirthAtHospitalOrClinic
+                                         , mcMotherPNCVisit1, mcMotherPNCVisit2
+                                         , mcMotherPNCVisit3, mcMotherPNCVisit4
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentMonth, currentYear);
        ELSE
@@ -751,6 +1187,3 @@
 
    END;
    $$ LANGUAGE plpgsql;
-  
-  
-  
