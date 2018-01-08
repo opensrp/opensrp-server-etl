@@ -3,481 +3,584 @@ package org.opensrp.etl.report;
 import org.hibernate.annotations.ColumnDefault;
 
 public class FamilyPlanningReport {
-	@ColumnDefault("0")
-    private int oldPillUsages;
-	@ColumnDefault("0")
-    private int newPillUsages;
-	@ColumnDefault("0")
-    private int currentTotalPillUsages;
-	@ColumnDefault("0")
-    private int previousTotalPillUsages;
-	@ColumnDefault("0")
-    private int totalPillUsages;
-	@ColumnDefault("0")
-    private int oldCondomUsages;
-	@ColumnDefault("0")
-    private int newCondomUsages;
-	@ColumnDefault("0")
-    private int currentTotalCondomUsages;
-	@ColumnDefault("0")
-    private int previousTotalCondomUsages;
-	@ColumnDefault("0")
-    private int totalCondomUsages;
-	@ColumnDefault("0")
-    private int oldInjectableUsages;
-	@ColumnDefault("0")
-    private int newInjectableUsages;
-	@ColumnDefault("0")
-    private int currentTotalInjectableUsages;
-	@ColumnDefault("0")
-    private int previousTotalInjectableUsages;
-	@ColumnDefault("0")
-    private int totalInjectableUsages;
-	@ColumnDefault("0")
-    private int oldIUDUsages;
-	@ColumnDefault("0")
-    private int newIUDUsages;
-	@ColumnDefault("0")
-    private int currentTotalIUDUsages;
-	@ColumnDefault("0")
-    private int previousTotalIUDUsages;
-	@ColumnDefault("0")
-    private int totalIUDUsages;
-	@ColumnDefault("0")
-    private int oldImplantUsages;
-	@ColumnDefault("0")
-    private int newImplantUsages;
-	@ColumnDefault("0")
-    private int currentTotalImplantUsages;
-	@ColumnDefault("0")
-    private int previousTotalImplantUsages;
-	@ColumnDefault("0")
-    private int totalImplantUsages;
-	@ColumnDefault("0")
-    private int oldMalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int newMalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int currentTotalMalePermanentUsages;
-	@ColumnDefault("0")
-    private int previousTotalMalePermanentUsages;
-	@ColumnDefault("0")
-    private int totalMalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int oldFemalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int newFemalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int currentTotalFemalePermanentUsages;
-	@ColumnDefault("0")
-    private int previousTotalFemalePermanentUsages;
-	@ColumnDefault("0")
-    private int totalFemalePermanentMethodUsages;
-	@ColumnDefault("0")
-    private int leftPillAndStartedNone;
-	@ColumnDefault("0")
-    private int leftPillAndStartedOtherMethod;
-	@ColumnDefault("0")
-    private int leftCondomAndStartedNone;
-	@ColumnDefault("0")
-    private int leftCondomAndStartedOtherMethod;
-	@ColumnDefault("0")
-    private int leftInjectableAndStartedNone;
     @ColumnDefault("0")
-    private int leftInjectableAndStartedOtherMethod;
+    private int fpOldPillUsage;
     @ColumnDefault("0")
-    private int leftIUDAndStartedNone;
+    private int fpNewPillUsage;
     @ColumnDefault("0")
-    private int leftIUDAndStartedOtherMethod;
+    private int fpCurrentTotalPillUsages;
     @ColumnDefault("0")
-    private int leftImplantAndStartedNone;
+    private int fpPrevTotalPillUsages;
     @ColumnDefault("0")
-    private int leftImplantAndStartedOtherMethod;
-
-    // private int EligibleCoupleCountCalculator;
-    // private CondomMethodUsagesCalculator condomUsagesCalculator;
-    // private IUDUsagesCalculator iudUsagesCalculator;
-    // private InjectableUsagesCalculator injectableUsagesCalculator;
-    // private ImplantUsagesCalculator implantUsagesCalculator;
-    // private MalePermanentMethodUsagesCalculator
-    // malePermanentMethodUsagesCalculator;
-    // private FemalePermanentMethodUsagesCalculator
-    // femalePermanentMethodUsagesCalculator;
+    private int fpTotalPillUsages;
+    @ColumnDefault("0")
+    private int fpLeftPillAndStartedNone;
+    @ColumnDefault("0")
+    private int fpLeftPillAndStartedOther;
+    @ColumnDefault("0")
+    private int fpOldCondomUsage;
+    @ColumnDefault("0")
+    private int fpNewCondomUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalCondomUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalCondomUsages;
+    @ColumnDefault("0")
+    private int fpTotalCondomUsages;
+    @ColumnDefault("0")
+    private int fpLeftCondomAndStartedNone;
+    @ColumnDefault("0")
+    private int fpLeftCondomAndStartedOther;
+    @ColumnDefault("0")
+    private int fpOldInjectableUsage;
+    @ColumnDefault("0")
+    private int fpNewInjectableUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalInjectableUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalInjectableUsages;
+    @ColumnDefault("0")
+    private int fpTotalInjectableUsages;
+    @ColumnDefault("0")
+    private int fpLeftInjectableAndStartedNone;
+    @ColumnDefault("0")
+    private int fpLeftInjectableAndStartedOther;
+    @ColumnDefault("0")
+    private int fpOldIUDUsage;
+    @ColumnDefault("0")
+    private int fpNewIUDUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalIUDUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalIUDUsages;
+    @ColumnDefault("0")
+    private int fpTotalIUDUsages;
+    @ColumnDefault("0")
+    private int fpLeftIUDAndStartedNone;
+    @ColumnDefault("0")
+    private int fpLeftIUDAndStartedOther;
+    @ColumnDefault("0")
+    private int fpOldImplantUsage;
+    @ColumnDefault("0")
+    private int fpNewImplantUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalImplantUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalImplantUsages;
+    @ColumnDefault("0")
+    private int fpTotalImplantUsages;
+    @ColumnDefault("0")
+    private int fpLeftImplantAndStartedNone;
+    @ColumnDefault("0")
+    private int fpLeftImplantAndStartedOther;
+    @ColumnDefault("0")
+    private int fpOldMalePermanentUsage;
+    @ColumnDefault("0")
+    private int fpNewMalePermanentUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalMalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalMalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpTotalMalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpOldFemalePermanentUsage;
+    @ColumnDefault("0")
+    private int fpNewFemalePermanentUsage;
+    @ColumnDefault("0")
+    private int fpCurrentTotalFemalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpPrevTotalFemalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpTotalFemalePermanentUsages;
+    @ColumnDefault("0")
+    private int fpCurrentEligibleCoupleCount;
+    @ColumnDefault("0")
+    private int fpPrevEligibleCoupleCount;
+    @ColumnDefault("0")
+    private int fpTotalEligibleCoupleCount;
+    @ColumnDefault("0")
+    private int fpNewEligibleCoupleCount;
+    @ColumnDefault("0")
+    private int fpTotalOldUsages;
+    @ColumnDefault("0")
+    private int fpTotalNewUsages;
+    @ColumnDefault("0")
+    private int fpTotalCurrentUsages;
+    @ColumnDefault("0")
+    private int fpTotalPrevUsages;
+    @ColumnDefault("0")
+    private int fpTotalUsages;
+    @ColumnDefault("0")
+    private int fpTotalStartedNone;
+    @ColumnDefault("0")
+    private int fpTotalStartedOther;
+    @ColumnDefault("0")
+    private int fpCAR;
 
     public FamilyPlanningReport() {
-        // TODO Auto-generated constructor stub
     }
 
-    public int getOldPillUsages() {
-        return oldPillUsages;
+    public int getFpOldPillUsage() {
+        return fpOldPillUsage;
     }
 
-    public void setOldPillUsages(int oldPillUsages) {
-        this.oldPillUsages = oldPillUsages;
+    public void setFpOldPillUsage(int fpOldPillUsage) {
+        this.fpOldPillUsage = fpOldPillUsage;
     }
 
-    public int getNewPillUsages() {
-        return newPillUsages;
+    public int getFpNewPillUsage() {
+        return fpNewPillUsage;
     }
 
-    public void setNewPillUsages(int newPillUsages) {
-        this.newPillUsages = newPillUsages;
+    public void setFpNewPillUsage(int fpNewPillUsage) {
+        this.fpNewPillUsage = fpNewPillUsage;
     }
 
-    public int getCurrentTotalPillUsages() {
-        return currentTotalPillUsages;
+    public int getFpCurrentTotalPillUsages() {
+        return fpCurrentTotalPillUsages;
     }
 
-    public void setCurrentTotalPillUsages(int currentTotalPillUsages) {
-        this.currentTotalPillUsages = currentTotalPillUsages;
+    public void setFpCurrentTotalPillUsages(int fpCurrentTotalPillUsages) {
+        this.fpCurrentTotalPillUsages = fpCurrentTotalPillUsages;
     }
 
-    public int getPreviousTotalPillUsages() {
-        return previousTotalPillUsages;
+    public int getFpPrevTotalPillUsages() {
+        return fpPrevTotalPillUsages;
     }
 
-    public void setPreviousTotalPillUsages(int previousTotalPillUsages) {
-        this.previousTotalPillUsages = previousTotalPillUsages;
+    public void setFpPrevTotalPillUsages(int fpPrevTotalPillUsages) {
+        this.fpPrevTotalPillUsages = fpPrevTotalPillUsages;
     }
 
-    public int getTotalPillUsages() {
-        return totalPillUsages;
+    public int getFpTotalPillUsages() {
+        return fpTotalPillUsages;
     }
 
-    public void setTotalPillUsages(int totalPillUsages) {
-        this.totalPillUsages = totalPillUsages;
+    public void setFpTotalPillUsages(int fpTotalPillUsages) {
+        this.fpTotalPillUsages = fpTotalPillUsages;
     }
 
-    public int getOldCondomUsages() {
-        return oldCondomUsages;
+    public int getFpLeftPillAndStartedNone() {
+        return fpLeftPillAndStartedNone;
     }
 
-    public void setOldCondomUsages(int oldCondomUsages) {
-        this.oldCondomUsages = oldCondomUsages;
+    public void setFpLeftPillAndStartedNone(int fpLeftPillAndStartedNone) {
+        this.fpLeftPillAndStartedNone = fpLeftPillAndStartedNone;
     }
 
-    public int getNewCondomUsages() {
-        return newCondomUsages;
+    public int getFpLeftPillAndStartedOther() {
+        return fpLeftPillAndStartedOther;
     }
 
-    public void setNewCondomUsages(int newCondomUsages) {
-        this.newCondomUsages = newCondomUsages;
+    public void setFpLeftPillAndStartedOther(int fpLeftPillAndStartedOther) {
+        this.fpLeftPillAndStartedOther = fpLeftPillAndStartedOther;
     }
 
-    public int getCurrentTotalCondomUsages() {
-        return currentTotalCondomUsages;
+    public int getFpOldCondomUsage() {
+        return fpOldCondomUsage;
     }
 
-    public void setCurrentTotalCondomUsages(int currentTotalCondomUsages) {
-        this.currentTotalCondomUsages = currentTotalCondomUsages;
+    public void setFpOldCondomUsage(int fpOldCondomUsage) {
+        this.fpOldCondomUsage = fpOldCondomUsage;
     }
 
-    public int getPreviousTotalCondomUsages() {
-        return previousTotalCondomUsages;
+    public int getFpNewCondomUsage() {
+        return fpNewCondomUsage;
     }
 
-    public void setPreviousTotalCondomUsages(int previousTotalCondomUsages) {
-        this.previousTotalCondomUsages = previousTotalCondomUsages;
+    public void setFpNewCondomUsage(int fpNewCondomUsage) {
+        this.fpNewCondomUsage = fpNewCondomUsage;
     }
 
-    public int getTotalCondomUsages() {
-        return totalCondomUsages;
+    public int getFpCurrentTotalCondomUsages() {
+        return fpCurrentTotalCondomUsages;
     }
 
-    public void setTotalCondomUsages(int totalCondomUsages) {
-        this.totalCondomUsages = totalCondomUsages;
+    public void setFpCurrentTotalCondomUsages(int fpCurrentTotalCondomUsages) {
+        this.fpCurrentTotalCondomUsages = fpCurrentTotalCondomUsages;
     }
 
-    public int getOldInjectableUsages() {
-        return oldInjectableUsages;
+    public int getFpPrevTotalCondomUsages() {
+        return fpPrevTotalCondomUsages;
     }
 
-    public void setOldInjectableUsages(int oldInjectableUsages) {
-        this.oldInjectableUsages = oldInjectableUsages;
+    public void setFpPrevTotalCondomUsages(int fpPrevTotalCondomUsages) {
+        this.fpPrevTotalCondomUsages = fpPrevTotalCondomUsages;
     }
 
-    public int getNewInjectableUsages() {
-        return newInjectableUsages;
+    public int getFpTotalCondomUsages() {
+        return fpTotalCondomUsages;
     }
 
-    public void setNewInjectableUsages(int newInjectableUsages) {
-        this.newInjectableUsages = newInjectableUsages;
+    public void setFpTotalCondomUsages(int fpTotalCondomUsages) {
+        this.fpTotalCondomUsages = fpTotalCondomUsages;
     }
 
-    public int getCurrentTotalInjectableUsages() {
-        return currentTotalInjectableUsages;
+    public int getFpLeftCondomAndStartedNone() {
+        return fpLeftCondomAndStartedNone;
     }
 
-    public void setCurrentTotalInjectableUsages(int currentTotalInjectableUsages) {
-        this.currentTotalInjectableUsages = currentTotalInjectableUsages;
+    public void setFpLeftCondomAndStartedNone(int fpLeftCondomAndStartedNone) {
+        this.fpLeftCondomAndStartedNone = fpLeftCondomAndStartedNone;
     }
 
-    public int getPreviousTotalInjectableUsages() {
-        return previousTotalInjectableUsages;
+    public int getFpLeftCondomAndStartedOther() {
+        return fpLeftCondomAndStartedOther;
     }
 
-    public void setPreviousTotalInjectableUsages(
-            int previousTotalInjectableUsages) {
-        this.previousTotalInjectableUsages = previousTotalInjectableUsages;
+    public void setFpLeftCondomAndStartedOther(int fpLeftCondomAndStartedOther) {
+        this.fpLeftCondomAndStartedOther = fpLeftCondomAndStartedOther;
     }
 
-    public int getTotalInjectableUsages() {
-        return totalInjectableUsages;
+    public int getFpOldInjectableUsage() {
+        return fpOldInjectableUsage;
     }
 
-    public void setTotalInjectableUsages(int totalInjectableUsages) {
-        this.totalInjectableUsages = totalInjectableUsages;
+    public void setFpOldInjectableUsage(int fpOldInjectableUsage) {
+        this.fpOldInjectableUsage = fpOldInjectableUsage;
     }
 
-    public int getOldIUDUsages() {
-        return oldIUDUsages;
+    public int getFpNewInjectableUsage() {
+        return fpNewInjectableUsage;
     }
 
-    public void setOldIUDUsages(int oldIUDUsages) {
-        this.oldIUDUsages = oldIUDUsages;
+    public void setFpNewInjectableUsage(int fpNewInjectableUsage) {
+        this.fpNewInjectableUsage = fpNewInjectableUsage;
     }
 
-    public int getNewIUDUsages() {
-        return newIUDUsages;
+    public int getFpCurrentTotalInjectableUsages() {
+        return fpCurrentTotalInjectableUsages;
     }
 
-    public void setNewIUDUsages(int newIUDUsages) {
-        this.newIUDUsages = newIUDUsages;
+    public void setFpCurrentTotalInjectableUsages(
+            int fpCurrentTotalInjectableUsages) {
+        this.fpCurrentTotalInjectableUsages = fpCurrentTotalInjectableUsages;
     }
 
-    public int getCurrentTotalIUDUsages() {
-        return currentTotalIUDUsages;
+    public int getFpPrevTotalInjectableUsages() {
+        return fpPrevTotalInjectableUsages;
     }
 
-    public void setCurrentTotalIUDUsages(int currentTotalIUDUsages) {
-        this.currentTotalIUDUsages = currentTotalIUDUsages;
+    public void setFpPrevTotalInjectableUsages(int fpPrevTotalInjectableUsages) {
+        this.fpPrevTotalInjectableUsages = fpPrevTotalInjectableUsages;
     }
 
-    public int getPreviousTotalIUDUsages() {
-        return previousTotalIUDUsages;
+    public int getFpTotalInjectableUsages() {
+        return fpTotalInjectableUsages;
     }
 
-    public void setPreviousTotalIUDUsages(int previousTotalIUDUsages) {
-        this.previousTotalIUDUsages = previousTotalIUDUsages;
+    public void setFpTotalInjectableUsages(int fpTotalInjectableUsages) {
+        this.fpTotalInjectableUsages = fpTotalInjectableUsages;
     }
 
-    public int getTotalIUDUsages() {
-        return totalIUDUsages;
+    public int getFpLeftInjectableAndStartedNone() {
+        return fpLeftInjectableAndStartedNone;
     }
 
-    public void setTotalIUDUsages(int totalIUDUsages) {
-        this.totalIUDUsages = totalIUDUsages;
+    public void setFpLeftInjectableAndStartedNone(
+            int fpLeftInjectableAndStartedNone) {
+        this.fpLeftInjectableAndStartedNone = fpLeftInjectableAndStartedNone;
     }
 
-    public int getOldImplantUsages() {
-        return oldImplantUsages;
+    public int getFpLeftInjectableAndStartedOther() {
+        return fpLeftInjectableAndStartedOther;
     }
 
-    public void setOldImplantUsages(int oldImplantUsages) {
-        this.oldImplantUsages = oldImplantUsages;
+    public void setFpLeftInjectableAndStartedOther(
+            int fpLeftInjectableAndStartedOther) {
+        this.fpLeftInjectableAndStartedOther = fpLeftInjectableAndStartedOther;
     }
 
-    public int getNewImplantUsages() {
-        return newImplantUsages;
+    public int getFpOldIUDUsage() {
+        return fpOldIUDUsage;
     }
 
-    public void setNewImplantUsages(int newImplantUsages) {
-        this.newImplantUsages = newImplantUsages;
+    public void setFpOldIUDUsage(int fpOldIUDUsage) {
+        this.fpOldIUDUsage = fpOldIUDUsage;
     }
 
-    public int getCurrentTotalImplantUsages() {
-        return currentTotalImplantUsages;
+    public int getFpNewIUDUsage() {
+        return fpNewIUDUsage;
     }
 
-    public void setCurrentTotalImplantUsages(int currentTotalImplantUsages) {
-        this.currentTotalImplantUsages = currentTotalImplantUsages;
+    public void setFpNewIUDUsage(int fpNewIUDUsage) {
+        this.fpNewIUDUsage = fpNewIUDUsage;
     }
 
-    public int getPreviousTotalImplantUsages() {
-        return previousTotalImplantUsages;
+    public int getFpCurrentTotalIUDUsages() {
+        return fpCurrentTotalIUDUsages;
     }
 
-    public void setPreviousTotalImplantUsages(int previousTotalImplantUsages) {
-        this.previousTotalImplantUsages = previousTotalImplantUsages;
+    public void setFpCurrentTotalIUDUsages(int fpCurrentTotalIUDUsages) {
+        this.fpCurrentTotalIUDUsages = fpCurrentTotalIUDUsages;
     }
 
-    public int getTotalImplantUsages() {
-        return totalImplantUsages;
+    public int getFpPrevTotalIUDUsages() {
+        return fpPrevTotalIUDUsages;
     }
 
-    public void setTotalImplantUsages(int totalImplantUsages) {
-        this.totalImplantUsages = totalImplantUsages;
+    public void setFpPrevTotalIUDUsages(int fpPrevTotalIUDUsages) {
+        this.fpPrevTotalIUDUsages = fpPrevTotalIUDUsages;
     }
 
-    public int getOldMalePermanentMethodUsages() {
-        return oldMalePermanentMethodUsages;
+    public int getFpTotalIUDUsages() {
+        return fpTotalIUDUsages;
     }
 
-    public void setOldMalePermanentMethodUsages(int oldMalePermanentMethodUsages) {
-        this.oldMalePermanentMethodUsages = oldMalePermanentMethodUsages;
+    public void setFpTotalIUDUsages(int fpTotalIUDUsages) {
+        this.fpTotalIUDUsages = fpTotalIUDUsages;
     }
 
-    public int getNewMalePermanentMethodUsages() {
-        return newMalePermanentMethodUsages;
+    public int getFpLeftIUDAndStartedNone() {
+        return fpLeftIUDAndStartedNone;
     }
 
-    public void setNewMalePermanentMethodUsages(int newMalePermanentMethodUsages) {
-        this.newMalePermanentMethodUsages = newMalePermanentMethodUsages;
+    public void setFpLeftIUDAndStartedNone(int fpLeftIUDAndStartedNone) {
+        this.fpLeftIUDAndStartedNone = fpLeftIUDAndStartedNone;
     }
 
-    public int getCurrentTotalMalePermanentUsages() {
-        return currentTotalMalePermanentUsages;
+    public int getFpLeftIUDAndStartedOther() {
+        return fpLeftIUDAndStartedOther;
     }
 
-    public void setCurrentTotalMalePermanentUsages(
-            int currentTotalMalePermanentUsages) {
-        this.currentTotalMalePermanentUsages = currentTotalMalePermanentUsages;
+    public void setFpLeftIUDAndStartedOther(int fpLeftIUDAndStartedOther) {
+        this.fpLeftIUDAndStartedOther = fpLeftIUDAndStartedOther;
     }
 
-    public int getPreviousTotalMalePermanentUsages() {
-        return previousTotalMalePermanentUsages;
+    public int getFpOldImplantUsage() {
+        return fpOldImplantUsage;
     }
 
-    public void setPreviousTotalMalePermanentUsages(
-            int previousTotalMalePermanentUsages) {
-        this.previousTotalMalePermanentUsages = previousTotalMalePermanentUsages;
+    public void setFpOldImplantUsage(int fpOldImplantUsage) {
+        this.fpOldImplantUsage = fpOldImplantUsage;
     }
 
-    public int getTotalMalePermanentMethodUsages() {
-        return totalMalePermanentMethodUsages;
+    public int getFpNewImplantUsage() {
+        return fpNewImplantUsage;
     }
 
-    public void setTotalMalePermanentMethodUsages(
-            int totalMalePermanentMethodUsages) {
-        this.totalMalePermanentMethodUsages = totalMalePermanentMethodUsages;
+    public void setFpNewImplantUsage(int fpNewImplantUsage) {
+        this.fpNewImplantUsage = fpNewImplantUsage;
     }
 
-    public int getOldFemalePermanentMethodUsages() {
-        return oldFemalePermanentMethodUsages;
+    public int getFpCurrentTotalImplantUsages() {
+        return fpCurrentTotalImplantUsages;
     }
 
-    public void setOldFemalePermanentMethodUsages(
-            int oldFemalePermanentMethodUsages) {
-        this.oldFemalePermanentMethodUsages = oldFemalePermanentMethodUsages;
+    public void setFpCurrentTotalImplantUsages(int fpCurrentTotalImplantUsages) {
+        this.fpCurrentTotalImplantUsages = fpCurrentTotalImplantUsages;
     }
 
-    public int getNewFemalePermanentMethodUsages() {
-        return newFemalePermanentMethodUsages;
+    public int getFpPrevTotalImplantUsages() {
+        return fpPrevTotalImplantUsages;
     }
 
-    public void setNewFemalePermanentMethodUsages(
-            int newFemalePermanentMethodUsages) {
-        this.newFemalePermanentMethodUsages = newFemalePermanentMethodUsages;
+    public void setFpPrevTotalImplantUsages(int fpPrevTotalImplantUsages) {
+        this.fpPrevTotalImplantUsages = fpPrevTotalImplantUsages;
     }
 
-    public int getCurrentTotalFemalePermanentUsages() {
-        return currentTotalFemalePermanentUsages;
+    public int getFpTotalImplantUsages() {
+        return fpTotalImplantUsages;
     }
 
-    public void setCurrentTotalFemalePermanentUsages(
-            int currentTotalFemalePermanentUsages) {
-        this.currentTotalFemalePermanentUsages = currentTotalFemalePermanentUsages;
+    public void setFpTotalImplantUsages(int fpTotalImplantUsages) {
+        this.fpTotalImplantUsages = fpTotalImplantUsages;
     }
 
-    public int getPreviousTotalFemalePermanentUsages() {
-        return previousTotalFemalePermanentUsages;
+    public int getFpLeftImplantAndStartedNone() {
+        return fpLeftImplantAndStartedNone;
     }
 
-    public void setPreviousTotalFemalePermanentUsages(
-            int previousTotalFemalePermanentUsages) {
-        this.previousTotalFemalePermanentUsages = previousTotalFemalePermanentUsages;
+    public void setFpLeftImplantAndStartedNone(int fpLeftImplantAndStartedNone) {
+        this.fpLeftImplantAndStartedNone = fpLeftImplantAndStartedNone;
     }
 
-    public int getTotalFemalePermanentMethodUsages() {
-        return totalFemalePermanentMethodUsages;
+    public int getFpLeftImplantAndStartedOther() {
+        return fpLeftImplantAndStartedOther;
     }
 
-    public void setTotalFemalePermanentMethodUsages(
-            int totalFemalePermanentMethodUsages) {
-        this.totalFemalePermanentMethodUsages = totalFemalePermanentMethodUsages;
+    public void setFpLeftImplantAndStartedOther(int fpLeftImplantAndStartedOther) {
+        this.fpLeftImplantAndStartedOther = fpLeftImplantAndStartedOther;
     }
 
-    public int getLeftPillAndStartedNone() {
-        return leftPillAndStartedNone;
+    public int getFpOldMalePermanentUsage() {
+        return fpOldMalePermanentUsage;
     }
 
-    public void setLeftPillAndStartedNone(int leftPillAndStartedNone) {
-        this.leftPillAndStartedNone = leftPillAndStartedNone;
+    public void setFpOldMalePermanentUsage(int fpOldMalePermanentUsage) {
+        this.fpOldMalePermanentUsage = fpOldMalePermanentUsage;
     }
 
-    public int getLeftPillAndStartedOtherMethod() {
-        return leftPillAndStartedOtherMethod;
+    public int getFpNewMalePermanentUsage() {
+        return fpNewMalePermanentUsage;
     }
 
-    public void setLeftPillAndStartedOtherMethod(
-            int leftPillAndStartedOtherMethod) {
-        this.leftPillAndStartedOtherMethod = leftPillAndStartedOtherMethod;
+    public void setFpNewMalePermanentUsage(int fpNewMalePermanentUsage) {
+        this.fpNewMalePermanentUsage = fpNewMalePermanentUsage;
     }
 
-    public int getLeftCondomAndStartedNone() {
-        return leftCondomAndStartedNone;
+    public int getFpCurrentTotalMalePermanentUsages() {
+        return fpCurrentTotalMalePermanentUsages;
     }
 
-    public void setLeftCondomAndStartedNone(int leftCondomAndStartedNone) {
-        this.leftCondomAndStartedNone = leftCondomAndStartedNone;
+    public void setFpCurrentTotalMalePermanentUsages(
+            int fpCurrentTotalMalePermanentUsages) {
+        this.fpCurrentTotalMalePermanentUsages = fpCurrentTotalMalePermanentUsages;
     }
 
-    public int getLeftCondomAndStartedOtherMethod() {
-        return leftCondomAndStartedOtherMethod;
+    public int getFpPrevTotalMalePermanentUsages() {
+        return fpPrevTotalMalePermanentUsages;
     }
 
-    public void setLeftCondomAndStartedOtherMethod(
-            int leftCondomAndStartedOtherMethod) {
-        this.leftCondomAndStartedOtherMethod = leftCondomAndStartedOtherMethod;
+    public void setFpPrevTotalMalePermanentUsages(
+            int fpPrevTotalMalePermanentUsages) {
+        this.fpPrevTotalMalePermanentUsages = fpPrevTotalMalePermanentUsages;
     }
 
-    public int getLeftInjectableAndStartedNone() {
-        return leftInjectableAndStartedNone;
+    public int getFpTotalMalePermanentUsages() {
+        return fpTotalMalePermanentUsages;
     }
 
-    public void setLeftInjectableAndStartedNone(int leftInjectableAndStartedNone) {
-        this.leftInjectableAndStartedNone = leftInjectableAndStartedNone;
+    public void setFpTotalMalePermanentUsages(int fpTotalMalePermanentUsages) {
+        this.fpTotalMalePermanentUsages = fpTotalMalePermanentUsages;
     }
 
-    public int getLeftInjectableAndStartedOtherMethod() {
-        return leftInjectableAndStartedOtherMethod;
+    public int getFpOldFemalePermanentUsage() {
+        return fpOldFemalePermanentUsage;
     }
 
-    public void setLeftInjectableAndStartedOtherMethod(
-            int leftInjectableAndStartedOtherMethod) {
-        this.leftInjectableAndStartedOtherMethod = leftInjectableAndStartedOtherMethod;
+    public void setFpOldFemalePermanentUsage(int fpOldFemalePermanentUsage) {
+        this.fpOldFemalePermanentUsage = fpOldFemalePermanentUsage;
     }
 
-    public int getLeftIUDAndStartedNone() {
-        return leftIUDAndStartedNone;
+    public int getFpNewFemalePermanentUsage() {
+        return fpNewFemalePermanentUsage;
     }
 
-    public void setLeftIUDAndStartedNone(int leftIUDAndStartedNone) {
-        this.leftIUDAndStartedNone = leftIUDAndStartedNone;
+    public void setFpNewFemalePermanentUsage(int fpNewFemalePermanentUsage) {
+        this.fpNewFemalePermanentUsage = fpNewFemalePermanentUsage;
     }
 
-    public int getLeftIUDAndStartedOtherMethod() {
-        return leftIUDAndStartedOtherMethod;
+    public int getFpCurrentTotalFemalePermanentUsages() {
+        return fpCurrentTotalFemalePermanentUsages;
     }
 
-    public void setLeftIUDAndStartedOtherMethod(int leftIUDAndStartedOtherMethod) {
-        this.leftIUDAndStartedOtherMethod = leftIUDAndStartedOtherMethod;
+    public void setFpCurrentTotalFemalePermanentUsages(
+            int fpCurrentTotalFemalePermanentUsages) {
+        this.fpCurrentTotalFemalePermanentUsages = fpCurrentTotalFemalePermanentUsages;
     }
 
-    public int getLeftImplantAndStartedNone() {
-        return leftImplantAndStartedNone;
+    public int getFpPrevTotalFemalePermanentUsages() {
+        return fpPrevTotalFemalePermanentUsages;
     }
 
-    public void setLeftImplantAndStartedNone(int leftImplantAndStartedNone) {
-        this.leftImplantAndStartedNone = leftImplantAndStartedNone;
+    public void setFpPrevTotalFemalePermanentUsages(
+            int fpPrevTotalFemalePermanentUsages) {
+        this.fpPrevTotalFemalePermanentUsages = fpPrevTotalFemalePermanentUsages;
     }
 
-    public int getLeftImplantAndStartedOtherMethod() {
-        return leftImplantAndStartedOtherMethod;
+    public int getFpTotalFemalePermanentUsages() {
+        return fpTotalFemalePermanentUsages;
     }
 
-    public void setLeftImplantAndStartedOtherMethod(
-            int leftImplantAndStartedOtherMethod) {
-        this.leftImplantAndStartedOtherMethod = leftImplantAndStartedOtherMethod;
+    public void setFpTotalFemalePermanentUsages(int fpTotalFemalePermanentUsages) {
+        this.fpTotalFemalePermanentUsages = fpTotalFemalePermanentUsages;
+    }
+
+    public int getFpCurrentEligibleCoupleCount() {
+        return fpCurrentEligibleCoupleCount;
+    }
+
+    public void setFpCurrentEligibleCoupleCount(int fpCurrentEligibleCoupleCount) {
+        this.fpCurrentEligibleCoupleCount = fpCurrentEligibleCoupleCount;
+    }
+
+    public int getFpPrevEligibleCoupleCount() {
+        return fpPrevEligibleCoupleCount;
+    }
+
+    public void setFpPrevEligibleCoupleCount(int fpPrevEligibleCoupleCount) {
+        this.fpPrevEligibleCoupleCount = fpPrevEligibleCoupleCount;
+    }
+
+    public int getFpTotalEligibleCoupleCount() {
+        return fpTotalEligibleCoupleCount;
+    }
+
+    public void setFpTotalEligibleCoupleCount(int fpTotalEligibleCoupleCount) {
+        this.fpTotalEligibleCoupleCount = fpTotalEligibleCoupleCount;
+    }
+
+    public int getFpNewEligibleCoupleCount() {
+        return fpNewEligibleCoupleCount;
+    }
+
+    public void setFpNewEligibleCoupleCount(int fpNewEligibleCoupleCount) {
+        this.fpNewEligibleCoupleCount = fpNewEligibleCoupleCount;
+    }
+
+    public int getFpTotalOldUsages() {
+        return fpTotalOldUsages;
+    }
+
+    public void setFpTotalOldUsages(int fpTotalOldUsages) {
+        this.fpTotalOldUsages = fpTotalOldUsages;
+    }
+
+    public int getFpTotalNewUsages() {
+        return fpTotalNewUsages;
+    }
+
+    public void setFpTotalNewUsages(int fpTotalNewUsages) {
+        this.fpTotalNewUsages = fpTotalNewUsages;
+    }
+
+    public int getFpTotalCurrentUsages() {
+        return fpTotalCurrentUsages;
+    }
+
+    public void setFpTotalCurrentUsages(int fpTotalCurrentUsages) {
+        this.fpTotalCurrentUsages = fpTotalCurrentUsages;
+    }
+
+    public int getFpTotalPrevUsages() {
+        return fpTotalPrevUsages;
+    }
+
+    public void setFpTotalPrevUsages(int fpTotalPrevUsages) {
+        this.fpTotalPrevUsages = fpTotalPrevUsages;
+    }
+
+    public int getFpTotalUsages() {
+        return fpTotalUsages;
+    }
+
+    public void setFpTotalUsages(int fpTotalUsages) {
+        this.fpTotalUsages = fpTotalUsages;
+    }
+
+    public int getFpTotalStartedNone() {
+        return fpTotalStartedNone;
+    }
+
+    public void setFpTotalStartedNone(int fpTotalStartedNone) {
+        this.fpTotalStartedNone = fpTotalStartedNone;
+    }
+
+    public int getFpTotalStartedOther() {
+        return fpTotalStartedOther;
+    }
+
+    public void setFpTotalStartedOther(int fpTotalStartedOther) {
+        this.fpTotalStartedOther = fpTotalStartedOther;
+    }
+
+    public int getFpCAR() {
+        return fpCAR;
+    }
+
+    public void setFpCAR(int fpCAR) {
+        this.fpCAR = fpCAR;
     }
 }
