@@ -1,6 +1,6 @@
 package org.opensrp.etl.entity;
 
-import javax.validation.constraints.NotBlank;
+
 
 public class FilterCriteria {
 	
