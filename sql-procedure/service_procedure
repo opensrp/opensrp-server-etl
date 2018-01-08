@@ -154,6 +154,48 @@
     ccReferredChildOfPneumonia integer := 0;
     ccReferredChildOfdiarrhea integer := 0;
 
+    /*Birth And Death Report Variables*/
+    bdTotalLiveBirth integer := 0;
+    bdtotalChildWithUnderWeight integer := 0;
+    bdTotalPrematureChild integer := 0;
+    bdStillBirthCount integer := 0;
+
+    bdDeathLessThan7Days integer := 0;
+    bdDeathLessThan28Days integer := 0;
+    bdDeathLessThan1Yr integer := 0;
+    bdTotalDeathLessThan1Yr integer := 0;
+
+    bdDeathLessThan5Yr integer := 0;
+    bdDeathOfMother integer := 0;
+    bdDeathOfOther integer := 0;
+    bdTotalDeathCount integer := 0;
+
+    /*Woman Nutrition Report Variables*/
+    wnCounsellingIronForPregWoman integer := 0;
+    wnCounsellingIronForMother integer := 0;
+    wnDistributionIronForPregWoman integer := 0;
+    wnDistributionIronForMother integer := 0;
+    wnCounsellingOnBreastMilkForPregWoman integer := 0;
+    wnCounsellingOnBreastMilkForMother integer := 0;
+
+    wnCounsellingOnFeedingMNP integer := 0;
+
+    /*Child Nutrition Report Variables*/
+    cnBreastFeedingWithin1Hour integer := 0;
+    cnBreastFeedingUntill6Month integer := 0;
+    cnComplementaryFoodForChild6TO23 integer := 0;
+    cnComplementaryFoodForChild24to59 integer := 0;
+    cnReceivedMNP integer := 0;
+
+    cnContractedMAMChildZeroToSix integer := 0;
+    cnContractedMAMChild6TO23 integer := 0;
+    cnContractedMAMChild24to59 integer := 0;
+
+    cnContractedSAMChildZeroToSix integer := 0;
+    cnContractedSAMChild6TO23 integer := 0;
+    cnContractedSAMChild24to59 integer := 0;
+
+    /*Utility variables*/
     recordExists integer := 0;
     prevRecordCount integer := 0;
     prevMonth integer := currentMonth - 1;
@@ -282,6 +324,36 @@
         ccReferredChildOfDangerousDiseases int,
         ccReferredChildOfPneumonia int,
         ccReferredChildOfdiarrhea int,
+        bdTotalLiveBirth int,
+        bdtotalChildWithUnderWeight int,
+        bdTotalPrematureChild int,
+        bdStillBirthCount int,
+        bdDeathLessThan7Days int,
+        bdDeathLessThan28Days int,
+        bdDeathLessThan1Yr int,
+        bdTotalDeathLessThan1Yr int,
+        bdDeathLessThan5Yr int,
+        bdDeathOfMother int,
+        bdDeathOfOther int,
+        bdTotalDeathCount int,
+        wnCounsellingIronForPregWoman int,
+        wnCounsellingIronForMother int,
+        wnDistributionIronForPregWoman int,
+        wnDistributionIronForMother int,
+        wnCounsellingOnBreastMilkForPregWoman int,
+        wnCounsellingOnBreastMilkForMother int,
+        wnCounsellingOnFeedingMNP int,
+        cnBreastFeedingWithin1Hour int,
+        cnBreastFeedingUntill6Month int,
+        cnComplementaryFoodForChild6TO23 int,
+        cnComplementaryFoodForChild24to59 int,
+        cnReceivedMNP int,
+        cnContractedMAMChildZeroToSix int,
+        cnContractedMAMChild6TO23 int,
+        cnContractedMAMChild24to59 int,
+        cnContractedSAMChildZeroToSix int,
+        cnContractedSAMChild6TO23 int,
+        cnContractedSAMChild24to59 int,
         mis_division varchar(30),
         mis_district varchar(30),
         mis_upazilla varchar(70),
@@ -1307,6 +1379,24 @@
                                          , ccPcv3Count, ccMrAndopv4Count
                                          , ccMeaslesCount, ccReferredChildOfDangerousDiseases
                                          , ccReferredChildOfPneumonia, ccReferredChildOfdiarrhea
+                                         , bdTotalLiveBirth, bdtotalChildWithUnderWeight
+                                         , bdTotalPrematureChild, bdStillBirthCount
+                                         , bdDeathLessThan7Days, bdDeathLessThan28Days
+                                         , bdDeathLessThan1Yr, bdTotalDeathLessThan1Yr
+                                         , bdDeathLessThan5Yr, bdDeathOfMother
+                                         , bdDeathOfOther, bdTotalDeathCount
+                                         , wnCounsellingIronForPregWoman, wnCounsellingIronForMother
+                                         , wnDistributionIronForPregWoman, wnDistributionIronForMother
+                                         , wnCounsellingOnBreastMilkForPregWoman
+                                         , wnCounsellingOnBreastMilkForMother
+                                         , wnCounsellingOnFeedingMNP
+                                         , cnBreastFeedingWithin1Hour, cnBreastFeedingUntill6Month
+                                         , cnComplementaryFoodForChild6TO23
+                                         , cnComplementaryFoodForChild24to59
+                                         , cnReceivedMNP, cnContractedMAMChildZeroToSix
+                                         , cnContractedMAMChild6TO23, cnContractedMAMChild24to59
+                                         , cnContractedSAMChildZeroToSix, cnContractedSAMChild6TO23
+                                         , cnContractedSAMChild24to59
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentMonth, currentYear);
        ELSE
