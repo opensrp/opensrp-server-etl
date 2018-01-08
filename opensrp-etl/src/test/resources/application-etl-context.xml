@@ -20,14 +20,14 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-<context:component-scan base-package="org.opensrp.etl.controller" />
+
 <context:component-scan base-package="org.opensrp.etl.entity" />
 <context:component-scan base-package="org.opensrp.etl.repository" />
 <context:component-scan base-package="org.opensrp.etl.service" />
 	
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url"  value="jdbc:postgresql://localhost/dgfp" />
+        <property name="url" value="jdbc:postgresql://localhost/dgfp" />
         <property name="username" value="postgres" />
         <property name="password" value="password" />
 </bean>
@@ -45,13 +45,13 @@
                 <value>org.opensrp.etl.entity.PNCEntity</value>
                 <value>org.opensrp.etl.entity.ChildEntity</value>
                 <value>org.opensrp.etl.entity.MarkerEntity</value>   
-                <value>org.opensrp.etl.entity.PSRFEntity</value> 
+                <value>org.opensrp.etl.entity.PSRFEntity</value>
                 <value>org.opensrp.etl.entity.BNFEntity</value>   
                 <value>org.opensrp.etl.entity.ExceptionEntity</value>
                 <value>org.opensrp.etl.entity.AdolescentEntity</value>
                 <value>org.opensrp.etl.entity.InjectableEntity</value>
                 <value>org.opensrp.etl.entity.DeathRegEntity</value>
-                 <value>org.opensrp.etl.entity.MIS1ReportEntity</value>
+                <value>org.opensrp.etl.entity.MIS1ReportEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -66,7 +66,7 @@
     
     
 <bean name="transmissionServiceFactory" class="org.opensrp.etl.transmission.service.TransmissionServiceFactory"/>
-  
+
 <bean name="householdService" class="org.opensrp.etl.service.HouseholdService"/>    
 <bean name="memberService" class="org.opensrp.etl.service.MemberService"/>
 <bean name="psrfService" class="org.opensrp.etl.service.PSRFService"/>
@@ -131,10 +131,7 @@
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
 <bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
 <bean name="deathRegEntity" class="org.opensrp.etl.entity.DeathRegEntity"/>
-
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
-<bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>
-    
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />

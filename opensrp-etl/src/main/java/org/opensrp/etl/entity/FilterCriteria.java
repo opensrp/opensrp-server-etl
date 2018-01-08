@@ -9,14 +9,11 @@ public class FilterCriteria {
     private String division;
     private String district;
     private String upazilla;
-    private String ward;
     private String unionname;
+    private String ward;  
     private String unit;
     
-
     private String year;
-    
-
     private String month;
     
 	public String getDivision() {
