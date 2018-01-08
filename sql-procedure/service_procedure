@@ -133,6 +133,27 @@
     mcEPISessionPresence integer := 0;
     mcCommunityClinicPresence integer := 0;
 
+    /*Child Care Report Variables*/
+    ccIsCleanedInfo integer := 0;
+    ccIsCleanedService integer := 0;
+    ccUsedChlorhexidinInfo integer := 0;
+    ccUsedChlorhexidinService integer := 0;
+
+    ccFedBreastMilkCount integer := 0;
+    ccUsedMaskCount integer := 0;
+
+    ccBcgCount integer := 0;
+    ccOpv1Andpcv1Andpenta1Count integer := 0;
+    ccOpv2Andpcv2Andpenta2Count integer := 0;
+    ccOpv3Andpenta3Count integer := 0;
+    ccPcv3Count integer := 0;
+    ccMrAndopv4Count integer := 0;
+    ccMeaslesCount integer := 0;
+
+    ccReferredChildOfDangerousDiseases integer := 0;
+    ccReferredChildOfPneumonia integer := 0;
+    ccReferredChildOfdiarrhea integer := 0;
+
     recordExists integer := 0;
     prevRecordCount integer := 0;
     prevMonth integer := currentMonth - 1;
@@ -245,6 +266,22 @@
         mcSatelliteClinicPresence int,
         mcEPISessionPresence int,
         mcCommunityClinicPresence int,
+        ccIsCleanedInfo int,
+        ccIsCleanedService int,
+        ccUsedChlorhexidinInfo int,
+        ccUsedChlorhexidinService int,
+        ccFedBreastMilkCount int,
+        ccUsedMaskCount int,
+        ccBcgCount int,
+        ccOpv1Andpcv1Andpenta1Count int,
+        ccOpv2Andpcv2Andpenta2Count int,
+        ccOpv3Andpenta3Count int,
+        ccPcv3Count int,
+        ccMrAndopv4Count int,
+        ccMeaslesCount int,
+        ccReferredChildOfDangerousDiseases int,
+        ccReferredChildOfPneumonia int,
+        ccReferredChildOfdiarrhea int,
         mis_division varchar(30),
         mis_district varchar(30),
         mis_upazilla varchar(70),
@@ -1262,6 +1299,14 @@
                                          , mcCounsellingOnInfectionOfDiseases
                                          , mcSatelliteClinicPresence, mcEPISessionPresence
                                          , mcCommunityClinicPresence
+                                         , ccIsCleanedInfo, ccIsCleanedService
+                                         , ccUsedChlorhexidinInfo, ccUsedChlorhexidinService
+                                         , ccFedBreastMilkCount, ccUsedMaskCount
+                                         , ccBcgCount, ccOpv1Andpcv1Andpenta1Count
+                                         , ccOpv2Andpcv2Andpenta2Count, ccOpv3Andpenta3Count
+                                         , ccPcv3Count, ccMrAndopv4Count
+                                         , ccMeaslesCount, ccReferredChildOfDangerousDiseases
+                                         , ccReferredChildOfPneumonia, ccReferredChildOfdiarrhea
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentMonth, currentYear);
        ELSE
