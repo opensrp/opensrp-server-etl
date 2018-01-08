@@ -33,10 +33,10 @@ public class MIS1ReportEntity {
     
     @Embedded
 	private FamilyPlanningReport familyPlanningReport;
-    private MaternityCareReport maternityCareReport;
-    private ChildCareReport childCareReport;
-    /*private BirthAndDeathReport birthAndDeathReport;
-    private NutritionReport nutritionReport;*/
+    //private MaternityCareReport maternityCareReport;
+    //private ChildCareReport childCareReport;
+    //private BirthAndDeathReport birthAndDeathReport;
+    //private NutritionReport nutritionReport;
 
 	public MIS1ReportEntity() {
 		// TODO Auto-generated constructor stub
