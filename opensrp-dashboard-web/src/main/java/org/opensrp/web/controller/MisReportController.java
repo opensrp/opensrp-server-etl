@@ -21,8 +21,7 @@ public class MisReportController {
 	@ResponseBody
 	@RequestMapping("/misreport/familyplanning")
 	public List<MIS1Report> getMIS1Report(FilterCriteria filterCriteria) {
-		System.out.println("FilterCriteria: " + filterCriteria.toString());
-		List<MIS1Report> mr = commonDatabaseRepository.findAllByCriteria(MIS1ReportEntity.class, filterCriteria);
-		return mr;
+		return commonDatabaseRepository.findAllByCriteria(MIS1ReportEntity.class, filterCriteria);
+
 	}
 }

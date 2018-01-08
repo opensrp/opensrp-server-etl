@@ -131,11 +131,7 @@
 <bean name="markerEntity" class="org.opensrp.etl.entity.MarkerEntity"/>
 <bean name="exceptionEntity" class="org.opensrp.etl.entity.ExceptionEntity"/>
 <bean name="deathRegEntity" class="org.opensrp.etl.entity.DeathRegEntity"/>
-
 <bean name="markerService" class="org.opensrp.etl.service.MarkerService"/>
-<bean name="markerRepository" class="org.opensrp.etl.repository.MarkerRepository"/>
-    
-
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />

@@ -27,7 +27,9 @@ public class MIS1ReportEntity {
     private String upazilla;
     private String ward;
     private String geo_union;
-    private String unit;
+    private String unit;    
+    private String reporting_year;
+    private String reporting_month;
     
     @Embedded
 	private FamilyPlanningReport familyPlanningReport;
@@ -127,6 +129,22 @@ public class MIS1ReportEntity {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	public String getReporting_year() {
+		return reporting_year;
+	}
+
+	public void setReporting_year(String reporting_year) {
+		this.reporting_year = reporting_year;
+	}
+
+	public String getReporting_month() {
+		return reporting_month;
+	}
+
+	public void setReporting_month(String reporting_month) {
+		this.reporting_month = reporting_month;
 	}
 
 

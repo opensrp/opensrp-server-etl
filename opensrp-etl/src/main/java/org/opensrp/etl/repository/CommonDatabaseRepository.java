@@ -133,8 +133,61 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	public <T> List<T> findAllByCriteria(Class<?> className, FilterCriteria filtercriteria) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
-		criteria.add(Restrictions.eq("division", filtercriteria.getDivision()));
-		//criteria.add(Restrictions.eq("district", serverVersion));
+		boolean hasPrerequisite = false;
+		if (filtercriteria != null) {
+			System.out.println("FilterCriteria: " + filtercriteria.toString());
+			if (!filtercriteria.getYear().isEmpty() || filtercriteria.getYear()!=null) {
+				 criteria.add(Restrictions.eq("reporting_year", filtercriteria.getYear()));
+				 System.out.println("set criteria year");
+				}
+			
+			if (!filtercriteria.getMonth().isEmpty() || filtercriteria.getMonth()!=null) {
+				 criteria.add(Restrictions.eq("reporting_month", filtercriteria.getMonth()));
+				 System.out.println("set criteria month");
+				}
+			if (filtercriteria.getDivision()!=null && !filtercriteria.getDivision().isEmpty() ) {
+				 criteria.add(Restrictions.eq("division", filtercriteria.getDivision()));
+				 System.out.println("set criteria division");
+				 hasPrerequisite = true;
+				}
+			if (hasPrerequisite && (filtercriteria.getDistrict()!=null && !filtercriteria.getDistrict().isEmpty() )) {
+				 criteria.add(Restrictions.eq("district", filtercriteria.getDistrict()));
+				 System.out.println("set criteria district");
+				 hasPrerequisite = true;
+				}else {
+					hasPrerequisite = false;
+				}
+			if (hasPrerequisite && (filtercriteria.getUpazilla()!=null && !filtercriteria.getUpazilla().isEmpty())) {
+				 criteria.add(Restrictions.eq("upazilla", filtercriteria.getUpazilla()));
+				 System.out.println("set criteria upazilla");
+				 hasPrerequisite = true;
+				}else {
+					hasPrerequisite = false;
+				}
+			
+			if (hasPrerequisite && (filtercriteria.getUnionname()!=null && !filtercriteria.getUnionname().isEmpty())) {
+				 criteria.add(Restrictions.eq("geo_union", filtercriteria.getUnionname()));
+				 System.out.println("set criteria unionname");
+				 hasPrerequisite = true;
+				}else {
+					hasPrerequisite = false;
+				}
+			
+			if (hasPrerequisite && (filtercriteria.getWard()!=null && !filtercriteria.getWard().isEmpty())) {
+				 criteria.add(Restrictions.eq("ward", filtercriteria.getWard()));
+				 System.out.println("set criteria ward");
+				 hasPrerequisite = true;
+				}else {
+					hasPrerequisite = false;
+				}
+			
+			if (hasPrerequisite && (filtercriteria.getUnit()!=null && !filtercriteria.getUnit().isEmpty())) {
+				 criteria.add(Restrictions.eq("unit", filtercriteria.getUnit()));
+				 System.out.println("set criteria unit");
+				 hasPrerequisite = true;
+				}
+			
+		}
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
