@@ -87,13 +87,51 @@
     mcANCVisit4 integer := 0;
 
     mcBirthAtHomeWithTrainedPerson integer := 0;
+    mcBirthAtHomeWithUntrainedPerson integer := 0;
     mcNormalBirthAtHospitalOrClinic integer := 0;
     mcCesareanBirthAtHospitalOrClinic integer := 0;
+
+    mcIsDelivered integer := 0;
+    mcAMTSL integer := 0;
+    mcNoOxytocinAndMisoprostolgiven integer := 0;
 
     mcMotherPNCVisit1 integer := 0;
     mcMotherPNCVisit2 integer := 0;
     mcMotherPNCVisit3 integer := 0;
     mcMotherPNCVisit4 integer := 0;
+
+    mcPNCCounselling integer := 0;
+
+    mcChildPNCVisit1 integer := 0;
+    mcChildPNCVisit2 integer := 0;
+    mcChildPNCVisit3 integer := 0;
+    mcChildPNCVisit4 integer := 0;
+
+    mcReferredComplexPregnant integer := 0;
+    mcReferredTotalComplexityCount integer := 0;
+    mcReferredMgSO4Count integer := 0;
+    mcReferredChildComplexityCount integer := 0;
+
+    mcTTDoseOne integer := 0;
+    mcTTDoseTwo integer := 0;
+    mcTTDoseThree integer := 0;
+    mcTTDoseFour integer := 0;
+    mcTTDoseFive integer := 0;
+
+    mcECPReceivedCount integer := 0;
+    mcMisoprostolReceivedCount integer := 0;
+
+    mcAdvisedIncompatibleCouple integer := 0;
+    mcReferredIncompatibleCouple integer := 0;
+
+    mcCounsellingOnChangesOfAdolescent integer := 0;
+    mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy integer := 0;
+    mcCounsellingTeenagersOnTakingIronAndFolicAcid integer := 0;
+    mcCounsellingOnInfectionOfDiseases integer := 0;
+
+    mcSatelliteClinicPresence integer := 0;
+    mcEPISessionPresence integer := 0;
+    mcCommunityClinicPresence integer := 0;
 
     recordExists integer := 0;
     prevRecordCount integer := 0;
@@ -172,12 +210,41 @@
         mcANCVisit3 int,
         mcANCVisit4 int,
         mcBirthAtHomeWithTrainedPerson int,
+        mcBirthAtHomeWithUntrainedPerson int,
         mcNormalBirthAtHospitalOrClinic int,
         mcCesareanBirthAtHospitalOrClinic int,
+        mcIsDelivered int,
+        mcAMTSL int,
+        mcNoOxytocinAndMisoprostolgiven int,
         mcMotherPNCVisit1 int,
         mcMotherPNCVisit2 int,
         mcMotherPNCVisit3 int,
         mcMotherPNCVisit4 int,
+        mcPNCCounselling int,
+        mcChildPNCVisit1 int,
+        mcChildPNCVisit2 int,
+        mcChildPNCVisit3 int,
+        mcChildPNCVisit4 int,
+        mcReferredComplexPregnant int,
+        mcReferredTotalComplexityCount int,
+        mcReferredMgSO4Count int,
+        mcReferredChildComplexityCount int,
+        mcTTDoseOne int,
+        mcTTDoseTwo int,
+        mcTTDoseThree int,
+        mcTTDoseFour int,
+        mcTTDoseFive int,
+        mcECPReceivedCount int,
+        mcMisoprostolReceivedCount int,
+        mcAdvisedIncompatibleCouple int,
+        mcReferredIncompatibleCouple int,
+        mcCounsellingOnChangesOfAdolescent int,
+        mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy int,
+        mcCounsellingTeenagersOnTakingIronAndFolicAcid int,
+        mcCounsellingOnInfectionOfDiseases int,
+        mcSatelliteClinicPresence int,
+        mcEPISessionPresence int,
+        mcCommunityClinicPresence int,
         mis_division varchar(30),
         mis_district varchar(30),
         mis_upazilla varchar(70),
@@ -1137,7 +1204,6 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
-
            INSERT INTO misreport VALUES (default, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
                                          , fpLeftPillAndStartedOther
@@ -1175,10 +1241,27 @@
                                          , mcTotalPregnantCount
                                          , mcANCVisit1, mcANCVisit2
                                          , mcANCVisit3, mcANCVisit4
-                                         , mcBirthAtHomeWithTrainedPerson, mcNormalBirthAtHospitalOrClinic
-                                         , mcCesareanBirthAtHospitalOrClinic
+                                         , mcBirthAtHomeWithTrainedPerson, mcBirthAtHomeWithUntrainedPerson
+                                         , mcNormalBirthAtHospitalOrClinic, mcCesareanBirthAtHospitalOrClinic
+                                         , mcIsDelivered, mcAMTSL
+                                         , mcNoOxytocinAndMisoprostolgiven
                                          , mcMotherPNCVisit1, mcMotherPNCVisit2
                                          , mcMotherPNCVisit3, mcMotherPNCVisit4
+                                         , mcPNCCounselling
+                                         , mcChildPNCVisit1, mcChildPNCVisit2
+                                         , mcChildPNCVisit3, mcChildPNCVisit4
+                                         , mcReferredComplexPregnant, mcReferredTotalComplexityCount
+                                         , mcReferredMgSO4Count, mcReferredChildComplexityCount
+                                         , mcTTDoseOne, mcTTDoseTwo, mcTTDoseThree
+                                         , mcTTDoseFour, mcTTDoseFive
+                                         , mcECPReceivedCount, mcMisoprostolReceivedCount
+                                         , mcAdvisedIncompatibleCouple, mcReferredIncompatibleCouple
+                                         , mcCounsellingOnChangesOfAdolescent
+                                         , mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy
+                                         , mcCounsellingTeenagersOnTakingIronAndFolicAcid
+                                         , mcCounsellingOnInfectionOfDiseases
+                                         , mcSatelliteClinicPresence, mcEPISessionPresence
+                                         , mcCommunityClinicPresence
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentMonth, currentYear);
        ELSE
