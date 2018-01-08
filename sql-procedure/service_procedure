@@ -71,7 +71,7 @@
     fpTotalStartedNone integer := 0;
     fpTotalStartedOther integer := 0;
 
-    fpCAR float := 0;
+    fpCAR int := 0;
 
     /*Maternity Care Report Variables*/
     mcCurrentNewPregnantCount integer := 0;
@@ -154,7 +154,7 @@
     ccReferredChildOfPneumonia integer := 0;
     ccReferredChildOfdiarrhea integer := 0;
 
-    /*Birth And Death Report Variables*/
+     /*Birth And Death Report Variables*/
     bdTotalLiveBirth integer := 0;
     bdtotalChildWithUnderWeight integer := 0;
     bdTotalPrematureChild integer := 0;
@@ -262,7 +262,7 @@
     	fpTotalUsages int,
         fpTotalStartedNone int,
         fpTotalStartedOther int,
-        fpCAR float,
+        fpCAR int,
         mcCurrentNewPregnantCount int,
         mcCurrentOldPregnantCount int,
         mcCurrentTotalPregnantCount int,
