@@ -32,8 +32,8 @@ public class MIS1ReportEntity {
     @Embedded
 	private FamilyPlanningReport familyPlanningReport;
     private MaternityCareReport maternityCareReport;
-    /*private BirthAndDeathReport birthAndDeathReport;
     private ChildCareReport childCareReport;
+    /*private BirthAndDeathReport birthAndDeathReport;
     private NutritionReport nutritionReport;*/
 
 	public MIS1ReportEntity() {
