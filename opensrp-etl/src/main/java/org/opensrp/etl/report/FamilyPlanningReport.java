@@ -1,50 +1,97 @@
 package org.opensrp.etl.report;
 
+import org.hibernate.annotations.ColumnDefault;
+
 public class FamilyPlanningReport {
+	@ColumnDefault("0")
     private int oldPillUsages;
+	@ColumnDefault("0")
     private int newPillUsages;
+	@ColumnDefault("0")
     private int currentTotalPillUsages;
+	@ColumnDefault("0")
     private int previousTotalPillUsages;
+	@ColumnDefault("0")
     private int totalPillUsages;
+	@ColumnDefault("0")
     private int oldCondomUsages;
+	@ColumnDefault("0")
     private int newCondomUsages;
+	@ColumnDefault("0")
     private int currentTotalCondomUsages;
+	@ColumnDefault("0")
     private int previousTotalCondomUsages;
+	@ColumnDefault("0")
     private int totalCondomUsages;
+	@ColumnDefault("0")
     private int oldInjectableUsages;
+	@ColumnDefault("0")
     private int newInjectableUsages;
+	@ColumnDefault("0")
     private int currentTotalInjectableUsages;
+	@ColumnDefault("0")
     private int previousTotalInjectableUsages;
+	@ColumnDefault("0")
     private int totalInjectableUsages;
+	@ColumnDefault("0")
     private int oldIUDUsages;
+	@ColumnDefault("0")
     private int newIUDUsages;
+	@ColumnDefault("0")
     private int currentTotalIUDUsages;
+	@ColumnDefault("0")
     private int previousTotalIUDUsages;
+	@ColumnDefault("0")
     private int totalIUDUsages;
+	@ColumnDefault("0")
     private int oldImplantUsages;
+	@ColumnDefault("0")
     private int newImplantUsages;
+	@ColumnDefault("0")
     private int currentTotalImplantUsages;
+	@ColumnDefault("0")
     private int previousTotalImplantUsages;
+	@ColumnDefault("0")
     private int totalImplantUsages;
+	@ColumnDefault("0")
     private int oldMalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int newMalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int currentTotalMalePermanentUsages;
+	@ColumnDefault("0")
     private int previousTotalMalePermanentUsages;
+	@ColumnDefault("0")
     private int totalMalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int oldFemalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int newFemalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int currentTotalFemalePermanentUsages;
+	@ColumnDefault("0")
     private int previousTotalFemalePermanentUsages;
+	@ColumnDefault("0")
     private int totalFemalePermanentMethodUsages;
+	@ColumnDefault("0")
     private int leftPillAndStartedNone;
+	@ColumnDefault("0")
     private int leftPillAndStartedOtherMethod;
+	@ColumnDefault("0")
     private int leftCondomAndStartedNone;
+	@ColumnDefault("0")
     private int leftCondomAndStartedOtherMethod;
+	@ColumnDefault("0")
     private int leftInjectableAndStartedNone;
+    @ColumnDefault("0")
     private int leftInjectableAndStartedOtherMethod;
+    @ColumnDefault("0")
     private int leftIUDAndStartedNone;
+    @ColumnDefault("0")
     private int leftIUDAndStartedOtherMethod;
+    @ColumnDefault("0")
     private int leftImplantAndStartedNone;
+    @ColumnDefault("0")
     private int leftImplantAndStartedOtherMethod;
 
     // private int EligibleCoupleCountCalculator;

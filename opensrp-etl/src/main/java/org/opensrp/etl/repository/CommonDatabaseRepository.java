@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.opensrp.etl.common.interfaces.DatabaseRepository;
+import org.opensrp.etl.entity.FilterCriteria;
 
 @Repository
 public class CommonDatabaseRepository implements DatabaseRepository {
@@ -124,6 +125,19 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		finally {
 			session.close();
 		}
+		
+		return (List<T>) result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAllByCriteria(Class<?> className, FilterCriteria filtercriteria) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("division", filtercriteria.getDivision()));
+		//criteria.add(Restrictions.eq("district", serverVersion));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
 		
 		return (List<T>) result;
 	}
