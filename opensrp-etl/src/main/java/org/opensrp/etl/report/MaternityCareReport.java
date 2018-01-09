@@ -14,13 +14,21 @@ public class MaternityCareReport {
     @ColumnDefault("0")
     private int mcTotalPregnantCount;
     @ColumnDefault("0")
-    private int mcANCVisit1;
+    private int mcANCVisit1Info;
     @ColumnDefault("0")
-    private int mcANCVisit2;
+    private int mcANCVisit2Info;
     @ColumnDefault("0")
-    private int mcANCVisit3;
+    private int mcANCVisit3Info;
     @ColumnDefault("0")
-    private int mcANCVisit4;
+    private int mcANCVisit4Info;
+    @ColumnDefault("0")
+    private int mcANCVisit1Service;
+    @ColumnDefault("0")
+    private int mcANCVisit2Service;
+    @ColumnDefault("0")
+    private int mcANCVisit3Service;
+    @ColumnDefault("0")
+    private int mcANCVisit4Service;
     @ColumnDefault("0")
     private int mcBirthAtHomeWithTrainedPerson;
     @ColumnDefault("0")
@@ -36,23 +44,39 @@ public class MaternityCareReport {
     @ColumnDefault("0")
     private int mcNoOxytocinAndMisoprostolgiven;
     @ColumnDefault("0")
-    private int mcMotherPNCVisit1;
+    private int mcMotherPNCVisit1Info;
     @ColumnDefault("0")
-    private int mcMotherPNCVisit2;
+    private int mcMotherPNCVisit2Info;
     @ColumnDefault("0")
-    private int mcMotherPNCVisit3;
+    private int mcMotherPNCVisit3Info;
     @ColumnDefault("0")
-    private int mcMotherPNCVisit4;
+    private int mcMotherPNCVisit4Info;
+    @ColumnDefault("0")
+    private int mcMotherPNCVisit1Service;
+    @ColumnDefault("0")
+    private int mcMotherPNCVisit2Service;
+    @ColumnDefault("0")
+    private int mcMotherPNCVisit3Service;
+    @ColumnDefault("0")
+    private int mcMotherPNCVisit4Service;
     @ColumnDefault("0")
     private int mcPNCCounselling;
     @ColumnDefault("0")
-    private int mcChildPNCVisit1;
+    private int mcChildPNCVisit1Info;
     @ColumnDefault("0")
-    private int mcChildPNCVisit2;
+    private int mcChildPNCVisit2Info;
     @ColumnDefault("0")
-    private int mcChildPNCVisit3;
+    private int mcChildPNCVisit3Info;
     @ColumnDefault("0")
-    private int mcChildPNCVisit4;
+    private int mcChildPNCVisit4Info;
+    @ColumnDefault("0")
+    private int mcChildPNCVisit1Service;
+    @ColumnDefault("0")
+    private int mcChildPNCVisit2Service;
+    @ColumnDefault("0")
+    private int mcChildPNCVisit3Service;
+    @ColumnDefault("0")
+    private int mcChildPNCVisit4Service;
     @ColumnDefault("0")
     private int mcReferredComplexPregnant;
     @ColumnDefault("0")
@@ -138,36 +162,68 @@ public class MaternityCareReport {
         this.mcTotalPregnantCount = mcTotalPregnantCount;
     }
 
-    public int getMcANCVisit1() {
-        return mcANCVisit1;
+    public int getMcANCVisit1Info() {
+        return mcANCVisit1Info;
     }
 
-    public void setMcANCVisit1(int mcANCVisit1) {
-        this.mcANCVisit1 = mcANCVisit1;
+    public void setMcANCVisit1Info(int mcANCVisit1Info) {
+        this.mcANCVisit1Info = mcANCVisit1Info;
     }
 
-    public int getMcANCVisit2() {
-        return mcANCVisit2;
+    public int getMcANCVisit2Info() {
+        return mcANCVisit2Info;
     }
 
-    public void setMcANCVisit2(int mcANCVisit2) {
-        this.mcANCVisit2 = mcANCVisit2;
+    public void setMcANCVisit2Info(int mcANCVisit2Info) {
+        this.mcANCVisit2Info = mcANCVisit2Info;
     }
 
-    public int getMcANCVisit3() {
-        return mcANCVisit3;
+    public int getMcANCVisit3Info() {
+        return mcANCVisit3Info;
     }
 
-    public void setMcANCVisit3(int mcANCVisit3) {
-        this.mcANCVisit3 = mcANCVisit3;
+    public void setMcANCVisit3Info(int mcANCVisit3Info) {
+        this.mcANCVisit3Info = mcANCVisit3Info;
     }
 
-    public int getMcANCVisit4() {
-        return mcANCVisit4;
+    public int getMcANCVisit4Info() {
+        return mcANCVisit4Info;
     }
 
-    public void setMcANCVisit4(int mcANCVisit4) {
-        this.mcANCVisit4 = mcANCVisit4;
+    public void setMcANCVisit4Info(int mcANCVisit4Info) {
+        this.mcANCVisit4Info = mcANCVisit4Info;
+    }
+
+    public int getMcANCVisit1Service() {
+        return mcANCVisit1Service;
+    }
+
+    public void setMcANCVisit1Service(int mcANCVisit1Service) {
+        this.mcANCVisit1Service = mcANCVisit1Service;
+    }
+
+    public int getMcANCVisit2Service() {
+        return mcANCVisit2Service;
+    }
+
+    public void setMcANCVisit2Service(int mcANCVisit2Service) {
+        this.mcANCVisit2Service = mcANCVisit2Service;
+    }
+
+    public int getMcANCVisit3Service() {
+        return mcANCVisit3Service;
+    }
+
+    public void setMcANCVisit3Service(int mcANCVisit3Service) {
+        this.mcANCVisit3Service = mcANCVisit3Service;
+    }
+
+    public int getMcANCVisit4Service() {
+        return mcANCVisit4Service;
+    }
+
+    public void setMcANCVisit4Service(int mcANCVisit4Service) {
+        this.mcANCVisit4Service = mcANCVisit4Service;
     }
 
     public int getMcBirthAtHomeWithTrainedPerson() {
@@ -231,36 +287,68 @@ public class MaternityCareReport {
         this.mcNoOxytocinAndMisoprostolgiven = mcNoOxytocinAndMisoprostolgiven;
     }
 
-    public int getMcMotherPNCVisit1() {
-        return mcMotherPNCVisit1;
+    public int getMcMotherPNCVisit1Info() {
+        return mcMotherPNCVisit1Info;
     }
 
-    public void setMcMotherPNCVisit1(int mcMotherPNCVisit1) {
-        this.mcMotherPNCVisit1 = mcMotherPNCVisit1;
+    public void setMcMotherPNCVisit1Info(int mcMotherPNCVisit1Info) {
+        this.mcMotherPNCVisit1Info = mcMotherPNCVisit1Info;
     }
 
-    public int getMcMotherPNCVisit2() {
-        return mcMotherPNCVisit2;
+    public int getMcMotherPNCVisit2Info() {
+        return mcMotherPNCVisit2Info;
     }
 
-    public void setMcMotherPNCVisit2(int mcMotherPNCVisit2) {
-        this.mcMotherPNCVisit2 = mcMotherPNCVisit2;
+    public void setMcMotherPNCVisit2Info(int mcMotherPNCVisit2Info) {
+        this.mcMotherPNCVisit2Info = mcMotherPNCVisit2Info;
     }
 
-    public int getMcMotherPNCVisit3() {
-        return mcMotherPNCVisit3;
+    public int getMcMotherPNCVisit3Info() {
+        return mcMotherPNCVisit3Info;
     }
 
-    public void setMcMotherPNCVisit3(int mcMotherPNCVisit3) {
-        this.mcMotherPNCVisit3 = mcMotherPNCVisit3;
+    public void setMcMotherPNCVisit3Info(int mcMotherPNCVisit3Info) {
+        this.mcMotherPNCVisit3Info = mcMotherPNCVisit3Info;
     }
 
-    public int getMcMotherPNCVisit4() {
-        return mcMotherPNCVisit4;
+    public int getMcMotherPNCVisit4Info() {
+        return mcMotherPNCVisit4Info;
     }
 
-    public void setMcMotherPNCVisit4(int mcMotherPNCVisit4) {
-        this.mcMotherPNCVisit4 = mcMotherPNCVisit4;
+    public void setMcMotherPNCVisit4Info(int mcMotherPNCVisit4Info) {
+        this.mcMotherPNCVisit4Info = mcMotherPNCVisit4Info;
+    }
+
+    public int getMcMotherPNCVisit1Service() {
+        return mcMotherPNCVisit1Service;
+    }
+
+    public void setMcMotherPNCVisit1Service(int mcMotherPNCVisit1Service) {
+        this.mcMotherPNCVisit1Service = mcMotherPNCVisit1Service;
+    }
+
+    public int getMcMotherPNCVisit2Service() {
+        return mcMotherPNCVisit2Service;
+    }
+
+    public void setMcMotherPNCVisit2Service(int mcMotherPNCVisit2Service) {
+        this.mcMotherPNCVisit2Service = mcMotherPNCVisit2Service;
+    }
+
+    public int getMcMotherPNCVisit3Service() {
+        return mcMotherPNCVisit3Service;
+    }
+
+    public void setMcMotherPNCVisit3Service(int mcMotherPNCVisit3Service) {
+        this.mcMotherPNCVisit3Service = mcMotherPNCVisit3Service;
+    }
+
+    public int getMcMotherPNCVisit4Service() {
+        return mcMotherPNCVisit4Service;
+    }
+
+    public void setMcMotherPNCVisit4Service(int mcMotherPNCVisit4Service) {
+        this.mcMotherPNCVisit4Service = mcMotherPNCVisit4Service;
     }
 
     public int getMcPNCCounselling() {
@@ -271,36 +359,68 @@ public class MaternityCareReport {
         this.mcPNCCounselling = mcPNCCounselling;
     }
 
-    public int getMcChildPNCVisit1() {
-        return mcChildPNCVisit1;
+    public int getMcChildPNCVisit1Info() {
+        return mcChildPNCVisit1Info;
     }
 
-    public void setMcChildPNCVisit1(int mcChildPNCVisit1) {
-        this.mcChildPNCVisit1 = mcChildPNCVisit1;
+    public void setMcChildPNCVisit1Info(int mcChildPNCVisit1Info) {
+        this.mcChildPNCVisit1Info = mcChildPNCVisit1Info;
     }
 
-    public int getMcChildPNCVisit2() {
-        return mcChildPNCVisit2;
+    public int getMcChildPNCVisit2Info() {
+        return mcChildPNCVisit2Info;
     }
 
-    public void setMcChildPNCVisit2(int mcChildPNCVisit2) {
-        this.mcChildPNCVisit2 = mcChildPNCVisit2;
+    public void setMcChildPNCVisit2Info(int mcChildPNCVisit2Info) {
+        this.mcChildPNCVisit2Info = mcChildPNCVisit2Info;
     }
 
-    public int getMcChildPNCVisit3() {
-        return mcChildPNCVisit3;
+    public int getMcChildPNCVisit3Info() {
+        return mcChildPNCVisit3Info;
     }
 
-    public void setMcChildPNCVisit3(int mcChildPNCVisit3) {
-        this.mcChildPNCVisit3 = mcChildPNCVisit3;
+    public void setMcChildPNCVisit3Info(int mcChildPNCVisit3Info) {
+        this.mcChildPNCVisit3Info = mcChildPNCVisit3Info;
     }
 
-    public int getMcChildPNCVisit4() {
-        return mcChildPNCVisit4;
+    public int getMcChildPNCVisit4Info() {
+        return mcChildPNCVisit4Info;
     }
 
-    public void setMcChildPNCVisit4(int mcChildPNCVisit4) {
-        this.mcChildPNCVisit4 = mcChildPNCVisit4;
+    public void setMcChildPNCVisit4Info(int mcChildPNCVisit4Info) {
+        this.mcChildPNCVisit4Info = mcChildPNCVisit4Info;
+    }
+
+    public int getMcChildPNCVisit1Service() {
+        return mcChildPNCVisit1Service;
+    }
+
+    public void setMcChildPNCVisit1Service(int mcChildPNCVisit1Service) {
+        this.mcChildPNCVisit1Service = mcChildPNCVisit1Service;
+    }
+
+    public int getMcChildPNCVisit2Service() {
+        return mcChildPNCVisit2Service;
+    }
+
+    public void setMcChildPNCVisit2Service(int mcChildPNCVisit2Service) {
+        this.mcChildPNCVisit2Service = mcChildPNCVisit2Service;
+    }
+
+    public int getMcChildPNCVisit3Service() {
+        return mcChildPNCVisit3Service;
+    }
+
+    public void setMcChildPNCVisit3Service(int mcChildPNCVisit3Service) {
+        this.mcChildPNCVisit3Service = mcChildPNCVisit3Service;
+    }
+
+    public int getMcChildPNCVisit4Service() {
+        return mcChildPNCVisit4Service;
+    }
+
+    public void setMcChildPNCVisit4Service(int mcChildPNCVisit4Service) {
+        this.mcChildPNCVisit4Service = mcChildPNCVisit4Service;
     }
 
     public int getMcReferredComplexPregnant() {
