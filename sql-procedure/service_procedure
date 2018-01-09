@@ -2,7 +2,7 @@
    CREATE OR REPLACE FUNCTION create_mis_report(division VARCHAR(70), district VARCHAR(70)
                                                 , upazilla VARCHAR(70), ward VARCHAR(70)
                                                 , unionname VARCHAR(70), unit VARCHAR(70)
-                                                , currentMonth integer, currentYear integer)
+                                                , currentM VARCHAR(70), currentY VARCHAR(70))
    RETURNS void AS $$
     declare
     /*Family Planning Report Variables*/
@@ -81,10 +81,15 @@
     mcPrevPregnantCount integer := 0;
     mcTotalPregnantCount integer := 0;
 
-    mcANCVisit1 integer := 0;
-    mcANCVisit2 integer := 0;
-    mcANCVisit3 integer := 0;
-    mcANCVisit4 integer := 0;
+    mcANCVisit1Info integer := 0;
+    mcANCVisit2Info integer := 0;
+    mcANCVisit3Info integer := 0;
+    mcANCVisit4Info integer := 0;
+
+    mcANCVisit1Service integer := 0;
+    mcANCVisit2Service integer := 0;
+    mcANCVisit3Service integer := 0;
+    mcANCVisit4Service integer := 0;
 
     mcBirthAtHomeWithTrainedPerson integer := 0;
     mcBirthAtHomeWithUntrainedPerson integer := 0;
@@ -95,17 +100,27 @@
     mcAMTSL integer := 0;
     mcNoOxytocinAndMisoprostolgiven integer := 0;
 
-    mcMotherPNCVisit1 integer := 0;
-    mcMotherPNCVisit2 integer := 0;
-    mcMotherPNCVisit3 integer := 0;
-    mcMotherPNCVisit4 integer := 0;
+    mcMotherPNCVisit1Info integer := 0;
+    mcMotherPNCVisit2Info integer := 0;
+    mcMotherPNCVisit3Info integer := 0;
+    mcMotherPNCVisit4Info integer := 0;
+
+    mcMotherPNCVisit1Service integer := 0;
+    mcMotherPNCVisit2Service integer := 0;
+    mcMotherPNCVisit3Service integer := 0;
+    mcMotherPNCVisit4Service integer := 0;
 
     mcPNCCounselling integer := 0;
 
-    mcChildPNCVisit1 integer := 0;
-    mcChildPNCVisit2 integer := 0;
-    mcChildPNCVisit3 integer := 0;
-    mcChildPNCVisit4 integer := 0;
+    mcChildPNCVisit1Info integer := 0;
+    mcChildPNCVisit2Info integer := 0;
+    mcChildPNCVisit3Info integer := 0;
+    mcChildPNCVisit4Info integer := 0;
+
+    mcChildPNCVisit1Service integer := 0;
+    mcChildPNCVisit2Service integer := 0;
+    mcChildPNCVisit3Service integer := 0;
+    mcChildPNCVisit4Service integer := 0;
 
     mcReferredComplexPregnant integer := 0;
     mcReferredTotalComplexityCount integer := 0;
@@ -198,6 +213,8 @@
     /*Utility variables*/
     recordExists integer := 0;
     prevRecordCount integer := 0;
+    currentMonth integer := currentM :: integer;
+    currentYear integer := currentY :: integer;
     prevMonth integer := currentMonth - 1;
     prevYear integer := currentYear;
 
@@ -268,10 +285,14 @@
         mcCurrentTotalPregnantCount int,
         mcPrevPregnantCount int,
         mcTotalPregnantCount int,
-        mcANCVisit1 int,
-        mcANCVisit2 int,
-        mcANCVisit3 int,
-        mcANCVisit4 int,
+        mcANCVisit1Info int,
+        mcANCVisit2Info int,
+        mcANCVisit3Info int,
+        mcANCVisit4Info int,
+        mcANCVisit1Service int,
+        mcANCVisit2Service int,
+        mcANCVisit3Service int,
+        mcANCVisit4Service int,
         mcBirthAtHomeWithTrainedPerson int,
         mcBirthAtHomeWithUntrainedPerson int,
         mcNormalBirthAtHospitalOrClinic int,
@@ -279,15 +300,23 @@
         mcIsDelivered int,
         mcAMTSL int,
         mcNoOxytocinAndMisoprostolgiven int,
-        mcMotherPNCVisit1 int,
-        mcMotherPNCVisit2 int,
-        mcMotherPNCVisit3 int,
-        mcMotherPNCVisit4 int,
+        mcMotherPNCVisit1Info int,
+        mcMotherPNCVisit2Info int,
+        mcMotherPNCVisit3Info int,
+        mcMotherPNCVisit4Info int,
+        mcMotherPNCVisit1Service int,
+        mcMotherPNCVisit2Service int,
+        mcMotherPNCVisit3Service int,
+        mcMotherPNCVisit4Service int,
         mcPNCCounselling int,
-        mcChildPNCVisit1 int,
-        mcChildPNCVisit2 int,
-        mcChildPNCVisit3 int,
-        mcChildPNCVisit4 int,
+        mcChildPNCVisit1Info int,
+        mcChildPNCVisit2Info int,
+        mcChildPNCVisit3Info int,
+        mcChildPNCVisit4Info int,
+        mcChildPNCVisit1Service int,
+        mcChildPNCVisit2Service int,
+        mcChildPNCVisit3Service int,
+        mcChildPNCVisit4Service int,
         mcReferredComplexPregnant int,
         mcReferredTotalComplexityCount int,
         mcReferredMgSO4Count int,
@@ -360,8 +389,8 @@
         mis_ward varchar(70),
         mis_unionname varchar(70),
         mis_unit varchar(70),
-        mis_currentMonth int,
-        mis_currentYear int
+        mis_currentMonth varchar(70),
+        mis_currentYear varchar(70)
        )', 'misreport');
 
         select count(*) from misreport into recordExists
@@ -371,11 +400,11 @@
         and misreport.mis_ward=ward
         and misreport.mis_unionname=unionname
         and misreport.mis_unit=unit
-        and misreport.mis_currentmonth=currentMonth
-        and misreport.mis_currentyear=currentYear;
+        and misreport.mis_currentmonth=currentM
+        and misreport.mis_currentyear=currentY;
 
         IF recordExists = 0 THEN
-    
+
             /*Calculating previous month*/
             IF currentMonth = 1 THEN
                 prevMonth := 12;
@@ -1301,9 +1330,123 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
-            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1 FROM anc a1
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
-            WHERE (ancName='ANC1'
+            WHERE (a1.ancName='ANC1'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+           SELECT COUNT(distinct b1.relationalid) INTO mcBirthAtHomeWithTrainedPerson FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.where_delivered = 1
+                    AND b1.who_delivered in (1,2,3,4,5,6)
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct b1.relationalid) INTO mcNormalBirthAtHospitalOrClinic FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.where_delivered in (2,3,4,5,6,7)
+                    AND b1.Delivery_Type = '1'
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct b1.relationalid) INTO mcCesareanBirthAtHospitalOrClinic FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.where_delivered in (2,3,4,5,6,7)
+                    AND b1.Delivery_Type = '2'
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit1Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC1'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit1Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC1'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcReferredComplexPregnant FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.is_reffered=1
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseOne FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.tt_dose like '%1%'
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct b1.relationalid) INTO mcMisoprostolReceivedCount FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.misoprostol_received=1
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnChangesOfAdolescent
+            FROM adolescent a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.councelling=4
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
             AND member.mem_district=district
@@ -1348,17 +1491,23 @@
                                          , mcCurrentNewPregnantCount, mcCurrentOldPregnantCount
                                          , mcCurrentTotalPregnantCount, mcPrevPregnantCount
                                          , mcTotalPregnantCount
-                                         , mcANCVisit1, mcANCVisit2
-                                         , mcANCVisit3, mcANCVisit4
+                                         , mcANCVisit1Info, mcANCVisit2Info
+                                         , mcANCVisit3Info, mcANCVisit4Info
+                                         , mcANCVisit1Service, mcANCVisit2Service
+                                         , mcANCVisit3Service, mcANCVisit4Service
                                          , mcBirthAtHomeWithTrainedPerson, mcBirthAtHomeWithUntrainedPerson
                                          , mcNormalBirthAtHospitalOrClinic, mcCesareanBirthAtHospitalOrClinic
                                          , mcIsDelivered, mcAMTSL
                                          , mcNoOxytocinAndMisoprostolgiven
-                                         , mcMotherPNCVisit1, mcMotherPNCVisit2
-                                         , mcMotherPNCVisit3, mcMotherPNCVisit4
+                                         , mcMotherPNCVisit1Info, mcMotherPNCVisit2Info
+                                         , mcMotherPNCVisit3Info, mcMotherPNCVisit4Info
+                                         , mcMotherPNCVisit1Service, mcMotherPNCVisit2Service
+                                         , mcMotherPNCVisit3Service, mcMotherPNCVisit4Service
                                          , mcPNCCounselling
-                                         , mcChildPNCVisit1, mcChildPNCVisit2
-                                         , mcChildPNCVisit3, mcChildPNCVisit4
+                                         , mcChildPNCVisit1Info, mcChildPNCVisit2Info
+                                         , mcChildPNCVisit3Info, mcChildPNCVisit4Info
+                                         , mcChildPNCVisit1Service, mcChildPNCVisit2Service
+                                         , mcChildPNCVisit3Service, mcChildPNCVisit4Service
                                          , mcReferredComplexPregnant, mcReferredTotalComplexityCount
                                          , mcReferredMgSO4Count, mcReferredChildComplexityCount
                                          , mcTTDoseOne, mcTTDoseTwo, mcTTDoseThree
@@ -1398,10 +1547,11 @@
                                          , cnContractedSAMChildZeroToSix, cnContractedSAMChild6TO23
                                          , cnContractedSAMChild24to59
                                          , division, district, upazilla, ward, unionname
-                                         , unit, currentMonth, currentYear);
+                                         , unit, currentM, currentY);
        ELSE
-        RAISE NOTICE 'record already exist %', recordExists;
+        RAISE NOTICE '%: record already exist %', now(), recordExists;
        END IF;
 
+       RAISE INFO 'prevMonth %', prevMonth;
    END;
    $$ LANGUAGE plpgsql;
