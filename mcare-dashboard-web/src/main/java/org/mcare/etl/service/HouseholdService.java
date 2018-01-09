@@ -69,7 +69,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	}
 	
 	@Transactional
-	public List<HouseholdEntity> list(Integer offset, Integer maxResults, Class<?> entityClassName) {
+	public List<Object> list(Integer offset, Integer maxResults, Class<?> entityClassName) {
 		return databaseRepositoryImpl.list(offset, maxResults, entityClassName);
 	}
 	
@@ -77,4 +77,5 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	public int count() {
 		return databaseRepositoryImpl.count();
 	}
+	
 }

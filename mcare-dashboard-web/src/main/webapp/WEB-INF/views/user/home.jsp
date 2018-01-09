@@ -13,162 +13,98 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta name="__csrf_parameter" content="${__csrf_parameter}"/>
-    <title>Add user information</title>
+    <title>mCare2 Dashboard Home</title>
     
-    <link  type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-  
+   <link  type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+   <link  type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
+   <link  type="text/css" href="<c:url value="/resources/css/sb-admin.css"/>" rel="stylesheet">
     <link  type="text/css" href="<c:url value="/resources/css/jquery-ui.css"/>" rel="stylesheet">
 
   </head>
-  <body>
+ <%--  <c:set var="url" value="<c:url value="/" />" /> --%>
+ <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <c:url var="saveUrl" value="/export" />
+  <c:url var="homeUrl" value="/" />
   <c:url var="home" value="/log" scope="request" />
- <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="<c:url value="/"/>">mCare2 Dashboard</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="<c:url value="/"/>">Home</a></li>
-     <li><a href="<c:url value="/export"/>">CSV Export</a></li>
-     <li><a href="<c:url value="/logout"/>">Logout</a></li>
+ 
+ 
+ 
+ 
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="<c:url value="/"/>">mCare2 Dashboard</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="<c:url value="/"/>">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Home</span>
+          </a>
+        </li>
       
-    </ul>
-  </div>
-</nav>
-
- <%-- <c:out value="${name}" /> --%>
- 
-  
- <div class="container">
-     <div class="row">               
-         <div class="col-md-12">
-            <h2>Welcome to mCare2 Dashboard.</h2>
-  
-  
-              
+       
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Sidebar</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="<c:url value="/export"/>">CSV Export</a>
+            </li>
+            <li>
+              <a href="<c:url value="household.html"/>">Household</a>
+            </li>
+          </ul>
+        </li>
+      
+      
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+       
+       
+        <li class="nav-item">
+          <a class="nav-link" href="<c:url value="/logout"/>">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
     </div>
- </div> 
-</div>
-  </body>
-  
-  <script src="<c:url value='/resources/js/jquery-1.12.4.js' />"></script>
-    <script src="<c:url value='/resources/js/jquery-ui.js' />"></script>
+  </nav>
+  <div class="content-wrapper">    
+   
     
-    
-    
-     <script>
-     
-     $(function () {
-         $("#start").datepicker({
-        	 dateFormat: "yy-mm-dd",
-        	 maxDate: new Date,
-             onSelect: function (selectedDate) {
-                 var orginalDate = new Date(selectedDate);
-                 var monthsAddedDate = new Date(new Date(orginalDate).setMonth(orginalDate.getMonth() + 3));
-                 
-                 $("#end").datepicker("option", 'minDate', selectedDate);
-                 $("#end").datepicker("option", 'maxDate', monthsAddedDate);
-             }
-         });
-
-         $("#end").datepicker({
-        	 dateFormat: "yy-mm-dd",
-        	 maxDate: new Date,
-             onSelect: function (selectedDate) {
-                 var orginalDate = new Date(selectedDate);
-                 var monthsAddedDate = new Date(new Date(orginalDate).setMonth(orginalDate.getMonth() - 3));
-               
-                 $("#start").datepicker("option", 'minDate', monthsAddedDate);
-                 $("#start").datepicker("option", 'maxDate', selectedDate);
-             }
-         })
-     });
- /*  $( function() {
-	  var dateToday = new Date();
-	     $('#start').datepicker({
-	        dateFormat: "yy-mm-dd",
-	         minDate: null,
-	         maxDate: dateToday,
-	           onSelect: function(selected) {
-	             $('#end').datepicker("option", "minDate",  
-	            		 $("#start").datepicker('getDate') );
-	          } 
-	     });
-
-	     $('#end').datepicker({
-	        dateFormat: "yy-mm-dd",
-	         minDate: null,
-	         maxDate: dateToday,
-	     });  
-  } );  */
-  </script>
   
-  
-  
-  <script>
- jQuery(document).ready(function($) {
+       
+      
+  </div>
+  <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © Your Website 2018</small>
+        </div>
+      </div>
+    </footer>
+   
 
-  $("#search-form").submit(function(event) {
-	 
-   // Disble the search button
-  // enableSearchButton(false);
 
-   // Prevent the form from submitting via the browser.
-   event.preventDefault();
-  
-  // window.location = "/log?roleName=name"; 
-   searchViaAjax() ;
-  });
-
- });
-
- function searchViaAjax() {
-
+</body>
+ <script src="<c:url value='/resources/js/jquery-1.12.4.js' />"></script>
+   <script src="<c:url value='/resources/js/bootstrap.bundle.min.js' />"></script>
  
-  $.ajax({
-   type : "GET",
-   contentType : "application/json",
-   url : "/search?start="+$("#start").val()+"&end="+$("#end").val()+"&provider="+$("#provider").val()+"&formName="+$("#formName").val(),
- //  data : JSON.stringify(search),
-   dataType : 'json',
-   timeout : 100000,
-   beforeSend: function() {
-	   $('#loader').show(); 
-   },
-   success : function(data) {
-    console.log("SUCCESS: ", data);
-    $('#loader').hide();
-    $('#download').show();
-    $('#fileName').html(data);
-    $("a#download").attr('href', 
-    '/multimedia/export/'+data);
-   },
-   error : function(e) {
-    console.log("ERROR: ", e);
-    display(e);
-   },
-   done : function(e) {
-	   
-    console.log("DONE");
-    //enableSearchButton(true);
-   }
-  });
-
- }
-
- function enableSearchButton(flag) {
-  $("#btn-search").prop("disabled", flag);
- }
-
- function display(data) {
-  var json = "<h4>Ajax Response</h4><pre>"
-    + JSON.stringify(data, null, 4) + "</pre>";
-  $('#feedback').html(json);
- }
-</script>
 </html>
