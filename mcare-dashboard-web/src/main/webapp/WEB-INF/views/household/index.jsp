@@ -40,6 +40,8 @@
     }
     /* size is used for moving user to end page  by clicking on END link*/
     int   size = Integer.parseInt(session.getAttribute("size").toString());
+      
+    List<Object[]>  parentDataList = (List<Object[]>)session.getAttribute("parentData");
  %>
   
   
@@ -56,9 +58,101 @@
         <div class="card-body">
           <div class="table-responsive">
             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-            <div class="row">
+            <div class="row">  
+               <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Division 
+                       <select id="division" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                        <option value="">Please Select </option>
+  <%                    for (Object[] objects : parentDataList) {
+                             %>
+                              <option value=<%=objects[1]%>><%=objects[0]%></option>
+   <% 
+                        }
+   %>
+                           
+                       </select> </label>
+                
+                   </div>
+                </div>
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>District 
+                     
+                      <select id="district" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="10">Please Select</option>
+                           
+                       </select>
+                      
+                      
+                      </label>
+                
+                   </div>
+                </div>  
+                
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Upazilla                   
+                      <select id="upazila" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0">Please Select</option>                           
+                       </select>                     
+                       </label>
+                
+                   </div>
+                </div>  
+                
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Union 
+                       <select id="union" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0">Please Select</option>                           
+                       </select>  </label>
+                
+                   </div>
+                </div> 
+             </div> 
+             <div class="row">
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Ward 
+                      <select id="ward" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0">Please Select</option>                           
+                       </select> </label>
+                
+                   </div>
+                </div>  
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Subunit 
+                       <select id="subunit" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0">Please Select</option>                           
+                       </select> </label>
+                
+                   </div>
+                </div>  
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Mauzapara 
+                       <select id="mauzapara" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0">Please Select</option>                           
+                       </select> </label>
+                
+                   </div>
+                </div>  
+                 <div class="col-sm-12 col-md-3">
+                   <div class="dataTables_length" id="dataTable_length"><label>Provider 
+                       <select name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+                          <option value="">Please Select Provider</option>
+                          <c:forEach items="${providers}" var="provider">    
+                              <option value="${provider.getProvider()}">${provider.getProvider()}</option>
+                          </c:forEach>
+                       </select> </label>
+                
+                   </div>
+                </div> 
+              </div>   
+               <div class="row">        
+                <div class="col-sm-12 col-md-3">
+                    <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input class="form-control form-control-sm" placeholder="" aria-controls="dataTable" type="search"></label></div>
+                </div>
+                </div>
+            </div>
             
-            <div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter"><label>Search:<input class="form-control form-control-sm" placeholder="" aria-controls="dataTable" type="search"></label></div></div></div><div class="row"><div class="col-sm-12">
+            <div class="row">
+            <div class="col-sm-12">
             
             <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" cellspacing="0" width="100%">
               
@@ -85,9 +179,7 @@
             </div>
             </div>
             <div class="row">
-               <div class="col-sm-12 col-md-5">
-                   
-               </div>
+              
                    <div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                        <ul class="pagination">
                        
@@ -139,7 +231,7 @@
         </div>
        
       
-    </div>
+   
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -150,11 +242,42 @@
       </div>
     </footer>
    
-
+<script src="<c:url value='/resources/js/jquery.min.js' />"></script>
+<script src="<c:url value='/resources/js/bootstrap.bundle.min.js' />"></script>
+<script src="<c:url value='/resources/js/location.js' />"></script>
 
 </body>
 
+ <script>
+ jQuery(document).ready(function($) {
+  	$("#division").change(function(event) {   
+		//event.preventDefault();
+		getLocationHireachy("/location?id="+$("#division").val(),"district") ;
+  	});
+  
+  	$("#district").change(function(event) {   
+		//event.preventDefault(); 
+		getLocationHireachy("/location?id="+$("#district").val(),"upazila") ;
+	});
+  	$("#upazila").change(function(event) {   
+		//event.preventDefault(); 
+		getLocationHireachy("/location?id="+$("#upazila").val(),"union") ;
+	});
+  	$("#union").change(function(event) {   
+		//event.preventDefault(); 
+		getLocationHireachy("/location?id="+$("#union").val(),"ward") ;
+	});
+  	$("#ward").change(function(event) {   
+		//event.preventDefault(); 
+		getLocationHireachy("/location?id="+$("#ward").val(),"subunit") ;
+	});
+  	$("#subunit").change(function(event) {   
+		//event.preventDefault(); 
+		getLocationHireachy("/location?id="+$("#subunit").val(),"mauzapara") ;
+	});
 
-<script src="<c:url value='/resources/js/jquery.min.js' />"></script>
-    <script src="<c:url value='/resources/js/bootstrap.bundle.min.js' />"></script>
+ });
+ </script>
+
+
 </html> 
