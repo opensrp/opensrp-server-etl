@@ -22,12 +22,12 @@ public class MIS1ReportEntity {
     @SequenceGenerator(name = "mis1report_id_seq", sequenceName = "mis1report_id_seq", allocationSize = 1)
     private int id;
 
-    private String division;
-    private String district;
-    private String upazilla;
-    private String ward;
-    private String geo_union;
-    private String unit;
+    private String reporting_division;
+    private String reporting_district;
+    private String reporting_upazilla;
+    private String reporting_ward;
+    private String reporting_union;
+    private String reporting_unit;
     private String reporting_year;
     private String reporting_month;
 
@@ -87,51 +87,51 @@ public class MIS1ReportEntity {
     }
 
     public String getDivision() {
-        return division;
+        return reporting_division;
     }
 
     public void setDivision(String division) {
-        this.division = division;
+        this.reporting_division = division;
     }
 
     public String getDistrict() {
-        return district;
+        return reporting_district;
     }
 
     public void setDistrict(String district) {
-        this.district = district;
+        this.reporting_district = district;
     }
 
     public String getUpazilla() {
-        return upazilla;
+        return reporting_upazilla;
     }
 
     public void setUpazilla(String upazilla) {
-        this.upazilla = upazilla;
+        this.reporting_upazilla = upazilla;
     }
 
     public String getWard() {
-        return ward;
+        return reporting_ward;
     }
 
     public void setWard(String ward) {
-        this.ward = ward;
+        this.reporting_ward = ward;
     }
 
     public String getGeo_union() {
-        return geo_union;
+        return reporting_union;
     }
 
     public void setGeo_union(String geo_union) {
-        this.geo_union = geo_union;
+        this.reporting_union = geo_union;
     }
 
     public String getUnit() {
-        return unit;
+        return reporting_unit;
     }
 
     public void setUnit(String unit) {
-        this.unit = unit;
+        this.reporting_unit = unit;
     }
 
     public String getReporting_year() {
