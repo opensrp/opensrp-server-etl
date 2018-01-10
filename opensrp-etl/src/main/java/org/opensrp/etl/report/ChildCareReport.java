@@ -30,11 +30,17 @@ public class ChildCareReport {
     @ColumnDefault("0")
     private int ccMeaslesCount;
     @ColumnDefault("0")
-    private int ccReferredChildOfDangerousDiseases;
+    private int ccReferredChildOfDangerousDiseasesInfo;
     @ColumnDefault("0")
-    private int ccReferredChildOfPneumonia;
+    private int ccReferredChildOfDangerousDiseasesService;
     @ColumnDefault("0")
-    private int ccReferredChildOfdiarrhea;
+    private int ccReferredChildOfPneumoniaInfo;
+    @ColumnDefault("0")
+    private int ccReferredChildOfPneumoniaService;
+    @ColumnDefault("0")
+    private int ccReferredChildOfDiarrheaInfo;
+    @ColumnDefault("0")
+    private int ccReferredChildOfDiarrheaService;
 
     public ChildCareReport() {
         // TODO Auto-generated constructor stub
@@ -144,29 +150,58 @@ public class ChildCareReport {
         this.ccMeaslesCount = ccMeaslesCount;
     }
 
-    public int getCcReferredChildOfDangerousDiseases() {
-        return ccReferredChildOfDangerousDiseases;
+    public int getCcReferredChildOfDangerousDiseasesInfo() {
+        return ccReferredChildOfDangerousDiseasesInfo;
     }
 
-    public void setCcReferredChildOfDangerousDiseases(
-            int ccReferredChildOfDangerousDiseases) {
-        this.ccReferredChildOfDangerousDiseases = ccReferredChildOfDangerousDiseases;
+    public void setCcReferredChildOfDangerousDiseasesInfo(
+            int ccReferredChildOfDangerousDiseasesInfo) {
+        this.ccReferredChildOfDangerousDiseasesInfo = ccReferredChildOfDangerousDiseasesInfo;
     }
 
-    public int getCcReferredChildOfPneumonia() {
-        return ccReferredChildOfPneumonia;
+    public int getCcReferredChildOfDangerousDiseasesService() {
+        return ccReferredChildOfDangerousDiseasesService;
     }
 
-    public void setCcReferredChildOfPneumonia(int ccReferredChildOfPneumonia) {
-        this.ccReferredChildOfPneumonia = ccReferredChildOfPneumonia;
+    public void setCcReferredChildOfDangerousDiseasesService(
+            int ccReferredChildOfDangerousDiseasesService) {
+        this.ccReferredChildOfDangerousDiseasesService = ccReferredChildOfDangerousDiseasesService;
     }
 
-    public int getCcReferredChildOfdiarrhea() {
-        return ccReferredChildOfdiarrhea;
+    public int getCcReferredChildOfPneumoniaInfo() {
+        return ccReferredChildOfPneumoniaInfo;
     }
 
-    public void setCcReferredChildOfdiarrhea(int ccReferredChildOfdiarrhea) {
-        this.ccReferredChildOfdiarrhea = ccReferredChildOfdiarrhea;
+    public void setCcReferredChildOfPneumoniaInfo(
+            int ccReferredChildOfPneumoniaInfo) {
+        this.ccReferredChildOfPneumoniaInfo = ccReferredChildOfPneumoniaInfo;
+    }
+
+    public int getCcReferredChildOfPneumoniaService() {
+        return ccReferredChildOfPneumoniaService;
+    }
+
+    public void setCcReferredChildOfPneumoniaService(
+            int ccReferredChildOfPneumoniaService) {
+        this.ccReferredChildOfPneumoniaService = ccReferredChildOfPneumoniaService;
+    }
+
+    public int getCcReferredChildOfDiarrheaInfo() {
+        return ccReferredChildOfDiarrheaInfo;
+    }
+
+    public void setCcReferredChildOfDiarrheaInfo(
+            int ccReferredChildOfDiarrheaInfo) {
+        this.ccReferredChildOfDiarrheaInfo = ccReferredChildOfDiarrheaInfo;
+    }
+
+    public int getCcReferredChildOfDiarrheaService() {
+        return ccReferredChildOfDiarrheaService;
+    }
+
+    public void setCcReferredChildOfDiarrheaService(
+            int ccReferredChildOfDiarrheaService) {
+        this.ccReferredChildOfDiarrheaService = ccReferredChildOfDiarrheaService;
     }
 
 }
