@@ -165,11 +165,14 @@
     ccMrAndopv4Count integer := 0;
     ccMeaslesCount integer := 0;
 
-    ccReferredChildOfDangerousDiseases integer := 0;
-    ccReferredChildOfPneumonia integer := 0;
-    ccReferredChildOfdiarrhea integer := 0;
+    ccReferredChildOfDangerousDiseasesInfo integer := 0;
+    ccReferredChildOfDangerousDiseasesService integer := 0;
+    ccReferredChildOfPneumoniaInfo integer := 0;
+    ccReferredChildOfPneumoniaService integer := 0;
+    ccReferredChildOfDiarrheaInfo integer := 0;
+    ccReferredChildOfDiarrheaService integer := 0;
 
-     /*Birth And Death Report Variables*/
+    /*Birth And Death Report Variables*/
     bdTotalLiveBirth integer := 0;
     bdtotalChildWithUnderWeight integer := 0;
     bdTotalPrematureChild integer := 0;
@@ -219,189 +222,15 @@
     prevYear integer := currentYear;
 
    BEGIN
-
-    EXECUTE format('
-       CREATE TABLE IF NOT EXISTS %I (
-        id serial PRIMARY KEY,
-        fpOldPillUsage int,
-        fpNewPillUsage int,
-        fpCurrentTotalPillUsages int,
-        fpPrevTotalPillUsages int,
-        fpTotalPillUsages int,
-        fpLeftPillAndStartedNone int,
-        fpLeftPillAndStartedOther int,
-        fpOldCondomUsage int,
-        fpNewCondomUsage int,
-        fpCurrentTotalCondomUsages int,
-        fpPrevTotalCondomUsages int,
-        fpTotalCondomUsages int,
-        fpLeftCondomAndStartedNone int,
-        fpLeftCondomAndStartedOther int,
-        fpOldInjectableUsage int,
-        fpNewInjectableUsage int,
-        fpCurrentTotalInjectableUsages int,
-        fpPrevTotalInjectableUsages int,
-        fpTotalInjectableUsages int,
-        fpLeftInjectableAndStartedNone int,
-        fpLeftInjectableAndStartedOther int,
-        fpOldIUDUsage int,
-        fpNewIUDUsage int,
-        fpCurrentTotalIUDUsages int,
-        fpPrevTotalIUDUsages int,
-        fpTotalIUDUsages int,
-        fpLeftIUDAndStartedNone int,
-        fpLeftIUDAndStartedOther int,      
-        fpOldImplantUsage int,
-        fpNewImplantUsage int,
-        fpCurrentTotalImplantUsages int,
-        fpPrevTotalImplantUsages int,
-        fpTotalImplantUsages int,
-        fpLeftImplantAndStartedNone int,
-        fpLeftImplantAndStartedOther int,
-        fpOldMalePermanentUsage int,
-        fpNewMalePermanentUsage int,
-        fpCurrentTotalMalePermanentUsages int,
-        fpPrevTotalMalePermanentUsages int,
-        fpTotalMalePermanentUsages int,
-        fpOldFemalePermanentUsage int,
-        fpNewFemalePermanentUsage int,
-        fpCurrentTotalFemalePermanentUsages int,
-        fpPrevTotalFemalePermanentUsages int,
-        fpTotalFemalePermanentUsages int,
-        fpCurrentEligibleCoupleCount int,
-        fpPrevEligibleCoupleCount int,
-        fpTotalEligibleCoupleCount int,
-        fpNewEligibleCoupleCount int,
-        fpTotalOldUsages int,
-        fpTotalNewUsages int,
-    	fpTotalCurrentUsages int,
-    	fpTotalPrevUsages int,
-    	fpTotalUsages int,
-        fpTotalStartedNone int,
-        fpTotalStartedOther int,
-        fpCAR int,
-        mcCurrentNewPregnantCount int,
-        mcCurrentOldPregnantCount int,
-        mcCurrentTotalPregnantCount int,
-        mcPrevPregnantCount int,
-        mcTotalPregnantCount int,
-        mcANCVisit1Info int,
-        mcANCVisit2Info int,
-        mcANCVisit3Info int,
-        mcANCVisit4Info int,
-        mcANCVisit1Service int,
-        mcANCVisit2Service int,
-        mcANCVisit3Service int,
-        mcANCVisit4Service int,
-        mcBirthAtHomeWithTrainedPerson int,
-        mcBirthAtHomeWithUntrainedPerson int,
-        mcNormalBirthAtHospitalOrClinic int,
-        mcCesareanBirthAtHospitalOrClinic int,
-        mcIsDelivered int,
-        mcAMTSL int,
-        mcNoOxytocinAndMisoprostolgiven int,
-        mcMotherPNCVisit1Info int,
-        mcMotherPNCVisit2Info int,
-        mcMotherPNCVisit3Info int,
-        mcMotherPNCVisit4Info int,
-        mcMotherPNCVisit1Service int,
-        mcMotherPNCVisit2Service int,
-        mcMotherPNCVisit3Service int,
-        mcMotherPNCVisit4Service int,
-        mcPNCCounselling int,
-        mcChildPNCVisit1Info int,
-        mcChildPNCVisit2Info int,
-        mcChildPNCVisit3Info int,
-        mcChildPNCVisit4Info int,
-        mcChildPNCVisit1Service int,
-        mcChildPNCVisit2Service int,
-        mcChildPNCVisit3Service int,
-        mcChildPNCVisit4Service int,
-        mcReferredComplexPregnant int,
-        mcReferredTotalComplexityCount int,
-        mcReferredMgSO4Count int,
-        mcReferredChildComplexityCount int,
-        mcTTDoseOne int,
-        mcTTDoseTwo int,
-        mcTTDoseThree int,
-        mcTTDoseFour int,
-        mcTTDoseFive int,
-        mcECPReceivedCount int,
-        mcMisoprostolReceivedCount int,
-        mcAdvisedIncompatibleCouple int,
-        mcReferredIncompatibleCouple int,
-        mcCounsellingOnChangesOfAdolescent int,
-        mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy int,
-        mcCounsellingTeenagersOnTakingIronAndFolicAcid int,
-        mcCounsellingOnInfectionOfDiseases int,
-        mcSatelliteClinicPresence int,
-        mcEPISessionPresence int,
-        mcCommunityClinicPresence int,
-        ccIsCleanedInfo int,
-        ccIsCleanedService int,
-        ccUsedChlorhexidinInfo int,
-        ccUsedChlorhexidinService int,
-        ccFedBreastMilkCount int,
-        ccUsedMaskCount int,
-        ccBcgCount int,
-        ccOpv1Andpcv1Andpenta1Count int,
-        ccOpv2Andpcv2Andpenta2Count int,
-        ccOpv3Andpenta3Count int,
-        ccPcv3Count int,
-        ccMrAndopv4Count int,
-        ccMeaslesCount int,
-        ccReferredChildOfDangerousDiseases int,
-        ccReferredChildOfPneumonia int,
-        ccReferredChildOfdiarrhea int,
-        bdTotalLiveBirth int,
-        bdtotalChildWithUnderWeight int,
-        bdTotalPrematureChild int,
-        bdStillBirthCount int,
-        bdDeathLessThan7Days int,
-        bdDeathLessThan28Days int,
-        bdDeathLessThan1Yr int,
-        bdTotalDeathLessThan1Yr int,
-        bdDeathLessThan5Yr int,
-        bdDeathOfMother int,
-        bdDeathOfOther int,
-        bdTotalDeathCount int,
-        wnCounsellingIronForPregWoman int,
-        wnCounsellingIronForMother int,
-        wnDistributionIronForPregWoman int,
-        wnDistributionIronForMother int,
-        wnCounsellingOnBreastMilkForPregWoman int,
-        wnCounsellingOnBreastMilkForMother int,
-        wnCounsellingOnFeedingMNP int,
-        cnBreastFeedingWithin1Hour int,
-        cnBreastFeedingUntill6Month int,
-        cnComplementaryFoodForChild6TO23 int,
-        cnComplementaryFoodForChild24to59 int,
-        cnReceivedMNP int,
-        cnContractedMAMChildZeroToSix int,
-        cnContractedMAMChild6TO23 int,
-        cnContractedMAMChild24to59 int,
-        cnContractedSAMChildZeroToSix int,
-        cnContractedSAMChild6TO23 int,
-        cnContractedSAMChild24to59 int,
-        mis_division varchar(30),
-        mis_district varchar(30),
-        mis_upazilla varchar(70),
-        mis_ward varchar(70),
-        mis_unionname varchar(70),
-        mis_unit varchar(70),
-        mis_currentMonth varchar(70),
-        mis_currentYear varchar(70)
-       )', 'misreport');
-
-        select count(*) from misreport into recordExists
-        where misreport.mis_division=division
-        and misreport.mis_district=district
-        and misreport.mis_upazilla=upazilla
-        and misreport.mis_ward=ward
-        and misreport.mis_unionname=unionname
-        and misreport.mis_unit=unit
-        and misreport.mis_currentmonth=currentM
-        and misreport.mis_currentyear=currentY;
+        select count(*) from mis1report m1 into recordExists
+        where m1.reporting_division=division
+        and m1.reporting_district=district
+        and m1.reporting_upazilla=upazilla
+        and m1.reporting_ward=ward
+        and m1.reporting_union=unionname
+        and m1.reporting_unit=unit
+        and m1.reporting_month=currentM
+        and m1.reporting_year=currentY;
 
         IF recordExists = 0 THEN
 
@@ -1330,6 +1159,18 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
+            SELECT COUNT(distinct p1.relationalid) INTO mcTotalPregnantCount FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.preg_status=1
+                    AND EXTRACT(MONTH FROM p1.today)<=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)<=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.ancName='ANC1'
@@ -1342,7 +1183,43 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
-           SELECT COUNT(distinct b1.relationalid) INTO mcBirthAtHomeWithTrainedPerson FROM bnf b1
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1Service FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC1'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit2Info FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC2'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit2Service FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC2'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct b1.relationalid) INTO mcBirthAtHomeWithTrainedPerson FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
             WHERE (b1.where_delivered = 1
                     AND b1.who_delivered in (1,2,3,4,5,6)
@@ -1456,7 +1333,7 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
-           INSERT INTO misreport VALUES (default, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
+           INSERT INTO mis1report (id, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
                                          , fpLeftPillAndStartedOther
                                          , fpOldCondomUsage, fpNewCondomUsage
@@ -1526,8 +1403,107 @@
                                          , ccBcgCount, ccOpv1Andpcv1Andpenta1Count
                                          , ccOpv2Andpcv2Andpenta2Count, ccOpv3Andpenta3Count
                                          , ccPcv3Count, ccMrAndopv4Count
-                                         , ccMeaslesCount, ccReferredChildOfDangerousDiseases
-                                         , ccReferredChildOfPneumonia, ccReferredChildOfdiarrhea
+                                         , ccMeaslesCount
+                                         , ccReferredChildOfDangerousDiseasesInfo
+                                         , ccReferredChildOfDangerousDiseasesService
+                                         , ccReferredChildOfPneumoniaInfo, ccReferredChildOfPneumoniaService
+                                         , ccReferredChildOfDiarrheaInfo, ccReferredChildOfDiarrheaService
+                                         , bdTotalLiveBirth, bdtotalChildWithUnderWeight
+                                         , bdTotalPrematureChild, bdStillBirthCount
+                                         , bdDeathLessThan7Days, bdDeathLessThan28Days
+                                         , bdDeathLessThan1Yr, bdTotalDeathLessThan1Yr
+                                         , bdDeathLessThan5Yr, bdDeathOfMother
+                                         , bdDeathOfOther, bdTotalDeathCount
+                                         , wnCounsellingIronForPregWoman, wnCounsellingIronForMother
+                                         , wnDistributionIronForPregWoman, wnDistributionIronForMother
+                                         , wnCounsellingOnBreastMilkForPregWoman
+                                         , wnCounsellingOnBreastMilkForMother
+                                         , wnCounsellingOnFeedingMNP
+                                         , cnBreastFeedingWithin1Hour, cnBreastFeedingUntill6Month
+                                         , cnComplementaryFoodForChild6TO23
+                                         , cnComplementaryFoodForChild24to59
+                                         , cnReceivedMNP, cnContractedMAMChildZeroToSix
+                                         , cnContractedMAMChild6TO23, cnContractedMAMChild24to59
+                                         , cnContractedSAMChildZeroToSix, cnContractedSAMChild6TO23
+                                         , cnContractedSAMChild24to59
+                                         , reporting_division, reporting_district
+                                         , reporting_upazilla, reporting_ward, reporting_union
+                                         , reporting_unit, reporting_month, reporting_year)
+           VALUES (nextval('mis1report_id_seq'), fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
+                                         , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
+                                         , fpLeftPillAndStartedOther
+                                         , fpOldCondomUsage, fpNewCondomUsage
+                                         , fpCurrentTotalCondomUsages, fpPrevTotalCondomUsages
+                                         , fpTotalCondomUsages, fpLeftCondomAndStartedNone
+                                         , fpLeftCondomAndStartedOther
+                                         , fpOldInjectableUsage, fpNewInjectableUsage
+                                         , fpCurrentTotalInjectableUsages, fpPrevTotalInjectableUsages
+                                         , fpTotalInjectableUsages, fpLeftInjectableAndStartedNone
+                                         , fpLeftInjectableAndStartedOther
+                                         , fpOldIUDUsage, fpNewIUDUsage
+                                         , fpCurrentTotalIUDUsages, fpPrevTotalIUDUsages
+                                         , fpTotalIUDUsages, fpLeftIUDAndStartedNone
+                                         , fpLeftIUDAndStartedOther
+                                         , fpOldImplantUsage, fpNewImplantUsage
+                                         , fpCurrentTotalImplantUsages, fpPrevTotalImplantUsages
+                                         , fpTotalImplantUsages, fpLeftImplantAndStartedNone
+                                         , fpLeftImplantAndStartedOther
+                                         , fpOldMalePermanentUsage, fpNewMalePermanentUsage
+                                         , fpCurrentTotalMalePermanentUsages, fpPrevTotalMalePermanentUsages
+                                         , fpTotalMalePermanentUsages
+                                         , fpOldFemalePermanentUsage, fpNewFemalePermanentUsage
+                                         , fpCurrentTotalFemalePermanentUsages, fpPrevTotalFemalePermanentUsages
+                                         , fpTotalFemalePermanentUsages
+                                         , fpCurrentEligibleCoupleCount, fpPrevEligibleCoupleCount
+                                         , fpTotalEligibleCoupleCount, fpNewEligibleCoupleCount
+                                         , fpTotalOldUsages, fpTotalNewUsages
+                                         , fpTotalCurrentUsages, fpTotalPrevUsages
+                                         , fpTotalUsages
+                                         , fpTotalStartedNone, fpTotalStartedOther
+                                         , fpCAR
+                                         , mcCurrentNewPregnantCount, mcCurrentOldPregnantCount
+                                         , mcCurrentTotalPregnantCount, mcPrevPregnantCount
+                                         , mcTotalPregnantCount
+                                         , mcANCVisit1Info, mcANCVisit2Info
+                                         , mcANCVisit3Info, mcANCVisit4Info
+                                         , mcANCVisit1Service, mcANCVisit2Service
+                                         , mcANCVisit3Service, mcANCVisit4Service
+                                         , mcBirthAtHomeWithTrainedPerson, mcBirthAtHomeWithUntrainedPerson
+                                         , mcNormalBirthAtHospitalOrClinic, mcCesareanBirthAtHospitalOrClinic
+                                         , mcIsDelivered, mcAMTSL
+                                         , mcNoOxytocinAndMisoprostolgiven
+                                         , mcMotherPNCVisit1Info, mcMotherPNCVisit2Info
+                                         , mcMotherPNCVisit3Info, mcMotherPNCVisit4Info
+                                         , mcMotherPNCVisit1Service, mcMotherPNCVisit2Service
+                                         , mcMotherPNCVisit3Service, mcMotherPNCVisit4Service
+                                         , mcPNCCounselling
+                                         , mcChildPNCVisit1Info, mcChildPNCVisit2Info
+                                         , mcChildPNCVisit3Info, mcChildPNCVisit4Info
+                                         , mcChildPNCVisit1Service, mcChildPNCVisit2Service
+                                         , mcChildPNCVisit3Service, mcChildPNCVisit4Service
+                                         , mcReferredComplexPregnant, mcReferredTotalComplexityCount
+                                         , mcReferredMgSO4Count, mcReferredChildComplexityCount
+                                         , mcTTDoseOne, mcTTDoseTwo, mcTTDoseThree
+                                         , mcTTDoseFour, mcTTDoseFive
+                                         , mcECPReceivedCount, mcMisoprostolReceivedCount
+                                         , mcAdvisedIncompatibleCouple, mcReferredIncompatibleCouple
+                                         , mcCounsellingOnChangesOfAdolescent
+                                         , mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy
+                                         , mcCounsellingTeenagersOnTakingIronAndFolicAcid
+                                         , mcCounsellingOnInfectionOfDiseases
+                                         , mcSatelliteClinicPresence, mcEPISessionPresence
+                                         , mcCommunityClinicPresence
+                                         , ccIsCleanedInfo, ccIsCleanedService
+                                         , ccUsedChlorhexidinInfo, ccUsedChlorhexidinService
+                                         , ccFedBreastMilkCount, ccUsedMaskCount
+                                         , ccBcgCount, ccOpv1Andpcv1Andpenta1Count
+                                         , ccOpv2Andpcv2Andpenta2Count, ccOpv3Andpenta3Count
+                                         , ccPcv3Count, ccMrAndopv4Count
+                                         , ccMeaslesCount
+                                         , ccReferredChildOfDangerousDiseasesInfo
+                                         , ccReferredChildOfDangerousDiseasesService
+                                         , ccReferredChildOfPneumoniaInfo, ccReferredChildOfPneumoniaService
+                                         , ccReferredChildOfDiarrheaInfo, ccReferredChildOfDiarrheaService
                                          , bdTotalLiveBirth, bdtotalChildWithUnderWeight
                                          , bdTotalPrematureChild, bdStillBirthCount
                                          , bdDeathLessThan7Days, bdDeathLessThan28Days
