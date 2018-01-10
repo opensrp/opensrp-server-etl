@@ -146,19 +146,19 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				 System.out.println("set criteria month");
 				}
 			if (filtercriteria.getDivision()!=null && !filtercriteria.getDivision().isEmpty() ) {
-				 criteria.add(Restrictions.eq("division", filtercriteria.getDivision()));
+				 criteria.add(Restrictions.eq("reporting_division", filtercriteria.getDivision()));
 				 System.out.println("set criteria division");
 				 hasPrerequisite = true;
 				}
 			if (hasPrerequisite && (filtercriteria.getDistrict()!=null && !filtercriteria.getDistrict().isEmpty() )) {
-				 criteria.add(Restrictions.eq("district", filtercriteria.getDistrict()));
+				 criteria.add(Restrictions.eq("reporting_district", filtercriteria.getDistrict()));
 				 System.out.println("set criteria district");
 				 hasPrerequisite = true;
 				}else {
 					hasPrerequisite = false;
 				}
 			if (hasPrerequisite && (filtercriteria.getUpazilla()!=null && !filtercriteria.getUpazilla().isEmpty())) {
-				 criteria.add(Restrictions.eq("upazilla", filtercriteria.getUpazilla()));
+				 criteria.add(Restrictions.eq("reporting_upazilla", filtercriteria.getUpazilla()));
 				 System.out.println("set criteria upazilla");
 				 hasPrerequisite = true;
 				}else {
@@ -166,7 +166,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				}
 			
 			if (hasPrerequisite && (filtercriteria.getUnionname()!=null && !filtercriteria.getUnionname().isEmpty())) {
-				 criteria.add(Restrictions.eq("geo_union", filtercriteria.getUnionname()));
+				 criteria.add(Restrictions.eq("reporting_union", filtercriteria.getUnionname()));
 				 System.out.println("set criteria unionname");
 				 hasPrerequisite = true;
 				}else {
@@ -174,7 +174,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				}
 			
 			if (hasPrerequisite && (filtercriteria.getWard()!=null && !filtercriteria.getWard().isEmpty())) {
-				 criteria.add(Restrictions.eq("ward", filtercriteria.getWard()));
+				 criteria.add(Restrictions.eq("reporting_ward", filtercriteria.getWard()));
 				 System.out.println("set criteria ward");
 				 hasPrerequisite = true;
 				}else {
@@ -182,7 +182,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				}
 			
 			if (hasPrerequisite && (filtercriteria.getUnit()!=null && !filtercriteria.getUnit().isEmpty())) {
-				 criteria.add(Restrictions.eq("unit", filtercriteria.getUnit()));
+				 criteria.add(Restrictions.eq("reporting_unit", filtercriteria.getUnit()));
 				 System.out.println("set criteria unit");
 				 hasPrerequisite = true;
 				}
