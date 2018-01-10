@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -199,5 +200,13 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	public int count() {
 		return sessionFactory.openSession().createCriteria(HouseholdEntity.class).list().size();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> executeSelectQuery(String sqlQuery, String paramName, int paramValue) {
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
+		query.setParameter(paramName, paramValue);
+		List<Object[]> results = query.list();
+		return results;
 	}
 }

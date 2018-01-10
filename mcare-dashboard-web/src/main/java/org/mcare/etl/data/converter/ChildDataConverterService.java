@@ -11,6 +11,7 @@ import org.mcare.etl.service.MotherService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ChildDataConverterService implements DataConverterService {
 	
@@ -51,7 +52,9 @@ public class ChildDataConverterService implements DataConverterService {
 			childEntity.setLastName("");
 			childEntity.setProvider(doc.getString("PROVIDERID"));
 			childEntity.setExternalUserId(details.getString("external_user_ID"));
-			childEntity.setDivision("");
+			if (details.has("division"))
+				childEntity.setDivision(details.getString("division"));
+			
 			childEntity.setCountry("");
 			childEntity.setCurrentFormStatus("");
 			if (doc.has("district"))
@@ -59,7 +62,6 @@ public class ChildDataConverterService implements DataConverterService {
 			if (doc.has("mouzaPara"))
 				childEntity.setMauzaPara(doc.getString("mouzaPara"));
 			if (doc.has("unit"))
-				
 				childEntity.setSubunit(doc.getString("unit"));
 			if (doc.has("union"))
 				childEntity.setUnion(doc.getString("union"));
@@ -74,9 +76,7 @@ public class ChildDataConverterService implements DataConverterService {
 			childEntity.setMotherWomAge(details.getString("mother_wom_age"));
 			childEntity.setFWBNFCHILDNAME(details.getString("FWBNFCHILDNAME"));
 			childEntity.setFWWOMBID(details.getString("FWWOMBID"));
-			
 			childEntity.setWBNFDOB(DateUtil.getDateFromString(details, "FWBNFDOB"));
-			
 			childEntity.setGOBHHID(details.getString("GOBHHID"));
 			childEntity.setJIVITAHHID(details.getString("JiVitAHHID"));
 			childEntity.setFWBNFNAMECHECK(details.getString("FWBNFNAMECHECK"));
