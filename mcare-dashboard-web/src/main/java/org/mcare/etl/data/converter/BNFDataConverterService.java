@@ -44,6 +44,8 @@ public class BNFDataConverterService implements DataConverterService {
 				bnfEntity.setFWEDD(doc.getString("FWEDD"));
 				
 				bnfEntity.setFWBNFSTS(doc.getString("FWBNFSTS"));
+				if (doc.has("FWBNFGEN"))
+				bnfEntity.setFWBNFGEN(doc.getString("FWBNFGEN"));
 				
 				bnfEntity.setFWDISPLAYTEXT(doc.getString("FWDISPLAYTEXT1"));
 				

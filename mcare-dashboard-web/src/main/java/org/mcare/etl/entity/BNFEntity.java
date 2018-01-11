@@ -42,6 +42,8 @@ public class BNFEntity {
 	
 	private String FWCONFIRMATION;
 	
+	private String FWBNFGEN;
+	
 	private String FWGESTATIONALAGE;
 	
 	//@Temporal(TemporalType.DATE)
@@ -287,5 +289,15 @@ public class BNFEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+
+	public String getFWBNFGEN() {
+		return FWBNFGEN;
+	}
+
+	public void setFWBNFGEN(String fWBNFGEN) {
+		FWBNFGEN = fWBNFGEN;
+	}
+	
+	
 	
 }
