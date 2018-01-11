@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.HouseholdEntity;
+import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -208,5 +209,25 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		query.setParameter(paramName, paramValue);
 		List<Object[]> results = query.list();
 		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(entityClassName);
+		
+		criteria.setFirstResult(offsetreal);
+		criteria.setMaxResults(result);
+		System.err.println("result:" + result + "offsetreal" + offsetreal);
+		List<T> products = null;
+		try {
+			products = (List<T>) criteria.list();
+			session.close();
+		}
+		catch (Exception e) {
+			
+		}
+		
+		return products;
 	}
 }

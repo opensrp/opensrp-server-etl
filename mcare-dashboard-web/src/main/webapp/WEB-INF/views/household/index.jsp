@@ -32,6 +32,16 @@
     List<HouseholdEntity>  households = (List<HouseholdEntity>)session.getAttribute("dataList");
     List<Integer>  pageList = (List<Integer>)session.getAttribute("pageList");
     String offSet = request.getParameter("offSet");
+    String division = request.getParameter("division")==null?"0?":request.getParameter("division");
+    String district = request.getParameter("district")==null?"0?":request.getParameter("district");
+    String upazila = request.getParameter("upazila")==null?"0?":request.getParameter("upazila");
+    String union = request.getParameter("union")==null?"0?":request.getParameter("union");
+    String ward = request.getParameter("ward")==null?"0?":request.getParameter("ward");
+    String subunit = request.getParameter("subunit")==null?"0?":request.getParameter("subunit");
+    String mauzapara = request.getParameter("mauzapara")==null?"0?":request.getParameter("mauzapara");
+    String provider = request.getParameter("provider")==null?"0?":request.getParameter("provider");
+    String name = request.getParameter("name")==null?"0?":request.getParameter("name");
+    String search = request.getParameter("search")==null?"0?":request.getParameter("search");
      /* disabledLINK has been used to to make current page number nonhiperlink i.e unclickable
      e.g if user is at page number 15 then page number 15 should not be clickable*/
     int disabledLINK = 0;
@@ -42,11 +52,12 @@
     int   size = Integer.parseInt(session.getAttribute("size").toString());
       
     List<Object[]>  parentDataList = (List<Object[]>)session.getAttribute("parentData");
+    List<Object[]>  districts = (List<Object[]>)session.getAttribute("districtListByParent");
  %>
   
   
   
-<body>
+
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <jsp:include page="/WEB-INF/views/navbar.jsp"/>
@@ -57,16 +68,16 @@
           <i class="fa fa-table"></i> Household list</div>
         <div class="card-body">
           <div class="table-responsive">
+           <form  id="search-form">
             <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-            <div class="row">  
+              <div class="row">  
                <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Division 
-                       <select id="division" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                        <option value="">Please Select </option>
-  <%                    for (Object[] objects : parentDataList) {
-                             %>
-                              <option value=<%=objects[1]%>><%=objects[0]%></option>
-   <% 
+                       <select id="division" name="division" aria-controls="dataTable" class="form-control form-control-sm">
+                        <option value="0?">Please Select </option>
+  <%                    for (Object[] objects : parentDataList) { %>
+                       
+                              <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
                         }
    %>
                            
@@ -77,8 +88,12 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>District 
                      
-                      <select id="district" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="10">Please Select</option>
+                      <select id="district" name="district" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>
+   <%                          for (Object[] objects : districts) {                             %>
+                                  <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                               }
+   %>
                            
                        </select>
                       
@@ -90,8 +105,8 @@
                 
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Upazilla                   
-                      <select id="upazila" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0">Please Select</option>                           
+                      <select id="upazila" name="upazila" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>                           
                        </select>                     
                        </label>
                 
@@ -100,8 +115,8 @@
                 
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Union 
-                       <select id="union" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0">Please Select</option>                           
+                       <select id="union" name="union" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>                           
                        </select>  </label>
                 
                    </div>
@@ -110,32 +125,32 @@
              <div class="row">
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Ward 
-                      <select id="ward" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0">Please Select</option>                           
+                      <select id="ward" name="ward" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>                           
                        </select> </label>
                 
                    </div>
                 </div>  
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Subunit 
-                       <select id="subunit" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0">Please Select</option>                           
+                       <select id="subunit" name="subunit" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>                           
                        </select> </label>
                 
                    </div>
                 </div>  
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Mauzapara 
-                       <select id="mauzapara" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0">Please Select</option>                           
+                       <select id="mauzapara" name="mauzapara" aria-controls="dataTable" class="form-control form-control-sm">
+                           <option value="0?">Please Select</option>                           
                        </select> </label>
                 
                    </div>
                 </div>  
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Provider 
-                       <select name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-                          <option value="">Please Select Provider</option>
+                       <select name="provider" aria-controls="dataTable" class="form-control form-control-sm">
+                          <option value="">Please Select</option>
                           <c:forEach items="${providers}" var="provider">    
                               <option value="${provider.getProvider()}">${provider.getProvider()}</option>
                           </c:forEach>
@@ -145,11 +160,20 @@
                 </div> 
               </div>   
                <div class="row">        
-                <div class="col-sm-12 col-md-3">
-                    <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input class="form-control form-control-sm" placeholder="" aria-controls="dataTable" type="search"></label></div>
-                </div>
+                 <div class="col-sm-12 col-md-8">
+                     <div id="name" class="name"><label>Name <input name="name" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" type="search"></label></div>
+                 </div>
+                 <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-offset-2 col-sm-4">
+ 					<button name="search" type="submit" id="bth-search"
+ 						class="btn btn-primary btn-lg" value="search">Search</button>
+ 				   </div>
+                 </div>
                 </div>
             </div>
+          </form>
+            
+            
             
             <div class="row">
             <div class="col-sm-12">
@@ -185,11 +209,11 @@
                        
                        <%if(disabledLINK != 0){ %>
                         <li class="paginate_button page-item previous" id="dataTable_previous">
-                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="household.html?offSet=<%=0%>">Start</a>
+                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=0%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Start</a>
                            </li>  
                            
                            <li class="paginate_button page-item previous" id="dataTable_previous">
-                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="household.html?offSet=<%=disabledLINK-1%>">Previous</a>
+                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=disabledLINK-1%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Previous</a>
                            </li>   
                        <%} %>
                                                
@@ -198,11 +222,11 @@
                               if(disabledLINK == i ){
                                   if(disabledLINK!=size){%>
                                       <li class="paginate_button page-item disabled">                              
-                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>"><%=i+"" %></a></li>
+                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>"><%=i+"" %></a></li>
                       <%          }
                               }else{ %>
                               <li class="paginate_button page-item active">                              
-                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>"><%=i+"" %></a></li><%                                  
+                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>"><%=i+"" %></a></li><%                                  
                               } 
                           } %>                        
                            <%
@@ -212,15 +236,13 @@
                                }else{
                            %> 
                             <li class="paginate_button page-item next" id="dataTable_next">
-                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=disabledLINK+1%>">Next</a>
+                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=disabledLINK+1%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Next</a>
                                   </li>
                             <li class="paginate_button page-item next" id="dataTable_next">
-                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=size%>">End</a>
+                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=size%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">End</a>
                                   </li>
                          <%
                                } %>
-                                         
-                          
                       
                        </ul>
                     </div>
@@ -251,29 +273,41 @@
  <script>
  jQuery(document).ready(function($) {
   	$("#division").change(function(event) {   
-		//event.preventDefault();
-		getLocationHireachy("/location?id="+$("#division").val(),"district") ;
+		//event.preventDefault();		
+		getLocationHierarchy("/location?id="+$("#division").val().split("?")[0],"district") ;		
+		$("#upazila").html("");		
+		$("#union").html("");
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
   	});
   
   	$("#district").change(function(event) {   
 		//event.preventDefault(); 
-		getLocationHireachy("/location?id="+$("#district").val(),"upazila") ;
+		getLocationHierarchy("/location?id="+$("#district").val().split("?")[0],"upazila") ;
+		$("#union").html("");		
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
 	});
-  	$("#upazila").change(function(event) {   
-		//event.preventDefault(); 
-		getLocationHireachy("/location?id="+$("#upazila").val(),"union") ;
+  	$("#upazila").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#upazila").val().split("?")[0],"union") ;		
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
 	});
-  	$("#union").change(function(event) {   
-		//event.preventDefault(); 
-		getLocationHireachy("/location?id="+$("#union").val(),"ward") ;
+  	$("#union").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#union").val().split("?")[0],"ward") ;
+		$("#subunit").html("");
+		$("#mauzapara").html("");
 	});
-  	$("#ward").change(function(event) {   
-		//event.preventDefault(); 
-		getLocationHireachy("/location?id="+$("#ward").val(),"subunit") ;
+  	$("#ward").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#ward").val().split("?")[0],"subunit") ;
+		$("#mauzapara").html("");
 	});
-  	$("#subunit").change(function(event) {   
-		//event.preventDefault(); 
-		getLocationHireachy("/location?id="+$("#subunit").val(),"mauzapara") ;
+  	$("#subunit").change(function(event) {
+		getLocationHierarchy("/location?id="+$("#subunit").val().split("?")[0],"mauzapara") ;
+		
 	});
 
  });

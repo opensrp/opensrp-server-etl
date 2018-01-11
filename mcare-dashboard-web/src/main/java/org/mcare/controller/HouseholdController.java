@@ -12,6 +12,7 @@ import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.service.HouseholdService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
+import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +35,64 @@ public class HouseholdController {
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
 	
+	@Autowired
+	private SearchBuilder searchBuilder;
+	
 	public HouseholdController() {
 		
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/household.html", method = RequestMethod.GET)
-	public String lisst(HttpServletRequest request, HttpSession session, Model model) {
+	public String search(HttpServletRequest request, HttpSession session, Model model) {
+		
+		String division = "";
+		String district = "";
+		String upazila = "";
+		String union = "";
+		String ward = "";
+		String subunit = "";
+		String mauzapara = "";
+		String provider = "";
+		String name = "";
+		String search = "";
+		search = (String) request.getParameter("search");
+		
+		if (search != null) {
+			division = (String) request.getParameter("division");
+			if (division != null || !division.equalsIgnoreCase("0?")) {
+				System.err.println("division:" + division);
+				String[] di = division.split("\\?");
+			} else {
+				division = "0";
+			}
+			district = (String) request.getParameter("district");
+			if (district != null || !district.equalsIgnoreCase("0?")) {
+				System.err.println("district:" + district);
+				String[] dist = district.split("\\?");
+				List<Object[]> districtListByParent = locationServiceImpl.getChildData(Integer.parseInt(dist[0]));
+				session.setAttribute("districtListByParent", districtListByParent);
+			} else {
+				district = "0";
+			}
+			upazila = (String) request.getParameter("upazila");
+			union = (String) request.getParameter("union");
+			ward = (String) request.getParameter("ward");
+			subunit = (String) request.getParameter("subunit");
+			mauzapara = (String) request.getParameter("mauzapara");
+			provider = (String) request.getParameter("provider");
+			name = (String) request.getParameter("name");
+			System.err.println("union:" + union);
+			searchBuilder.setDivision(division);
+			searchBuilder.setDistrict(district);
+			searchBuilder.setUpazila(upazila);
+			searchBuilder.setUnion(union);
+			searchBuilder.setWard(ward);
+			searchBuilder.setSubunit(subunit);
+			searchBuilder.setMauzapara(mauzapara);
+			searchBuilder.setProvider(provider);
+			searchBuilder.setName(name);
+			
+		}
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
 		String offset = (String) request.getParameter("offSet");
 		int result = 10;
@@ -52,14 +104,14 @@ public class HouseholdController {
 		if (offset != null) {
 			int offsetReal = Integer.parseInt(offset);
 			offsetReal = offsetReal * 10;
-			data = householdService.list(result, offsetReal, entityClassName);
+			data = householdService.search(searchBuilder, result, offsetReal, entityClassName);
 			if (session.getAttribute("size") == null) {
 				size = householdService.count();
 				session.setAttribute("size", size / 10);
 			}
 			
 		} else {
-			data = householdService.list(result, 0, entityClassName);
+			data = householdService.search(searchBuilder, result, 0, entityClassName);
 			size = householdService.count();
 			if ((size % result) == 0) {
 				session.setAttribute("size", (size / 10) - 1);
@@ -75,9 +127,8 @@ public class HouseholdController {
 	}
 	
 	@RequestMapping(value = "/location", method = RequestMethod.GET)
-	public String dataExportGetList(HttpServletRequest request, HttpSession session, Model model, @RequestParam int id) {
+	public String getChildLocationList(HttpServletRequest request, HttpSession session, Model model, @RequestParam int id) {
 		List<Object[]> parentData = locationServiceImpl.getChildData(id);
-		System.err.println("Data:" + id);
 		session.setAttribute("data", parentData);
 		return "household/location";
 	}

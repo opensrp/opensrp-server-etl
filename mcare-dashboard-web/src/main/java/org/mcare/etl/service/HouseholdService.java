@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.interfaces.RegisterService;
+import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,4 +79,8 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return databaseRepositoryImpl.count();
 	}
 	
+	@Transactional
+	public List<Object> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
+		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
+	}
 }

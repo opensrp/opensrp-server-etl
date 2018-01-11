@@ -1,5 +1,5 @@
 
-function getLocationHireachy(url,id) { 
+function getLocationHierarchy(url,id) { 
   $.ajax({
    type : "GET",
    contentType : "application/json",
