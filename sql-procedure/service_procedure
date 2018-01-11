@@ -1219,6 +1219,54 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit3Info FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC3'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit3Service FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC3'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit4Info FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC4'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit4Service FROM anc a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.ancName='ANC4'
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
             SELECT COUNT(distinct b1.relationalid) INTO mcBirthAtHomeWithTrainedPerson FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
             WHERE (b1.where_delivered = 1
@@ -1284,6 +1332,188 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit2Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC2'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit2Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC2'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit3Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC3'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit3Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC3'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit4Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC4'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit4Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC4'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit1Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC1'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit1Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC1'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit2Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC2'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit2Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC2'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit3Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC3'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit3Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC3'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit4Info FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC4'
+                    AND p1.visit_status in (1,3)
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit4Service FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.pncname='PNC4'
+                    AND p1.has_pnc_given_on_time=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
             SELECT COUNT(distinct a1.relationalid) INTO mcReferredComplexPregnant FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.is_reffered=1
@@ -1299,6 +1529,54 @@
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseOne FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
             WHERE (p1.tt_dose like '%1%'
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseTwo FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.tt_dose like '%2%'
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseThree FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.tt_dose like '%3%'
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseFour FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.tt_dose like '%4%'
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseFive FROM psrf p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.tt_dose like '%5%'
                     AND EXTRACT(MONTH FROM p1.today)=currentMonth
                     AND EXTRACT(YEAR FROM p1.today)=currentYear)
             AND member.mem_district=district
@@ -1326,6 +1604,274 @@
             WHERE (a1.councelling=4
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy
+            FROM adolescent a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.councelling=1
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingTeenagersOnTakingIronAndFolicAcid
+            FROM adolescent a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.councelling=2
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnInfectionOfDiseases
+            FROM adolescent a1
+            JOIN member ON (a1.relationalid= member.caseid)
+            WHERE (a1.councelling=6
+                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+
+            /*Child Care Report Queries*/
+            SELECT COUNT(distinct p1.relationalid) INTO ccIsCleanedInfo
+            FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.is_cleaned=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO ccIsCleanedService
+            FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.is_cleaned=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO ccUsedChlorhexidinInfo
+            FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.chlorhexidin=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO ccUsedChlorhexidinService
+            FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.chlorhexidin=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct p1.relationalid) INTO ccFedBreastMilkCount
+            FROM pnc p1
+            JOIN member ON (p1.relationalid= member.caseid)
+            WHERE (p1.breasmilk_Fed=1
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccBcgCount
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.vaccines LIKE '%BCG%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccOpv1Andpcv1Andpenta1Count
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.vaccines LIKE '%OPV1%'
+                    AND c1.vaccines LIKE '%PCV1%'
+                    AND c1.vaccines LIKE '%Penta1%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccOpv2Andpcv2Andpenta2Count
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.vaccines LIKE '%OPV2%'
+                    AND c1.vaccines LIKE '%PCV2%'
+                    AND c1.vaccines LIKE '%Penta2%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccOpv3Andpenta3Count
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.vaccines LIKE '%OPV3%'
+                    AND c1.vaccines LIKE '%Penta3%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccPcv3Count
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE ( c1.vaccines LIKE '%PCV3%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccMrAndopv4Count
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.vaccines LIKE '%OPV4%'
+                    AND c1.vaccines LIKE '%MR%'
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDangerousDiseasesInfo
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=1
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDangerousDiseasesService
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=1
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfPneumoniaInfo
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=2
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfPneumoniaService
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=2
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDiarrheaInfo
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=3
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDiarrheaService
+            FROM child c1
+            JOIN member ON (c1.relationalid= member.caseid)
+            WHERE (c1.diseases_Prob=3
+                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
