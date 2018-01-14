@@ -1,4 +1,5 @@
  <%@page import="org.mcare.etl.entity.HouseholdEntity"%>
+  <%@page import="org.mcare.common.util.PaginationHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -32,16 +33,64 @@
     List<HouseholdEntity>  households = (List<HouseholdEntity>)session.getAttribute("dataList");
     List<Integer>  pageList = (List<Integer>)session.getAttribute("pageList");
     String offSet = request.getParameter("offSet");
-    String division = request.getParameter("division")==null?"0?":request.getParameter("division");
-    String district = request.getParameter("district")==null?"0?":request.getParameter("district");
-    String upazila = request.getParameter("upazila")==null?"0?":request.getParameter("upazila");
-    String union = request.getParameter("union")==null?"0?":request.getParameter("union");
-    String ward = request.getParameter("ward")==null?"0?":request.getParameter("ward");
-    String subunit = request.getParameter("subunit")==null?"0?":request.getParameter("subunit");
-    String mauzapara = request.getParameter("mauzapara")==null?"0?":request.getParameter("mauzapara");
-    String provider = request.getParameter("provider")==null?"0?":request.getParameter("provider");
-    String name = request.getParameter("name")==null?"0?":request.getParameter("name");
-    String search = request.getParameter("search")==null?"0?":request.getParameter("search");
+    String division ="";
+    int divId =0;
+    if(request.getParameterMap().containsKey("division")){
+       division = request.getParameter("division")==null?"0?":request.getParameter("division");
+       divId = PaginationHelperUtil.getParentId(division);
+    }
+    String district ="";
+    int distId =0;
+    if(request.getParameterMap().containsKey("district")){
+         district = request.getParameter("district")==null?"0?":request.getParameter("district");
+    	 distId = PaginationHelperUtil.getParentId(district);
+    }
+    String upazila = "";
+    int upzilaId =0;
+    if(request.getParameterMap().containsKey("upazila")){
+        upazila = request.getParameter("upazila")==null?"0?":request.getParameter("upazila");
+        upzilaId = PaginationHelperUtil.getParentId(upazila);
+    }
+    String union="";
+    int unionId =0;
+    if(request.getParameterMap().containsKey("union")){
+        union = request.getParameter("union")==null?"0?":request.getParameter("union");
+        unionId = PaginationHelperUtil.getParentId(union);
+    }
+    
+    String ward="";
+    int wardId =0;
+    if(request.getParameterMap().containsKey("ward")){
+        ward = request.getParameter("ward")==null?"0?":request.getParameter("ward");
+        wardId = PaginationHelperUtil.getParentId(ward);
+    }
+    
+    String subunit="";
+    int subunitId =0;
+    if(request.getParameterMap().containsKey("subunit")){
+        subunit = request.getParameter("subunit")==null?"0?":request.getParameter("subunit");
+        subunitId = PaginationHelperUtil.getParentId(subunit);
+    }
+    String mauzapara="";
+    int mauzaparaId =0;
+    if(request.getParameterMap().containsKey("mauzapara")){
+        mauzapara = request.getParameter("mauzapara")==null?"0?":request.getParameter("mauzapara");
+        mauzaparaId = PaginationHelperUtil.getParentId(mauzapara);
+    }
+    
+    String provider="";   
+    if(request.getParameterMap().containsKey("provider")){
+         provider = request.getParameter("provider")==null?"0?":request.getParameter("provider");
+    }
+    
+    String name=""; 
+    if(request.getParameterMap().containsKey("name")){
+      name = request.getParameter("name")==null?"0?":request.getParameter("name");
+    }
+    String search ="";
+    if(request.getParameterMap().containsKey("search")){
+     search = request.getParameter("search")==null?"0?":request.getParameter("search");
+    }
      /* disabledLINK has been used to to make current page number nonhiperlink i.e unclickable
      e.g if user is at page number 15 then page number 15 should not be clickable*/
     int disabledLINK = 0;
@@ -50,9 +99,15 @@
     }
     /* size is used for moving user to end page  by clicking on END link*/
     int   size = Integer.parseInt(session.getAttribute("size").toString());
-      
+    
     List<Object[]>  parentDataList = (List<Object[]>)session.getAttribute("parentData");
     List<Object[]>  districts = (List<Object[]>)session.getAttribute("districtListByParent");
+    List<Object[]>  upazilas = (List<Object[]>)session.getAttribute("upazilasListByParent");
+    List<Object[]>  unions = (List<Object[]>)session.getAttribute("unionsListByParent");
+    List<Object[]>  wards = (List<Object[]>)session.getAttribute("wardsListByParent");
+    List<Object[]>  subuits = (List<Object[]>)session.getAttribute("subunitListByParent");
+    List<Object[]>  mauzaparas = (List<Object[]>)session.getAttribute("mauzaparaListByParent");
+   
  %>
   
   
@@ -65,7 +120,7 @@
   <div class="content-wrapper">    
       
         <div class="card-header">
-          <i class="fa fa-table"></i> Household list</div>
+          <i class="fa fa-table"></i> Household list <%=divId%></div>
         <div class="card-body">
           <div class="table-responsive">
            <form  id="search-form">
@@ -75,10 +130,14 @@
                    <div class="dataTables_length" id="dataTable_length"><label>Division 
                        <select id="division" name="division" aria-controls="dataTable" class="form-control form-control-sm">
                         <option value="0?">Please Select </option>
-  <%                    for (Object[] objects : parentDataList) { %>
-                       
-                              <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
-                        }
+  <%                    for (Object[] objects : parentDataList) { 
+                            if(divId ==((Integer) objects[1]).intValue()){ %>
+                            	<option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                            	<%   }else{
+                         %>
+                             <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                           }
+                         }
    %>
                            
                        </select> </label>
@@ -90,10 +149,18 @@
                      
                       <select id="district" name="district" aria-controls="dataTable" class="form-control form-control-sm">
                            <option value="0?">Please Select</option>
-   <%                          for (Object[] objects : districts) {                             %>
-                                  <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
-                               }
-   %>
+        <%                  if(districts!=null){ 
+                                for (Object[] objects : districts) { 
+                                     if(distId ==((Integer) objects[1]).intValue()){ %>
+                                      <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
+                                      <%   }else{
+                                  %>
+                                      <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
+                                    }
+                                }
+                            }
+        %>
+       
                            
                        </select>
                       
@@ -106,8 +173,18 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Upazilla                   
                       <select id="upazila" name="upazila" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0?">Please Select</option>                           
-                       </select>                     
+                           <option value="0?">Please Select</option>
+  <%                      if(upazilas!=null){ 
+                                  for (Object[] objects : upazilas) { 
+                                       if(upzilaId ==((Integer) objects[1]).intValue()){ %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                      }
+                                  }
+                              }
+   %>                       </select>                     
                        </label>
                 
                    </div>
@@ -116,7 +193,18 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Union 
                        <select id="union" name="union" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0?">Please Select</option>                           
+                           <option value="0?">Please Select</option>
+   <%                      if(unions!=null){ 
+                                  for (Object[] objects : unions) { 
+                                       if(unionId ==((Integer) objects[1]).intValue()){ %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                      }
+                                  }
+                              }
+   %>                              
                        </select>  </label>
                 
                    </div>
@@ -126,7 +214,18 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Ward 
                       <select id="ward" name="ward" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0?">Please Select</option>                           
+                           <option value="0?">Please Select</option>  
+  <%                      if(wards!=null){ 
+                                  for (Object[] objects : wards) { 
+                                       if(wardId ==((Integer) objects[1]).intValue()){ %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                      }
+                                  }
+                              }
+   %>                           
                        </select> </label>
                 
                    </div>
@@ -134,7 +233,18 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Subunit 
                        <select id="subunit" name="subunit" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0?">Please Select</option>                           
+                           <option value="0?">Please Select</option>  
+  <%                      if(subuits!=null){ 
+                                  for (Object[] objects : subuits) { 
+                                       if(subunitId ==((Integer) objects[1]).intValue()){ %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                      }
+                                  }
+                              }
+   %>                                                    
                        </select> </label>
                 
                    </div>
@@ -142,7 +252,18 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Mauzapara 
                        <select id="mauzapara" name="mauzapara" aria-controls="dataTable" class="form-control form-control-sm">
-                           <option value="0?">Please Select</option>                           
+                           <option value="0?">Please Select</option>
+<%                         if(mauzaparas!=null){ 
+                                  for (Object[] objects : mauzaparas) { 
+                                       if(mauzaparaId ==((Integer) objects[1]).intValue()){ %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                      }
+                                  }
+                              }
+   %>                             
                        </select> </label>
                 
                    </div>
@@ -150,7 +271,7 @@
                  <div class="col-sm-12 col-md-3">
                    <div class="dataTables_length" id="dataTable_length"><label>Provider 
                        <select name="provider" aria-controls="dataTable" class="form-control form-control-sm">
-                          <option value="">Please Select</option>
+                          <option value="0?">Please Select</option>
                           <c:forEach items="${providers}" var="provider">    
                               <option value="${provider.getProvider()}">${provider.getProvider()}</option>
                           </c:forEach>

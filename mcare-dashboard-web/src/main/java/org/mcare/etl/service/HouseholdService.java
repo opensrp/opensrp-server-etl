@@ -83,4 +83,10 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	public List<Object> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
 		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
 	}
+	
+	@Transactional
+	public int countBySearch(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.countBySearch(searchBuilder);
+	}
+	
 }

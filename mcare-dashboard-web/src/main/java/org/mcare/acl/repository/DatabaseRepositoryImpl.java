@@ -205,9 +205,17 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String sqlQuery, String paramName, int paramValue) {
-		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		query.setParameter(paramName, paramValue);
-		List<Object[]> results = query.list();
+		Session session = sessionFactory.openSession();
+		List<Object[]> results = null;
+		try {
+			SQLQuery query = session.createSQLQuery(sqlQuery);
+			query.setParameter(paramName, paramValue);
+			results = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			session.close();
+		}
 		return results;
 	}
 	
@@ -215,10 +223,22 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(entityClassName);
-		
+		System.err.println("searchBuilder.getDivision();" + searchBuilder.getDivision());
+		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
+			System.err.println(searchBuilder.getDivision().toUpperCase());
+			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
+		}
+		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
+			System.err.println(searchBuilder.getDistrict().toUpperCase());
+			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
+		}
+		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
+			System.err.println(searchBuilder.getUpazila().toUpperCase());
+			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
+		}
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
-		System.err.println("result:" + result + "offsetreal" + offsetreal);
+		
 		List<T> products = null;
 		try {
 			products = (List<T>) criteria.list();
@@ -229,5 +249,23 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		
 		return products;
+	}
+	
+	public int countBySearch(SearchBuilder searchBuilder) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(HouseholdEntity.class);
+		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
+			System.err.println(searchBuilder.getDivision().toUpperCase());
+			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
+		}
+		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
+			System.err.println(searchBuilder.getDistrict().toUpperCase());
+			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
+		}
+		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
+			System.err.println(searchBuilder.getUpazila().toUpperCase());
+			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
+		}
+		return criteria.list().size();
 	}
 }
