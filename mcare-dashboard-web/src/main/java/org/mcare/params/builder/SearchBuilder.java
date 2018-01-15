@@ -29,6 +29,21 @@ public class SearchBuilder {
 		
 	}
 	
+	public SearchBuilder clear() {
+		this.setDivision("");
+		this.setDistrict("");
+		this.setUpazila("");
+		this.setUnion("");
+		this.setWard("");
+		this.setSubunit("");
+		this.setMauzapara("");
+		this.setProvider("");
+		this.setName("");
+		this.setSearch("");
+		return this;
+		
+	}
+	
 	public String getDivision() {
 		return division;
 	}

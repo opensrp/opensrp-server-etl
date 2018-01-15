@@ -10,6 +10,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.HouseholdEntity;
@@ -223,18 +224,38 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(entityClassName);
-		System.err.println("searchBuilder.getDivision();" + searchBuilder.getDivision());
+		
 		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			System.err.println(searchBuilder.getDivision().toUpperCase());
+			
 			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 		}
 		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			System.err.println(searchBuilder.getDistrict().toUpperCase());
+			
 			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
 		}
 		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			System.err.println(searchBuilder.getUpazila().toUpperCase());
+			
 			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
+		}
+		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
+			criteria.add(Restrictions.eq("union", searchBuilder.getUnion()));
+		}
+		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
+			criteria.add(Restrictions.eq("ward", searchBuilder.getWard()));
+		}
+		if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
+			criteria.add(Restrictions.eq("mauzaPara", searchBuilder.getMauzapara()));
+		}
+		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
+			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
+		}
+		System.err.println("searchBuilder.getProvider():" + searchBuilder.getProvider());
+		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
+			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
+		}
+		if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
+			System.err.println(searchBuilder.getName().toUpperCase());
+			criteria.add(Restrictions.ilike("firstName", searchBuilder.getName().toUpperCase(), MatchMode.ANYWHERE));
 		}
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
@@ -251,21 +272,49 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return products;
 	}
 	
-	public int countBySearch(SearchBuilder searchBuilder) {
+	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(HouseholdEntity.class);
-		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			System.err.println(searchBuilder.getDivision().toUpperCase());
-			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
+		int count = 0;
+		Criteria criteria = session.createCriteria(entityClassName);
+		try {
+			
+			if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
+				
+				criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
+			}
+			if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
+				
+				criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
+			}
+			if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
+				
+				criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
+			}
+			if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
+				criteria.add(Restrictions.eq("union", searchBuilder.getUnion()));
+			}
+			if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
+				criteria.add(Restrictions.eq("ward", searchBuilder.getWard()));
+			}
+			if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
+				criteria.add(Restrictions.eq("mauzaPara", searchBuilder.getMauzapara()));
+			}
+			if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
+				criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
+			}
+			if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
+				criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
+			}
+			if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
+				criteria.add(Restrictions.ilike("firstName", searchBuilder.getName(), MatchMode.ANYWHERE));
+			}
+			count = criteria.list().size();
+			session.close();
 		}
-		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			System.err.println(searchBuilder.getDistrict().toUpperCase());
-			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
+		catch (Exception e) {
+			session.close();
 		}
-		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			System.err.println(searchBuilder.getUpazila().toUpperCase());
-			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
-		}
-		return criteria.list().size();
+		
+		return count;
 	}
 }

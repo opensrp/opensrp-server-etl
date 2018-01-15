@@ -85,8 +85,8 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	}
 	
 	@Transactional
-	public int countBySearch(SearchBuilder searchBuilder) {
-		return databaseRepositoryImpl.countBySearch(searchBuilder);
+	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
+		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
 	}
 	
 }

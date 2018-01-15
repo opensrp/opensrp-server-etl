@@ -35,62 +35,84 @@
     String offSet = request.getParameter("offSet");
     String division ="";
     int divId =0;
+    String divisionLink="";
     if(request.getParameterMap().containsKey("division")){
        division = request.getParameter("division")==null?"0?":request.getParameter("division");
        divId = PaginationHelperUtil.getParentId(division);
+       divisionLink="&division="+division;
     }
     String district ="";
     int distId =0;
+    String districtLink="";
     if(request.getParameterMap().containsKey("district")){
          district = request.getParameter("district")==null?"0?":request.getParameter("district");
     	 distId = PaginationHelperUtil.getParentId(district);
+    	 districtLink="&district="+district;
     }
     String upazila = "";
     int upzilaId =0;
+    String upazilaLink="";
     if(request.getParameterMap().containsKey("upazila")){
         upazila = request.getParameter("upazila")==null?"0?":request.getParameter("upazila");
         upzilaId = PaginationHelperUtil.getParentId(upazila);
+        upazilaLink="&upazila="+upazila;
     }
     String union="";
     int unionId =0;
+    String unionLink="";
     if(request.getParameterMap().containsKey("union")){
         union = request.getParameter("union")==null?"0?":request.getParameter("union");
         unionId = PaginationHelperUtil.getParentId(union);
+        unionLink="&union="+union;
     }
     
     String ward="";
     int wardId =0;
+    String wardLink="";
     if(request.getParameterMap().containsKey("ward")){
         ward = request.getParameter("ward")==null?"0?":request.getParameter("ward");
         wardId = PaginationHelperUtil.getParentId(ward);
+        wardLink="&ward="+ward;
     }
     
     String subunit="";
     int subunitId =0;
+    String subunitLink="";
     if(request.getParameterMap().containsKey("subunit")){
         subunit = request.getParameter("subunit")==null?"0?":request.getParameter("subunit");
         subunitId = PaginationHelperUtil.getParentId(subunit);
+        subunitLink="&subunit="+subunit;
     }
     String mauzapara="";
     int mauzaparaId =0;
+    String mauzaparaLink="";
     if(request.getParameterMap().containsKey("mauzapara")){
         mauzapara = request.getParameter("mauzapara")==null?"0?":request.getParameter("mauzapara");
         mauzaparaId = PaginationHelperUtil.getParentId(mauzapara);
+        mauzaparaLink="&mauzapara="+mauzapara;
     }
     
-    String provider="";   
+    String provider="";
+    String providerLink="";
     if(request.getParameterMap().containsKey("provider")){
          provider = request.getParameter("provider")==null?"0?":request.getParameter("provider");
+         providerLink="&provider="+provider;
     }
     
     String name=""; 
+    String nameLink="";
     if(request.getParameterMap().containsKey("name")){
       name = request.getParameter("name")==null?"0?":request.getParameter("name");
+      nameLink="&name="+name;
     }
     String search ="";
+    String searchLink="";
     if(request.getParameterMap().containsKey("search")){
      search = request.getParameter("search")==null?"0?":request.getParameter("search");
+     searchLink="&search="+search;
     }
+    
+    String paginationLink = divisionLink+districtLink+upazilaLink+unionLink + subunitLink+mauzaparaLink+providerLink+nameLink+searchLink;
      /* disabledLINK has been used to to make current page number nonhiperlink i.e unclickable
      e.g if user is at page number 15 then page number 15 should not be clickable*/
     int disabledLINK = 0;
@@ -132,10 +154,10 @@
                         <option value="0?">Please Select </option>
   <%                    for (Object[] objects : parentDataList) { 
                             if(divId ==((Integer) objects[1]).intValue()){ %>
-                            	<option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                            	<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                             	<%   }else{
                          %>
-                             <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                             <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                            }
                          }
    %>
@@ -177,10 +199,10 @@
   <%                      if(upazilas!=null){ 
                                   for (Object[] objects : upazilas) { 
                                        if(upzilaId ==((Integer) objects[1]).intValue()){ %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                                         <%   }else{
                                     %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                                       }
                                   }
                               }
@@ -197,10 +219,10 @@
    <%                      if(unions!=null){ 
                                   for (Object[] objects : unions) { 
                                        if(unionId ==((Integer) objects[1]).intValue()){ %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                                         <%   }else{
                                     %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                                       }
                                   }
                               }
@@ -218,10 +240,10 @@
   <%                      if(wards!=null){ 
                                   for (Object[] objects : wards) { 
                                        if(wardId ==((Integer) objects[1]).intValue()){ %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                                         <%   }else{
                                     %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                                       }
                                   }
                               }
@@ -237,10 +259,10 @@
   <%                      if(subuits!=null){ 
                                   for (Object[] objects : subuits) { 
                                        if(subunitId ==((Integer) objects[1]).intValue()){ %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                                         <%   }else{
                                     %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                                       }
                                   }
                               }
@@ -256,10 +278,10 @@
 <%                         if(mauzaparas!=null){ 
                                   for (Object[] objects : mauzaparas) { 
                                        if(mauzaparaId ==((Integer) objects[1]).intValue()){ %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%> selected><%=objects[0]%></option>   
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
                                         <%   }else{
                                     %>
-                                        <option value=<%=objects[1]%>?<%=objects[0]%>><%=objects[0]%></option>   <% 
+                                        <option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>   <% 
                                       }
                                   }
                               }
@@ -282,7 +304,7 @@
               </div>   
                <div class="row">        
                  <div class="col-sm-12 col-md-8">
-                     <div id="name" class="name"><label>Name <input name="name" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" type="search"></label></div>
+                     <div id="name" class="name"><label>Name <input name="name" class="form-control form-control-sm" value="<%=name%>" placeholder="" aria-controls="dataTable" type="search"></label></div>
                  </div>
                  <div class="col-sm-12 col-md-4">
                     <div class="col-sm-offset-2 col-sm-4">
@@ -330,11 +352,11 @@
                        
                        <%if(disabledLINK != 0){ %>
                         <li class="paginate_button page-item previous" id="dataTable_previous">
-                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=0%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Start</a>
+                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=0%><%=paginationLink%>">Start</a>
                            </li>  
                            
                            <li class="paginate_button page-item previous" id="dataTable_previous">
-                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=disabledLINK-1%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Previous</a>
+                           <a aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link" href="?offSet=<%=disabledLINK-1%><%=paginationLink%>">Previous</a>
                            </li>   
                        <%} %>
                                                
@@ -343,11 +365,11 @@
                               if(disabledLINK == i ){
                                   if(disabledLINK!=size){%>
                                       <li class="paginate_button page-item disabled">                              
-                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>"><%=i+"" %></a></li>
+                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%><%=paginationLink%>"><%=i+"" %></a></li>
                       <%          }
                               }else{ %>
                               <li class="paginate_button page-item active">                              
-                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>"><%=i+"" %></a></li><%                                  
+                                  <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link" href="household.html?offSet=<%=i%><%=paginationLink%>"><%=i+"" %></a></li><%                                  
                               } 
                           } %>                        
                            <%
@@ -357,10 +379,10 @@
                                }else{
                            %> 
                             <li class="paginate_button page-item next" id="dataTable_next">
-                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=disabledLINK+1%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">Next</a>
+                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=disabledLINK+1%><%=paginationLink%>">Next</a>
                                   </li>
                             <li class="paginate_button page-item next" id="dataTable_next">
-                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=size%>&division=<%=division%>&district=<%=district%>&upazila=<%=upazila%>&union=<%=union%>&ward=<%=ward%>&subunit=<%=subunit%>&mauzapara=<%=mauzapara%>&provider=<%=provider%>&name=<%=name%>&search=<%=search%>">End</a>
+                                  <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link" href="household.html?offSet=<%=size%><%=paginationLink%>">End</a>
                                   </li>
                          <%
                                } %>

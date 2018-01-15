@@ -8,17 +8,61 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mcare.acl.entity.ProviderEntity;
+import org.mcare.acl.service.ProviderServiceImpl;
+import org.mcare.etl.service.HouseholdService;
+import org.mcare.location.serviceimpl.LocationServiceImpl;
+import org.mcare.params.builder.SearchBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 @Component
 public class PaginationUtil {
+	
+	@Autowired
+	private LocationServiceImpl locationServiceImpl;
+	
+	@Autowired
+	private ProviderServiceImpl providerServiceImpl;
+	
+	@Autowired
+	private HouseholdService householdService;
 	
 	public PaginationUtil() {
 		
 	}
 	
-	public <T> void pagination(HttpServletRequest request, HttpSession session, String offset, List<Integer> pageList,
-	                           List<Object> data) {
+	public <T> void pagination(HttpServletRequest request, HttpSession session, SearchBuilder searchBuilder,
+	                           Class<?> entityClassName, Model model) {
+		List<Object[]> parentData = locationServiceImpl.getParentData();
+		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+		String offset = (String) request.getParameter("offSet");
+		int result = 10;
+		int size = 0;
+		List<Integer> pageList = new ArrayList<Integer>();
+		List<Object> data;
+		if (offset != null) {
+			int offsetReal = Integer.parseInt(offset);
+			offsetReal = offsetReal * 10;
+			data = householdService.search(searchBuilder, result, offsetReal, entityClassName);
+			if (session.getAttribute("size") == null) {
+				size = householdService.countBySearch(searchBuilder, entityClassName);
+				session.setAttribute("size", size / 10);
+			}
+			
+		} else {
+			data = householdService.search(searchBuilder, result, 0, entityClassName);
+			size = householdService.countBySearch(searchBuilder, entityClassName);
+			if ((size % result) == 0) {
+				session.setAttribute("size", (size / 10) - 1);
+			} else {
+				session.setAttribute("size", size / 10);
+			}
+		}
+		
+		session.setAttribute("parentData", parentData);
+		model.addAttribute("providers", providers);
 		
 		/*when user click on any page number then this part will be executed. 
 		 * else part will be executed on load i.e first time on page*/
@@ -70,6 +114,7 @@ public class PaginationUtil {
 		}
 		session.setAttribute("pageList", pageList);
 		session.setAttribute("dataList", data);
+		
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
