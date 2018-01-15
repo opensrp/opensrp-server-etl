@@ -1879,6 +1879,384 @@
             AND member.mem_union=unionname
             AND member.mem_subunit=unit;
 
+
+            /*Birth and Death Report Queries*/
+            SELECT SUM(b1.num_live_birth) INTO bdTotalLiveBirth
+            FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE ( EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            If bdTotalLiveBirth IS NULL THEN
+                bdTotalLiveBirth := 0;
+            END If;
+
+            SELECT COUNT(distinct b1.relationalid) INTO bdtotalChildWithUnderWeight
+            FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.child_weight < 2.5
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct b1.relationalid) INTO bdTotalPrematureChild
+            FROM bnf b1
+            JOIN member ON (b1.relationalid= member.caseid)
+            WHERE (b1.premature_birth=1
+                    AND EXTRACT(MONTH FROM b1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM b1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan7Days
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 1
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan28Days
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 2
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan1Yr
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 3
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            bdTotalDeathLessThan1Yr := bdDeathLessThan7Days + bdDeathLessThan28Days
+                                       + bdDeathLessThan1Yr;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan5Yr
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 4
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathOfMother
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 5
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct d1.relationalid) INTO bdDeathOfOther
+            FROM deathreg d1
+            JOIN member ON (d1.relationalid= member.caseid)
+            WHERE (d1.deceased_age_group = 6
+                    AND EXTRACT(MONTH FROM d1.death_today)=currentMonth
+                    AND EXTRACT(YEAR FROM d1.death_today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            bdTotalDeathCount := bdTotalDeathLessThan1Yr + bdDeathLessThan5Yr
+                                 + bdDeathOfMother + bdDeathOfOther;
+
+            /*Nutrition Report Queries*/
+            SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingIronForPregWoman
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.mother_nutrition = 1
+                    AND p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingIronForMother
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.mother_nutrition = 1
+                    AND NOT p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnDistributionIronForPregWoman
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.distrinuted_nutrition = 1
+                    AND p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnDistributionIronForMother
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.distrinuted_nutrition = 1
+                    AND NOT p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnBreastMilkForPregWoman
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.mother_nutrition = 3
+                    AND p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnBreastMilkForMother
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.mother_nutrition = 3
+                    AND NOT p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnFeedingMNP
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            JOIN psrf p1 ON (p1.relationalid= member.caseid)
+            WHERE ( n1.mother_nutrition = 2
+                    AND NOT p1.preg_status = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
+                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingWithin1Hour
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 1
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingUntill6Month
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 2
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild6TO23
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 3
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild24to59
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 3
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChildZeroToSix
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 4
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild6TO23
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 4
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild24TO59
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 4
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChildZeroToSix
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 5
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild6TO23
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 5
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
+            SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild24TO59
+            FROM nutrition n1
+            JOIN member ON (n1.relationalid= member.caseid)
+            WHERE ( n1.child_nutrition = 5
+                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+            AND member.mem_district=district
+            AND member.mem_division=division
+            AND member.mem_upazilla=upazilla
+            AND member.mem_ward=ward
+            AND member.mem_union=unionname
+            AND member.mem_subunit=unit;
+
            INSERT INTO mis1report (id, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
                                          , fpLeftPillAndStartedOther
@@ -1968,10 +2346,10 @@
                                          , cnBreastFeedingWithin1Hour, cnBreastFeedingUntill6Month
                                          , cnComplementaryFoodForChild6TO23
                                          , cnComplementaryFoodForChild24to59
-                                         , cnReceivedMNP, cnContractedMAMChildZeroToSix
-                                         , cnContractedMAMChild6TO23, cnContractedMAMChild24to59
-                                         , cnContractedSAMChildZeroToSix, cnContractedSAMChild6TO23
-                                         , cnContractedSAMChild24to59
+                                         , cnReceivedMNP
+                                         , cnContractedMAMChildZeroToSix, cnContractedMAMChild6TO23
+                                         , cnContractedMAMChild24to59, cnContractedSAMChildZeroToSix
+                                         , cnContractedSAMChild6TO23, cnContractedSAMChild24to59
                                          , reporting_division, reporting_district
                                          , reporting_upazilla, reporting_ward, reporting_union
                                          , reporting_unit, reporting_month, reporting_year)
@@ -2064,10 +2442,10 @@
                                          , cnBreastFeedingWithin1Hour, cnBreastFeedingUntill6Month
                                          , cnComplementaryFoodForChild6TO23
                                          , cnComplementaryFoodForChild24to59
-                                         , cnReceivedMNP, cnContractedMAMChildZeroToSix
-                                         , cnContractedMAMChild6TO23, cnContractedMAMChild24to59
-                                         , cnContractedSAMChildZeroToSix, cnContractedSAMChild6TO23
-                                         , cnContractedSAMChild24to59
+                                         , cnReceivedMNP
+                                         , cnContractedMAMChildZeroToSix, cnContractedMAMChild6TO23
+                                         , cnContractedMAMChild24to59, cnContractedSAMChildZeroToSix
+                                         , cnContractedSAMChild6TO23, cnContractedSAMChild24to59
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentM, currentY);
        ELSE
