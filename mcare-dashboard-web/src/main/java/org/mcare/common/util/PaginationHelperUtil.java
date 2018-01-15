@@ -122,4 +122,88 @@ public class PaginationHelperUtil {
 		
 	}
 	
+	public static String getPaginationLint(HttpServletRequest request) {
+		String division = "";
+		int divId = 0;
+		String divisionLink = "";
+		if (request.getParameterMap().containsKey("division")) {
+			division = request.getParameter("division") == null ? "0?" : request.getParameter("division");
+			divId = PaginationHelperUtil.getParentId(division);
+			divisionLink = "&division=" + division;
+		}
+		String district = "";
+		int distId = 0;
+		String districtLink = "";
+		if (request.getParameterMap().containsKey("district")) {
+			district = request.getParameter("district") == null ? "0?" : request.getParameter("district");
+			distId = PaginationHelperUtil.getParentId(district);
+			districtLink = "&district=" + district;
+		}
+		String upazila = "";
+		int upzilaId = 0;
+		String upazilaLink = "";
+		if (request.getParameterMap().containsKey("upazila")) {
+			upazila = request.getParameter("upazila") == null ? "0?" : request.getParameter("upazila");
+			upzilaId = PaginationHelperUtil.getParentId(upazila);
+			upazilaLink = "&upazila=" + upazila;
+		}
+		String union = "";
+		int unionId = 0;
+		String unionLink = "";
+		if (request.getParameterMap().containsKey("union")) {
+			union = request.getParameter("union") == null ? "0?" : request.getParameter("union");
+			unionId = PaginationHelperUtil.getParentId(union);
+			unionLink = "&union=" + union;
+		}
+		
+		String ward = "";
+		int wardId = 0;
+		String wardLink = "";
+		if (request.getParameterMap().containsKey("ward")) {
+			ward = request.getParameter("ward") == null ? "0?" : request.getParameter("ward");
+			wardId = PaginationHelperUtil.getParentId(ward);
+			wardLink = "&ward=" + ward;
+		}
+		
+		String subunit = "";
+		int subunitId = 0;
+		String subunitLink = "";
+		if (request.getParameterMap().containsKey("subunit")) {
+			subunit = request.getParameter("subunit") == null ? "0?" : request.getParameter("subunit");
+			subunitId = PaginationHelperUtil.getParentId(subunit);
+			subunitLink = "&subunit=" + subunit;
+		}
+		String mauzapara = "";
+		int mauzaparaId = 0;
+		String mauzaparaLink = "";
+		if (request.getParameterMap().containsKey("mauzapara")) {
+			mauzapara = request.getParameter("mauzapara") == null ? "0?" : request.getParameter("mauzapara");
+			mauzaparaId = PaginationHelperUtil.getParentId(mauzapara);
+			mauzaparaLink = "&mauzapara=" + mauzapara;
+		}
+		
+		String provider = "";
+		String providerLink = "";
+		if (request.getParameterMap().containsKey("provider")) {
+			provider = request.getParameter("provider") == null ? "0?" : request.getParameter("provider");
+			providerLink = "&provider=" + provider;
+		}
+		
+		String name = "";
+		String nameLink = "";
+		if (request.getParameterMap().containsKey("name")) {
+			name = request.getParameter("name") == null ? "0?" : request.getParameter("name");
+			nameLink = "&name=" + name;
+		}
+		String search = "";
+		String searchLink = "";
+		if (request.getParameterMap().containsKey("search")) {
+			search = request.getParameter("search") == null ? "0?" : request.getParameter("search");
+			searchLink = "&search=" + search;
+		}
+		String paginationLink = divisionLink + districtLink + upazilaLink + unionLink + subunitLink + mauzaparaLink
+		        + providerLink + nameLink + searchLink;
+		return paginationLink;
+	}
+	
 }

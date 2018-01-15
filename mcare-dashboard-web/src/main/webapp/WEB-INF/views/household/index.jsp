@@ -1,4 +1,5 @@
- <%@page import="org.mcare.etl.entity.HouseholdEntity"%>
+ <%@page import="org.mcare.acl.entity.ProviderEntity"%>
+<%@page import="org.mcare.etl.entity.HouseholdEntity"%>
   <%@page import="org.mcare.common.util.PaginationHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -31,6 +32,7 @@
   </head>
   <%
     List<HouseholdEntity>  households = (List<HouseholdEntity>)session.getAttribute("dataList");
+    List<ProviderEntity>  providers = (List<ProviderEntity>)session.getAttribute("providers");
     List<Integer>  pageList = (List<Integer>)session.getAttribute("pageList");
     String offSet = request.getParameter("offSet");
     String division ="";
@@ -275,7 +277,7 @@
                    <div class="dataTables_length" id="dataTable_length"><label>Mauzapara 
                        <select id="mauzapara" name="mauzapara" aria-controls="dataTable" class="form-control form-control-sm">
                            <option value="0?">Please Select</option>
-<%                         if(mauzaparas!=null){ 
+ <%                         if(mauzaparas!=null){ 
                                   for (Object[] objects : mauzaparas) { 
                                        if(mauzaparaId ==((Integer) objects[1]).intValue()){ %>
                                         <option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>   
@@ -294,9 +296,17 @@
                    <div class="dataTables_length" id="dataTable_length"><label>Provider 
                        <select name="provider" aria-controls="dataTable" class="form-control form-control-sm">
                           <option value="0?">Please Select</option>
-                          <c:forEach items="${providers}" var="provider">    
-                              <option value="${provider.getProvider()}">${provider.getProvider()}</option>
-                          </c:forEach>
+  <%                         if(providers!=null){ 
+                                  for (ProviderEntity objects : providers) { 
+                                       if(provider.equalsIgnoreCase(objects.getProvider())){ %>
+                                        <option value="<%=objects.getProvider()%>?<%=objects.getProvider()%>" selected><%=objects.getProvider()%></option>   
+                                        <%   }else{
+                                    %>
+                                        <option value="<%=objects.getProvider()%>?<%=objects.getProvider()%>"><%=objects.getProvider()%></option>   <% 
+                                      }
+                                  }
+                              }
+   %> 
                        </select> </label>
                 
                    </div>
@@ -425,8 +435,7 @@
 		$("#mauzapara").html("");
   	});
   
-  	$("#district").change(function(event) {   
-		//event.preventDefault(); 
+  	$("#district").change(function(event) {
 		getLocationHierarchy("/location?id="+$("#district").val().split("?")[0],"upazila") ;
 		$("#union").html("");		
 		$("#ward").html("");

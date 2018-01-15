@@ -46,17 +46,14 @@ public class HouseholdController {
 	
 	@RequestMapping(value = "/household.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		
 		String search = "";
 		search = (String) request.getParameter("search");
-		
 		if (search != null) {
 			searchBuilder = paginationHelperUtil.setParams(request, session);
 		} else {
 			searchBuilder = searchBuilder.clear();
 		}
 		Class<HouseholdEntity> entityClassName = HouseholdEntity.class;
-		
 		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
 		return "household/index";
 	}

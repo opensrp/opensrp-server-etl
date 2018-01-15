@@ -62,7 +62,7 @@ public class PaginationUtil {
 		}
 		
 		session.setAttribute("parentData", parentData);
-		model.addAttribute("providers", providers);
+		session.setAttribute("providers", providers);
 		
 		/*when user click on any page number then this part will be executed. 
 		 * else part will be executed on load i.e first time on page*/

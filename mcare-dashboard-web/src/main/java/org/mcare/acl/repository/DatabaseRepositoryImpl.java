@@ -187,7 +187,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		Criteria criteria = session.createCriteria(entityClassName);
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
-		System.err.println("result:" + result + "offsetreal" + offsetreal);
 		List<T> products = null;
 		try {
 			products = (List<T>) criteria.list();
