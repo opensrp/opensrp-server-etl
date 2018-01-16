@@ -3,7 +3,7 @@
                                                 , upazilla VARCHAR(70), ward VARCHAR(70)
                                                 , unionname VARCHAR(70), unit VARCHAR(70)
                                                 , currentM VARCHAR(70), currentY VARCHAR(70))
-   RETURNS void AS $$
+   RETURNS integer AS $$
     declare
     /*Family Planning Report Variables*/
     fpOldPillUsage integer := 0;
@@ -220,6 +220,10 @@
     currentYear integer := currentY :: integer;
     prevMonth integer := currentMonth - 1;
     prevYear integer := currentYear;
+
+    child6Month interval :='6 months';
+    child24Months interval :='2 years';
+    child60Months interval :='5 years';
 
    BEGIN
         select count(*) from mis1report m1 into recordExists
@@ -2015,9 +2019,7 @@
             WHERE ( n1.mother_nutrition = 1
                     AND p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2032,9 +2034,7 @@
             WHERE ( n1.mother_nutrition = 1
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2049,9 +2049,7 @@
             WHERE ( n1.distrinuted_nutrition = 1
                     AND p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2066,9 +2064,7 @@
             WHERE ( n1.distrinuted_nutrition = 1
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2083,9 +2079,7 @@
             WHERE ( n1.mother_nutrition = 3
                     AND p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2100,9 +2094,7 @@
             WHERE ( n1.mother_nutrition = 3
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2117,9 +2109,7 @@
             WHERE ( n1.mother_nutrition = 2
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
-                    AND EXTRACT(MONTH FROM p1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM p1.today)=currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2158,7 +2148,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 3
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child6Month
+                    AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2171,7 +2163,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 3
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child24months
+                    AND age(member.member_birth_date) < child60months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2184,7 +2178,8 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 4
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) < child6Month)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2197,7 +2192,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 4
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child6Month
+                    AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2210,7 +2207,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 4
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child24Months
+                    AND age(member.member_birth_date) < child60Months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2223,7 +2222,8 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 5
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) < child6Month)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2236,7 +2236,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 5
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child6Month
+                    AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2249,7 +2251,9 @@
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition = 5
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND age(member.member_birth_date) >= child24Months
+                    AND age(member.member_birth_date) < child60Months)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2448,10 +2452,13 @@
                                          , cnContractedSAMChild6TO23, cnContractedSAMChild24to59
                                          , division, district, upazilla, ward, unionname
                                          , unit, currentM, currentY);
+
+       RAISE NOTICE '%: inserted row: %', now(), currval('mis1report_id_seq');
+
        ELSE
-        RAISE NOTICE '%: record already exist %', now(), recordExists;
+           RAISE NOTICE '%: record already exist %', now(), recordExists;
        END IF;
 
-       RAISE INFO 'prevMonth %', prevMonth;
+       RETURN currval('mis1report_id_seq');
    END;
    $$ LANGUAGE plpgsql;
