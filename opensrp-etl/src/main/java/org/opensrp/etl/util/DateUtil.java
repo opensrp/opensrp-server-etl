@@ -22,7 +22,7 @@ public class DateUtil {
 	public static Date getDateFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
 		
-		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
+		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty() && !"Invalid Date".equals(doc.getString(key)) &&  !"0".equals(doc.getString(key))) {
 			date = getYYYYMMDDFormat.parse(doc.getString(key));
 			return date;
 		}
@@ -31,7 +31,7 @@ public class DateUtil {
 	
 	public static Date getDateTimeFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
-		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
+		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty() && !"Invalid Date".equals(doc.getString(key)) &&  !"0".equals(doc.getString(key))) {
 			date = getYYYYMMDDHHMMSSFormat.parse(doc.getString(key));
 		}
 		return date;

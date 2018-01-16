@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.opensrp.etl.common.interfaces.DatabaseRepository;
 import org.opensrp.etl.entity.FilterCriteria;
+import org.opensrp.etl.report.MIS1Report;
 
 @Repository
 public class CommonDatabaseRepository implements DatabaseRepository {
@@ -189,7 +190,13 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			
 		}
 		@SuppressWarnings("unchecked")
-		List<T> result = criteria.list();
+		List<T> result = criteria.list();	
+		
+		if (result.size()<=0) {
+			int misId = generateMISReport(filtercriteria);
+			findById(misId, MIS1Report.class);
+		}
+		
 		session.close();
 		
 		return (List<T>) result;
@@ -207,6 +214,18 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
+	
+	public <T> T findById(int Id, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("id", Id));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		System.out.println("finding result:" + result.toString());
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
 	
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
 		System.out.println("finding caseId and today relationalId:" + relationalId);
@@ -256,6 +275,31 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		} // TODO Auto-generated method stub
 		
 		return actionExist;
+	}
+	
+	public int generateMISReport(FilterCriteria filter) {
+		Session session = sessionFactory.openSession();
+		int Id = 0;
+		try {
+			String hql = "SELECT create_mis_report('"
+					+ filter.getDivision()+"', '"
+							+ filter.getDistrict()+"', '"
+									+ filter.getUpazilla()+"', '"
+											+ filter.getUnionname()+"', '"
+													+ filter.getWard() +"', '"
+															+ filter.getUnit() +"', '"
+																	+ filter.getMonth() +"', '"
+																			+ filter.getYear() +"')";	
+			Query query = session.createQuery(hql);	
+			Id = (Integer) query.list().get(0);
+			session.close();
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		} // TODO Auto-generated method stub
+		
+		return Id;
 	}
 	
 	public int isEventExist(String baseEntityId, long version) {
