@@ -278,29 +278,36 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public int generateMISReport(FilterCriteria filter) {
-		Session session = sessionFactory.openSession();
-		int Id = 0;
-		try {
-			String hql = "SELECT create_mis_report('"
-					+ filter.getDivision()+"', '"
-							+ filter.getDistrict()+"', '"
-									+ filter.getUpazilla()+"', '"
-											+ filter.getUnionname()+"', '"
-													+ filter.getWard() +"', '"
-															+ filter.getUnit() +"', '"
-																	+ filter.getMonth() +"', '"
-																			+ filter.getYear() +"')";	
-			Query query = session.createQuery(hql);	
-			Id = (Integer) query.list().get(0);
-			session.close();
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} // TODO Auto-generated method stub
-		
-		return Id;
-	}
+        System.out.println("in generateMISReport " + filter.toString());
+        Session session = sessionFactory.openSession();
+        int Id = 0;
+        try {
+            String hql = "SELECT * FROM create_mis_report(:division,:district" +
+                    ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY) m";
+
+            Query query = session.createSQLQuery(hql)
+                    .setParameter("division", filter.getDivision())
+                    .setParameter("district", filter.getDistrict())
+                    .setParameter("upazilla", filter.getUpazilla())
+                    .setParameter("unionname", filter.getUnionname())
+                    .setParameter("ward", filter.getWard())
+                    .setParameter("unit", filter.getUnit())
+                    .setParameter("currentM", filter.getMonth())
+                    .setParameter("currentY", filter.getYear());
+
+            List results = query.list();
+
+            System.out.println("before ID: " + Id);
+            Id = (Integer) results.get(0);
+            System.out.println("after ID: " + Id);
+            session.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Id;
+    }
 	
 	public int isEventExist(String baseEntityId, long version) {
 		Session session = sessionFactory.openSession();
