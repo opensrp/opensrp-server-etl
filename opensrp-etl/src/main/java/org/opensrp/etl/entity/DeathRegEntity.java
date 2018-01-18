@@ -44,6 +44,7 @@ public class DeathRegEntity {
 
 	private Date start;
 
+	@Temporal(TemporalType.DATE)
 	private Date death_today;
 
 	private Date received_time;
@@ -52,6 +53,8 @@ public class DeathRegEntity {
 	private Date Visit_Date;
 
 	private Integer Deceased_Age_Group;
+
+    private Integer Deceased_Age;
 
     private String INSTANCEID;
 
@@ -64,8 +67,6 @@ public class DeathRegEntity {
 	private String Date_Death;
 
 	private String Gender_Deceased;
-
-	private String Deceased_Age;
 	
 	private String Reason_Death;
 
@@ -151,6 +152,7 @@ public class DeathRegEntity {
 		this.changes = changes;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getDeath_today() {
 		return death_today;
 	}
@@ -207,11 +209,11 @@ public class DeathRegEntity {
 		Deceased_Age_Group = deceased_Age_Group;
 	}
 
-	public String getDeceased_Age() {
+	public Integer getDeceased_Age() {
 		return Deceased_Age;
 	}
 
-	public void setDeceased_Age(String deceased_Age) {
+	public void setDeceased_Age(Integer deceased_Age) {
 		Deceased_Age = deceased_Age;
 	}
 

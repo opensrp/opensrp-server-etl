@@ -106,6 +106,7 @@ public class ChildEntity {
 
 	private String Detail_Diseases_Prob;
 
+	@Temporal(TemporalType.DATE)
 	private Date existing_Member_Birth_Date;
 
 	@Temporal(TemporalType.DATE)
@@ -309,6 +310,7 @@ public class ChildEntity {
 		this.clientVersion = clientVersion;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getExisting_Member_Birth_Date() {
 		return existing_Member_Birth_Date;
 	}

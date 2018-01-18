@@ -46,6 +46,8 @@ public class InjectableEntity {
 
 	private Date start;
 
+    private Date received_time;
+
 	@Temporal(TemporalType.DATE)
 	private Date Today;
 	
@@ -74,8 +76,6 @@ public class InjectableEntity {
 
 	@Temporal(TemporalType.DATE)
 	private Date injectable_Today;
-
-	private Date received_time;
 
 	@Temporal(TemporalType.DATE)
 	private Date Injection_Date;

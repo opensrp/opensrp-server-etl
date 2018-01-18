@@ -96,8 +96,10 @@ public class PSRFEntity {
 
 	private Long existing_ELCO_NID;
 
+	@Temporal(TemporalType.DATE)
 	private Date Next_Injection_Date;
 
+	@Temporal(TemporalType.DATE)
     private Date Permanent_M_Date;
 
 	@Temporal(TemporalType.DATE)
@@ -253,7 +255,7 @@ public class PSRFEntity {
 
     private String relationalid;
 
-   // private String INSTANCEID;
+    private String INSTANCEID;
 
     private String _id;
 
@@ -612,6 +614,7 @@ public class PSRFEntity {
 		Prolong_Delivery = prolong_Delivery;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getPermanent_M_Date() {
 		return Permanent_M_Date;
 	}
@@ -1134,13 +1137,13 @@ public class PSRFEntity {
 		return updated;
 	}
 
-//	public String getINSTANCEID() {
-//        return INSTANCEID;
-//    }
-//
-//    public void setINSTANCEID(String iNSTANCEID) {
-//        INSTANCEID = iNSTANCEID;
-//    }
+	public String getINSTANCEID() {
+        return INSTANCEID;
+    }
+
+    public void setINSTANCEID(String iNSTANCEID) {
+        INSTANCEID = iNSTANCEID;
+    }
 
     public String get_id() {
         return _id;

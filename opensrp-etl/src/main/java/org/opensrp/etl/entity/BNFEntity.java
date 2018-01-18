@@ -76,6 +76,8 @@ public class BNFEntity {
 
 	private Integer Calc_Age;
 
+    private Integer Delivery_Type;
+
     private String INSTANCEID;
 
     private String _id;
@@ -111,8 +113,6 @@ public class BNFEntity {
 	private String Mem_Union;
 
 	private String existing_GPS;
-
-	private String Delivery_Type;
 
 	private String existing_EDD;
 
@@ -415,11 +415,11 @@ public class BNFEntity {
 		this.existing_GPS = existing_GPS;
 	}
 
-	public String getDelivery_Type() {
+	public Integer getDelivery_Type() {
 		return Delivery_Type;
 	}
 
-	public void setDelivery_Type(String delivery_Type) {
+	public void setDelivery_Type(Integer delivery_Type) {
 		Delivery_Type = delivery_Type;
 	}
 

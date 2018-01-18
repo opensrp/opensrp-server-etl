@@ -14,11 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.opensrp.etl.common.interfaces.DatabaseRepository;
 import org.opensrp.etl.entity.FilterCriteria;
-import org.opensrp.etl.report.MIS1Report;
+import org.opensrp.etl.entity.MIS1ReportEntity;
 
 @Repository
 public class CommonDatabaseRepository implements DatabaseRepository {
-	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -191,15 +190,16 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		}
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();	
-		
+		System.out.println("result: " + result.toString());
+		session.close();
+
 		if (result.size()<=0) {
 			int misId = generateMISReport(filtercriteria);
-			findById(misId, MIS1Report.class);
+			result = findById(misId, MIS1ReportEntity.class);
+			System.out.println("result: " + result.toString());
 		}
 		
-		session.close();
-		
-		return (List<T>) result;
+		return result;
 	}
 	
 	@Override
@@ -211,19 +211,17 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
-	public <T> T findById(int Id, Class<?> className) {
+	public <T> List<T> findById(int Id, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("id", Id));
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		System.out.println("finding result:" + result.toString());
-		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+		return  (result.size() > 0 ? result : null);
 	}
 	
 	
@@ -236,7 +234,6 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
@@ -249,7 +246,6 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		//System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
@@ -278,11 +274,10 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public int generateMISReport(FilterCriteria filter) {
-        System.out.println("in generateMISReport " + filter.toString());
         Session session = sessionFactory.openSession();
-        int Id = 0;
+        int Id = -1;
         try {
-            String hql = "SELECT * FROM create_mis_report(:division,:district" +
+            String hql = "SELECT * FROM generate_mis_report(:division,:district" +
                     ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY) m";
 
             Query query = session.createSQLQuery(hql)
@@ -296,10 +291,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
                     .setParameter("currentY", filter.getYear());
 
             List results = query.list();
-
-            System.out.println("before ID: " + Id);
             Id = (Integer) results.get(0);
-            System.out.println("after ID: " + Id);
             session.close();
         }
         catch (Exception e) {

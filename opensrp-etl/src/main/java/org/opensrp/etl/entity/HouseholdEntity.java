@@ -36,7 +36,17 @@ public class HouseholdEntity {
 	private String INSTANCEID;
 	
 	private String PROVIDERID;
-	
+
+    private Integer Final_ELCO;
+
+    private Integer HoH_Age;
+
+    private Integer HoH_Gender;
+
+    private Integer Member_Number;
+
+    private Integer No_Of_Couples;
+
 	private String existing_location;
 	
 	private String existing_Country;
@@ -65,9 +75,7 @@ public class HouseholdEntity {
 	private String Village_Name;
 	
 	private String GoB_HHID;
-	
-	private String No_Of_Couples;
-	
+
 	private String Country;
 	
 	private String Division;
@@ -90,11 +98,7 @@ public class HouseholdEntity {
 	private String HoH_F_Name;
 	
 	private String HoH_L_Name;
-	
-	private String HoH_Gender;
-	
-	private String HoH_Age;
-	
+
 	@Column(name = "dob")
 	@Temporal(TemporalType.DATE)
 	private Date Calc_HoH_Dob_Confirm;
@@ -106,13 +110,9 @@ public class HouseholdEntity {
 	private String HoH_BRID;
 	
 	private String HoH_Mobile_number;
-	
-	private String Member_Number;
-	
+
 	private String MWRA;
-	
-	private String Final_ELCO;
-	
+
 	private String HH_Status;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -259,11 +259,11 @@ public class HouseholdEntity {
 		End = end;
 	}
 	
-	public String getNo_Of_Couples() {
+	public Integer getNo_Of_Couples() {
 		return No_Of_Couples;
 	}
 	
-	public void setNo_Of_Couples(String no_Of_Couples) {
+	public void setNo_Of_Couples(Integer no_Of_Couples) {
 		No_Of_Couples = no_Of_Couples;
 	}
 	
@@ -355,19 +355,19 @@ public class HouseholdEntity {
 		HoH_L_Name = hoH_L_Name;
 	}
 	
-	public String getHoH_Gender() {
+	public Integer getHoH_Gender() {
 		return HoH_Gender;
 	}
 	
-	public void setHoH_Gender(String hoH_Gender) {
+	public void setHoH_Gender(Integer hoH_Gender) {
 		HoH_Gender = hoH_Gender;
 	}
 	
-	public String getHoH_Age() {
+	public Integer getHoH_Age() {
 		return HoH_Age;
 	}
 	
-	public void setHoH_Age(String hoH_Age) {
+	public void setHoH_Age(Integer hoH_Age) {
 		HoH_Age = hoH_Age;
 	}
 	
@@ -412,11 +412,11 @@ public class HouseholdEntity {
 		HoH_Mobile_number = hoH_Mobile_number;
 	}
 	
-	public String getMember_Number() {
+	public Integer getMember_Number() {
 		return Member_Number;
 	}
 	
-	public void setMember_Number(String member_Number) {
+	public void setMember_Number(Integer member_Number) {
 		Member_Number = member_Number;
 	}
 	
@@ -428,11 +428,11 @@ public class HouseholdEntity {
 		MWRA = mWRA;
 	}
 	
-	public String getFinal_ELCO() {
+	public Integer getFinal_ELCO() {
 		return Final_ELCO;
 	}
 	
-	public void setFinal_ELCO(String final_ELCO) {
+	public void setFinal_ELCO(Integer final_ELCO) {
 		Final_ELCO = final_ELCO;
 	}
 	

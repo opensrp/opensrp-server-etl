@@ -86,52 +86,52 @@ public class MIS1ReportEntity {
         this.nutritionReport = nutritionReport;
     }
 
-    public String getDivision() {
+    public String getReporting_division() {
         return reporting_division;
     }
 
-    public void setDivision(String division) {
-        this.reporting_division = division;
+    public void setReporting_division(String reporting_division) {
+        this.reporting_division = reporting_division;
     }
 
-    public String getDistrict() {
+    public String getReporting_district() {
         return reporting_district;
     }
 
-    public void setDistrict(String district) {
-        this.reporting_district = district;
+    public void setReporting_district(String reporting_district) {
+        this.reporting_district = reporting_district;
     }
 
-    public String getUpazilla() {
+    public String getReporting_upazilla() {
         return reporting_upazilla;
     }
 
-    public void setUpazilla(String upazilla) {
-        this.reporting_upazilla = upazilla;
+    public void setReporting_upazilla(String reporting_upazilla) {
+        this.reporting_upazilla = reporting_upazilla;
     }
 
-    public String getWard() {
+    public String getReporting_ward() {
         return reporting_ward;
     }
 
-    public void setWard(String ward) {
-        this.reporting_ward = ward;
+    public void setReporting_ward(String reporting_ward) {
+        this.reporting_ward = reporting_ward;
     }
 
-    public String getGeo_union() {
+    public String getReporting_union() {
         return reporting_union;
     }
 
-    public void setGeo_union(String geo_union) {
-        this.reporting_union = geo_union;
+    public void setReporting_union(String reporting_union) {
+        this.reporting_union = reporting_union;
     }
 
-    public String getUnit() {
+    public String getReporting_unit() {
         return reporting_unit;
     }
 
-    public void setUnit(String unit) {
-        this.reporting_unit = unit;
+    public void setReporting_unit(String reporting_unit) {
+        this.reporting_unit = reporting_unit;
     }
 
     public String getReporting_year() {
@@ -149,5 +149,4 @@ public class MIS1ReportEntity {
     public void setReporting_month(String reporting_month) {
         this.reporting_month = reporting_month;
     }
-
 }

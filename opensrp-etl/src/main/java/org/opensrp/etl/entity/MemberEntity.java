@@ -48,7 +48,9 @@ public class MemberEntity {
     @Column(name = "end_time")
     private Date End;
 
-    private String Member_GoB_HHID;
+    private Integer Member_Age;
+
+    private Integer Member_Gender;
 
     @Temporal(TemporalType.DATE)
     private Date Member_Reg_Date;
@@ -60,22 +62,20 @@ public class MemberEntity {
     @Temporal(TemporalType.DATE)
     private Date Member_Birth_Date;
 
-    private String Member_Age;
-
-    private String Calc_Age;
+    private Integer Calc_Age;
 
     private Integer ELCO;
 
     @Temporal(TemporalType.DATE)
     private Date Calc_Dob_Confirm;
 
-    private String Calc_Age_Confirm;
+    private Integer Calc_Age_Confirm;
+
+    private String Member_GoB_HHID;
 
     private String Birth_Date_Note;
 
     private String Note_age;
-
-    private String Member_Gender;
 
     private String Mem_ID_Type;
 
@@ -282,19 +282,19 @@ public class MemberEntity {
         Member_Birth_Date = member_Birth_Date;
     }
 
-    public String getMember_Age() {
+    public Integer getMember_Age() {
         return Member_Age;
     }
 
-    public void setMember_Age(String member_Age) {
+    public void setMember_Age(Integer member_Age) {
         Member_Age = member_Age;
     }
 
-    public String getCalc_Age() {
+    public Integer getCalc_Age() {
         return Calc_Age;
     }
 
-    public void setCalc_Age(String calc_Age) {
+    public void setCalc_Age(Integer calc_Age) {
         Calc_Age = calc_Age;
     }
 
@@ -307,11 +307,11 @@ public class MemberEntity {
         Calc_Dob_Confirm = calc_Dob_Confirm;
     }
 
-    public String getCalc_Age_Confirm() {
+    public Integer getCalc_Age_Confirm() {
         return Calc_Age_Confirm;
     }
 
-    public void setCalc_Age_Confirm(String calc_Age_Confirm) {
+    public void setCalc_Age_Confirm(Integer calc_Age_Confirm) {
         Calc_Age_Confirm = calc_Age_Confirm;
     }
 
@@ -331,11 +331,11 @@ public class MemberEntity {
         Note_age = note_age;
     }
 
-    public String getMember_Gender() {
+    public Integer getMember_Gender() {
         return Member_Gender;
     }
 
-    public void setMember_Gender(String member_Gender) {
+    public void setMember_Gender(Integer member_Gender) {
         Member_Gender = member_Gender;
     }
 

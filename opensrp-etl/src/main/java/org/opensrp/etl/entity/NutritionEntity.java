@@ -33,6 +33,8 @@ public class NutritionEntity {
 
 	private Date start;
 
+    private Date received_time;
+
 	private Long serverVersion;
 
 	private String doc_id;
@@ -66,9 +68,7 @@ public class NutritionEntity {
 	private String existing_Union;
 	
 	private String existing_Child_Father;
-	
-	private Date received_time;
-	
+
 	private String existing_Mem_F_Name;
 	
 	private String existing_GoB_HHID;

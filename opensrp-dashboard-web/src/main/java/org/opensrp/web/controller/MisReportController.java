@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.opensrp.etl.entity.FilterCriteria;
 import org.opensrp.etl.entity.MIS1ReportEntity;
-import org.opensrp.etl.report.MIS1Report;
 import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ public class MisReportController {
 
 	@ResponseBody
 	@RequestMapping("/misreport")
-	public List<MIS1Report> getMIS1Report(FilterCriteria filterCriteria) {
+	public List<MIS1ReportEntity> getMIS1Report(FilterCriteria filterCriteria) {
 		return commonDatabaseRepository.findAllByCriteria(MIS1ReportEntity.class, filterCriteria);
 
 	}
