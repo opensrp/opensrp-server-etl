@@ -1,7 +1,7 @@
 -- Procedure for generating misreport
-   CREATE OR REPLACE FUNCTION create_mis_report(division VARCHAR(70), district VARCHAR(70)
-                                                , upazilla VARCHAR(70), ward VARCHAR(70)
-                                                , unionname VARCHAR(70), unit VARCHAR(70)
+   CREATE OR REPLACE FUNCTION generate_mis_report(division VARCHAR(70), district VARCHAR(70)
+                                                , upazilla VARCHAR(70), unionname VARCHAR(70)
+                                                , ward VARCHAR(70), unit VARCHAR(70)
                                                 , currentM VARCHAR(70), currentY VARCHAR(70))
    RETURNS integer AS $$
     declare
@@ -224,6 +224,8 @@
     child6Month interval :='6 months';
     child24Months interval :='2 years';
     child60Months interval :='5 years';
+
+    current_mis1report_seq_id integer := 0;
 
    BEGIN
         select count(*) from mis1report m1 into recordExists
@@ -1287,7 +1289,7 @@
             SELECT COUNT(distinct b1.relationalid) INTO mcNormalBirthAtHospitalOrClinic FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
             WHERE (b1.where_delivered in (2,3,4,5,6,7)
-                    AND b1.Delivery_Type = '1'
+                    AND b1.Delivery_Type = 1
                     AND EXTRACT(MONTH FROM b1.today)=currentMonth
                     AND EXTRACT(YEAR FROM b1.today)=currentYear)
             AND member.mem_district=district
@@ -1300,7 +1302,7 @@
             SELECT COUNT(distinct b1.relationalid) INTO mcCesareanBirthAtHospitalOrClinic FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
             WHERE (b1.where_delivered in (2,3,4,5,6,7)
-                    AND b1.Delivery_Type = '2'
+                    AND b1.Delivery_Type = 2
                     AND EXTRACT(MONTH FROM b1.today)=currentMonth
                     AND EXTRACT(YEAR FROM b1.today)=currentYear)
             AND member.mem_district=district
@@ -2459,6 +2461,7 @@
            RAISE NOTICE '%: record already exist %', now(), recordExists;
        END IF;
 
-       RETURN currval('mis1report_id_seq');
+       SELECT last_value into current_mis1report_seq_id FROM mis1report_id_seq;
+       RETURN current_mis1report_seq_id;
    END;
    $$ LANGUAGE plpgsql;
