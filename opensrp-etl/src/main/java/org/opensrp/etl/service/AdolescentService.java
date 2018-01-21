@@ -6,58 +6,59 @@ import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.AdolescentEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.AdolescentRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AdolescentService implements RegisterService<AdolescentEntity>{
+public class AdolescentService implements RegisterService<AdolescentEntity> {
 
-	@Autowired
-	private AdolescentRepository adolescentRepository;
+    private static final String ADOLESCENT_TODAY = "adolescent_today";
+    @Autowired
+    private CommonDatabaseRepository commonDatabaseRepository;
 
-	public AdolescentService() {
-		// TODO Auto-generated constructor stub
-	}
+    public AdolescentService() {
+    }
 
-	@Transactional
-	@Override
-	public void save(AdolescentEntity adolescentEntity) {
-		AdolescentEntity existingadolescentEntity = findByCaseIdAndToday(adolescentEntity.getRelationalid(),
-				adolescentEntity.getToday());
-		if (existingadolescentEntity == null) {
-			adolescentRepository.save(adolescentEntity);
-		} else {
-			if (delete(existingadolescentEntity))
-				adolescentRepository.save(adolescentEntity);
-		}
-		
-	}
+    @Transactional
+    @Override
+    public void save(AdolescentEntity adolescentEntity) {
+        AdolescentEntity existingadolescentEntity = findByCaseIdAndToday(
+                adolescentEntity.getRelationalid(),
+                adolescentEntity.getAdolescent_today());
+        if (existingadolescentEntity == null) {
+            commonDatabaseRepository.save(adolescentEntity);
+        } else {
+            if (delete(existingadolescentEntity))
+                commonDatabaseRepository.save(adolescentEntity);
+        }
 
-	private AdolescentEntity findByCaseIdAndToday(String relationalid,
-			Date today) {
-		return adolescentRepository.findByCaseIdAndToday(relationalid, today);
-	}
+    }
 
-	@Override
-	public boolean delete(AdolescentEntity adolescentEntity) {
-		return adolescentRepository.delete(adolescentEntity);
-	}
+    @Transactional
+    @Override
+    public boolean delete(AdolescentEntity adolescentEntity) {
+        return commonDatabaseRepository.delete(adolescentEntity);
+    }
 
-	@Override
-	public void update(AdolescentEntity t) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Transactional
+    @Override
+    public void update(AdolescentEntity adolescentEntity) {
+        commonDatabaseRepository.update(adolescentEntity);
+    }
 
-	@Override
-	public AdolescentEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public AdolescentEntity findById(int id) {
+        return null;
+    }
 
-	@Override
-	public AdolescentEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public AdolescentEntity findByCaseId(String caseId) {
+        return null;
+    }
 
+    @Transactional
+    private AdolescentEntity findByCaseIdAndToday(String relationalid,
+            Date today) {
+        return commonDatabaseRepository.findByCaseIdAndToday(ADOLESCENT_TODAY,
+                relationalid, today, AdolescentEntity.class);
+    }
 }

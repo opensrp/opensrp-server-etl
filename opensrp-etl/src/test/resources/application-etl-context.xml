@@ -88,7 +88,6 @@
 <bean name="ancRepository" class="org.opensrp.etl.repository.ANCRepository"/>
 <bean name="pncRepository" class="org.opensrp.etl.repository.PNCRepository"/>
 <bean name="bnfRepository" class="org.opensrp.etl.repository.BNFRepository"/>
-<bean name="childRepository" class="org.opensrp.etl.repository.ChildRepository"/>
 <bean name="actionRepository" class="org.opensrp.etl.repository.ActionRepository"/>
 <bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
 <bean name="adolescentRepository" class="org.opensrp.etl.repository.AdolescentRepository"/>

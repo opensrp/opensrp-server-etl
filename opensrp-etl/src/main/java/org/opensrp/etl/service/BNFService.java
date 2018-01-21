@@ -4,61 +4,55 @@ import java.util.Date;
 import javax.transaction.Transactional;
 import org.opensrp.etl.entity.BNFEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.BNFRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BNFService implements RegisterService<BNFEntity> {
-	
-	@Autowired
-	private BNFRepository bnfRepository;
-	
-	public BNFService() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public void setBnfRepository(BNFRepository bnfRepository) {
-		this.bnfRepository = bnfRepository;
-	}
-	
-	@Transactional
-	@Override
-	public void save(BNFEntity bnfEntity) {
-		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnfEntity.getRelationalid(),
-				bnfEntity.getToday());
-		if (existingbnfEntity == null) {
-			bnfRepository.save(bnfEntity);
-		} else {
-			if (delete(existingbnfEntity))
-				bnfRepository.save(bnfEntity);
-		}
-	}
-	
-	@Transactional
-	@Override
-	public boolean delete(BNFEntity bnffEntity) {
-		return bnfRepository.delete(bnffEntity);
-	}
-	
-	@Override
-	public void update(BNFEntity t) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public BNFEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public BNFEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Transactional
-	public BNFEntity findByCaseIdAndToday(String caseId, Date today) {
-		return bnfRepository.findByCaseIdAndToday(caseId, today);
-	}
+
+    @Autowired
+    private CommonDatabaseRepository commonDatabaseRepository;
+
+    public BNFService() {
+    }
+
+    @Transactional
+    @Override
+    public void save(BNFEntity bnfEntity) {
+        BNFEntity existingbnfEntity = findByCaseIdAndToday(
+                bnfEntity.getRelationalid(), bnfEntity.getToday());
+        if (existingbnfEntity == null) {
+            commonDatabaseRepository.save(bnfEntity);
+        } else {
+            if (delete(existingbnfEntity))
+                commonDatabaseRepository.save(bnfEntity);
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean delete(BNFEntity bnfEntity) {
+        return commonDatabaseRepository.delete(bnfEntity);
+    }
+
+    @Transactional
+    @Override
+    public void update(BNFEntity bnfEntity) {
+        commonDatabaseRepository.update(bnfEntity);
+    }
+
+    @Override
+    public BNFEntity findById(int id) {
+        return null;
+    }
+
+    @Override
+    public BNFEntity findByCaseId(String caseId) {
+        return null;
+    }
+
+    @Transactional
+    public BNFEntity findByCaseIdAndToday(String caseId, Date today) {
+        return commonDatabaseRepository.findByCaseIdAndToday(caseId, today,
+                BNFEntity.class);
+    }
 }

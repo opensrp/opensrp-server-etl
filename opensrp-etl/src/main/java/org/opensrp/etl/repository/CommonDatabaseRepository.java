@@ -10,14 +10,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.opensrp.etl.common.interfaces.DatabaseRepository;
 import org.opensrp.etl.entity.FilterCriteria;
 import org.opensrp.etl.entity.MIS1ReportEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class CommonDatabaseRepository implements DatabaseRepository {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -136,64 +137,64 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		boolean hasPrerequisite = false;
 		if (filtercriteria != null) {
 			System.out.println("FilterCriteria: " + filtercriteria.toString());
-			if (!filtercriteria.getYear().isEmpty() || filtercriteria.getYear()!=null) {
-				 criteria.add(Restrictions.eq("reporting_year", filtercriteria.getYear()));
-				 System.out.println("set criteria year");
-				}
+			if (!filtercriteria.getYear().isEmpty() || filtercriteria.getYear() != null) {
+				criteria.add(Restrictions.eq("reporting_year", filtercriteria.getYear()));
+				System.out.println("set criteria year");
+			}
 			
-			if (!filtercriteria.getMonth().isEmpty() || filtercriteria.getMonth()!=null) {
-				 criteria.add(Restrictions.eq("reporting_month", filtercriteria.getMonth()));
-				 System.out.println("set criteria month");
-				}
-			if (filtercriteria.getDivision()!=null && !filtercriteria.getDivision().isEmpty() ) {
-				 criteria.add(Restrictions.eq("reporting_division", filtercriteria.getDivision()));
-				 System.out.println("set criteria division");
-				 hasPrerequisite = true;
-				}
-			if (hasPrerequisite && (filtercriteria.getDistrict()!=null && !filtercriteria.getDistrict().isEmpty() )) {
-				 criteria.add(Restrictions.eq("reporting_district", filtercriteria.getDistrict()));
-				 System.out.println("set criteria district");
-				 hasPrerequisite = true;
-				}else {
-					hasPrerequisite = false;
-				}
-			if (hasPrerequisite && (filtercriteria.getUpazilla()!=null && !filtercriteria.getUpazilla().isEmpty())) {
-				 criteria.add(Restrictions.eq("reporting_upazilla", filtercriteria.getUpazilla()));
-				 System.out.println("set criteria upazilla");
-				 hasPrerequisite = true;
-				}else {
-					hasPrerequisite = false;
-				}
+			if (!filtercriteria.getMonth().isEmpty() || filtercriteria.getMonth() != null) {
+				criteria.add(Restrictions.eq("reporting_month", filtercriteria.getMonth()));
+				System.out.println("set criteria month");
+			}
+			if (filtercriteria.getDivision() != null && !filtercriteria.getDivision().isEmpty()) {
+				criteria.add(Restrictions.eq("reporting_division", filtercriteria.getDivision()));
+				System.out.println("set criteria division");
+				hasPrerequisite = true;
+			}
+			if (hasPrerequisite && (filtercriteria.getDistrict() != null && !filtercriteria.getDistrict().isEmpty())) {
+				criteria.add(Restrictions.eq("reporting_district", filtercriteria.getDistrict()));
+				System.out.println("set criteria district");
+				hasPrerequisite = true;
+			} else {
+				hasPrerequisite = false;
+			}
+			if (hasPrerequisite && (filtercriteria.getUpazilla() != null && !filtercriteria.getUpazilla().isEmpty())) {
+				criteria.add(Restrictions.eq("reporting_upazilla", filtercriteria.getUpazilla()));
+				System.out.println("set criteria upazilla");
+				hasPrerequisite = true;
+			} else {
+				hasPrerequisite = false;
+			}
 			
-			if (hasPrerequisite && (filtercriteria.getUnionname()!=null && !filtercriteria.getUnionname().isEmpty())) {
-				 criteria.add(Restrictions.eq("reporting_union", filtercriteria.getUnionname()));
-				 System.out.println("set criteria unionname");
-				 hasPrerequisite = true;
-				}else {
-					hasPrerequisite = false;
-				}
+			if (hasPrerequisite && (filtercriteria.getUnionname() != null && !filtercriteria.getUnionname().isEmpty())) {
+				criteria.add(Restrictions.eq("reporting_union", filtercriteria.getUnionname()));
+				System.out.println("set criteria unionname");
+				hasPrerequisite = true;
+			} else {
+				hasPrerequisite = false;
+			}
 			
-			if (hasPrerequisite && (filtercriteria.getWard()!=null && !filtercriteria.getWard().isEmpty())) {
-				 criteria.add(Restrictions.eq("reporting_ward", filtercriteria.getWard()));
-				 System.out.println("set criteria ward");
-				 hasPrerequisite = true;
-				}else {
-					hasPrerequisite = false;
-				}
+			if (hasPrerequisite && (filtercriteria.getWard() != null && !filtercriteria.getWard().isEmpty())) {
+				criteria.add(Restrictions.eq("reporting_ward", filtercriteria.getWard()));
+				System.out.println("set criteria ward");
+				hasPrerequisite = true;
+			} else {
+				hasPrerequisite = false;
+			}
 			
-			if (hasPrerequisite && (filtercriteria.getUnit()!=null && !filtercriteria.getUnit().isEmpty())) {
-				 criteria.add(Restrictions.eq("reporting_unit", filtercriteria.getUnit()));
-				 System.out.println("set criteria unit");
-				 hasPrerequisite = true;
-				}
+			if (hasPrerequisite && (filtercriteria.getUnit() != null && !filtercriteria.getUnit().isEmpty())) {
+				criteria.add(Restrictions.eq("reporting_unit", filtercriteria.getUnit()));
+				System.out.println("set criteria unit");
+				hasPrerequisite = true;
+			}
 			
 		}
 		@SuppressWarnings("unchecked")
-		List<T> result = criteria.list();	
+		List<T> result = criteria.list();
 		System.out.println("result: " + result.toString());
 		session.close();
-
-		if (result.size()<=0) {
+		
+		if (result.size() <= 0) {
 			int misId = generateMISReport(filtercriteria);
 			result = findById(misId, MIS1ReportEntity.class);
 			System.out.println("result: " + result.toString());
@@ -221,16 +222,36 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		return  (result.size() > 0 ? result : null);
+		return (result.size() > 0 ? result : null);
 	}
 	
-	
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
-		System.out.println("finding caseId and today relationalId:" + relationalId);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
-		criteria.add(Restrictions.eq("relationalId", relationalId));
-		criteria.add(Restrictions.eq("today", today));
+		criteria.add(Restrictions.eq("relationalid", relationalId));
+		criteria.add(Restrictions.eq("Today", today));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
+	public <T> T findByCaseIdAndToday(String keyName, String relationalId, Date today, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("relationalid", relationalId));
+		criteria.add(Restrictions.eq(keyName, today));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
+	public <T> T findByCaseIdAndName(String keyName, String relationalId, String name, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("relationalid", relationalId));
+		criteria.add(Restrictions.eq(keyName, name));
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
@@ -238,10 +259,20 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public <T> T findByBaseEntityIdAndServerVersion(String baseEntityId, long serverVersion, Class<?> className) {
-		System.out.println("finding by baseEntityId and serverVersion:" + baseEntityId);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("baseEntityId", baseEntityId));
+		criteria.add(Restrictions.eq("serverVersion", serverVersion));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
+	public <T> T findByRelationalIdAndServerVersion(String relationalid, long serverVersion, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("relationalid", relationalid));
 		criteria.add(Restrictions.eq("serverVersion", serverVersion));
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
@@ -254,8 +285,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		int actionExist = 0;
 		try {
 			String hql = "select A.baseEntityId from " + "ActionEntity A " + "where A.baseEntityId = :base_entity_id "
-			        + "and A.visitCode = :visit_code " 
-			+ "and A.alertStatus = :alert_status "
+			        + "and A.visitCode = :visit_code " + "and A.alertStatus = :alert_status "
 			        + " and A.startDate = :start_date";
 			Query query = session.createQuery(hql);
 			query.setParameter("base_entity_id", baseEntityId);
@@ -274,39 +304,35 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public int generateMISReport(FilterCriteria filter) {
-        Session session = sessionFactory.openSession();
-        int Id = -1;
-        try {
-            String hql = "SELECT * FROM generate_mis_report(:division,:district" +
-                    ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY) m";
-
-            Query query = session.createSQLQuery(hql)
-                    .setParameter("division", filter.getDivision())
-                    .setParameter("district", filter.getDistrict())
-                    .setParameter("upazilla", filter.getUpazilla())
-                    .setParameter("unionname", filter.getUnionname())
-                    .setParameter("ward", filter.getWard())
-                    .setParameter("unit", filter.getUnit())
-                    .setParameter("currentM", filter.getMonth())
-                    .setParameter("currentY", filter.getYear());
-
-            List results = query.list();
-            Id = (Integer) results.get(0);
-            session.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return Id;
-    }
+		Session session = sessionFactory.openSession();
+		int Id = -1;
+		try {
+			String hql = "SELECT * FROM generate_mis_report(:division,:district"
+			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY) m";
+			
+			Query query = session.createSQLQuery(hql).setParameter("division", filter.getDivision())
+			        .setParameter("district", filter.getDistrict()).setParameter("upazilla", filter.getUpazilla())
+			        .setParameter("unionname", filter.getUnionname()).setParameter("ward", filter.getWard())
+			        .setParameter("unit", filter.getUnit()).setParameter("currentM", filter.getMonth())
+			        .setParameter("currentY", filter.getYear());
+			
+			List results = query.list();
+			Id = (Integer) results.get(0);
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return Id;
+	}
 	
 	public int isEventExist(String baseEntityId, long version) {
 		Session session = sessionFactory.openSession();
 		int eventExist = 0;
 		try {
 			String hql = "select E.baseEntityId from " + "EventEntity E " + "where E.baseEntityId = :base_entity_id "
-					+ "and E.version = :version ";
+			        + "and E.version = :version ";
 			Query query = session.createQuery(hql);
 			query.setParameter("base_entity_id", baseEntityId);
 			query.setParameter("version", version);

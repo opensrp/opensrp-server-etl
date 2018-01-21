@@ -4,57 +4,59 @@ import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.ANCEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.ANCRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ANCService implements RegisterService<ANCEntity> {
-	
-	@Autowired
-	private ANCRepository ancRepository;
-	
-	public ANCService() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Transactional
-	@Override
-	public void save(ANCEntity ancEntity) {
-		ANCEntity existingancEntity = findByCaseIdAndName(ancEntity.getRelationalid(), ancEntity.getAncName());
-		if (existingancEntity == null) {
-			ancRepository.save(ancEntity);
-		} else {
-			if (delete(existingancEntity))
-				ancRepository.save(ancEntity);
-		}
-		
-	}
-	
-	@Transactional
-	@Override
-	public boolean delete(ANCEntity ancEntity) {
-		return ancRepository.delete(ancEntity);
-	}
-	
-	@Override
-	public void update(ANCEntity t) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public ANCEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Transactional
-	@Override
-	public ANCEntity findByCaseId(String caseId) {
-		return ancRepository.findByCaseId(caseId);
-	}
-	
-	@Transactional
-	public ANCEntity findByCaseIdAndName(String relationalId, String name) {
-		return ancRepository.findByCaseIdAndName(relationalId, name);
-	}
+
+    private static final String ANC_NAME = "ancName";
+    @Autowired
+    private CommonDatabaseRepository commonDatabaseRepository;
+
+    public ANCService() {
+    }
+
+    @Transactional
+    @Override
+    public void save(ANCEntity ancEntity) {
+        ANCEntity existingancEntity = findByCaseIdAndName(
+                ancEntity.getRelationalid(), ancEntity.getAncName());
+        if (existingancEntity == null) {
+            commonDatabaseRepository.save(ancEntity);
+        } else {
+            if (delete(existingancEntity))
+                commonDatabaseRepository.save(ancEntity);
+        }
+
+    }
+
+    @Transactional
+    @Override
+    public boolean delete(ANCEntity ancEntity) {
+        return commonDatabaseRepository.delete(ancEntity);
+    }
+
+    @Transactional
+    @Override
+    public void update(ANCEntity ancEntity) {
+        commonDatabaseRepository.update(ancEntity);
+
+    }
+
+    @Override
+    public ANCEntity findById(int id) {
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public ANCEntity findByCaseId(String caseId) {
+        return null;
+    }
+
+    @Transactional
+    public ANCEntity findByCaseIdAndName(String relationalId, String name) {
+        return commonDatabaseRepository.findByCaseIdAndName(ANC_NAME,
+                relationalId, name, ANCEntity.class);
+    }
 }

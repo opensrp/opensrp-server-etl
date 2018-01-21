@@ -6,60 +6,56 @@ import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.DeathRegEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.DeathRegRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DeathRegService implements RegisterService<DeathRegEntity> {
-
+	
+	private static final String DEATH_TODAY = "death_today";
 	@Autowired
-	private DeathRegRepository deathRegRepository;
-
+	private CommonDatabaseRepository commonDatabaseRepository;
+	
 	public DeathRegService() {
-		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Transactional
 	@Override
 	public void save(DeathRegEntity deathRegEntity) {
 		DeathRegEntity existingDeathRegEntity = findByCaseIdAndToday(deathRegEntity.getRelationalid(),
-				deathRegEntity.getDeath_today());
-
+		    deathRegEntity.getDeath_today());
+		
 		if (existingDeathRegEntity == null) {
-			deathRegRepository.save(deathRegEntity);
+			commonDatabaseRepository.save(deathRegEntity);
 		} else {
 			if (delete(existingDeathRegEntity))
-				deathRegRepository.save(deathRegEntity);
+				commonDatabaseRepository.save(deathRegEntity);
 		}
 	}
-
+	
 	@Transactional
 	@Override
-	public boolean delete(DeathRegEntity t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(DeathRegEntity deathRegEntity) {
+		return commonDatabaseRepository.delete(deathRegEntity);
 	}
-
+	
 	@Transactional
 	@Override
-	public void update(DeathRegEntity t) {
-		// TODO Auto-generated method stub
-		
+	public void update(DeathRegEntity deathRegEntity) {
+		commonDatabaseRepository.update(deathRegEntity);
 	}
-
+	
 	@Override
 	public DeathRegEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public DeathRegEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Transactional
 	public DeathRegEntity findByCaseIdAndToday(String relationalId, Date death_today) {
-		return deathRegRepository.findByCaseIdAndToday(relationalId, death_today);
+		return commonDatabaseRepository.findByCaseIdAndToday(DEATH_TODAY, relationalId, death_today, DeathRegEntity.class);
 	}
 }
