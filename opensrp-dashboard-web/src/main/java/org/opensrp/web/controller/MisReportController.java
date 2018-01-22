@@ -1,5 +1,6 @@
 package org.opensrp.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.opensrp.etl.entity.FilterCriteria;
@@ -19,8 +20,12 @@ public class MisReportController {
 
 	@ResponseBody
 	@RequestMapping("/misreport")
-	public List<MIS1ReportEntity> getMIS1Report(FilterCriteria filterCriteria) {
-		return commonDatabaseRepository.findAllByCriteria(MIS1ReportEntity.class, filterCriteria);
-
+	public <T> List<T> getMIS1Report(FilterCriteria filterCriteria) {
+		List<T> findAllByCriteria = commonDatabaseRepository.findAllByCriteria(MIS1ReportEntity.class, filterCriteria);
+        if (!findAllByCriteria.isEmpty()) {
+            return findAllByCriteria;
+        } else {
+            return commonDatabaseRepository.checkEmptyCriteria(filterCriteria);
+        }
 	}
 }

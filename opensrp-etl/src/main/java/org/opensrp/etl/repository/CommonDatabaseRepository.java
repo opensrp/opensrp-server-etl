@@ -1,5 +1,6 @@
 package org.opensrp.etl.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -137,12 +138,12 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		boolean hasPrerequisite = false;
 		if (filtercriteria != null) {
 			System.out.println("FilterCriteria: " + filtercriteria.toString());
-			if (!filtercriteria.getYear().isEmpty() || filtercriteria.getYear() != null) {
+			if (filtercriteria.getYear() != null && !filtercriteria.getYear().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_year", filtercriteria.getYear()));
 				System.out.println("set criteria year");
 			}
 			
-			if (!filtercriteria.getMonth().isEmpty() || filtercriteria.getMonth() != null) {
+			if (filtercriteria.getMonth() != null && !filtercriteria.getMonth().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_month", filtercriteria.getMonth()));
 				System.out.println("set criteria month");
 			}
@@ -201,11 +202,47 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		
 		if (result.size() <= 0) {
 			int misId = generateMISReport(filtercriteria);
-			result = findById(misId, MIS1ReportEntity.class);
-			System.out.println("result: " + result.toString());
+			if (misId != -1) {
+				result = findById(misId, MIS1ReportEntity.class);
+				System.out.println("result: " + result.toString());
+			}
 		}
 		
 		return result;
+	}
+	
+	public <T> List<T> checkEmptyCriteria(FilterCriteria filterCriteria) {
+		List<T> list = new ArrayList<T>();
+		String s = "missing filter criteria: ";
+		list.add((T) s);
+		if (filterCriteria.getDivision() == null) {
+			list.add((T) "division");
+		}
+		if (filterCriteria.getDistrict() == null) {
+			list.add((T) "district");
+		}
+		if (filterCriteria.getUpazilla() == null) {
+			list.add((T) "upazilla");
+		}
+		if (filterCriteria.getUnionname() == null) {
+			list.add((T) "unionname");
+		}
+		if (filterCriteria.getWard() == null) {
+			list.add((T) "ward");
+		}
+		if (filterCriteria.getUnit() == null) {
+			list.add((T) "unit");
+		}
+		if (filterCriteria.getMonth() == null) {
+			list.add((T) "month");
+		}
+		if (filterCriteria.getYear() == null) {
+			list.add((T) "month");
+		}
+		if (filterCriteria.getProvider() == null) {
+			list.add((T) "month");
+		}
+		return list;
 	}
 	
 	@Override
@@ -315,14 +352,17 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			String hql = "SELECT * FROM generate_mis_report(:division,:district"
 			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY,:provider) m";
 			
-			Query query = session.createSQLQuery(hql).setParameter("division", filter.getDivision())
-			        .setParameter("district", filter.getDistrict()).setParameter("upazilla", filter.getUpazilla())
-			        .setParameter("unionname", filter.getUnionname()).setParameter("ward", filter.getWard())
-			        .setParameter("unit", filter.getUnit()).setParameter("currentM", filter.getMonth())
-			        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider());
-			
-			List results = query.list();
-			Id = (Integer) results.get(0);
+			if (filter.getDivision() != null && filter.getDistrict() != null && filter.getUpazilla() != null
+			        && filter.getUnionname() != null && filter.getWard() != null && filter.getUnit() != null
+			        && filter.getMonth() != null && filter.getYear() != null && filter.getProvider() != null) {
+				Query query = session.createSQLQuery(hql).setParameter("division", filter.getDivision())
+				        .setParameter("district", filter.getDistrict()).setParameter("upazilla", filter.getUpazilla())
+				        .setParameter("unionname", filter.getUnionname()).setParameter("ward", filter.getWard())
+				        .setParameter("unit", filter.getUnit()).setParameter("currentM", filter.getMonth())
+				        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider());
+				List results = query.list();
+				Id = (Integer) results.get(0);
+			}
 			session.close();
 		}
 		catch (Exception e) {
