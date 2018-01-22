@@ -188,6 +188,11 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				hasPrerequisite = true;
 			}
 			
+			if (filtercriteria.getProvider() != null && !filtercriteria.getProvider().isEmpty()) {
+				criteria.add(Restrictions.eq("reporting_provider", filtercriteria.getProvider()));
+				System.out.println("set criteria provider");
+			}
+			
 		}
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
@@ -298,7 +303,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		}
 		
 		return actionExist;
 	}
@@ -308,13 +313,13 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		int Id = -1;
 		try {
 			String hql = "SELECT * FROM generate_mis_report(:division,:district"
-			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY) m";
+			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY,:provider) m";
 			
 			Query query = session.createSQLQuery(hql).setParameter("division", filter.getDivision())
 			        .setParameter("district", filter.getDistrict()).setParameter("upazilla", filter.getUpazilla())
 			        .setParameter("unionname", filter.getUnionname()).setParameter("ward", filter.getWard())
 			        .setParameter("unit", filter.getUnit()).setParameter("currentM", filter.getMonth())
-			        .setParameter("currentY", filter.getYear());
+			        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider());
 			
 			List results = query.list();
 			Id = (Integer) results.get(0);
@@ -343,7 +348,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		} // TODO Auto-generated method stub
+		}
 		
 		return eventExist;
 	}
