@@ -2,7 +2,8 @@
    CREATE OR REPLACE FUNCTION generate_mis_report(division VARCHAR(70), district VARCHAR(70)
                                                 , upazilla VARCHAR(70), unionname VARCHAR(70)
                                                 , ward VARCHAR(70), unit VARCHAR(70)
-                                                , currentM VARCHAR(70), currentY VARCHAR(70))
+                                                , currentM VARCHAR(70), currentY VARCHAR(70)
+                                                , provider VARCHAR(70))
    RETURNS integer AS $$
     declare
     /*Family Planning Report Variables*/
@@ -236,7 +237,8 @@
         and m1.reporting_union=unionname
         and m1.reporting_unit=unit
         and m1.reporting_month=currentM
-        and m1.reporting_year=currentY;
+        and m1.reporting_year=currentY
+        and m1.reporting_provider=provider;
 
         IF recordExists = 0 THEN
 
@@ -2357,8 +2359,10 @@
                                          , cnContractedMAMChild24to59, cnContractedSAMChildZeroToSix
                                          , cnContractedSAMChild6TO23, cnContractedSAMChild24to59
                                          , reporting_division, reporting_district
-                                         , reporting_upazilla, reporting_ward, reporting_union
-                                         , reporting_unit, reporting_month, reporting_year)
+                                         , reporting_upazilla, reporting_ward
+                                         , reporting_union, reporting_unit
+                                         , reporting_month, reporting_year
+                                         , reporting_provider)
            VALUES (nextval('mis1report_id_seq'), fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
                                          , fpLeftPillAndStartedOther
@@ -2452,8 +2456,11 @@
                                          , cnContractedMAMChildZeroToSix, cnContractedMAMChild6TO23
                                          , cnContractedMAMChild24to59, cnContractedSAMChildZeroToSix
                                          , cnContractedSAMChild6TO23, cnContractedSAMChild24to59
-                                         , division, district, upazilla, ward, unionname
-                                         , unit, currentM, currentY);
+                                         , division, district
+                                         , upazilla, ward
+                                         , unionname, unit
+                                         , currentM, currentY
+                                         , provider);
 
        RAISE NOTICE '%: inserted row: %', now(), currval('mis1report_id_seq');
 
