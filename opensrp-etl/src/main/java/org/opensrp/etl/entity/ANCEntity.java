@@ -28,34 +28,25 @@ public class ANCEntity {
 	@SequenceGenerator(name = "anc_id_seq", sequenceName = "anc_id_seq", allocationSize = 1)
 	private long id;
 	
-	private String ancName;
-
+	private Integer Visit_Status;
+	
+	private Integer Is_Reffered;
+	
+	private Integer Preg_Status;
+	
+	private Integer IFA_Received;
+	
+	private Integer Is_Post_Due;
+	
 	@Column(name = "doc_id")
 	private String _id;
-
-	@Column(name = "end_time")
-	private Date end;
-
-	private Date start;
-
-	private Date received_time;
-
-	@Temporal(TemporalType.DATE)
-	private Date today;
-
-	private Integer Visit_Status;
-
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
-
-	private Integer Is_Reffered;
-
-	private Integer Preg_Status;
-
+	
+	private String ancName;
+	
 	private String INSTANCEID;
-
+	
 	private String existing_Caesarean;
-
+	
 	private String existing_Age_Youngest_Child;
 	
 	private String existing_Mem_Marital_Status;
@@ -64,12 +55,7 @@ public class ANCEntity {
 	
 	private String existing_Bleeding;
 	
-	private Integer IFA_Received;
-	
 	private String existing_Heavy_Blood_Flow;
-	
-	@Temporal(TemporalType.DATE)
-	private Date ANC_Expired_Date;
 	
 	private String existing_Final_Vill;
 	
@@ -78,13 +64,8 @@ public class ANCEntity {
 	private String existing_Gravida;
 	
 	private String Confirm_Info;
-
-	private Integer Is_Post_Due;
 	
 	private String existing_ELCO_BRID;
-	
-	@Temporal(TemporalType.DATE)
-	private Date existing_EDD;
 	
 	private String Met;
 	
@@ -128,11 +109,8 @@ public class ANCEntity {
 	
 	private String anc_current_formStatus;
 	
-	@Temporal(TemporalType.DATE)
-	private Date ANC_Post_Due_Date;
-	
 	private String existing_Gestational_Age;
-
+	
 	private String existing_Prolong_Delivery;
 	
 	private String existing_HoH_F_Name;
@@ -143,50 +121,72 @@ public class ANCEntity {
 	
 	private String Not_Eligible;
 	
-	@Temporal(TemporalType.DATE)
-	private Date existing_LMP;
-	
 	private String Position_Child_During_Delivery;
 	
 	private String Menstruation;
-
+	
 	private String High_Fever;
-
+	
+	private String relationalid;
+	
+	private Date received_time;
+	
+	private Date start;
+	
+	@Column(name = "end_time")
+	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date ANC_Expired_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date existing_EDD;
+	
+	@Temporal(TemporalType.DATE)
+	private Date ANC_Post_Due_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date existing_LMP;
+	
 	@Temporal(TemporalType.DATE)
 	private Date ANC_Due_Date;
-
-	private String relationalid;
-
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
 	private Date created = new Date();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getAncName() {
 		return ancName;
 	}
-
+	
 	public void setAncName(String ancName) {
 		this.ancName = ancName;
 	}
-
+	
 	public String get_id() {
 		return _id;
 	}
-
+	
 	public void set_id(String _id) {
 		this._id = _id;
 	}
-
+	
 	public String getExisting_Age_Youngest_Child() {
 		return existing_Age_Youngest_Child;
 	}
@@ -650,20 +650,20 @@ public class ANCEntity {
 	public void setANC_Due_Date(Date aNC_Due_Date) {
 		ANC_Due_Date = aNC_Due_Date;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}
-
-    public String getINSTANCEID() {
-        return INSTANCEID;
-    }
-
-    public void setINSTANCEID(String iNSTANCEID) {
-        INSTANCEID = iNSTANCEID;
-    }
+	
+	public String getINSTANCEID() {
+		return INSTANCEID;
+	}
+	
+	public void setINSTANCEID(String iNSTANCEID) {
+		INSTANCEID = iNSTANCEID;
+	}
 }

@@ -34,7 +34,6 @@ public class ExceptionEntity {
 	@Column(name = "case_id")
 	private String caseId;
 	
-	//@Type(type = "text")
 	@Column(name = "error_message")
 	private String errorMessage;
 	

@@ -28,51 +28,29 @@ public class PNCEntity {
 	@SequenceGenerator(name = "pnc_id_seq", sequenceName = "pnc_id_seq", allocationSize = 1)
 	private long id;
 	
-	@Column(name = "doc_id")
-    private String _id;
-
-    private String INSTANCEID;
-
-	private String pncName;
-
-	@Temporal(TemporalType.DATE)
-	private Date today;
-
-	@Column(name = "end_time")
-	private Date end;
-
-	private Date received_time;
-
-	private Date start;
-
-	private Integer Has_PNC_Given_On_Time;
-
-	private Integer Is_Cleaned;
-
-	private Integer Chlorhexidin;
-
-	private Integer Breasmilk_Fed;
-
 	private Integer Visit_Status;
-
-	private Integer Menstruation;
-
-	private Integer High_Fever;
-
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Expired_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Due_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date PNC_Post_Due_Date;
-
+	
+	private Integer Has_PNC_Given_On_Time;
+	
+	private Integer Is_Cleaned;
+	
+	private Integer Chlorhexidin;
+	
+	private Integer Breasmilk_Fed;
+	
+	@Column(name = "doc_id")
+	private String _id;
+	
+	private String High_Fever;
+	
+	private String Menstruation;
+	
+	private String INSTANCEID;
+	
+	private String pncName;
+	
 	private String Visit_No;
-
+	
 	private String existing_Couple_No;
 	
 	private String existing_Risky_Preg;
@@ -90,9 +68,9 @@ public class PNCEntity {
 	private String existing_Visit_Status;
 	
 	private String exising_Union;
-
+	
 	private String existing_Spouse_Name;
-
+	
 	private String existing_ELCO;
 	
 	private String Calc_On_Time;
@@ -102,7 +80,7 @@ public class PNCEntity {
 	private String existing_Final_Vill;
 	
 	private String existing_ELCO_BRID;
-
+	
 	private String Convulsions;
 	
 	private String Met;
@@ -122,13 +100,13 @@ public class PNCEntity {
 	private String existing_Premature_Birth;
 	
 	private String Not_Bathed;
-
+	
 	private String existing_DOO;
 	
 	private String Is_On_Time;
 	
 	private String Is_Critical;
-
+	
 	private String yn_dk_label;
 	
 	private String existing_Delivery_Type;
@@ -150,23 +128,45 @@ public class PNCEntity {
 	private String existing_ELCO_Mobile_Number;
 	
 	private String Is_Expired;
-
+	
 	private String relationalid;
-
+	
+	private Date received_time;
+	
+	private Date start;
+	
+	@Column(name = "end_time")
+	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date today;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Expired_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Due_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date PNC_Post_Due_Date;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
 	private Date created = new Date();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getPncName() {
 		return pncName;
 	}
@@ -279,11 +279,11 @@ public class PNCEntity {
 		this.exising_Union = exising_Union;
 	}
 	
-	public Integer getMenstruation() {
+	public String getMenstruation() {
 		return Menstruation;
 	}
 	
-	public void setMenstruation(Integer menstruation) {
+	public void setMenstruation(String menstruation) {
 		Menstruation = menstruation;
 	}
 	
@@ -295,11 +295,11 @@ public class PNCEntity {
 		this.existing_Spouse_Name = existing_Spouse_Name;
 	}
 	
-	public Integer getHigh_Fever() {
+	public String getHigh_Fever() {
 		return High_Fever;
 	}
 	
-	public void setHigh_Fever(Integer high_Fever) {
+	public void setHigh_Fever(String high_Fever) {
 		High_Fever = high_Fever;
 	}
 	
@@ -635,20 +635,20 @@ public class PNCEntity {
 	public void setIs_Expired(String is_Expired) {
 		Is_Expired = is_Expired;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}
-
-    public String getINSTANCEID() {
-        return INSTANCEID;
-    }
-
-    public void setINSTANCEID(String iNSTANCEID) {
-        INSTANCEID = iNSTANCEID;
-    }
+	
+	public String getINSTANCEID() {
+		return INSTANCEID;
+	}
+	
+	public void setINSTANCEID(String iNSTANCEID) {
+		INSTANCEID = iNSTANCEID;
+	}
 }

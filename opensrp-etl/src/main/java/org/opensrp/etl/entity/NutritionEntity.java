@@ -27,48 +27,29 @@ public class NutritionEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nutrition_id_seq")
 	@SequenceGenerator(name = "nutrition_id_seq", sequenceName = "nutrition_id_seq", allocationSize = 1)
 	private long id;
-
-	@Column(name = "end_time")
-	private Date end;
-
-	private Date start;
-
-    private Date received_time;
-
+	
 	private Long serverVersion;
-
-	private String doc_id;
-
-	private String changes;
-
-	private Integer Mother_Nutrition;
-
-	private Integer Child_Nutrition;
-
-	private String existing_TT_Count;
-
-	private Integer Distrinuted_Nutrition;
-
+	
 	private Integer Visit_Status;
-
-	@Temporal(TemporalType.DATE)
-	private Date Visit_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date Calc_Dob_Confirm;
-
-	@Temporal(TemporalType.DATE)
-	private Date existing_Injection_Date;
-
-	@Temporal(TemporalType.DATE)
-	private Date existing_Calc_Dob_Confirm;
-
+	
+	private Integer Distrinuted_Nutrition;
+	
+	private String Mother_Nutrition;
+	
+	private String Child_Nutrition;
+	
+	private String existing_TT_Count;
+	
+	private String doc_id;
+	
+	private String changes;
+	
 	private String existing_Couple_No;
-
+	
 	private String existing_Union;
 	
 	private String existing_Child_Father;
-
+	
 	private String existing_Mem_F_Name;
 	
 	private String existing_GoB_HHID;
@@ -78,13 +59,13 @@ public class NutritionEntity {
 	private String existing_Mauzapara;
 	
 	private String Supplementary_Food;
-
+	
 	private String Refer;
 	
 	private String VitA_Minarals;
 	
 	private String IFA_Tablets;
-
+	
 	private String existing_Upazilla;
 	
 	private String existing_Ward;
@@ -96,37 +77,56 @@ public class NutritionEntity {
 	private String existing_District;
 	
 	private String existing_Child_Mother;
-
+	
 	private String existing_HoH_F_Name;
-
+	
 	private String Confirm_Info;
-
+	
 	private String existing_Final_Vill;
-
+	
 	private String Met;
-
+	
 	private String existing_ELCO_Mobile_Number;
-
+	
 	private String existing_Country;
-
-    private String relationalid;
-
-    private String INSTANCEID;
-
+	
+	private String INSTANCEID;
+	
+	private String relationalid;
+	
+	private Date received_time;
+	
+	private Date start;
+	
+	@Column(name = "end_time")
+	private Date end;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Visit_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Calc_Dob_Confirm;
+	
+	@Temporal(TemporalType.DATE)
+	private Date existing_Injection_Date;
+	
+	@Temporal(TemporalType.DATE)
+	private Date existing_Calc_Dob_Confirm;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
 	private Date created = new Date();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getDoc_id() {
 		return doc_id;
 	}
@@ -273,11 +273,11 @@ public class NutritionEntity {
 		VitA_Minarals = vitA_Minarals;
 	}
 	
-	public Integer getMother_Nutrition() {
+	public String getMother_Nutrition() {
 		return Mother_Nutrition;
 	}
 	
-	public void setMother_Nutrition(Integer mother_Nutrition) {
+	public void setMother_Nutrition(String mother_Nutrition) {
 		Mother_Nutrition = mother_Nutrition;
 	}
 	
@@ -306,11 +306,11 @@ public class NutritionEntity {
 		this.existing_Injection_Date = existing_Injection_Date;
 	}
 	
-	public Integer getChild_Nutrition() {
+	public String getChild_Nutrition() {
 		return Child_Nutrition;
 	}
 	
-	public void setChild_Nutrition(Integer child_Nutrition) {
+	public void setChild_Nutrition(String child_Nutrition) {
 		Child_Nutrition = child_Nutrition;
 	}
 	
@@ -442,21 +442,21 @@ public class NutritionEntity {
 	public void setexisting_Country(String existing_Country) {
 		this.existing_Country = existing_Country;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}
-
-    public String getINSTANCEID() {
-        return INSTANCEID;
-    }
-
-    public void setINSTANCEID(String iNSTANCEID) {
-        INSTANCEID = iNSTANCEID;
-    }
+	
+	public String getINSTANCEID() {
+		return INSTANCEID;
+	}
+	
+	public void setINSTANCEID(String iNSTANCEID) {
+		INSTANCEID = iNSTANCEID;
+	}
 	
 }

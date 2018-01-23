@@ -36,25 +36,23 @@ public class ActionEntity {
 	@SequenceGenerator(name = "action_id_seq", sequenceName = "action_id_seq", allocationSize = 1)
 	private long id;
 	
+	@Column(name = "time_stamp")
+	private Long timeStamp;
+	
+	@Column(name = "is_action_active")
+	private Boolean isActionActive;
+	
 	@Column(name = "provider")
 	private String anmIdentifier;
 	
 	@Column(name = "case_id")
 	private String caseId;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "start_date")
-	private Date startDate;
-	
 	@Column(name = "beneficiary_type")
 	private String beneficiaryType;
 	
 	@Column(name = "schedule_name")
 	private String scheduleName;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "expiry_date")
-	private Date expiryDate;
 	
 	@Column(name = "visit_code")
 	private String visitCode;
@@ -68,11 +66,13 @@ public class ActionEntity {
 	@Column(name = "action_type")
 	private String actionType;
 	
-	@Column(name = "is_action_active")
-	private Boolean isActionActive;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "start_date")
+	private Date startDate;
 	
-	@Column(name = "time_stamp")
-	private Long timeStamp;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "expiry_date")
+	private Date expiryDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -83,11 +83,11 @@ public class ActionEntity {
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getCaseId() {
 		return caseId;
 	}
@@ -103,7 +103,7 @@ public class ActionEntity {
 	public Date getUpdated() {
 		return updated;
 	}
-
+	
 	public String getAnmIdentifier() {
 		return anmIdentifier;
 	}
@@ -111,7 +111,7 @@ public class ActionEntity {
 	public void setanmIdentifier(String provider) {
 		this.anmIdentifier = provider;
 	}
-
+	
 	public Date getStartDate() {
 		return startDate;
 	}

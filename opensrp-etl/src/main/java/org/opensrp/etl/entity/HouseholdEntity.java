@@ -28,7 +28,17 @@ public class HouseholdEntity {
 	@SequenceGenerator(name = "household_id_seq", sequenceName = "household_id_seq", allocationSize = 1)
 	private long id;
 	
+	private Integer HoH_Age;
+	
+	private Integer HoH_Gender;
+	
+	private Integer No_Of_Couples;
+	
+	private String Member_Number;
+	
 	private String caseId;
+	
+	private String Final_ELCO;
 	
 	@Column(name = "doc_id")
 	private String _id;
@@ -36,17 +46,7 @@ public class HouseholdEntity {
 	private String INSTANCEID;
 	
 	private String PROVIDERID;
-
-    private Integer Final_ELCO;
-
-    private Integer HoH_Age;
-
-    private Integer HoH_Gender;
-
-    private Integer Member_Number;
-
-    private Integer No_Of_Couples;
-
+	
 	private String existing_location;
 	
 	private String existing_Country;
@@ -61,21 +61,10 @@ public class HouseholdEntity {
 	
 	private String existing_Ward;
 	
-	private Date Start;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Today;
-	
-	@Column(name = "end_time")
-	private Date End;
-	
-	@Temporal(TemporalType.DATE)
-	private Date Reg_Date;
-	
 	private String Village_Name;
 	
 	private String GoB_HHID;
-
+	
 	private String Country;
 	
 	private String Division;
@@ -98,10 +87,6 @@ public class HouseholdEntity {
 	private String HoH_F_Name;
 	
 	private String HoH_L_Name;
-
-	@Column(name = "dob")
-	@Temporal(TemporalType.DATE)
-	private Date Calc_HoH_Dob_Confirm;
 	
 	private String HoH_ID_Type;
 	
@@ -110,21 +95,36 @@ public class HouseholdEntity {
 	private String HoH_BRID;
 	
 	private String HoH_Mobile_number;
-
+	
 	private String MWRA;
-
+	
 	private String HH_Status;
-
+	
+	private Date Start;
+	
+	@Column(name = "end_time")
+	private Date End;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Today;
+	
+	@Temporal(TemporalType.DATE)
+	private Date Reg_Date;
+	
+	@Column(name = "dob")
+	@Temporal(TemporalType.DATE)
+	private Date Calc_HoH_Dob_Confirm;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
 	private Date created = new Date();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	public long getId() {
 		return id;
 	}
@@ -412,11 +412,11 @@ public class HouseholdEntity {
 		HoH_Mobile_number = hoH_Mobile_number;
 	}
 	
-	public Integer getMember_Number() {
+	public String getMember_Number() {
 		return Member_Number;
 	}
 	
-	public void setMember_Number(Integer member_Number) {
+	public void setMember_Number(String member_Number) {
 		Member_Number = member_Number;
 	}
 	
@@ -428,11 +428,11 @@ public class HouseholdEntity {
 		MWRA = mWRA;
 	}
 	
-	public Integer getFinal_ELCO() {
+	public String getFinal_ELCO() {
 		return Final_ELCO;
 	}
 	
-	public void setFinal_ELCO(Integer final_ELCO) {
+	public void setFinal_ELCO(String final_ELCO) {
 		Final_ELCO = final_ELCO;
 	}
 	
@@ -451,11 +451,11 @@ public class HouseholdEntity {
 	public void set_id(String _id) {
 		this._id = _id;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}

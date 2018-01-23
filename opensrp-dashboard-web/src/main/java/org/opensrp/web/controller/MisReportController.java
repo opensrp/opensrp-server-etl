@@ -1,6 +1,5 @@
 package org.opensrp.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.opensrp.etl.entity.FilterCriteria;
