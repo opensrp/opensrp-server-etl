@@ -1609,7 +1609,7 @@
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnChangesOfAdolescent
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
-            WHERE (a1.councelling=4
+            WHERE (a1.councelling LIKE '%4%'
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
             AND member.mem_district=district
@@ -1622,7 +1622,7 @@
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
-            WHERE (a1.councelling=1
+            WHERE (a1.councelling LIKE '%1%'
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
             AND member.mem_district=district
@@ -1635,7 +1635,7 @@
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingTeenagersOnTakingIronAndFolicAcid
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
-            WHERE (a1.councelling=2
+            WHERE (a1.councelling LIKE '%2%'
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
             AND member.mem_district=district
@@ -1648,7 +1648,7 @@
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnInfectionOfDiseases
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
-            WHERE (a1.councelling=6
+            WHERE (a1.councelling LIKE '%6%'
                     AND EXTRACT(MONTH FROM a1.today)=currentMonth
                     AND EXTRACT(YEAR FROM a1.today)=currentYear)
             AND member.mem_district=district
@@ -2020,7 +2020,7 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
-            WHERE ( n1.mother_nutrition = 1
+            WHERE ( n1.mother_nutrition LIKE '%1%'
                     AND p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
@@ -2035,7 +2035,7 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
-            WHERE ( n1.mother_nutrition = 1
+            WHERE ( n1.mother_nutrition LIKE '%1%'
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
@@ -2080,7 +2080,7 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
-            WHERE ( n1.mother_nutrition = 3
+            WHERE ( n1.mother_nutrition LIKE '%3%'
                     AND p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
@@ -2095,7 +2095,7 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
-            WHERE ( n1.mother_nutrition = 3
+            WHERE ( n1.mother_nutrition LIKE '%3%'
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
@@ -2110,7 +2110,7 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
-            WHERE ( n1.mother_nutrition = 2
+            WHERE ( n1.mother_nutrition LIKE '%2%'
                     AND NOT p1.preg_status = 1
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
@@ -2124,7 +2124,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingWithin1Hour
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 1
+            WHERE ( n1.child_nutrition LIKE '%1%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
@@ -2137,7 +2137,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingUntill6Month
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 2
+            WHERE ( n1.child_nutrition LIKE '%2%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
             AND member.mem_district=district
@@ -2150,7 +2150,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild6TO23
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 3
+            WHERE ( n1.child_nutrition LIKE '%3%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child6Month
@@ -2165,7 +2165,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild24to59
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 3
+            WHERE ( n1.child_nutrition LIKE '%3%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child24months
@@ -2180,7 +2180,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChildZeroToSix
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 4
+            WHERE ( n1.child_nutrition LIKE '%4%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) < child6Month)
@@ -2194,7 +2194,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild6TO23
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 4
+            WHERE ( n1.child_nutrition LIKE '%4%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child6Month
@@ -2209,7 +2209,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild24TO59
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 4
+            WHERE ( n1.child_nutrition LIKE '%4%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child24Months
@@ -2224,7 +2224,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChildZeroToSix
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 5
+            WHERE ( n1.child_nutrition LIKE '%5%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) < child6Month)
@@ -2238,7 +2238,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild6TO23
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 5
+            WHERE ( n1.child_nutrition LIKE '%5%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child6Month
@@ -2253,7 +2253,7 @@
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild24TO59
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
-            WHERE ( n1.child_nutrition = 5
+            WHERE ( n1.child_nutrition LIKE '%5%'
                     AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
                     AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
                     AND age(member.member_birth_date) >= child24Months
