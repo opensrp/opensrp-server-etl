@@ -1,12 +1,14 @@
 package org.opensrp.etl.service;
 
+import static org.opensrp.etl.util.AllConstants.CASE_ID;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.HouseholdEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.HouseholdRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,9 @@ import org.springframework.stereotype.Service;
 public class HouseholdService implements RegisterService<HouseholdEntity> {
 	
 	@Autowired
-	private HouseholdRepository householdRepository;
+	private CommonDatabaseRepository commonDatabaseRepository;
 	
 	public HouseholdService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
@@ -26,42 +27,37 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		
 		HouseholdEntity existingHouseholdEntity = findByCaseId(householdEntity.getCaseId());
 		if (existingHouseholdEntity == null) {
-			householdRepository.save(householdEntity);
+			commonDatabaseRepository.save(householdEntity);
 		} else {
 			if (delete(existingHouseholdEntity))
-				householdRepository.save(householdEntity);
+				commonDatabaseRepository.save(householdEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(HouseholdEntity householdEntity) {
-		return householdRepository.delete(householdEntity);
-		
+		return commonDatabaseRepository.delete(householdEntity);
 	}
 	
 	@Transactional
 	@Override
 	public void update(HouseholdEntity householdEntity) {
-		householdRepository.update(householdEntity);
-		
+		commonDatabaseRepository.update(householdEntity);
 	}
 	
 	@Override
 	public HouseholdEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Transactional
 	@Override
 	public HouseholdEntity findByCaseId(String caseId) {
-		return householdRepository.findByCaseId(caseId);
+		return commonDatabaseRepository.findByKey(caseId, CASE_ID, HouseholdEntity.class);
 	}
 	
 	public List<HouseholdEntity> list() {
-		//householdRepository.
 		return null;
-		
 	}
 }

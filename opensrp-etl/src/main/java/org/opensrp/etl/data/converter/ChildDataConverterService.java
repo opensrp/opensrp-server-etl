@@ -10,44 +10,42 @@ import org.opensrp.etl.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ChildDataConverterService implements DataConverterService {
-
-    @Autowired
-    private ChildEntity childEntity;
-
-    @Autowired
-    private ChildService childService;
-
-    @Autowired
-    private ExceptionService exceptionService;
-
-    @Autowired
-    private DataConverter dataConverter;
-
-    public ChildDataConverterService() {
-        // TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-        JSONArray childArray = new JSONArray();
-        childArray = doc.getJSONArray("child_vaccine");
-
-        for (int i = 0; i < childArray.length(); i++) {
-            JSONObject child = childArray.getJSONObject(i);
-            Class<ChildEntity> className = ChildEntity.class;
-            Object object = new ChildEntity();
-            childEntity = (ChildEntity) dataConverter.convert(child, className,
-                    object);
-
-            try {
-                childEntity.setrelationalid(doc.getString("caseId"));
-                childEntity.set_id(doc.getString("_id"));
-                childEntity.setINSTANCEID(doc.getString("INSTANCEID"));
-                childService.save(childEntity);
-            } catch (Exception e) {
-                exceptionService.generatedEntityAndSave(doc, e
-                        .fillInStackTrace().toString(), "child");
-            }
-        }
-    }
+	
+	@Autowired
+	private ChildEntity childEntity;
+	
+	@Autowired
+	private ChildService childService;
+	
+	@Autowired
+	private ExceptionService exceptionService;
+	
+	@Autowired
+	private DataConverter dataConverter;
+	
+	public ChildDataConverterService() {
+	}
+	
+	@Override
+	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+		JSONArray childArray = new JSONArray();
+		childArray = doc.getJSONArray("child_vaccine");
+		
+		for (int i = 0; i < childArray.length(); i++) {
+			JSONObject child = childArray.getJSONObject(i);
+			Class<ChildEntity> className = ChildEntity.class;
+			Object object = new ChildEntity();
+			childEntity = (ChildEntity) dataConverter.convert(child, className, object);
+			
+			try {
+				childEntity.setrelationalid(doc.getString("caseId"));
+				childEntity.set_id(doc.getString("_id"));
+				childEntity.setINSTANCEID(doc.getString("INSTANCEID"));
+				childService.save(childEntity);
+			}
+			catch (Exception e) {
+				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "child");
+			}
+		}
+	}
 }

@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import static org.opensrp.etl.util.AllConstants.CHILD_TODAY;
+
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -10,8 +12,6 @@ import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ChildService implements RegisterService<ChildEntity> {
-	
-	private static final String CHILD_TODAY = "child_today";
 	
 	@Autowired
 	private CommonDatabaseRepository commonDatabaseRepository;

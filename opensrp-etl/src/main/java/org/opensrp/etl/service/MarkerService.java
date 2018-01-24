@@ -12,34 +12,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MarkerService implements RegisterService<MarkerEntity> {
-
 	
 	@Autowired
 	private CommonDatabaseRepository commonDatabaseRepository;
 	
 	public MarkerService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
 	@Override
 	public void save(MarkerEntity markerEntity) {
 		commonDatabaseRepository.save(markerEntity);
-		
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(MarkerEntity markerEntity) {
 		return commonDatabaseRepository.delete(markerEntity);
-		
 	}
 	
 	@Transactional
 	@Override
 	public void update(MarkerEntity markerEntity) {
 		commonDatabaseRepository.update(markerEntity);
-		
 	}
 	
 	@Transactional
@@ -50,7 +45,6 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 	
 	@Override
 	public MarkerEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -59,11 +53,8 @@ public class MarkerService implements RegisterService<MarkerEntity> {
 		return null;
 	}
 	
-
-	
 	@Transactional
 	public MarkerEntity findByName(String name) {
-	
 		return commonDatabaseRepository.findByKey(name, "name", MarkerEntity.class);
 	}
 	

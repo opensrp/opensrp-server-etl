@@ -1,5 +1,7 @@
 package org.opensrp.etl.service;
 
+import static org.opensrp.etl.util.AllConstants.DEATH_TODAY;
+
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class DeathRegService implements RegisterService<DeathRegEntity> {
 	
-	private static final String DEATH_TODAY = "death_today";
 	@Autowired
 	private CommonDatabaseRepository commonDatabaseRepository;
 	

@@ -1,10 +1,12 @@
 package org.opensrp.etl.service;
 
+import static org.opensrp.etl.util.AllConstants.CASE_ID;
+
 import javax.transaction.Transactional;
 
 import org.opensrp.etl.entity.MemberEntity;
 import org.opensrp.etl.interfaces.RegisterService;
-import org.opensrp.etl.repository.MemberRepository;
+import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,9 @@ import org.springframework.stereotype.Service;
 public class MemberService implements RegisterService<MemberEntity> {
 	
 	@Autowired
-	private MemberRepository memberRepository;
+	private CommonDatabaseRepository commonDatabaseRepository;
 	
 	public MemberService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
@@ -23,37 +24,33 @@ public class MemberService implements RegisterService<MemberEntity> {
 	public void save(MemberEntity memberEntity) {
 		MemberEntity existingMemberEntity = findByCaseId(memberEntity.getCaseId());
 		if (existingMemberEntity == null) {
-			memberRepository.save(memberEntity);
+			commonDatabaseRepository.save(memberEntity);
 		} else {
 			if (delete(existingMemberEntity))
-				memberRepository.save(memberEntity);
+				commonDatabaseRepository.save(memberEntity);
 		}
 	}
 	
 	@Transactional
 	@Override
 	public boolean delete(MemberEntity memberEntity) {
-		return memberRepository.delete(memberEntity);
-		
+		return commonDatabaseRepository.delete(memberEntity);
 	}
 	
 	@Transactional
 	@Override
 	public void update(MemberEntity memberEntity) {
-		memberRepository.update(memberEntity);
-		
+		commonDatabaseRepository.update(memberEntity);
 	}
 	
 	@Override
 	public MemberEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Transactional
 	@Override
 	public MemberEntity findByCaseId(String caseId) {
-		return memberRepository.findByCaseId(caseId);
+		return commonDatabaseRepository.findByKey(caseId, CASE_ID, MemberEntity.class);
 	}
-	
 }

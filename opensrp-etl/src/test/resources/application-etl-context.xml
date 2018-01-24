@@ -81,19 +81,6 @@
 <bean name="exceptionService" class="org.opensrp.etl.service.ExceptionService"/>
 <bean name="deathRegService" class="org.opensrp.etl.service.DeathRegService"/>
 
-<bean name="householdRepository" class="org.opensrp.etl.repository.HouseholdRepository"/>
-<bean name="memberRepository" class="org.opensrp.etl.repository.MemberRepository"/>
-<bean name="psrfRepository" class="org.opensrp.etl.repository.PSRFRepository"/> 
-<bean name="nutritionRepository" class="org.opensrp.etl.repository.NutritionRepository"/>
-<bean name="ancRepository" class="org.opensrp.etl.repository.ANCRepository"/>
-<bean name="pncRepository" class="org.opensrp.etl.repository.PNCRepository"/>
-<bean name="bnfRepository" class="org.opensrp.etl.repository.BNFRepository"/>
-<bean name="actionRepository" class="org.opensrp.etl.repository.ActionRepository"/>
-<bean name="exceptionRepository" class="org.opensrp.etl.repository.ExceptionRepository"/>
-<bean name="adolescentRepository" class="org.opensrp.etl.repository.AdolescentRepository"/>
-<bean name="injectableRepository" class="org.opensrp.etl.repository.InjectableRepository"/>
-<bean name="deathRegRepository" class="org.opensrp.etl.repository.DeathRegRepository"/>
-
 <bean name="householdTransmissionService" class="org.opensrp.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="memberTransmissionService" class="org.opensrp.etl.transmission.service.MemberTransmissionService"/>
 <bean name="actionTransmissionService" class="org.opensrp.etl.transmission.service.ActionTransmissionService"/>
