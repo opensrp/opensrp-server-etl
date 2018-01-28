@@ -1,5 +1,6 @@
 package org.opensrp.etl.data.converter;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +11,8 @@ import org.opensrp.etl.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ChildDataConverterService implements DataConverterService {
+	
+	private static final Logger logger = Logger.getLogger(ChildDataConverterService.class);
 	
 	@Autowired
 	private ChildEntity childEntity;
@@ -44,6 +47,7 @@ public class ChildDataConverterService implements DataConverterService {
 				childService.save(childEntity);
 			}
 			catch (Exception e) {
+				logger.error(e);
 				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "child");
 			}
 		}

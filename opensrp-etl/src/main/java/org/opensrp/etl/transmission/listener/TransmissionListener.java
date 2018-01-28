@@ -2,6 +2,7 @@ package org.opensrp.etl.transmission.listener;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 public class TransmissionListener {
 	
-	//private static final Logger logger = Logger.getLogger(TransmissionListener.class);
+	private static final Logger logger = Logger.getLogger(TransmissionListener.class);
 	
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;
@@ -40,29 +41,27 @@ public class TransmissionListener {
 	@SuppressWarnings("unchecked")
 	public void dataListener() throws JSONException {
 		markerEntity = markerService.findByName(CommonConstant.DGFP.name());
+		logger.info("DGFP executed!");
+		
 		if (markerEntity != null) {
-		    System.out.println("DGFP Data transfer started...");
-            ViewResult vr = sourceDBRepository.allData(markerEntity
-                    .getTimeStamp());
-            List<Row> rows = vr.getRows();
-
-            for (Row row : rows) {
-                JSONObject jsonData = new JSONObject(row.getValue());
-                transmissionServiceFactory.getTransmissionType(
-                        jsonData.getString("type")).convertDataJsonToEntity(
-                        jsonData);
-
-                long currentDocumentTimeStamp = Long.parseLong(jsonData
-                        .getString("timeStamp"));
-
-                if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
-                    markerEntity.settimeStamp(currentDocumentTimeStamp);
-                    markerService.update(markerEntity);
-                }
-            }
-            System.out.println("DGFP Data transfer completed");
-        } else {
-            System.out.println("DGFP ETL process started, marker not initialized");
-        }
+			logger.info("DGFP Data transfer started...");
+			ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
+			List<Row> rows = vr.getRows();
+			logger.debug("row size: " + rows.size());
+			for (Row row : rows) {
+				JSONObject jsonData = new JSONObject(row.getValue());
+				transmissionServiceFactory.getTransmissionType(jsonData.getString("type")).convertDataJsonToEntity(jsonData);
+				
+				long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
+				
+				if (markerEntity.getTimeStamp() < currentDocumentTimeStamp) {
+					markerEntity.settimeStamp(currentDocumentTimeStamp);
+					markerService.update(markerEntity);
+				}
+			}
+			logger.info("DGFP Data transfer completed");
+		} else {
+			System.out.println("DGFP ETL process started, marker not initialized");
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CommonDatabaseRepository implements DatabaseRepository {
 	
+	private static final Logger logger = Logger.getLogger(CommonDatabaseRepository.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -28,7 +31,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public void test() {
-		System.err.println("sessionFactory:" + sessionFactory);
+		logger.debug("sessionFactory:" + sessionFactory);
 	}
 	
 	@Override
@@ -122,7 +125,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			result = (List<T>) query.list();
 		}
 		catch (Exception e) {
-			System.out.println("error:" + e.getMessage());
+			logger.error("error:" + e.getMessage());
 		}
 		finally {
 			session.close();
@@ -137,31 +140,31 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		Criteria criteria = session.createCriteria(className);
 		boolean hasPrerequisite = false;
 		if (filtercriteria != null) {
-			System.out.println("FilterCriteria: " + filtercriteria.toString());
+			logger.info("FilterCriteria: " + filtercriteria.toString());
 			if (filtercriteria.getYear() != null && !filtercriteria.getYear().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_year", filtercriteria.getYear()));
-				System.out.println("set criteria year");
+				logger.info("set criteria year");
 			}
 			
 			if (filtercriteria.getMonth() != null && !filtercriteria.getMonth().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_month", filtercriteria.getMonth()));
-				System.out.println("set criteria month");
+				logger.info("set criteria month");
 			}
 			if (filtercriteria.getDivision() != null && !filtercriteria.getDivision().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_division", filtercriteria.getDivision()));
-				System.out.println("set criteria division");
+				logger.info("set criteria division");
 				hasPrerequisite = true;
 			}
 			if (hasPrerequisite && (filtercriteria.getDistrict() != null && !filtercriteria.getDistrict().isEmpty())) {
 				criteria.add(Restrictions.eq("reporting_district", filtercriteria.getDistrict()));
-				System.out.println("set criteria district");
+				logger.info("set criteria district");
 				hasPrerequisite = true;
 			} else {
 				hasPrerequisite = false;
 			}
 			if (hasPrerequisite && (filtercriteria.getUpazilla() != null && !filtercriteria.getUpazilla().isEmpty())) {
 				criteria.add(Restrictions.eq("reporting_upazilla", filtercriteria.getUpazilla()));
-				System.out.println("set criteria upazilla");
+				logger.info("set criteria upazilla");
 				hasPrerequisite = true;
 			} else {
 				hasPrerequisite = false;
@@ -169,7 +172,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			
 			if (hasPrerequisite && (filtercriteria.getUnionname() != null && !filtercriteria.getUnionname().isEmpty())) {
 				criteria.add(Restrictions.eq("reporting_union", filtercriteria.getUnionname()));
-				System.out.println("set criteria unionname");
+				logger.info("set criteria unionname");
 				hasPrerequisite = true;
 			} else {
 				hasPrerequisite = false;
@@ -177,7 +180,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			
 			if (hasPrerequisite && (filtercriteria.getWard() != null && !filtercriteria.getWard().isEmpty())) {
 				criteria.add(Restrictions.eq("reporting_ward", filtercriteria.getWard()));
-				System.out.println("set criteria ward");
+				logger.info("set criteria ward");
 				hasPrerequisite = true;
 			} else {
 				hasPrerequisite = false;
@@ -185,26 +188,26 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 			
 			if (hasPrerequisite && (filtercriteria.getUnit() != null && !filtercriteria.getUnit().isEmpty())) {
 				criteria.add(Restrictions.eq("reporting_unit", filtercriteria.getUnit()));
-				System.out.println("set criteria unit");
+				logger.info("set criteria unit");
 				hasPrerequisite = true;
 			}
 			
 			if (filtercriteria.getProvider() != null && !filtercriteria.getProvider().isEmpty()) {
 				criteria.add(Restrictions.eq("reporting_provider", filtercriteria.getProvider()));
-				System.out.println("set criteria provider");
+				logger.info("set criteria provider");
 			}
 			
 		}
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
-		System.out.println("result: " + result.toString());
+		logger.debug("result: " + result.toString());
 		session.close();
 		
 		if (result.size() <= 0) {
 			int misId = generateMISReport(filtercriteria);
 			if (misId != -1) {
 				result = findById(misId, MIS1ReportEntity.class);
-				System.out.println("result: " + result.toString());
+				logger.debug("result: " + result.toString());
 			}
 		}
 		
@@ -247,7 +250,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
-		System.out.println("finding key:" + value);
+		logger.debug("finding key: " + value);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, value));
@@ -258,6 +261,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public <T> List<T> findById(int Id, Class<?> className) {
+		logger.debug("finding Id: " + Id);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("id", Id));
@@ -268,6 +272,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
+		logger.debug("finding caseId and Today: " + relationalId + ", " + today);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("relationalid", relationalId));
@@ -279,6 +284,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public <T> T findByCaseIdAndToday(String fieldName, String relationalId, Date today, Class<?> className) {
+		logger.debug("finding caseId and " + fieldName + ": " + relationalId + ", " + today);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("relationalid", relationalId));
@@ -290,6 +296,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 	}
 	
 	public <T> T findByCaseIdAndName(String keyName, String relationalId, String name, Class<?> className) {
+		logger.debug("finding caseId and " + keyName + ": " + relationalId + ", " + name);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("relationalid", relationalId));
@@ -300,18 +307,8 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
-	public <T> T findByBaseEntityIdAndServerVersion(String baseEntityId, long serverVersion, Class<?> className) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(className);
-		criteria.add(Restrictions.eq("baseEntityId", baseEntityId));
-		criteria.add(Restrictions.eq("serverVersion", serverVersion));
-		@SuppressWarnings("unchecked")
-		List<T> result = criteria.list();
-		session.close();
-		return (T) (result.size() > 0 ? (T) result.get(0) : null);
-	}
-	
 	public <T> T findByRelationalIdAndServerVersion(String relationalid, long serverVersion, Class<?> className) {
+		logger.debug("finding caseId and serverVersion: " + relationalid + ", " + serverVersion);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("relationalid", relationalid));
@@ -362,6 +359,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 				        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider());
 				List results = query.list();
 				Id = (Integer) results.get(0);
+				logger.info("successfully created 1 row new in mis1report table");
 			}
 			session.close();
 		}
@@ -370,26 +368,5 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		}
 		
 		return Id;
-	}
-	
-	public int isEventExist(String baseEntityId, long version) {
-		Session session = sessionFactory.openSession();
-		int eventExist = 0;
-		try {
-			String hql = "select E.baseEntityId from " + "EventEntity E " + "where E.baseEntityId = :base_entity_id "
-			        + "and E.version = :version ";
-			Query query = session.createQuery(hql);
-			query.setParameter("base_entity_id", baseEntityId);
-			query.setParameter("version", version);
-			System.out.println("query: " + query);
-			eventExist = query.list().size();
-			session.close();
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return eventExist;
 	}
 }

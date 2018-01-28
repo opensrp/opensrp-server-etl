@@ -1,5 +1,6 @@
 package org.opensrp.etl.data.converter;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.DeathRegEntity;
@@ -9,6 +10,8 @@ import org.opensrp.etl.service.ExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DeathRegDataConverterService implements DataConverterService {
+	
+	private static final Logger logger = Logger.getLogger(DeathRegDataConverterService.class);
 	
 	@Autowired
 	private DeathRegEntity deathRegEntity;
@@ -41,6 +44,7 @@ public class DeathRegDataConverterService implements DataConverterService {
 				deathRegService.save(deathRegEntity);
 			}
 			catch (Exception e) {
+				logger.error(e);
 				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "deathReg");
 			}
 		}

@@ -1,5 +1,6 @@
 package org.opensrp.etl.data.converter;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +11,8 @@ import org.opensrp.etl.service.NutritionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class NutritionDataConverterService implements DataConverterService {
+	
+	private static final Logger logger = Logger.getLogger(NutritionDataConverterService.class);
 	
 	@Autowired
 	private NutritionEntity nutritionEntity;
@@ -44,6 +47,7 @@ public class NutritionDataConverterService implements DataConverterService {
 				nutritionService.save(nutritionEntity);
 			}
 			catch (Exception e) {
+				logger.error(e);
 				exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "nutrition");
 			}
 			

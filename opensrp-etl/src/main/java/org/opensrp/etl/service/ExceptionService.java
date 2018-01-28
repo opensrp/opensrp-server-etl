@@ -4,6 +4,7 @@ import static org.opensrp.etl.util.AllConstants.CASE_ID;
 
 import javax.transaction.Transactional;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.ExceptionEntity;
@@ -12,6 +13,8 @@ import org.opensrp.etl.repository.CommonDatabaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExceptionService implements RegisterService<ExceptionEntity> {
+	
+	private static final Logger logger = Logger.getLogger(ExceptionService.class);
 	
 	@Autowired
 	private ExceptionEntity exceptionEntity;
@@ -33,7 +36,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 			save(exceptionEntity);
 		}
 		catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		return exceptionEntity;

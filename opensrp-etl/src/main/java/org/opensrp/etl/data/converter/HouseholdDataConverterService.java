@@ -1,5 +1,6 @@
 package org.opensrp.etl.data.converter;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.opensrp.etl.entity.HouseholdEntity;
 import org.opensrp.etl.interfaces.DataConverterService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HouseholdDataConverterService implements DataConverterService {
+	
+	private static final Logger logger = Logger.getLogger(HouseholdDataConverterService.class);
 	
 	public HouseholdDataConverterService() {
 		
@@ -37,7 +40,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdService.save(householdEntity);
 		}
 		catch (Exception e) {
-		    e.printStackTrace();
+			logger.error(e);
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), Keys.HOUSEHOLD.name());
 		}
 	}
