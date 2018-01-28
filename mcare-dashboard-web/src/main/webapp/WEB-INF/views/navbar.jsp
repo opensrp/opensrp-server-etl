@@ -33,7 +33,7 @@
               <a href="<c:url value="/export"/>">CSV Export</a>
             </li>
             <li>
-              <a href="<c:url value="household.html"/>">Household</a>
+              <a href="<c:url value="/household.html"/>">Household</a>
             </li>
           </ul>
         </li>

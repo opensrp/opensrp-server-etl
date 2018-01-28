@@ -27,3 +27,43 @@ function getLocationHierarchy(url,id) {
   });
 
  }
+
+jQuery(document).ready(function($) {
+  	$("#division").change(function(event) {   
+		//event.preventDefault();		
+		getLocationHierarchy("/location?id="+$("#division").val().split("?")[0],"district") ;		
+		$("#upazila").html("");		
+		$("#union").html("");
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
+  	});
+  
+  	$("#district").change(function(event) {
+		getLocationHierarchy("/location?id="+$("#district").val().split("?")[0],"upazila") ;
+		$("#union").html("");		
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
+	});
+  	$("#upazila").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#upazila").val().split("?")[0],"union") ;		
+		$("#ward").html("");
+		$("#subunit").html("");
+		$("#mauzapara").html("");
+	});
+  	$("#union").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#union").val().split("?")[0],"ward") ;
+		$("#subunit").html("");
+		$("#mauzapara").html("");
+	});
+  	$("#ward").change(function(event) { 
+		getLocationHierarchy("/location?id="+$("#ward").val().split("?")[0],"subunit") ;
+		$("#mauzapara").html("");
+	});
+  	$("#subunit").change(function(event) {
+		getLocationHierarchy("/location?id="+$("#subunit").val().split("?")[0],"mauzapara") ;
+		
+	});
+
+ });

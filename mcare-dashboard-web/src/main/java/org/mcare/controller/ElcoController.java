@@ -1,27 +1,23 @@
 package org.mcare.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.ProviderServiceImpl;
 import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
-import org.mcare.etl.entity.HouseholdEntity;
+import org.mcare.etl.entity.ElcoEntity;
 import org.mcare.etl.service.HouseholdService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class HouseholdController {
+public class ElcoController {
 	
 	@Autowired
 	private HouseholdService householdService;
@@ -41,11 +37,11 @@ public class HouseholdController {
 	@Autowired
 	private PaginationHelperUtil paginationHelperUtil;
 	
-	public HouseholdController() {
+	public ElcoController() {
 		
 	}
 	
-	@RequestMapping(value = "/household.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/elco.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
 		String search = "";
 		search = (String) request.getParameter("search");
@@ -56,19 +52,12 @@ public class HouseholdController {
 			searchBuilder = searchBuilder.clear();
 		}
 		PaginationHelperUtil.getPaginationLink(request, session);
-		Class<HouseholdEntity> entityClassName = HouseholdEntity.class;
+		Class<ElcoEntity> entityClassName = ElcoEntity.class;
 		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
-		return "household/index";
+		return "elco/index";
 	}
 	
-	@RequestMapping(value = "/location", method = RequestMethod.GET)
-	public String getChildLocationList(HttpServletRequest request, HttpSession session, Model model, @RequestParam int id) {
-		List<Object[]> parentData = locationServiceImpl.getChildData(id);
-		session.setAttribute("data", parentData);
-		return "household/location";
-	}
-	
-	@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		
 		HouseholdEntity household = householdService.findById(id);
@@ -76,5 +65,5 @@ public class HouseholdController {
 		model.addAttribute("household", household);
 		return "household/view";
 		
-	}
+	}*/
 }

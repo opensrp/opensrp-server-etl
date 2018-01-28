@@ -51,10 +51,11 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
 	public HouseholdEntity findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return databaseRepositoryImpl.findById(id, "id", HouseholdEntity.class);
 	}
 	
 	@Transactional

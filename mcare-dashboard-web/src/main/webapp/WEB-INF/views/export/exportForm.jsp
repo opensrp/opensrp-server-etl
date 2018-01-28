@@ -45,13 +45,13 @@
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
-                
-                <label for="exampleInputPassword1">End Date</label>
-                <input class="form-control" type="text" name="end" required id="end">
-              </div>
-              <div class="col-md-6">
                 <label for="exampleInputLastName">Start Date</label>
                 <input  class="form-control" type=text name="start"  required id="start">
+               
+              </div>
+              <div class="col-md-6">
+                 <label for="exampleInputPassword1">End Date</label>
+                <input class="form-control" type="text" name="end" required id="end">
                 
               </div>
             </div>

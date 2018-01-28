@@ -40,7 +40,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	@Override
-	public <T> T findById(long id, String fieldName, Class<?> className) {
+	public <T> T findById(int id, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
 		return databaseRepositoryImpl.findById(id, fieldName, className);
 	}

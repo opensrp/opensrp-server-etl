@@ -8,7 +8,7 @@ public interface DatabaseService {
 	
 	public <T> int delete(T t);
 	
-	public <T> T findById(long id, String fieldName, Class<?> className);
+	public <T> T findById(int id, String fieldName, Class<?> className);
 	
 	public <T> T findByKey(String value, String fieldName, Class<?> className);
 	

@@ -101,7 +101,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T findById(long id, String fieldName, Class<?> className) {
+	public <T> T findById(int id, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, id));
@@ -134,14 +134,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
-		System.out.println("finding caseId:" + value);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, value));
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		System.out.println("finding result:" + result.toString());
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
@@ -225,7 +223,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		Criteria criteria = session.createCriteria(entityClassName);
 		
 		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			
+			System.err.println("searchBuilder.getDivision():" + searchBuilder.getDivision());
 			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 		}
 		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
@@ -248,12 +246,13 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
 			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
 		}
-		System.err.println("searchBuilder.getProvider():" + searchBuilder.getProvider());
+		
 		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
+			System.err.println("searchBuilder.getDivision():" + searchBuilder.getProvider());
 			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
 		}
 		if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
-			System.err.println(searchBuilder.getName().toUpperCase());
+			
 			criteria.add(Restrictions.ilike("firstName", searchBuilder.getName().toUpperCase(), MatchMode.ANYWHERE));
 		}
 		criteria.setFirstResult(offsetreal);

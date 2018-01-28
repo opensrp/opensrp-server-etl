@@ -1,5 +1,5 @@
  <%@page import="org.mcare.acl.entity.ProviderEntity"%>
-<%@page import="org.mcare.etl.entity.HouseholdEntity"%>
+<%@page import="org.mcare.etl.entity.ElcoEntity"%>
   <%@page import="org.mcare.common.util.PaginationHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -32,7 +32,7 @@
     
   </head>
   <%
-    List<HouseholdEntity>  households = (List<HouseholdEntity>)session.getAttribute("dataList");
+    List<ElcoEntity>  households = (List<ElcoEntity>)session.getAttribute("dataList");
     List<ProviderEntity>  providers = (List<ProviderEntity>)session.getAttribute("providers");
     List<Integer>  pageList = (List<Integer>)session.getAttribute("pageList");
     String offSet = request.getParameter("offSet");
@@ -315,12 +315,12 @@
               
               <tbody>
                 <%
-                for(HouseholdEntity household:households){ %>
+                for(ElcoEntity household:households){ %>
                     <tr role="row" class="even">
                         <td><a href="/<%=household.getId()%>/view.html"><%=household.getFirstName()%></a></td>
                         <td><%=household.getProvider()%></td>                       
-                        <td><%=household.getFWGOBHHID()%></td>
-                        <td><%=household.getFWJIVHHID()%></td>
+                        <td><%=household.getGOBHHID()%></td>
+                        <td><%=household.getJiVitAHHID()%></td>
                         <td><%=household.getRegistrationDate()%></td>
                          <td><%=household.getCaseId()%></td>
                     </tr>

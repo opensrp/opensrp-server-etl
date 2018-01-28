@@ -46,7 +46,10 @@ public class MotherDataConverterService implements DataConverterService {
 			if (doc.has("FWWOMDISTRICT"))
 				motherEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
 			if (doc.has("FWWOMUPAZILLA"))
-				motherEntity.setDivision(doc.getString("FWWOMUPAZILLA"));
+				motherEntity.setUpazila(doc.getString("FWWOMUPAZILLA"));
+			
+			if (details.has("division"))
+				motherEntity.setDivision(details.getString("division"));
 			
 			motherEntity.setCountry("BANGLADESH");
 			motherEntity.setCurrentFormStatus("");

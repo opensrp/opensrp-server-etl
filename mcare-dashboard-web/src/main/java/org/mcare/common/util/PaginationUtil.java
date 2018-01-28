@@ -60,7 +60,7 @@ public class PaginationUtil {
 				session.setAttribute("size", size / 10);
 			}
 		}
-		
+		System.err.println("data:" + data.toString());
 		session.setAttribute("parentData", parentData);
 		session.setAttribute("providers", providers);
 		

@@ -1,6 +1,8 @@
 package org.mcare.common.util;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,6 +66,9 @@ public class PaginationHelperUtil {
 		}
 	}
 	
+	/**
+	 * Set Params to session & return search option
+	 */
 	public SearchBuilder setParams(HttpServletRequest request, HttpSession session) {
 		String division = "";
 		String district = "";
@@ -108,21 +113,22 @@ public class PaginationHelperUtil {
 		if (request.getParameterMap().containsKey("name")) {
 			name = (String) request.getParameter("name");
 		}
-		
-		searchBuilder.setDivision(this.locationName(division));
-		searchBuilder.setDistrict(this.locationName(district));
-		searchBuilder.setUpazila(this.locationName(upazila));
-		searchBuilder.setUnion(this.locationName(union));
-		searchBuilder.setWard(this.locationName(ward));
-		searchBuilder.setSubunit(this.locationName(subunit));
-		searchBuilder.setMauzapara(this.locationName(mauzapara));
-		searchBuilder.setProvider(this.locationName(provider));
+		System.err.println("provider:" + provider);
+		searchBuilder.setDivision(locationName(division));
+		searchBuilder.setDistrict(locationName(district));
+		searchBuilder.setUpazila(locationName(upazila));
+		searchBuilder.setUnion(locationName(union));
+		searchBuilder.setWard(locationName(ward));
+		searchBuilder.setSubunit(locationName(subunit));
+		searchBuilder.setMauzapara(locationName(mauzapara));
+		searchBuilder.setProvider(provider);
 		searchBuilder.setName(name);
 		return searchBuilder;
 		
 	}
 	
-	public static String getPaginationLint(HttpServletRequest request) {
+	public static Map<String, String> getPaginationLink(HttpServletRequest request, HttpSession session) {
+		Map<String, String> map = new HashMap<>();
 		String division = "";
 		int divId = 0;
 		String divisionLink = "";
@@ -130,6 +136,7 @@ public class PaginationHelperUtil {
 			division = request.getParameter("division") == null ? "0?" : request.getParameter("division");
 			divId = PaginationHelperUtil.getParentId(division);
 			divisionLink = "&division=" + division;
+			map.put("divId", String.valueOf(divId));
 		}
 		String district = "";
 		int distId = 0;
@@ -138,6 +145,7 @@ public class PaginationHelperUtil {
 			district = request.getParameter("district") == null ? "0?" : request.getParameter("district");
 			distId = PaginationHelperUtil.getParentId(district);
 			districtLink = "&district=" + district;
+			map.put("distId", String.valueOf(distId));
 		}
 		String upazila = "";
 		int upzilaId = 0;
@@ -146,6 +154,7 @@ public class PaginationHelperUtil {
 			upazila = request.getParameter("upazila") == null ? "0?" : request.getParameter("upazila");
 			upzilaId = PaginationHelperUtil.getParentId(upazila);
 			upazilaLink = "&upazila=" + upazila;
+			map.put("upzilaId", String.valueOf(upzilaId));
 		}
 		String union = "";
 		int unionId = 0;
@@ -154,6 +163,7 @@ public class PaginationHelperUtil {
 			union = request.getParameter("union") == null ? "0?" : request.getParameter("union");
 			unionId = PaginationHelperUtil.getParentId(union);
 			unionLink = "&union=" + union;
+			map.put("unionId", String.valueOf(unionId));
 		}
 		
 		String ward = "";
@@ -163,6 +173,7 @@ public class PaginationHelperUtil {
 			ward = request.getParameter("ward") == null ? "0?" : request.getParameter("ward");
 			wardId = PaginationHelperUtil.getParentId(ward);
 			wardLink = "&ward=" + ward;
+			map.put("wardId", String.valueOf(wardId));
 		}
 		
 		String subunit = "";
@@ -172,6 +183,7 @@ public class PaginationHelperUtil {
 			subunit = request.getParameter("subunit") == null ? "0?" : request.getParameter("subunit");
 			subunitId = PaginationHelperUtil.getParentId(subunit);
 			subunitLink = "&subunit=" + subunit;
+			map.put("subunitId", String.valueOf(subunitId));
 		}
 		String mauzapara = "";
 		int mauzaparaId = 0;
@@ -180,13 +192,15 @@ public class PaginationHelperUtil {
 			mauzapara = request.getParameter("mauzapara") == null ? "0?" : request.getParameter("mauzapara");
 			mauzaparaId = PaginationHelperUtil.getParentId(mauzapara);
 			mauzaparaLink = "&mauzapara=" + mauzapara;
+			map.put("mauzaparaId", String.valueOf(mauzaparaId));
 		}
 		
 		String provider = "";
 		String providerLink = "";
 		if (request.getParameterMap().containsKey("provider")) {
-			provider = request.getParameter("provider") == null ? "0?" : request.getParameter("provider");
+			provider = request.getParameter("provider") == null ? "" : request.getParameter("provider");
 			providerLink = "&provider=" + provider;
+			map.put("provider", provider);
 		}
 		
 		String name = "";
@@ -194,6 +208,7 @@ public class PaginationHelperUtil {
 		if (request.getParameterMap().containsKey("name")) {
 			name = request.getParameter("name") == null ? "0?" : request.getParameter("name");
 			nameLink = "&name=" + name;
+			map.put("name", name);
 		}
 		String search = "";
 		String searchLink = "";
@@ -201,9 +216,11 @@ public class PaginationHelperUtil {
 			search = request.getParameter("search") == null ? "0?" : request.getParameter("search");
 			searchLink = "&search=" + search;
 		}
-		String paginationLink = divisionLink + districtLink + upazilaLink + unionLink + subunitLink + mauzaparaLink
-		        + providerLink + nameLink + searchLink;
-		return paginationLink;
+		String paginationLink = divisionLink + districtLink + upazilaLink + unionLink + wardLink + subunitLink
+		        + mauzaparaLink + providerLink + nameLink + searchLink;
+		map.put("paginationLink", paginationLink);
+		session.setAttribute("paginationAtributes", map);
+		return map;
 	}
 	
 }
