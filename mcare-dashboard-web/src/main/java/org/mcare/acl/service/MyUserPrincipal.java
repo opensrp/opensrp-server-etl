@@ -1,9 +1,13 @@
 package org.mcare.acl.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import org.mcare.acl.entity.Role;
 import org.mcare.acl.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyUserPrincipal implements UserDetails {
@@ -22,6 +26,15 @@ public class MyUserPrincipal implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		List<Role> roles = null;
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+			/*role.getPrivileges().stream()
+			 .map(p -> new SimpleGrantedAuthority(p.getName()))
+			 .forEach(authorities::add);*/
+		}
+		
 		return null;
 	}
 	

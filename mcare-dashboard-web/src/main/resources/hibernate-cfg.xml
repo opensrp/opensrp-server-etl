@@ -28,6 +28,10 @@
             <list>
              <value>org.mcare.data.export.entity.DataExportEntity</value>
                <value>org.mcare.acl.entity.ProviderEntity</value>
+                <value>org.mcare.acl.entity.Account</value>
+                 <value>org.mcare.acl.entity.Role</value>
+                  <value>org.mcare.acl.entity.Permission</value>
+                  
                 <value>org.mcare.acl.entity.UserEntity</value>
                  <value>org.mcare.etl.entity.HouseholdEntity</value>
                 <value>org.mcare.etl.entity.ElcoEntity</value>

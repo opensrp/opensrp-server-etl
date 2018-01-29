@@ -89,6 +89,7 @@
 <bean name="markerEntity" class="org.mcare.etl.entity.MarkerEntity"/>
 <bean name="exceptionEntity" class="org.mcare.etl.entity.ExceptionEntity"/>
 
+
 <bean name="markerService" class="org.mcare.etl.service.MarkerService"/>
 <bean name="markerRepository" class="org.mcare.etl.repository.MarkerRepository"/>
 
