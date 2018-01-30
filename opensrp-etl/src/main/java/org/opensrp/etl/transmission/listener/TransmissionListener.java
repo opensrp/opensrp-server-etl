@@ -61,7 +61,7 @@ public class TransmissionListener {
 			}
 			logger.info("DGFP Data transfer completed");
 		} else {
-			System.out.println("DGFP ETL process started, marker not initialized");
+			logger.info("DGFP ETL process started, marker not initialized");
 		}
 	}
 }

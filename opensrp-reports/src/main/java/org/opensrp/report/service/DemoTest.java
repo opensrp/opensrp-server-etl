@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class DemoTest {
 	
 	public DemoTest() {
-		System.err.println("dddd");
+		System.err.println("Demo Test");
 	}
 	
 	private String name;

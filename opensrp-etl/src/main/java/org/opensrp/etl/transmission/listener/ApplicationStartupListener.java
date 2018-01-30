@@ -1,5 +1,6 @@
 package org.opensrp.etl.transmission.listener;
 
+import org.apache.log4j.Logger;
 import org.opensrp.etl.entity.MarkerEntity;
 import org.opensrp.etl.service.MarkerService;
 import org.opensrp.etl.util.CommonConstant;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationStartupListener implements ApplicationListener<ContextRefreshedEvent> {
+	
+	private static final Logger logger = Logger.getLogger(ApplicationStartupListener.class);
+	
 	@Autowired
 	private MarkerService markerService;
 	
@@ -18,15 +22,14 @@ public class ApplicationStartupListener implements ApplicationListener<ContextRe
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		System.out.println(
-			    CommonConstant.DGFP.name() + "Application Stating............" + event.getApplicationContext().getId());
-			markerEntity = markerService.findByName(CommonConstant.DGFP.name());
-			if (markerEntity == null) {
-				MarkerEntity markerEntityDGFP = new MarkerEntity();				
-				markerEntityDGFP.setname(CommonConstant.DGFP.name());
-				markerEntityDGFP.settimeStamp(0);
-				markerService.save(markerEntityDGFP);
-			}
+		logger.info(CommonConstant.DGFP.name() + " Application Stating............ " + event.getApplicationContext().getId());
+		markerEntity = markerService.findByName(CommonConstant.DGFP.name());
+		if (markerEntity == null) {
+			MarkerEntity markerEntityDGFP = new MarkerEntity();
+			markerEntityDGFP.setname(CommonConstant.DGFP.name());
+			markerEntityDGFP.settimeStamp(0);
+			markerService.save(markerEntityDGFP);
+		}
 		
 	}
 	
