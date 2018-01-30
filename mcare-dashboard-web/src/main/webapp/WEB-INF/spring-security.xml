@@ -51,10 +51,10 @@
 	    <user name="mike" password="127870930d65c57ee65fcc47f2170d38" authorities="ROLE_VISITOR" />
 	  </user-service> -->
 	  <b:bean id="myUserDetailsService"  class="org.mcare.acl.service.UserService"/>
- 
+      <global-method-security pre-post-annotations="enabled" />
 	<authentication-manager>
 	    <authentication-provider
-	      user-service-ref="myUserDetailsService" >
+	      user-service-ref="accountDao" >
 	       <!--  <password-encoder ref="passwordEncoder">
 	        </password-encoder> -->
 	    </authentication-provider>
