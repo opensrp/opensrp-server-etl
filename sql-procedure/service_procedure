@@ -258,7 +258,8 @@
             and member.mem_upazilla=upazilla
             and member.mem_ward=ward
             and member.mem_union=unionname
-            and member.mem_subunit=unit;
+            and member.mem_subunit=unit
+            and member.providerid=provider;
 
 
             /*Family Planning Report Queries*/
@@ -278,7 +279,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
             
             IF prevRecordCount = 0 THEN
 		SELECT COUNT(distinct p1.relationalid) INTO fpNewPillUsage FROM psrf p1
@@ -292,7 +294,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;          
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE   
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewPillUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -308,7 +311,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalPillUsages FROM psrf p1
@@ -321,7 +325,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalPillUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -333,7 +338,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalPillUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -345,7 +351,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftPillAndStartedNone FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -362,7 +369,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftPillAndStartedOther FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -378,7 +386,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
            /*Condom Usage queries*/
@@ -396,7 +405,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 		SELECT COUNT(distinct p1.relationalid) INTO fpNewCondomUsage FROM psrf p1
@@ -409,7 +419,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewCondomUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -425,7 +436,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalCondomUsages FROM psrf p1
@@ -438,7 +450,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalCondomUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -450,7 +463,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalCondomUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -462,7 +476,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftCondomAndStartedNone FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -479,7 +494,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftCondomAndStartedOther FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -495,7 +511,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
             /*Injectable Usage queries*/
@@ -513,7 +530,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 		SELECT COUNT(distinct p1.relationalid) INTO fpNewInjectableUsage FROM psrf p1
@@ -526,7 +544,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewInjectableUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -542,7 +561,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalInjectableUsages FROM psrf p1
@@ -555,7 +575,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalInjectableUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -567,7 +588,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalInjectableUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -579,7 +601,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftInjectableAndStartedNone FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -596,7 +619,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftInjectableAndStartedOther FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -612,7 +636,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
 	    /*IUD Usage queries*/
@@ -630,7 +655,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 				SELECT COUNT(distinct p1.relationalid) INTO fpNewIUDUsage FROM psrf p1
@@ -643,7 +669,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewIUDUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -659,7 +686,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalIUDUsages FROM psrf p1
@@ -672,7 +700,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalIUDUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -684,7 +713,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalIUDUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -696,7 +726,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftIUDAndStartedNone FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -713,7 +744,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftIUDAndStartedOther FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -729,7 +761,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
 	    /*Implant Usage queries*/
@@ -747,7 +780,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 				SELECT COUNT(distinct p1.relationalid) INTO fpNewImplantUsage FROM psrf p1
@@ -760,7 +794,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewImplantUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -776,7 +811,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalImplantUsages FROM psrf p1
@@ -789,7 +825,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalImplantUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -801,7 +838,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalImplantUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -813,7 +851,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftImplantAndStartedNone FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -830,7 +869,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpLeftImplantAndStartedOther FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -846,7 +886,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
             /*MalePermanent Method Usage queries*/
@@ -864,7 +905,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 				SELECT COUNT(distinct p1.relationalid) INTO fpNewMalePermanentUsage FROM psrf p1
@@ -877,7 +919,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewMalePermanentUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -893,7 +936,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalMalePermanentUsages FROM psrf p1
@@ -906,7 +950,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalMalePermanentUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -918,7 +963,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalMalePermanentUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -930,7 +976,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
             /*FemalePermanent Method Usage queries*/
@@ -948,7 +995,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             IF prevRecordCount = 0 THEN
 				SELECT COUNT(distinct p1.relationalid) INTO fpNewFemalePermanentUsage FROM psrf p1
@@ -961,7 +1009,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO fpNewFemalePermanentUsage FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -977,7 +1026,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpCurrentTotalFemalePermanentUsages FROM psrf p1
@@ -990,7 +1040,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevTotalFemalePermanentUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1002,7 +1053,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalFemalePermanentUsages FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1014,7 +1066,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
 	    /*Eligible Couple queries*/
@@ -1028,7 +1081,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpPrevEligibleCoupleCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1040,7 +1094,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO fpTotalEligibleCoupleCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1051,7 +1106,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 			SELECT COUNT(distinct p1.relationalid) INTO fpNewEligibleCoupleCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1062,7 +1118,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 	   /*Total counts queries*/
            fpTotalOldUsages := fpOldPillUsage + fpOldCondomUsage + fpOldInjectableUsage
@@ -1112,7 +1169,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             ELSE
                 SELECT COUNT(distinct p1.relationalid) INTO mcCurrentNewPregnantCount FROM psrf p1
                 JOIN member ON (p1.relationalid= member.caseid)
@@ -1128,7 +1186,8 @@
                 AND member.mem_upazilla=upazilla
                 AND member.mem_ward=ward
                 AND member.mem_union=unionname
-                AND member.mem_subunit=unit;
+                AND member.mem_subunit=unit
+                AND member.providerid=provider;
             END IF;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcCurrentOldPregnantCount FROM psrf p1
@@ -1141,7 +1200,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcCurrentTotalPregnantCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1153,7 +1213,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcPrevPregnantCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1165,7 +1226,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTotalPregnantCount FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1177,7 +1239,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1189,7 +1252,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit1Service FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1201,7 +1265,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit2Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1213,7 +1278,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit2Service FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1225,7 +1291,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit3Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1237,7 +1304,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit3Service FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1249,7 +1317,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
              SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit4Info FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1261,7 +1330,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcANCVisit4Service FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1273,7 +1343,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct b1.relationalid) INTO mcBirthAtHomeWithTrainedPerson FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
@@ -1286,7 +1357,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct b1.relationalid) INTO mcNormalBirthAtHospitalOrClinic FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
@@ -1299,7 +1371,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct b1.relationalid) INTO mcCesareanBirthAtHospitalOrClinic FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
@@ -1312,7 +1385,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit1Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1325,7 +1399,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit1Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1338,7 +1413,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit2Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1351,7 +1427,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit2Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1364,7 +1441,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit3Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1377,7 +1455,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit3Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1390,7 +1469,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit4Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1403,7 +1483,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcMotherPNCVisit4Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1416,7 +1497,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit1Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1429,7 +1511,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit1Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1442,7 +1525,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit2Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1455,7 +1539,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit2Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1468,7 +1553,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit3Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1481,7 +1567,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit3Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1494,7 +1581,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit4Info FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1507,7 +1595,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcChildPNCVisit4Service FROM pnc p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1520,7 +1609,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcReferredComplexPregnant FROM anc a1
             JOIN member ON (a1.relationalid= member.caseid)
@@ -1532,7 +1622,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseOne FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1544,7 +1635,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseTwo FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1556,7 +1648,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseThree FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1568,7 +1661,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseFour FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1580,7 +1674,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO mcTTDoseFive FROM psrf p1
             JOIN member ON (p1.relationalid= member.caseid)
@@ -1592,7 +1687,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct b1.relationalid) INTO mcMisoprostolReceivedCount FROM bnf b1
             JOIN member ON (b1.relationalid= member.caseid)
@@ -1604,7 +1700,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnChangesOfAdolescent
             FROM adolescent a1
@@ -1617,7 +1714,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingBadEffectOnChildMarriageAndTeenPregnancy
             FROM adolescent a1
@@ -1630,7 +1728,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingTeenagersOnTakingIronAndFolicAcid
             FROM adolescent a1
@@ -1643,7 +1742,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct a1.relationalid) INTO mcCounsellingOnInfectionOfDiseases
             FROM adolescent a1
@@ -1656,7 +1756,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
             /*Child Care Report Queries*/
@@ -1671,7 +1772,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO ccIsCleanedService
             FROM pnc p1
@@ -1684,7 +1786,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO ccUsedChlorhexidinInfo
             FROM pnc p1
@@ -1697,7 +1800,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO ccUsedChlorhexidinService
             FROM pnc p1
@@ -1710,7 +1814,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct p1.relationalid) INTO ccFedBreastMilkCount
             FROM pnc p1
@@ -1723,7 +1828,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccBcgCount
             FROM child c1
@@ -1736,7 +1842,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccOpv1Andpcv1Andpenta1Count
             FROM child c1
@@ -1751,7 +1858,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccOpv2Andpcv2Andpenta2Count
             FROM child c1
@@ -1766,7 +1874,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccOpv3Andpenta3Count
             FROM child c1
@@ -1780,7 +1889,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccPcv3Count
             FROM child c1
@@ -1793,7 +1903,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccMrAndopv4Count
             FROM child c1
@@ -1807,7 +1918,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDangerousDiseasesInfo
             FROM child c1
@@ -1820,7 +1932,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDangerousDiseasesService
             FROM child c1
@@ -1833,7 +1946,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfPneumoniaInfo
             FROM child c1
@@ -1846,7 +1960,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfPneumoniaService
             FROM child c1
@@ -1859,7 +1974,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDiarrheaInfo
             FROM child c1
@@ -1872,7 +1988,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct c1.relationalid) INTO ccReferredChildOfDiarrheaService
             FROM child c1
@@ -1885,7 +2002,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
 
             /*Birth and Death Report Queries*/
@@ -1899,7 +2017,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             If bdTotalLiveBirth IS NULL THEN
                 bdTotalLiveBirth := 0;
@@ -1916,7 +2035,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct b1.relationalid) INTO bdTotalPrematureChild
             FROM bnf b1
@@ -1929,7 +2049,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan7Days
             FROM deathreg d1
@@ -1942,7 +2063,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan28Days
             FROM deathreg d1
@@ -1955,7 +2077,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct d1.relationalid) INTO bdDeathLessThan1Yr
             FROM deathreg d1
@@ -1968,7 +2091,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             bdTotalDeathLessThan1Yr := bdDeathLessThan7Days + bdDeathLessThan28Days
                                        + bdDeathLessThan1Yr;
@@ -1984,7 +2108,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct d1.relationalid) INTO bdDeathOfMother
             FROM deathreg d1
@@ -1997,7 +2122,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct d1.relationalid) INTO bdDeathOfOther
             FROM deathreg d1
@@ -2010,7 +2136,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             bdTotalDeathCount := bdTotalDeathLessThan1Yr + bdDeathLessThan5Yr
                                  + bdDeathOfMother + bdDeathOfOther;
@@ -2029,7 +2156,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingIronForMother
             FROM nutrition n1
@@ -2044,7 +2172,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnDistributionIronForPregWoman
             FROM nutrition n1
@@ -2059,7 +2188,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnDistributionIronForMother
             FROM nutrition n1
@@ -2074,7 +2204,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnBreastMilkForPregWoman
             FROM nutrition n1
@@ -2089,7 +2220,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnBreastMilkForMother
             FROM nutrition n1
@@ -2104,7 +2236,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO wnCounsellingOnFeedingMNP
             FROM nutrition n1
@@ -2119,7 +2252,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingWithin1Hour
             FROM nutrition n1
@@ -2132,7 +2266,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnBreastFeedingUntill6Month
             FROM nutrition n1
@@ -2145,7 +2280,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild6TO23
             FROM nutrition n1
@@ -2160,7 +2296,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnComplementaryFoodForChild24to59
             FROM nutrition n1
@@ -2175,7 +2312,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChildZeroToSix
             FROM nutrition n1
@@ -2189,7 +2327,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild6TO23
             FROM nutrition n1
@@ -2204,7 +2343,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedMAMChild24TO59
             FROM nutrition n1
@@ -2219,7 +2359,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChildZeroToSix
             FROM nutrition n1
@@ -2233,7 +2374,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild6TO23
             FROM nutrition n1
@@ -2248,7 +2390,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
             SELECT COUNT(distinct n1.relationalid) INTO cnContractedSAMChild24TO59
             FROM nutrition n1
@@ -2263,7 +2406,8 @@
             AND member.mem_upazilla=upazilla
             AND member.mem_ward=ward
             AND member.mem_union=unionname
-            AND member.mem_subunit=unit;
+            AND member.mem_subunit=unit
+            AND member.providerid=provider;
 
            INSERT INTO mis1report (id, fpOldPillUsage, fpNewPillUsage, fpCurrentTotalPillUsages
                                          , fpPrevTotalPillUsages, fpTotalPillUsages, fpLeftPillAndStartedNone
