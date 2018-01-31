@@ -55,7 +55,6 @@ public class BNFEntity {
 	
 	private String FWBNFWOMVITSTS;
 	
-	@Temporal(TemporalType.DATE)
 	private Date FWBNFDTOO;
 	
 	private String FWBNFLB;
@@ -273,31 +272,29 @@ public class BNFEntity {
 	public void setRelationalId(String relationalId) {
 		this.relationalId = relationalId;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}
-
+	
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-
+	
 	public String getFWBNFGEN() {
 		return FWBNFGEN;
 	}
-
+	
 	public void setFWBNFGEN(String fWBNFGEN) {
 		FWBNFGEN = fWBNFGEN;
 	}
-	
-	
 	
 }

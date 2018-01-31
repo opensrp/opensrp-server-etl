@@ -35,9 +35,10 @@ public class HouseholdDataConverterService implements DataConverterService {
 			caseID = doc.getString("caseId");
 			
 			householdEntity.setBirthDate(DateUtil.getDateFromString(doc, "FWHOHBIRTHDATE"));
-			
-			householdEntity.setCaseId(doc.getString("caseId"));
-			householdEntity.setClientVersion(doc.getLong("clientVersion"));
+			if (doc.has("caseId"))
+				householdEntity.setCaseId(doc.getString("caseId"));
+			if (doc.has("clientVersion"))
+				householdEntity.setClientVersion(doc.getLong("clientVersion"));
 			householdEntity.setCountry(doc.getString("FWCOUNTRY"));
 			householdEntity.setCurrentFormStatus(doc.getString("current_formStatus"));
 			householdEntity.setDistrict(doc.getString("FWDISTRICT"));
@@ -49,7 +50,8 @@ public class HouseholdDataConverterService implements DataConverterService {
 			}
 			
 			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc, "END"));
-			householdEntity.setExternalUserId(doc.getString("external_user_ID"));
+			if (doc.has("external_user_ID"))
+				householdEntity.setExternalUserId(doc.getString("external_user_ID"));
 			if (doc.has("FWHOHFNAME") && !doc.getString("FWHOHFNAME").isEmpty()) {
 				householdEntity.setFirstName(doc.getString("FWHOHFNAME"));
 			} else {

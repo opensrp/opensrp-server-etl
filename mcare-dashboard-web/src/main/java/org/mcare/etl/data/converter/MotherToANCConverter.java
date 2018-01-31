@@ -38,6 +38,14 @@ public class MotherToANCConverter {
 	
 	private static final String ANC_Visit_Four = "ancVisitFour";
 	
+	private static final String visitCode1 = "ancrv_1";
+	
+	private static final String visitCode2 = "ancrv_2";
+	
+	private static final String visitCode3 = "ancrv_3";
+	
+	private static final String visitCode4 = "ancrv_4";
+	
 	private ArrayList<String> ancKeys = new ArrayList<String>();
 	
 	private Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
@@ -193,7 +201,7 @@ public class MotherToANCConverter {
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_One));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("1");
-				ancEntity.setAncName(ANC_Visit_One);
+				ancEntity.setAncName(visitCode1);
 				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap, ANCType.anc1_current_formStatus.name()));
 				
 			}
@@ -204,7 +212,7 @@ public class MotherToANCConverter {
 				JSONObject ancVisitOne = new JSONObject(mdoc.getString(ANC_Visit_Two));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("2");
-				ancEntity.setAncName(ANC_Visit_Two);
+				ancEntity.setAncName(visitCode2);
 				ancService.save(convertToAncEntity(ancVisitOne, ancVisitKeyMap, ANCType.ANC2_current_formStatus.name()));
 				
 			}
@@ -215,7 +223,7 @@ public class MotherToANCConverter {
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Three));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("3");
-				ancEntity.setAncName(ANC_Visit_Three);
+				ancEntity.setAncName(visitCode3);
 				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap, ANCType.ANC3_current_formStatus.name()));
 				
 			}
@@ -225,7 +233,7 @@ public class MotherToANCConverter {
 				JSONObject ancVisit = new JSONObject(mdoc.getString(ANC_Visit_Four));
 				Map<String, String> ancVisitKeyMap = new HashMap<String, String>();
 				ancVisitKeyMap = getANCVisitKeys("4");
-				ancEntity.setAncName(ANC_Visit_Four);
+				ancEntity.setAncName(visitCode4);
 				ancService.save(convertToAncEntity(ancVisit, ancVisitKeyMap, ANCType.ANC4_current_formStatus.name()));
 				
 			}

@@ -44,7 +44,7 @@ public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		notNull(username, "username can't be null");
 		Account account = getByUsername(username);
-		System.err.println("username:" + username);
+		System.err.println("username:" + account.getAuthorities().toString());
 		if (account == null) {
 			throw new UsernameNotFoundException("No user with username " + username);
 		}

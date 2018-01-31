@@ -10,6 +10,7 @@ import org.mcare.etl.service.ExceptionService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class BNFDataConverterService implements DataConverterService {
 	
@@ -45,13 +46,13 @@ public class BNFDataConverterService implements DataConverterService {
 				
 				bnfEntity.setFWBNFSTS(doc.getString("FWBNFSTS"));
 				if (doc.has("FWBNFGEN"))
-				bnfEntity.setFWBNFGEN(doc.getString("FWBNFGEN"));
+					bnfEntity.setFWBNFGEN(doc.getString("FWBNFGEN"));
 				
 				bnfEntity.setFWDISPLAYTEXT(doc.getString("FWDISPLAYTEXT1"));
 				
 				bnfEntity.setFWBNFWOMVITSTS(doc.getString("FWBNFWOMVITSTS"));
 				
-				bnfEntity.setFWBNFDTOO(DateUtil.getDateFromString(doc, "FWBNFDTOO"));
+				bnfEntity.setFWBNFDTOO(DateUtil.getDateTFromString(doc, "FWBNFDTOO"));
 				
 				bnfEntity.setFWBNFLB(doc.getString("FWBNFLB"));
 				

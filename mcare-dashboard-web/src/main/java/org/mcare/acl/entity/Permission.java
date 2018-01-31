@@ -71,4 +71,10 @@ public class Permission implements GrantedAuthority {
 	public int hashCode() {
 		return getAuthority().hashCode();
 	}
+	
+	@Override
+	public String toString() {
+		return "Permission [id=" + id + ", name=" + name + "]";
+	}
+	
 }

@@ -9,6 +9,7 @@ import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -80,11 +81,14 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return databaseRepositoryImpl.count();
 	}
 	
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
 	public List<Object> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
 		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
 	}
 	
+	//@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);

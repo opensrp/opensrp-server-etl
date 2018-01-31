@@ -7,6 +7,7 @@ import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ActionService implements RegisterService<ActionEntity> {
 	
@@ -20,25 +21,25 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	@Override
 	public void save(ActionEntity actionEntity) {
-		if (!isActionExist(actionEntity)) {
+		ActionEntity action = getAction(actionEntity);
+		if (action == null) {
 			databaseRepositoryImpl.save(actionEntity);
 		} else {
-			System.out.println("Action already exists in database!!!");
+			if (delete(action))
+				databaseRepositoryImpl.save(actionEntity);
 		}
-		
 	}
 	
 	@Transactional
-	public boolean isActionExist(ActionEntity actionEntity) {
-		return databaseRepositoryImpl.isActionExist(actionEntity.getCaseID(), actionEntity.getVisitCode(),
-		    actionEntity.getAlertStatus(), actionEntity.getStartDate()) > 0 ? true : false;
+	public ActionEntity getAction(ActionEntity actionEntity) {
+		return databaseRepositoryImpl.getAction(actionEntity.getCaseID(), actionEntity.getVisitCode(),
+		    actionEntity.getAlertStatus(), actionEntity.getStartDate());
 		
 	}
 	
 	@Override
 	public boolean delete(ActionEntity t) {
-		return true;
-		// TODO Auto-generated method stub
+		return databaseRepositoryImpl.delete(t);
 		
 	}
 	
@@ -57,7 +58,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Transactional
 	@Override
 	public ActionEntity findByCaseId(String caseId) {
-		return databaseRepositoryImpl.findByKey(caseId,"caseId", ActionEntity.class);
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", ActionEntity.class);
 	}
 	
 }

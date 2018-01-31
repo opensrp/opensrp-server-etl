@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
+import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,9 +157,10 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
-	public int isActionExist(String caseId, String visitCode, String alertStatus, Date startDate) {
+	public ActionEntity getAction(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
-		int actionExist = 0;
+		
+		ActionEntity actions = null;
 		try {
 			String hql = "select A.caseId from " + "ActionEntity A " + "where A.caseId = :case_id "
 			        + "and A.visitCode = :visit_code " + "and A.alertStatus = :alert_status "
@@ -168,15 +170,15 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			query.setParameter("visit_code", visitCode);
 			query.setParameter("alert_status", alertStatus);
 			query.setParameter("start_date", startDate);
-			actionExist = query.list().size();
+			actions = (ActionEntity) query.list().get(0);
 			session.close();
 			
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("From getAction: " + e.getMessage());
 		} // TODO Auto-generated method stub
 		
-		return actionExist;
+		return actions;
 	}
 	
 	@SuppressWarnings("unchecked")

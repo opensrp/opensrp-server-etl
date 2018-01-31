@@ -21,6 +21,8 @@ public class DateUtil {
 	
 	private final static SimpleDateFormat getEddMMMyyyyhhmmssz = new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss z");
 	
+	private final static SimpleDateFormat getYYYYMMDDTHHMMSSFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss");
+	
 	public static Date getDateFromString(JSONObject doc, String key) throws ParseException, JSONException {
 		Date date = null;
 		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
@@ -45,6 +47,15 @@ public class DateUtil {
 		        && !"Invalid Date".equalsIgnoreCase(doc.getString(key))) {
 			date = getEddMMMyyyyhhmmssz.parse(doc.getString(key));
 			return getYYYYMMDDFormat.parse(getYYYYMMDDFormat.format(date));
+		}
+		return date;
+	}
+	
+	public static Date getDateTFromString(JSONObject doc, String key) throws ParseException, JSONException {
+		Date date = null;
+		if (doc.has(key) && !"null".equalsIgnoreCase(doc.getString(key)) && !doc.getString(key).isEmpty()) {
+			date = getYYYYMMDDTHHMMSSFormat.parse(doc.getString(key));
+			return date;
 		}
 		return date;
 	}

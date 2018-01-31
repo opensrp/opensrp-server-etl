@@ -11,6 +11,7 @@ import org.mcare.etl.service.ExceptionService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ActionDataConverterService implements DataConverterService {
 	
@@ -39,12 +40,21 @@ public class ActionDataConverterService implements DataConverterService {
 			actionEntity.setActionType(doc.getString("actionType"));
 			actionEntity.setTimeStamp(Long.parseLong(doc.getString("timeStamp")));
 			actionEntity.setIsActionActive(Boolean.parseBoolean(doc.getString("isActionActive")));
+			if ("expired".equalsIgnoreCase(data.getString("alertStatus"))) {
+				actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "startDate"));
+				actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+			} else {
+				actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
+				actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+			}
+			
 			actionEntity.setAlertStatus(data.getString("alertStatus"));
+			
 			actionEntity.setVisitCode(data.getString("visitCode"));
-			actionEntity.setExpiryDate(DateUtil.getDateFromString(data, "expiryDate"));
+			
 			actionEntity.setScheduleName(data.getString("scheduleName"));
 			actionEntity.setBeneficiaryType(data.getString("beneficiaryType"));
-			actionEntity.setStartDate(DateUtil.getDateFromString(data, "startDate"));
+			
 			actionService.save(actionEntity);
 		}
 		catch (JSONException e) {

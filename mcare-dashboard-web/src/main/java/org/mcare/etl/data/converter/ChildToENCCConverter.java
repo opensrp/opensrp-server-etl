@@ -33,6 +33,12 @@ public class ChildToENCCConverter {
 	
 	private static final String ENCC_Visit_Three = "enccVisitThree";
 	
+	private static final String visitCode1 = "enccrv_1";
+	
+	private static final String visitCode2 = "enccrv_2";
+	
+	private static final String visitCode3 = "enccrv_3";
+	
 	private ArrayList<String> enccKeys = new ArrayList<String>();
 	
 	private Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
@@ -106,7 +112,7 @@ public class ChildToENCCConverter {
 				JSONObject enccVisitOne = new JSONObject(mdoc.getString(ENCC_Visit_One));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("1");
-				enccEntity.setEnccName(ENCC_Visit_One);
+				enccEntity.setEnccName(visitCode1);
 				enccService.save(convertToAncEntity(enccVisitOne, enccVisitKeyMap, mdoc.get("caseId").toString()));
 				
 			}
@@ -117,7 +123,7 @@ public class ChildToENCCConverter {
 				JSONObject enccVisitOne = new JSONObject(mdoc.getString(ENCC_Visit_Two));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("2");
-				enccEntity.setEnccName(ENCC_Visit_Two);
+				enccEntity.setEnccName(visitCode2);
 				enccService.save(convertToAncEntity(enccVisitOne, enccVisitKeyMap, mdoc.get("caseId").toString()));
 				
 			}
@@ -129,7 +135,7 @@ public class ChildToENCCConverter {
 				JSONObject enccVisit = new JSONObject(mdoc.getString(ENCC_Visit_Three));
 				Map<String, String> enccVisitKeyMap = new HashMap<String, String>();
 				enccVisitKeyMap = getENCCVisitKeys("3");
-				enccEntity.setEnccName(ENCC_Visit_Three);
+				enccEntity.setEnccName(visitCode3);
 				enccService.save(convertToAncEntity(enccVisit, enccVisitKeyMap, mdoc.get("caseId").toString()));
 				
 			}

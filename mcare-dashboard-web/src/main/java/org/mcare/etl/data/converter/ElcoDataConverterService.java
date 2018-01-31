@@ -11,6 +11,7 @@ import org.mcare.etl.service.ExceptionService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ElcoDataConverterService implements DataConverterService {
 	
@@ -36,25 +37,44 @@ public class ElcoDataConverterService implements DataConverterService {
 		try {
 			caseID = doc.getString("caseId");
 			JSONObject details = new JSONObject(doc.getString("details"));
-			elcoEntity.setBirthDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
-			elcoEntity.setCaseId(doc.getString("caseId"));
+			if (doc.has("WomanREGDATE"))
+				elcoEntity.setBirthDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
+			if (doc.has("caseId"))
+				elcoEntity.setCaseId(doc.getString("caseId"));
 			elcoEntity.setClientVersion(doc.getLong("clientVersion"));
-			elcoEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
-			elcoEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
-			elcoEntity.setDivision(doc.getString("FWWOMDIVISION"));
-			elcoEntity.setExternalUserId(doc.getString("external_user_ID"));
-			elcoEntity.setFirstName(doc.getString("FWWOMFNAME"));
-			elcoEntity.setGender(doc.getString("FWGENDER"));
-			elcoEntity.setGOBHHID(doc.getString("GOBHHID"));
-			elcoEntity.setGps(doc.getString("FWWOMGPS"));
-			elcoEntity.setInstanceId(doc.getString("INSTANCEID"));
-			elcoEntity.setJiVitAHHID(doc.getString("JiVitAHHID"));
-			elcoEntity.setLastName(doc.getString("FWWOMLNAME"));
-			elcoEntity.setMauzaPara(doc.getString("FWWOMMAUZA_PARA"));
-			elcoEntity.setProvider(doc.getString("PROVIDERID"));
-			elcoEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
-			elcoEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
-			elcoEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
+			if (doc.has("FWWOMCOUNTRY"))
+				elcoEntity.setCountry(doc.getString("FWWOMCOUNTRY"));
+			if (doc.has("FWWOMDISTRICT"))
+				elcoEntity.setDistrict(doc.getString("FWWOMDISTRICT"));
+			if (doc.has("FWWOMDIVISION"))
+				elcoEntity.setDivision(doc.getString("FWWOMDIVISION"));
+			if (doc.has("external_user_ID"))
+				elcoEntity.setExternalUserId(doc.getString("external_user_ID"));
+			if (doc.has("FWWOMFNAME"))
+				elcoEntity.setFirstName(doc.getString("FWWOMFNAME"));
+			if (doc.has("FWGENDER"))
+				elcoEntity.setGender(doc.getString("FWGENDER"));
+			if (doc.has("GOBHHID"))
+				elcoEntity.setGOBHHID(doc.getString("GOBHHID"));
+			if (doc.has("FWWOMGPS"))
+				elcoEntity.setGps(doc.getString("FWWOMGPS"));
+			if (doc.has("INSTANCEID"))
+				elcoEntity.setInstanceId(doc.getString("INSTANCEID"));
+			if (doc.has("JiVitAHHID"))
+				elcoEntity.setJiVitAHHID(doc.getString("JiVitAHHID"));
+			if (doc.has("FWWOMLNAME"))
+				elcoEntity.setLastName(doc.getString("FWWOMLNAME"));
+			if (doc.has("FWWOMMAUZA_PARA"))
+				elcoEntity.setMauzaPara(doc.getString("FWWOMMAUZA_PARA"));
+			if (doc.has("PROVIDERID"))
+				elcoEntity.setProvider(doc.getString("PROVIDERID"));
+			if (doc.has("WomanREGDATE"))
+				elcoEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "WomanREGDATE"));
+			if (doc.has("SUBMISSIONDATE"))
+				elcoEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
+			if (doc.has("FWWOMSUBUNIT"))
+				elcoEntity.setSubunit(doc.getString("FWWOMSUBUNIT"));
+			
 			elcoEntity.setStart(DateUtil.getDateTimeFromString(details, "start"));
 			elcoEntity.setEnd(DateUtil.getDateTimeFromString(details, "end"));
 			elcoEntity.setToday(DateUtil.getDateFromString(details, "today"));
@@ -131,8 +151,11 @@ public class ElcoDataConverterService implements DataConverterService {
 			} else {
 				elcoEntity.setFWELIGIBLE2("");
 			}
-			elcoEntity.setFWWOMGOBHHID(doc.getString("FWWOMGOBHHID"));
-			elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
+			
+			if (doc.has("FWWOMGOBHHID"))
+				elcoEntity.setFWWOMGOBHHID(doc.getString("FWWOMGOBHHID"));
+			if (doc.has("FWPSRPREGSTS"))
+				elcoEntity.setFWPSRPREGSTS(doc.getString("FWPSRPREGSTS"));
 			elcoEntity.setRelationalId(details.getString("relationalid"));
 			elcoEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
 			elcoEntity.setCurrentFormStatus("");

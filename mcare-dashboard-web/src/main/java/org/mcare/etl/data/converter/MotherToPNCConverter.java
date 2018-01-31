@@ -35,6 +35,12 @@ public class MotherToPNCConverter {
 	
 	private static final String PNC_Visit_Three = "pncVisitThree";
 	
+	private static final String visitCode1 = "pncrv_1";
+	
+	private static final String visitCode2 = "pncrv_2";
+	
+	private static final String visitCode3 = "pncrv_3";
+	
 	private ArrayList<String> pncKeys = new ArrayList<String>();
 	
 	private Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
@@ -102,7 +108,7 @@ public class MotherToPNCConverter {
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_One));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("1");
-				pncEntity.setPncName(PNC_Visit_One);
+				pncEntity.setPncName(visitCode1);
 				pncService.save(convertTopncEntity(pncVisitOne, pncVisitKeyMap));
 				//logger.debug("pncVisitOne saved successfully entity: " + pncEntity.toString());
 			}
@@ -114,7 +120,7 @@ public class MotherToPNCConverter {
 				JSONObject pncVisitOne = new JSONObject(mdoc.getString(PNC_Visit_Two));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("2");
-				pncEntity.setPncName(PNC_Visit_Two);
+				pncEntity.setPncName(visitCode2);
 				pncService.save(convertTopncEntity(pncVisitOne, pncVisitKeyMap));
 				//logger.debug("pncVisitTwo saved successfully entity: " + pncEntity.toString());
 			}
@@ -127,7 +133,7 @@ public class MotherToPNCConverter {
 				JSONObject pncVisit = new JSONObject(mdoc.getString(PNC_Visit_Three));
 				Map<String, String> pncVisitKeyMap = new HashMap<String, String>();
 				pncVisitKeyMap = getpncVisitKeys("3");
-				pncEntity.setPncName(PNC_Visit_Three);
+				pncEntity.setPncName(visitCode3);
 				pncService.save(convertTopncEntity(pncVisit, pncVisitKeyMap));
 				
 			}
