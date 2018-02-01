@@ -71,6 +71,9 @@ public class ChildEntity extends CommonEntity {
 	@Column(name = "relational_id")
 	private String relationalId;//details
 	
+	@Column(name = "birth_date_and_time")
+	private Date birthDateAndTime;//details
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "mother_id", referencedColumnName = "id")
 	private MotherEntity mother;
@@ -209,6 +212,14 @@ public class ChildEntity extends CommonEntity {
 	
 	public void setMother(MotherEntity mother) {
 		this.mother = mother;
+	}
+	
+	public Date getBirthDateAndTime() {
+		return birthDateAndTime;
+	}
+	
+	public void setBirthDateAndTime(Date birthDateAndTime) {
+		this.birthDateAndTime = birthDateAndTime;
 	}
 	
 }

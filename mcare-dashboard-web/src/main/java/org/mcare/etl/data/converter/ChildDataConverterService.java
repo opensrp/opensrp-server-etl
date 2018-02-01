@@ -3,7 +3,6 @@ package org.mcare.etl.data.converter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.ChildEntity;
-import org.mcare.etl.entity.MotherEntity;
 import org.mcare.etl.interfaces.DataConverterService;
 import org.mcare.etl.service.ChildService;
 import org.mcare.etl.service.ExceptionService;
@@ -37,6 +36,8 @@ public class ChildDataConverterService implements DataConverterService {
 			JSONObject details = new JSONObject(doc.getString("details"));
 			
 			childEntity.setBirthDate(DateUtil.getDateFromString(details, "FWBNFDOB"));
+			if (details.has("FWBNFDTOO"))
+				childEntity.setBirthDateAndTime(DateUtil.getDateTFromString(details, "FWBNFDTOO"));
 			
 			childEntity.setClientVersion(doc.getLong("clientVersion"));
 			childEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
@@ -87,7 +88,6 @@ public class ChildDataConverterService implements DataConverterService {
 			childEntity.setFWHUSNAME(details.getString("FWHUSNAME"));
 			childEntity.setIsClosed(doc.getString("isClosed"));
 			childEntity.setRelationalId(details.getString("relationalid"));
-			MotherEntity mother = motherService.findByCaseId(details.getString("relationalid"));
 			
 			childService.save(childEntity);
 			childToENCCConverter.enccVisitSave(doc);
