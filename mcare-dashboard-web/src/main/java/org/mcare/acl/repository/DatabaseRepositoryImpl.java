@@ -97,6 +97,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			session.close();
 			
 		}
+		System.err.println("returnValue::" + returnValue);
 		return returnValue;
 	}
 	
@@ -160,25 +161,19 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	public ActionEntity getAction(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
 		
-		ActionEntity actions = null;
-		try {
-			String hql = "select A.caseId from " + "ActionEntity A " + "where A.caseId = :case_id "
-			        + "and A.visitCode = :visit_code " + "and A.alertStatus = :alert_status "
-			        + " and A.startDate = :start_date";
-			Query query = session.createQuery(hql);
-			query.setParameter("case_id", caseId);
-			query.setParameter("visit_code", visitCode);
-			query.setParameter("alert_status", alertStatus);
-			query.setParameter("start_date", startDate);
-			actions = (ActionEntity) query.list().get(0);
-			session.close();
-			
-		}
-		catch (Exception e) {
-			System.out.println("From getAction: " + e.getMessage());
-		} // TODO Auto-generated method stub
+		Criteria criteria = session.createCriteria(ActionEntity.class);
+		criteria.add(Restrictions.eq("visitCode", visitCode));
+		criteria.add(Restrictions.eq("caseId", caseId));
+		criteria.add(Restrictions.eq("alertStatus", alertStatus));
+		criteria.add(Restrictions.eq("startDate", startDate));
+		@SuppressWarnings("unchecked")
+		List<ActionEntity> actions = criteria.list();
+		session.close();
 		
-		return actions;
+		if (actions.size() == 0) {
+			return null;
+		}
+		return (ActionEntity) actions.get(0);
 	}
 	
 	@SuppressWarnings("unchecked")

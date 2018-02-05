@@ -22,6 +22,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	@Override
 	public void save(ActionEntity actionEntity) {
 		ActionEntity action = getAction(actionEntity);
+		
 		if (action == null) {
 			databaseRepositoryImpl.save(actionEntity);
 		} else {
@@ -37,6 +38,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
 	public boolean delete(ActionEntity t) {
 		return databaseRepositoryImpl.delete(t);
