@@ -15,8 +15,7 @@
 	        <security:csrf/>
     	</security:http>
 	
-	  <b:bean id="myUserDetailsService"  class="org.mcare.acl.service.UserService"/>
-     
+	 
 	<security:authentication-manager>
 	    <security:authentication-provider
 	      user-service-ref="accountDao" >

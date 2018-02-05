@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mcare.acl.entity.UserEntity;
 import org.mcare.acl.service.DatabaseServiceImpl;
-import org.mcare.acl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,9 +32,6 @@ public class AclController {
 	
 	@Autowired
 	private UserEntity userEntity;
-	
-	@Autowired
-	private UserService userService;
 	
 	@RequestMapping("/")
 	public String showView(Model model) {
@@ -69,7 +65,7 @@ public class AclController {
 		userEntity.setEnabled(true);
 		
 		userEntity.setPassword(userEntity.getPassword());
-		userService.save(userEntity);
+		//userService.save(userEntity);
 		return new ModelAndView("redirect:/user/add");
 	}
 	
