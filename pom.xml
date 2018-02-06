@@ -8,6 +8,5 @@
   <name>mcare 2 dashboard</name>
   <modules>
     <module>mcare-dashboard-web</module>
-    <module>mcare-etl</module>
   </modules>
 </project>
