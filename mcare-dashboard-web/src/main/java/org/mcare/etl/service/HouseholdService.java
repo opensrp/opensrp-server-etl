@@ -88,7 +88,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
 	}
 	
-	//@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
+	@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
