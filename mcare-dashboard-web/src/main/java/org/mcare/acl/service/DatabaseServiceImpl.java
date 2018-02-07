@@ -34,14 +34,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Transactional
 	@Override
 	public <T> int delete(T t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Transactional
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return databaseRepositoryImpl.findById(id, fieldName, className);
 	}
 	

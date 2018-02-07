@@ -21,25 +21,21 @@ public class ProviderServiceImpl implements DatabaseService {
 	
 	@Override
 	public <T> long save(T t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
 	public <T> int delete(T t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -47,7 +43,6 @@ public class ProviderServiceImpl implements DatabaseService {
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);
-		
 	}
 	
 }

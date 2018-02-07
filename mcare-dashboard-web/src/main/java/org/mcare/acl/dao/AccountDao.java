@@ -5,7 +5,7 @@
  * Blog: http://springinpractice.com/
  * Code: https://github.com/springinpractice
  */
-package org.mcare.acl.service;
+package org.mcare.acl.dao;
 
 import org.mcare.acl.entity.Account;
 import org.springframework.security.core.userdetails.UserDetailsService;

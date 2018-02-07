@@ -20,7 +20,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public HouseholdService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
@@ -56,7 +55,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	@Transactional
 	@Override
 	public HouseholdEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return databaseRepositoryImpl.findById(id, "id", HouseholdEntity.class);
 	}
 	
@@ -67,7 +65,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	}
 	
 	public List<HouseholdEntity> list() {
-		//householdRepository.
 		return null;
 		
 	}
@@ -82,7 +79,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return databaseRepositoryImpl.count();
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
 	public <T> List<T> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
