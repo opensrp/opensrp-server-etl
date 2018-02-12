@@ -1,0 +1,1 @@
+function(doc) { if(doc.timeStamp && doc.type!="ScheduleLog") {emit([doc.timeStamp], doc)} }
