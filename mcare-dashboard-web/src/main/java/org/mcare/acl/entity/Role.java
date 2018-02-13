@@ -1,10 +1,3 @@
-/* 
- * Copyright (c) 2013 Manning Publications Co.
- * 
- * Book: http://manning.com/wheeler/
- * Blog: http://springinpractice.com/
- * Code: https://github.com/springinpractice
- */
 package org.mcare.acl.entity;
 
 import java.util.HashSet;
@@ -26,17 +19,10 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-/**
- * @author Willie Wheeler (willie.wheeler@gmail.com)
- */
 @Service
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
-	
-	/**
-     * 
-     */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -76,10 +62,7 @@ public class Role implements GrantedAuthority {
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.GrantedAuthority#getAuthority()
-	 */
+
 	@Override
 	@Transient
 	public String getAuthority() {

@@ -16,6 +16,7 @@ public class MyPermissionEvaluator implements PermissionEvaluator {
 		System.err.println("permission:" + permission.toString());
 		System.err.println("targetDomainObject:" + targetDomainObject.toString());
 		System.err.println("getAuthorities:" + authentication.getAuthorities());
+
 		Collection<? extends GrantedAuthority> role = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : role) {
 			
