@@ -5,12 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Registration</title>
-<meta name="_csrf_parameter" content="_csrf" />
-<meta name="_csrf_header" content="X-CSRF-TOKEN" />
-<meta name="_csrf" content="e62835df-f1a0-49ea-bce7-bf96f998119c" />
 </head>
 <body>
-	<form method="post" action="registration.jsp">
+	<form action="/household.html">
 		<center>
 			<table border="1" width="30%" cellpadding="5">
 				<thead>
@@ -42,8 +39,8 @@
 					<tr>
 						<td><input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" /></td>
-						<td><input type="submit" value="Submit" /></td>
-						<td><input type="reset" value="Reset" /></td>
+						<td><input type="submit" value="submit" /></td>
+						<td><input type="reset" value="reset" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">Already registered!! <a href="index.jsp">Login

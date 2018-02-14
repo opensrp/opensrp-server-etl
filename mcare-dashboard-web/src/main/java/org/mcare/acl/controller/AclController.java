@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.service.DatabaseServiceImpl;
+import org.mcare.acl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -32,6 +32,9 @@ public class AclController {
 	@Autowired
 	private Account account;
 	
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping("/")
 	public String showView(Model model) {
 		
@@ -52,20 +55,16 @@ public class AclController {
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.GET)
 	public ModelAndView addUser(Model model) {
-		model.addAttribute("name", "Tom from Home page");
-		model.addAttribute("formatted", "<b>Home</b>");
+		System.err.println("password: " + new StandardPasswordEncoder().encode("xyz"));
+
+		model.addAttribute("account", new Account());
 		return new ModelAndView("user/add", "command", account);
 	}
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-	public ModelAndView add(@ModelAttribute("user") Account account, ModelMap model) {
-		System.err.println("" + account.getUsername());
-		account.setUsername(account.getUsername());
-		account.setEnabled(true);
-		
-		account.setPassword(account.getPassword());
-		//userService.save(userEntity);
-		return new ModelAndView("redirect:/user/add");
+	public ModelAndView add(@ModelAttribute("account") Account account, ModelMap model) {
+		userService.registerNewUserAccount(account);
+		return new ModelAndView("redirect:/user/login");
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -82,11 +81,55 @@ public class AclController {
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 
+//	@RequestMapping(value = "/user/registration", method = RequestMethod.GET)
+//	public String showRegistrationForm(WebRequest request, Model model) {
+//		
+//	    Account account = new Account();
+//	    model.addAttribute("user", account);
+//	    return "user/registration";
+//	}
+	
+	
 	@RequestMapping(value = "/user/registration", method = RequestMethod.GET)
-	public String showRegistrationForm(WebRequest request, Model model) {
-		System.err.println(new StandardPasswordEncoder().encode("admin"));
-	    Account account = new Account();
-	    model.addAttribute("user", account);
-	    return "registration";
+	public ModelAndView show() {
+		return new ModelAndView("registration", "account", account);
 	}
+
+	
+	
+//	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+//	public ModelAndView submit(Account account) {
+//		System.out.println("in submit method");
+//		
+//		service.registerNewUserAccount(account);
+//	    
+//	    
+//		
+//		// Do something with the submitted User
+//		String url = "/household.html";
+//		return new ModelAndView(new RedirectView(url));
+//	}
+
+	
+//	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+//	public ModelAndView registerUserAccount(
+//	  @ModelAttribute("user") Account account, 
+//	  WebRequest request) {
+//	     
+//	    User registered = new User();
+//
+//	        registered = createUserAccount(account, result);
+//
+//	        return new ModelAndView("login", "account", account);
+//	}
+//
+//	private User createUserAccount(Account account) {
+//	    User registered = null;
+//	    try {
+//	        registered = service.registerNewUserAccount(account);
+//	    } catch (EmailExistsException e) {
+//	        return null;
+//	    }
+//	    return registered;
+//	}
 }

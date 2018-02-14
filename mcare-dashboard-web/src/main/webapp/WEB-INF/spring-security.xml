@@ -12,6 +12,8 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/login*"
 			access="isAnonymous()" />
+		<security:intercept-url pattern="/user/add*"
+			access="isAnonymous()" />
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login login-page="/login"
@@ -21,15 +23,14 @@
 	</security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider
-			user-service-ref="accountDao">
-			<!--  <security:password-encoder ref="passwordEncoder" />-->
+		<security:authentication-provider user-service-ref="accountDao">
+			<security:password-encoder ref="passwordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<!-- <b:bean id="passwordEncoder"
+	<b:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.password.StandardPasswordEncoder">
-	</b:bean> -->
+	</b:bean>
 
 	<security:global-method-security
 		pre-post-annotations="enabled">
