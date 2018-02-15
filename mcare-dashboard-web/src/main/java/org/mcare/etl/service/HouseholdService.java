@@ -10,6 +10,7 @@ import org.mcare.etl.interfaces.RegisterService;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public HouseholdService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
@@ -55,7 +55,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	@Transactional
 	@Override
 	public HouseholdEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return databaseRepositoryImpl.findById(id, "id", HouseholdEntity.class);
 	}
 	
@@ -66,7 +65,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	}
 	
 	public List<HouseholdEntity> list() {
-		//householdRepository.
 		return null;
 		
 	}
@@ -84,14 +82,12 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
-	public List<Object> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
+	public <T> List<T> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
 		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
 	}
-	
-	@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
+
 	@Transactional
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
 	}
-	
 }

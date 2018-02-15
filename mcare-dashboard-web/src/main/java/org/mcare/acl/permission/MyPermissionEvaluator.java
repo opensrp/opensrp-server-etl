@@ -1,4 +1,4 @@
-package org.mcare.acl.service;
+package org.mcare.acl.permission;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -13,10 +13,10 @@ public class MyPermissionEvaluator implements PermissionEvaluator {
 	
 	@Override
 	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-		// TODO Auto-generated method stub
 		System.err.println("permission:" + permission.toString());
 		System.err.println("targetDomainObject:" + targetDomainObject.toString());
 		System.err.println("getAuthorities:" + authentication.getAuthorities());
+
 		Collection<? extends GrantedAuthority> role = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : role) {
 			
@@ -30,7 +30,6 @@ public class MyPermissionEvaluator implements PermissionEvaluator {
 	
 	@Override
 	public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

@@ -5,7 +5,7 @@
  * Blog: http://springinpractice.com/
  * Code: https://github.com/springinpractice
  */
-package org.mcare.acl.service;
+package org.mcare.acl.dao;
 
 import java.io.Serializable;
 import java.util.List;

@@ -51,7 +51,6 @@ public class HouseholdController {
 		search = (String) request.getParameter("search");
 		if (search != null) {
 			searchBuilder = paginationHelperUtil.setParams(request, session);
-			
 		} else {
 			searchBuilder = searchBuilder.clear();
 		}

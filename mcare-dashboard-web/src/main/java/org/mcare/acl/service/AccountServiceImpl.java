@@ -9,6 +9,7 @@ package org.mcare.acl.service;
 
 import javax.inject.Inject;
 
+import org.mcare.acl.dao.AccountDao;
 import org.mcare.acl.entity.Account;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Inject
 	private AccountDao accountDao;
-	
-	/* (non-Javadoc)
-	 * @see com.springinpractice.ch07.service.AccountService#getAccountByUsername(java.lang.String)
-	 */
+
 	@PreAuthorize("hasRole('PERM_READ_ACCOUNTS')")
 	public Account getAccountByUsername(String username) {
 		return accountDao.getByUsername(username);

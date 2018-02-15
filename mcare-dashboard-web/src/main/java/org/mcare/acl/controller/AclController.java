@@ -1,13 +1,13 @@
-/**
- * 
- */
-package org.mcare.controller;
+package org.mcare.acl.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.*;
 
-import org.mcare.acl.entity.UserEntity;
+
+import org.mcare.acl.entity.Account;
 import org.mcare.acl.service.DatabaseServiceImpl;
+import org.mcare.acl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,8 +31,11 @@ public class AclController {
 	private DatabaseServiceImpl databaseServiceImpl;
 	
 	@Autowired
-	private UserEntity userEntity;
+	private Account account;
 	
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping("/")
 	public String showView(Model model) {
 		
@@ -53,27 +56,21 @@ public class AclController {
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.GET)
 	public ModelAndView addUser(Model model) {
-		model.addAttribute("name", "Tom from Home page");
-		model.addAttribute("formatted", "<b>Home</b>");
-		return new ModelAndView("user/add", "command", userEntity);
+		model.addAttribute("account", new Account());
+		return new ModelAndView("user/add", "command", account);
 	}
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-	public ModelAndView add(@ModelAttribute("user") UserEntity userEntity, ModelMap model) {
-		System.err.println("" + userEntity.getUsername());
-		userEntity.setUsername(userEntity.getUsername());
-		userEntity.setEnabled(true);
-		
-		userEntity.setPassword(userEntity.getPassword());
-		//userService.save(userEntity);
-		return new ModelAndView("redirect:/user/add");
+	public ModelAndView add(@ModelAttribute("account") @Valid Account account, ModelMap model) {
+		userService.registerNewUserAccount(account);
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		return "user/login";
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

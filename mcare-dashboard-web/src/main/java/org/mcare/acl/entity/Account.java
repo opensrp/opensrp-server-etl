@@ -1,10 +1,3 @@
-/* 
- * Copyright (c) 2013 Manning Publications Co.
- * 
- * Book: http://manning.com/wheeler/
- * Blog: http://springinpractice.com/
- * Code: https://github.com/springinpractice
- */
 package org.mcare.acl.entity;
 
 import java.util.Collection;
@@ -24,23 +17,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-/**
- * @author Willie Wheeler (willie.wheeler@gmail.com)
- */
 @Service
 @Entity
 @Table(name = "account")
 @NamedQuery(name = "account.byUsername", query = "from Account a where a.username = :username")
 public class Account implements UserDetails {
-	
-	/**
-     * 
-     */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -57,6 +44,7 @@ public class Account implements UserDetails {
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@NotNull
 	@Column(name = "email")
 	private String email;
 	
@@ -80,11 +68,7 @@ public class Account implements UserDetails {
 	public int getId() {
 		return id;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#getUsername()
-	 */
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -121,11 +105,7 @@ public class Account implements UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
-	 */
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -133,35 +113,22 @@ public class Account implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonExpired()
-	 */
+
 	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonLocked()
-	 */
+
 	@Transient
 	public boolean isAccountNonLocked() {
 		return true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
-	 */
+
 	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isEnabled()
-	 */
-	
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -186,10 +153,7 @@ public class Account implements UserDetails {
 		}
 		return perms;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities()
-	 */
+
 	@Transient
 	public Collection<GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
@@ -197,12 +161,7 @@ public class Account implements UserDetails {
 		authorities.addAll(getPermissions());
 		return authorities;
 	}
-	
-	/**
-	 * <p>
-	 * Returns the username.
-	 * </p>
-	 */
+
 	public String toString() {
 		return username;
 	}
