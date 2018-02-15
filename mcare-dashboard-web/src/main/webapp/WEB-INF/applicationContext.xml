@@ -31,5 +31,6 @@
 	<context:component-scan base-package="org.mcare.etl.entity" />
 	<context:component-scan base-package="org.mcare.etl.repository" />
 	<context:component-scan base-package="org.mcare.etl.service" />
+	<context:component-scan base-package="org.mcare.acl" />
 
 </beans>

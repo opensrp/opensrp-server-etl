@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,6 +44,7 @@ public class Account implements UserDetails {
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@NotNull
 	@Column(name = "email")
 	private String email;
 	

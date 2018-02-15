@@ -7,8 +7,6 @@
  */
 package org.mcare.acl.dao;
 
-import static org.springframework.util.Assert.notNull;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,16 +23,19 @@ public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao
 
 	@Override
 	public Account getByUsername(String username) {
-		notNull(username, "username can't be null");
 		return (Account) getSession().getNamedQuery("account.byUsername").setParameter("username", username).uniqueResult();
 	}
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		notNull(username, "username can't be null");
-		Account account = getByUsername(username);
-		System.err.println("username:" + account.getAuthorities().toString());
+		Account account = null;
+		try {
+			account = getByUsername(username);
+			System.out.println("username:" + account.getAuthorities().toString());
+		} catch (Exception e) {
+			System.err.println("account null: " + e);
+		}
 		return account;
 	}
 

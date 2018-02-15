@@ -69,7 +69,7 @@
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
-							<form:input path="password" />
+							<form:input type="password" path="password" />
 						</div>
 					</div>
 					<div class="form-group">
