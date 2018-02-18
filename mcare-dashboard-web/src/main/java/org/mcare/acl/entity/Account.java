@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,9 @@ public class Account implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_seq")
 	@SequenceGenerator(name = "account_id_seq", sequenceName = "account_id_seq", allocationSize = 1)
 	private int id;
-	
+
+	//@NotNull
+	//@NotEmpty
 	@Column(name = "username")
 	private String username;
 	
@@ -43,11 +46,12 @@ public class Account implements UserDetails {
 	
 	@Column(name = "last_name")
 	private String lastName;
-	
-	@NotNull
+
+	//@NotEmpty
 	@Column(name = "email")
 	private String email;
 	
+	//@NotEmpty
 	@Column(name = "password")
 	private String password;
 	
