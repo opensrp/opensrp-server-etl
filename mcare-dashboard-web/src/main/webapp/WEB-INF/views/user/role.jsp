@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add user information</title>
+<title>Add permissions</title>
 
 <link type="text/css"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>"
@@ -23,7 +23,7 @@
 </head>
 
 <body>
-	<c:url var="saveUrl" value="/user/add" />
+	<c:url var="saveUrl" value="/user/role" />
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -32,7 +32,7 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="<c:url value="/"/>">Home</a></li>
-				<li><a href="<c:url value="/export"/>">CSV Export</a></li>
+				<li><a href="<c:url value="/user/administration"/>">Administration</a></li>
 				<li><a href="<c:url value="/logout"/>">Logout</a></li>
 			</ul>
 		</div>
@@ -41,44 +41,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form:form method="POST" action="${saveUrl}" modelAttribute="account">
+				<form:form method="POST" action="${saveUrl}" modelAttribute="role">
 					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">User Name</label>
+						<label class="col-sm-2 control-label">Role Name</label>
 						<div class="col-sm-10">
-							<form:input path="username" />
-						</div>
-					</div>
-
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">First Name</label>
-						<div class="col-sm-10">
-							<form:input path="firstName" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Last Name</label>
-						<div class="col-sm-10">
-							<form:input path="lastName" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Email</label>
-						<div class="col-sm-10">
-							<form:input path="email" />
-							<form:errors path="email" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Password</label>
-						<div class="col-sm-10">
-							<form:password path="password"/>
-							<form:errors path="password" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Re-type Password</label>
-						<div class="col-sm-10">
-							<form:password path="retypePassword" />
+							<form:input path="name" />
 						</div>
 					</div>
 					<div class="form-group">

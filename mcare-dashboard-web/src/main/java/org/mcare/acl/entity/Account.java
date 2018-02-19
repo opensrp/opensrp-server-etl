@@ -1,6 +1,7 @@
 package org.mcare.acl.entity;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,9 +17,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,7 +44,7 @@ public class Account implements UserDetails {
 	private int id;
 
 	//@NotNull
-	//@NotEmpty
+	@NotEmpty(message = "username can't be empty")
 	@Column(name = "username")
 	private String username;
 	
@@ -47,17 +54,33 @@ public class Account implements UserDetails {
 	@Column(name = "last_name")
 	private String lastName;
 
-	//@NotEmpty
+	@NotEmpty(message = "email can't be empty")
 	@Column(name = "email")
 	private String email;
-	
-	//@NotEmpty
+
+	@NotEmpty
+	//@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters")
 	@Column(name = "password")
 	private String password;
-	
+
+	@NotEmpty
+	//@Min(4)
+	@Column(name = "retype_password")
+	private String retypePassword;
+
 	@Column(name = "enabled")
 	private boolean enabled;
-	
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", updatable = false)
+	@CreationTimestamp
+	private Date created = new Date();
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
+	@UpdateTimestamp
+	private Date updated = new Date();
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "account_role", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<Role>();
@@ -116,6 +139,14 @@ public class Account implements UserDetails {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRetypePassword() {
+		return retypePassword;
+	}
+
+	public void setRetypePassword(String retypePassword) {
+		this.retypePassword = retypePassword;
 	}
 
 	@Transient
