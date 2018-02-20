@@ -315,9 +315,12 @@
               
               <tbody>
                 <%
-                for(HouseholdEntity household:households){ %>
+                for(HouseholdEntity household:households){ %> 
                     <tr role="row" class="even">
-                        <td><a href="/<%=household.getId()%>/view.html"><%=household.getFirstName()%></a></td>
+                        <td>
+						<c:url value="/<%=household.getId()%>/view.html" var="myURL"/>										
+						<a href="${myURL}"><%=household.getFirstName()%></a>
+                        </td>
                         <td><%=household.getProvider()%></td>                       
                         <td><%=household.getFWGOBHHID()%></td>
                         <td><%=household.getFWJIVHHID()%></td>
@@ -387,7 +390,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © Your Website 2018</small>
+          <small>Copyright © mpower-social enterprise ltd 2018</small>
         </div>
       </div>
     </footer>

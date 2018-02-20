@@ -24,17 +24,15 @@ public class DataExportServiceFactory {
 	}
 	
 	private DataExportService setDataExportServiceWithFormName(String formName) {
-		if (FormName.ancVisitOne.name().equalsIgnoreCase(formName) || FormName.ancVisitTwo.name().equalsIgnoreCase(formName)
-		        || FormName.ancVisitThree.name().equalsIgnoreCase(formName)
-		        || FormName.ancVisitFour.name().equalsIgnoreCase(formName)) {
+		if (FormName.ancrv_1.name().equalsIgnoreCase(formName) || FormName.ancrv_2.name().equalsIgnoreCase(formName)
+		        || FormName.ancrv_3.name().equalsIgnoreCase(formName) || FormName.ancrv_4.name().equalsIgnoreCase(formName)) {
 			dataExportService = ancDataExportServiceImpl;
-		} else if (FormName.pncVisitOne.name().equalsIgnoreCase(formName)
-		        || FormName.pncVisitTwo.name().equalsIgnoreCase(formName)
-		        || FormName.pncVisitThree.name().equalsIgnoreCase(formName)) {
+		} else if (FormName.pncrv_1.name().equalsIgnoreCase(formName) || FormName.pncrv_2.name().equalsIgnoreCase(formName)
+		        || FormName.pncrv_3.name().equalsIgnoreCase(formName)) {
 			dataExportService = pncDataExportServiceImpl;
-		} else if (FormName.enccVisitOne.name().equalsIgnoreCase(formName)
-		        || FormName.enccVisitTwo.name().equalsIgnoreCase(formName)
-		        || FormName.enccVisitThree.name().equalsIgnoreCase(formName)) {
+		} else if (FormName.enccrv_1.name().equalsIgnoreCase(formName)
+		        || FormName.enccrv_2.name().equalsIgnoreCase(formName)
+		        || FormName.enccrv_3.name().equalsIgnoreCase(formName)) {
 			dataExportService = enccDataExportServiceImpl;
 		} else {
 			
