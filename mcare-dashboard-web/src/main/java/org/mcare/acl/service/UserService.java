@@ -1,7 +1,11 @@
 package org.mcare.acl.service;
 
+import javax.validation.ConstraintValidatorContext;
+
 import org.mcare.acl.dao.AccountDao;
 import org.mcare.acl.entity.Account;
+import org.mcare.acl.entity.Permission;
+import org.mcare.acl.entity.Role;
 import org.mcare.acl.repository.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +34,15 @@ public class UserService {
 			account.setEmail(account.getEmail());
 			account.setEnabled(true);
 			account.setPassword(passwordEncoder.encode(account.getPassword()));
+			account.setRetypePassword(account.getRetypePassword());
 			repository.save(account);
 		}
+	}
+
+	@Transactional
+	public void managePermissions(Permission permission) {
+		permission.setName(permission.getName());
+		repository.save(permission);
 	}
 
 	private boolean emailExist(String email) {
@@ -40,5 +51,14 @@ public class UserService {
 			return true;
 		}
 		return false;
+	}
+
+	public String isValid(Account account) {
+		return String.valueOf(passwordEncoder.matches(account.getRetypePassword(), account.getPassword()));
+	}
+
+	public void manageRole(Role role) {
+		role.setName(role.getName());
+		repository.save(role);
 	}
 }

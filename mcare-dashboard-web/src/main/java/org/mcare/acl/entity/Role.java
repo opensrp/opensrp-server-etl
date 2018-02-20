@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class Role implements GrantedAuthority {
 	@SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq", allocationSize = 1)
 	private int id;
 	
+	@NotEmpty(message = "role name can't be empty")
 	@Column(name = "name")
 	private String name;
 	

@@ -35,6 +35,9 @@
             <li>
               <a href="<c:url value="/household.html"/>">Household</a>
             </li>
+            <li>
+              <a href="<c:url value="/user/administration"/>">Administration</a>
+            </li>
           </ul>
         </li>
       

@@ -13,7 +13,7 @@
 		<security:intercept-url pattern="/login*"
 			access="isAnonymous()" />
 		<security:intercept-url pattern="/user/add*"
-			access="isAnonymous()" />
+			access="permitAll" />
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login login-page="/login"
@@ -34,7 +34,7 @@
 	</security:global-method-security>
 
 	<b:bean id="passwordEncoder"
-		class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	</b:bean>
 
 	<b:bean id="expressionHandler"
