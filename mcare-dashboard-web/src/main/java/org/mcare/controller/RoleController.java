@@ -1,5 +1,7 @@
 package org.mcare.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.mcare.acl.entity.Permission;
@@ -32,8 +34,15 @@ public class RoleController {
 	@Autowired
 	private Role role;
 	
-	@RequestMapping(value = "role/add", method = RequestMethod.GET)
-	public ModelAndView getRole(Model model) {
+	@RequestMapping(value = "role.html", method = RequestMethod.GET)
+	public String roleList(Model model) {
+		List<Role> roles = roleServiceImpl.findAll("Role");
+		model.addAttribute("roles", roles);
+		return "role/index";
+	}
+	
+	@RequestMapping(value = "role/add.html", method = RequestMethod.GET)
+	public ModelAndView saveRole(Model model) {
 		
 		model.addAttribute("role", new Role());
 		model.addAttribute("permissions", permissionService.findAll("Permission"));
@@ -41,8 +50,8 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value = "/role/add", method = RequestMethod.POST)
-	public ModelAndView addRole(@RequestParam(value = "permissions", required = false) int[] permissions,
-	                            @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model) {
+	public ModelAndView saveRole(@RequestParam(value = "permissions", required = false) int[] permissions,
+	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model) {
 		
 		role.setPermissions(roleServiceImpl.serPermissions(permissions));
 		roleServiceImpl.save(role);

@@ -60,7 +60,7 @@ public class RoleServiceImpl implements AclService {
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll(tableClass);
 	}
 	
 	public Set<Permission> serPermissions(int[] selectedPermissions) {
