@@ -321,8 +321,8 @@
                 %>
                     <tr role="row" class="even">
                         <td><a href="<c:url value="/${id}/view.html"/>"><%=household.getFirstName()%></a></td>
-                        <td> <%=household.getProvider()%></td>                       
-                        <td><%=household.getFWGOBHHID()%></td>
+                      <td> <%=household.getProvider()%></td>             
+                       <td><%=household.getFWGOBHHID()%></td>
                         <td><%=household.getFWJIVHHID()%></td>
                         <td><%=household.getRegistrationDate()%></td>
                          <td><%=household.getCaseId()%></td>
@@ -390,7 +390,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © Your Website 2018</small>
+          <small>Copyright © mpower-social enterprise ltd 2018</small>
         </div>
       </div>
     </footer>
