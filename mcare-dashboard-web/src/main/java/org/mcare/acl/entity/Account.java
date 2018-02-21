@@ -20,9 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,13 +33,14 @@ import org.springframework.stereotype.Service;
 @Table(name = "account")
 @NamedQuery(name = "account.byUsername", query = "from Account a where a.username = :username")
 public class Account implements UserDetails {
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_seq")
 	@SequenceGenerator(name = "account_id_seq", sequenceName = "account_id_seq", allocationSize = 1)
 	private int id;
-
+	
 	//@NotNull
 	@NotEmpty(message = "username can't be empty")
 	@Column(name = "username")
@@ -53,34 +51,35 @@ public class Account implements UserDetails {
 	
 	@Column(name = "last_name")
 	private String lastName;
-
+	
 	@NotEmpty(message = "email can't be empty")
 	@Column(name = "email")
 	private String email;
-
+	
 	@NotEmpty
 	//@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters")
 	@Column(name = "password")
 	private String password;
-
+	
 	@NotEmpty
 	//@Min(4)
 	@Column(name = "retype_password")
+	@Transient
 	private String retypePassword;
-
+	
 	@Column(name = "enabled")
 	private boolean enabled;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
 	private Date created = new Date();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE", insertable = true, updatable = true)
 	@UpdateTimestamp
 	private Date updated = new Date();
-
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "account_role", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<Role>();
@@ -95,7 +94,7 @@ public class Account implements UserDetails {
 	public int getId() {
 		return id;
 	}
-
+	
 	public String getUsername() {
 		return username;
 	}
@@ -132,7 +131,7 @@ public class Account implements UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -140,30 +139,30 @@ public class Account implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public String getRetypePassword() {
 		return retypePassword;
 	}
-
+	
 	public void setRetypePassword(String retypePassword) {
 		this.retypePassword = retypePassword;
 	}
-
+	
 	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-
+	
 	@Transient
 	public boolean isAccountNonLocked() {
 		return true;
 	}
-
+	
 	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
-
+	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -188,7 +187,7 @@ public class Account implements UserDetails {
 		}
 		return perms;
 	}
-
+	
 	@Transient
 	public Collection<GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
@@ -196,8 +195,12 @@ public class Account implements UserDetails {
 		authorities.addAll(getPermissions());
 		return authorities;
 	}
-
+	
+	@Override
 	public String toString() {
-		return username;
+		return "Account [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
+		        + ", email=" + email + ", password=" + password + ", retypePassword=" + retypePassword + ", enabled="
+		        + enabled + ", created=" + created + ", updated=" + updated + ", roles=" + roles + "]";
 	}
+	
 }
