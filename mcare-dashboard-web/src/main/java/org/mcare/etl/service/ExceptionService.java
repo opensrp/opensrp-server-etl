@@ -4,7 +4,7 @@ import javax.transaction.Transactional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ExceptionEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;

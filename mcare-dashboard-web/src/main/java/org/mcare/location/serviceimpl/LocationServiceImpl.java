@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.location.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

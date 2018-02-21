@@ -4,13 +4,12 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ENCCEntity;
-import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.ENCCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ENCCService implements RegisterService<ENCCEntity> {
 	
@@ -53,7 +52,7 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	}
 	
 	@Transactional
-	public ENCCEntity findByCaseIdAndToday(String relationalId, Date today) {		
+	public ENCCEntity findByCaseIdAndToday(String relationalId, Date today) {
 		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, ENCCEntity.class);
 	}
 	

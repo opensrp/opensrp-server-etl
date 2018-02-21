@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.common.util.ExportKeyMapperSetup;
 import org.mcare.data.export.entity.DataExportEntity;
 import org.mcare.data.export.service.DataExportService;

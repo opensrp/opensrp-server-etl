@@ -1,4 +1,4 @@
-package org.mcare.acl.service;
+package org.mcare.acl.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,7 +7,8 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.mcare.acl.entity.Permission;
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.acl.service.AclService;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

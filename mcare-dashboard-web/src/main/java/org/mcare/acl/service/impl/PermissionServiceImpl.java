@@ -1,8 +1,9 @@
-package org.mcare.acl.service;
+package org.mcare.acl.service.impl;
 
 import java.util.List;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.acl.service.AclService;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

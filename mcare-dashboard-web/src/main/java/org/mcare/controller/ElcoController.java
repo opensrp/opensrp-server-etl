@@ -3,7 +3,7 @@ package org.mcare.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mcare.acl.service.ProviderServiceImpl;
+import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ElcoEntity;

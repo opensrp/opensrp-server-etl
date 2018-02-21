@@ -1,4 +1,4 @@
-package org.mcare.acl.repository;
+package org.mcare.common.repository.impl;
 
 import java.util.Date;
 import java.util.List;

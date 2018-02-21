@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyPermissionEvaluator implements PermissionEvaluator {
+public class CustomPermissionEvaluator implements PermissionEvaluator {
 	
 	@Override
 	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {

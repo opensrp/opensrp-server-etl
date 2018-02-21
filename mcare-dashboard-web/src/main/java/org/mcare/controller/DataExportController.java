@@ -10,7 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mcare.acl.entity.ProviderEntity;
-import org.mcare.acl.service.ProviderServiceImpl;
+import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.DateUtil;
 import org.mcare.common.util.FormName;
 import org.mcare.data.export.entity.DataExportEntity;

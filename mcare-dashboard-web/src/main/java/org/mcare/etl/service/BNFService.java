@@ -4,13 +4,12 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.BNFEntity;
-import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.BNFRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class BNFService implements RegisterService<BNFEntity> {
 	
@@ -20,8 +19,6 @@ public class BNFService implements RegisterService<BNFEntity> {
 	public BNFService() {
 		// TODO Auto-generated constructor stub
 	}
-	
-
 	
 	@Transactional
 	@Override

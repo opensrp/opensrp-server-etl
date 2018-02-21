@@ -1,4 +1,4 @@
-package org.mcare.acl.controller;
+package org.mcare.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,11 +6,8 @@ import javax.validation.Valid;
 
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.entity.Permission;
-import org.mcare.acl.entity.Role;
-import org.mcare.acl.service.DatabaseServiceImpl;
-import org.mcare.acl.service.PermissionServiceImpl;
-import org.mcare.acl.service.RoleServiceImpl;
-import org.mcare.acl.service.UserService;
+import org.mcare.acl.service.impl.UserServiceImpl;
+import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 
 @Controller
-public class AclController {
+public class UserController {
 	
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
@@ -42,16 +38,7 @@ public class AclController {
 	private Permission permission;
 	
 	@Autowired
-	private PermissionServiceImpl permissionService;
-	
-	@Autowired
-	private RoleServiceImpl roleServiceImpl;
-	
-	@Autowired
-	private Role role;
-	
-	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
 	@RequestMapping("/")
 	public String showView(Model model) {
@@ -101,23 +88,6 @@ public class AclController {
 	                                  ModelMap model) {
 		userService.managePermissions(permission);
 		return new ModelAndView("redirect:/user/permission");
-	}
-	
-	@RequestMapping(value = "role/add", method = RequestMethod.GET)
-	public ModelAndView getRole(Model model) {
-		
-		model.addAttribute("role", new Role());
-		model.addAttribute("permissions", permissionService.findAll("Permission"));
-		return new ModelAndView("role/add", "command", role);
-	}
-	
-	@RequestMapping(value = "/role/add", method = RequestMethod.POST)
-	public ModelAndView addRole(@RequestParam(value = "permissions", required = false) int[] permissions,
-	                            @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model) {
-		
-		role.setPermissions(roleServiceImpl.serPermissions(permissions));
-		roleServiceImpl.save(role);
-		return new ModelAndView("redirect:/role/add");
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

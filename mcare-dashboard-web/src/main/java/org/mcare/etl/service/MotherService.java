@@ -2,13 +2,12 @@ package org.mcare.etl.service;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
-import org.mcare.etl.entity.ElcoEntity;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.MotherEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.MotherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class MotherService implements RegisterService<MotherEntity> {
 	

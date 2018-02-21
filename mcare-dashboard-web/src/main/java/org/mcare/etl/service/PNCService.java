@@ -4,13 +4,12 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.PNCEntity;
-import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.PNCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class PNCService implements RegisterService<PNCEntity> {
 	

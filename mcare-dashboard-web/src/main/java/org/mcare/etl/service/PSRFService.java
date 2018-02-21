@@ -4,12 +4,12 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.mcare.acl.repository.DatabaseRepositoryImpl;
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.RegisterService;
-import org.mcare.etl.repository.PSRFRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class PSRFService implements RegisterService<PSRFEntity> {
 	

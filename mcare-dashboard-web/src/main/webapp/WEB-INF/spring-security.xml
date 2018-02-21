@@ -39,6 +39,6 @@
 
 	<b:bean id="expressionHandler"
 		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
-		<b:property name="permissionEvaluator" ref="myPermissionEvaluator" />
+		<b:property name="permissionEvaluator" ref="customPermissionEvaluator" />
 	</b:bean>
 </b:beans>

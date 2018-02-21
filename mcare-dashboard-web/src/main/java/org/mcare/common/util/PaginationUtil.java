@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.entity.ProviderEntity;
-import org.mcare.acl.service.ProviderServiceImpl;
+import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.etl.service.HouseholdService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
