@@ -11,6 +11,7 @@ import org.mcare.etl.service.HouseholdService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class ElcoController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO_LIST')")
 	@RequestMapping(value = "/elco.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
 		String search = "";
@@ -57,7 +59,8 @@ public class ElcoController {
 		return "elco/index";
 	}
 	
-	/*@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
+	/*@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
+	@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		
 		HouseholdEntity household = householdService.findById(id);

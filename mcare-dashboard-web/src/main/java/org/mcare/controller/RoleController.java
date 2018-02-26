@@ -11,6 +11,7 @@ import org.mcare.acl.entity.Role;
 import org.mcare.acl.service.impl.PermissionServiceImpl;
 import org.mcare.acl.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -37,6 +38,7 @@ public class RoleController {
 	@Autowired
 	private Role role;
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "role.html", method = RequestMethod.GET)
 	public String roleList(Model model) {
 		List<Role> roles = roleServiceImpl.findAll("Role");
@@ -44,6 +46,7 @@ public class RoleController {
 		return "role/index";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "role/add.html", method = RequestMethod.GET)
 	public ModelAndView saveRole(ModelMap model, HttpSession session) {
 		
@@ -55,6 +58,7 @@ public class RoleController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/role/add.html", method = RequestMethod.POST)
 	public ModelAndView saveRole(@RequestParam(value = "permissions", required = false) int[] permissions,
 	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,
@@ -71,6 +75,7 @@ public class RoleController {
 		}
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_ROLE')")
 	@RequestMapping(value = "role/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editRole(ModelMap model, HttpSession session, @PathVariable("id") int id) {
 		Role role = roleServiceImpl.findById(id, "id", Role.class);
@@ -90,6 +95,7 @@ public class RoleController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_ROLE')")
 	@RequestMapping(value = "/role/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editRole(@RequestParam(value = "permissions", required = false) int[] permissions,
 	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,

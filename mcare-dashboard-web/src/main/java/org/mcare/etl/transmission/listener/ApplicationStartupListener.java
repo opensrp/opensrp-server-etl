@@ -1,5 +1,6 @@
 package org.mcare.etl.transmission.listener;
 
+import org.mcare.acl.service.impl.PermissionServiceImpl;
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.service.MarkerService;
 import org.mcare.etl.util.CommonConstant;
@@ -17,6 +18,9 @@ public class ApplicationStartupListener implements ApplicationListener<ContextRe
 	@Autowired
 	private MarkerEntity markerEntity;
 	
+	@Autowired
+	private PermissionServiceImpl permissionServiceImpl;
+	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		System.out.println(CommonConstant.MCARE.name() + "Application Stating............"
@@ -28,5 +32,13 @@ public class ApplicationStartupListener implements ApplicationListener<ContextRe
 		if (markerEntity == null) {
 			markerService.save(entity);
 		}
+		try {
+			permissionServiceImpl.addPermission();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

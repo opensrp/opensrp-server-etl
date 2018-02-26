@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="org.mcare.common.util.CheckboxHelperUtil"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@page import="java.util.List"%>
 <%@page import="org.mcare.acl.entity.Role"%>
@@ -27,7 +28,7 @@
 </head>
 
 <body>
-	<c:url var="saveUrl" value="/user/${id}/add.html" />
+	<c:url var="saveUrl" value="/user/${id}/edit.html" />
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -55,6 +56,7 @@
 						</div>
 					</div>
                     <form:hidden path="id"  />
+                    <form:hidden path="password"/>
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label">First Name</label>
 						<div class="col-sm-10">

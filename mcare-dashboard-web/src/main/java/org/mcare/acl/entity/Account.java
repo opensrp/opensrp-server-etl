@@ -62,8 +62,6 @@ public class Account implements UserDetails {
 	@Column(name = "password")
 	private String password;
 	
-	@NotEmpty
-	//@Min(4)
 	@Column(name = "retype_password")
 	@Transient
 	private String retypePassword;

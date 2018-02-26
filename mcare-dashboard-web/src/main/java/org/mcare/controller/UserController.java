@@ -1,5 +1,6 @@
 package org.mcare.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,10 @@ import org.mcare.acl.service.impl.RoleServiceImpl;
 import org.mcare.acl.service.impl.UserServiceImpl;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +48,13 @@ public class UserController {
 	private Permission permission;
 	
 	@Autowired
-	private UserServiceImpl userService;
+	private UserServiceImpl userServiceImpl;
 	
 	@Autowired
 	private RoleServiceImpl roleServiceImpl;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/")
 	public String showView(Model model) {
@@ -68,6 +74,15 @@ public class UserController {
 		return "user/home";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
+	@RequestMapping(value = "user.html", method = RequestMethod.GET)
+	public String userList(Model model) {
+		List<Account> users = userServiceImpl.findAll("Account");
+		model.addAttribute("users", users);
+		return "user/index";
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_USER')")
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.GET)
 	public ModelAndView saveUser(Model model, HttpSession session) {
 		int[] selectedRoles = null;
@@ -77,15 +92,18 @@ public class UserController {
 		return new ModelAndView("user/add", "command", account);
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_USER')")
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.POST)
 	public ModelAndView saveUser(@RequestParam(value = "roles", required = false) int[] roles,
 	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
 	                             HttpSession session) {
 		
 		try {
-			if (userService.isValid(account).equalsIgnoreCase("false")) {
-				account.setRoles(userService.setRoles(roles));
-				userService.registerNewUserAccount(account);
+			if (userServiceImpl.isValid(account).equalsIgnoreCase("false")) {
+				account.setEnabled(true);
+				account.setPassword(passwordEncoder.encode(account.getPassword()));
+				account.setRoles(userServiceImpl.setRoles(roles));
+				userServiceImpl.save(account);
 				
 				return new ModelAndView("redirect:/user.html");
 			} else {
@@ -104,9 +122,10 @@ public class UserController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
-		Account account = userService.findById(id, "id", Account.class);
+		Account account = userServiceImpl.findById(id, "id", Account.class);
 		System.err.println("" + account.toString());
 		int[] selectedRoles = new int[200];
 		model.addAttribute("account", account);
@@ -122,15 +141,46 @@ public class UserController {
 		return new ModelAndView("user/edit", "command", account);
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editUser(@RequestParam(value = "roles", required = false) int[] roles,
 	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
 	                             HttpSession session, @PathVariable("id") int id) {
 		
-		account.setRoles(userService.setRoles(roles));
+		account.setRoles(userServiceImpl.setRoles(roles));
 		account.setId(id);
-		userService.update(account);
+		account.setEnabled(true);
+		userServiceImpl.update(account);
+		return new ModelAndView("redirect:/user.html");
 		
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
+	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.GET)
+	public ModelAndView editPassword(Model model, HttpSession session, @PathVariable("id") int id) {
+		Account account = userServiceImpl.findById(id, "id", Account.class);
+		
+		model.addAttribute("account", account);
+		
+		return new ModelAndView("user/password", "command", account);
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
+	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.POST)
+	public ModelAndView editPassword(@Valid @ModelAttribute("account") Account account, BindingResult binding,
+	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
+		Account gettingAccount = userServiceImpl.findById(id, "id", Account.class);
+		if (userServiceImpl.isValid(account).equalsIgnoreCase("false")) {
+			
+			account.setRoles(gettingAccount.getRoles());
+			account.setId(id);
+			account.setEnabled(true);
+			account.setPassword(passwordEncoder.encode(account.getPassword()));
+			userServiceImpl.update(account);
+		} else {
+			model.addAttribute("passwordNotMatch", "Password Does not match");
+			return new ModelAndView("user/password", "command", gettingAccount);
+		}
 		return new ModelAndView("redirect:/user.html");
 		
 	}
@@ -138,11 +188,6 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		return "user/login";
-	}
-	
-	@RequestMapping(value = "/user/administration", method = RequestMethod.GET)
-	public String administrationPage() {
-		return "user/administration";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

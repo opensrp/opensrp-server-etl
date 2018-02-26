@@ -13,6 +13,7 @@ import org.mcare.etl.service.HouseholdService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ public class HouseholdController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_HOUSEHOLD_LIST')")
 	@RequestMapping(value = "/household.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
 		String search = "";
@@ -67,6 +69,7 @@ public class HouseholdController {
 		return "household/location";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_HOUSEHOLD')")
 	@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		

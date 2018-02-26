@@ -90,7 +90,7 @@ public class UserServiceImpl implements AclService {
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll(tableClass);
 	}
 	
 	@Transactional

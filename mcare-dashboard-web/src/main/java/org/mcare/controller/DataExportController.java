@@ -18,6 +18,7 @@ import org.mcare.data.export.service.impl.DataExportServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,6 @@ import com.google.gson.Gson;
  * @author proshanto
  */
 @Controller
-//@RestController
 public class DataExportController {
 	
 	@Autowired
@@ -48,6 +48,7 @@ public class DataExportController {
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_EXPORT_DATA')")
 	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
 	                                               String end, String provider, String formName, Model model)
@@ -99,6 +100,7 @@ public class DataExportController {
 		return "export/list";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_EXPORT_DATA')")
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
 		model.addAttribute("formNames", FormName.values());
