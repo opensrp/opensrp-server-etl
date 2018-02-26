@@ -1,5 +1,7 @@
 package org.mcare.controller;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,6 +9,7 @@ import javax.validation.Valid;
 
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.entity.Permission;
+import org.mcare.acl.entity.Role;
 import org.mcare.acl.service.impl.RoleServiceImpl;
 import org.mcare.acl.service.impl.UserServiceImpl;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,6 +101,37 @@ public class UserController {
 			model.addAttribute("unigue", "User name alreday taken");
 			return new ModelAndView("/user/add");
 		}
+		
+	}
+	
+	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
+	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
+		Account account = userService.findById(id, "id", Account.class);
+		System.err.println("" + account.toString());
+		int[] selectedRoles = new int[200];
+		model.addAttribute("account", account);
+		Set<Role> getRoles = account.getRoles();
+		int i = 0;
+		for (Role role : getRoles) {
+			selectedRoles[i] = role.getId();
+			i++;
+		}
+		model.addAttribute("id", id);
+		session.setAttribute("roles", databaseServiceImpl.findAll("Role"));
+		session.setAttribute("selectedRoles", selectedRoles);
+		return new ModelAndView("user/edit", "command", account);
+	}
+	
+	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.POST)
+	public ModelAndView editUser(@RequestParam(value = "roles", required = false) int[] roles,
+	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
+	                             HttpSession session, @PathVariable("id") int id) {
+		
+		account.setRoles(userService.setRoles(roles));
+		account.setId(id);
+		userService.update(account);
+		
+		return new ModelAndView("redirect:/user.html");
 		
 	}
 	

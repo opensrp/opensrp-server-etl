@@ -64,24 +64,29 @@ public class UserServiceImpl implements AclService {
 		return repository.update(t);
 	}
 	
+	@Transactional
 	@Override
 	public <T> boolean delete(T t) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
+	@Transactional
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id, fieldName, className);
+		
 	}
 	
+	@Transactional
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		// TODO Auto-generated method stub

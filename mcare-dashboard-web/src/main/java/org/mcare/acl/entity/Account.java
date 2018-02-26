@@ -88,6 +88,10 @@ public class Account implements UserDetails {
 	public Account() {
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public Account(String username) {
 		this.username = username;
 	}

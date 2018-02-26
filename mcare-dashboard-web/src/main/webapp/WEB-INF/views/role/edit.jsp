@@ -48,7 +48,7 @@
       <label class="col-sm-2 control-label">Role Name</label>
       <div class="col-sm-10">
        <form:input path="name" required="required" />
-       <form:input path="id" />
+       <form:hidden path="id" />
       </div>
                       <form:errors path="name" cssClass="error" />
       
