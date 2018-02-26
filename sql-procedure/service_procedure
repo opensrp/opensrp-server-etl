@@ -3,7 +3,7 @@
                                                 , upazilla VARCHAR(70), unionname VARCHAR(70)
                                                 , ward VARCHAR(70), unit VARCHAR(70)
                                                 , currentM VARCHAR(70), currentY VARCHAR(70)
-                                                , provider VARCHAR(70))
+                                                , provider VARCHAR(70), updateReport VARCHAR(70))
    RETURNS integer AS $$
     declare
     /*Family Planning Report Variables*/
@@ -221,6 +221,7 @@
     currentYear integer := currentY :: integer;
     prevMonth integer := currentMonth - 1;
     prevYear integer := currentYear;
+    updateReportFlag integer := updateReport :: integer;
 
     child6Month interval :='6 months';
     child24Months interval :='2 years';
@@ -229,16 +230,29 @@
     current_mis1report_seq_id integer := 0;
 
    BEGIN
-        select count(*) from mis1report m1 into recordExists
-        where m1.reporting_division=division
-        and m1.reporting_district=district
-        and m1.reporting_upazilla=upazilla
-        and m1.reporting_ward=ward
-        and m1.reporting_union=unionname
-        and m1.reporting_unit=unit
-        and m1.reporting_month=currentM
-        and m1.reporting_year=currentY
-        and m1.reporting_provider=provider;
+        IF updateReportFlag = 1 THEN
+            DELETE FROM mis1report m1
+            WHERE m1.reporting_division=division
+            and m1.reporting_district=district
+            and m1.reporting_upazilla=upazilla
+            and m1.reporting_ward=ward
+            and m1.reporting_union=unionname
+            and m1.reporting_unit=unit
+            and m1.reporting_month=currentM
+            and m1.reporting_year=currentY
+            and m1.reporting_provider=provider;
+        ELSE
+            select count(*) from mis1report m1 into recordExists
+            where m1.reporting_division=division
+            and m1.reporting_district=district
+            and m1.reporting_upazilla=upazilla
+            and m1.reporting_ward=ward
+            and m1.reporting_union=unionname
+            and m1.reporting_unit=unit
+            and m1.reporting_month=currentM
+            and m1.reporting_year=currentY
+            and m1.reporting_provider=provider;
+        END IF;
 
         IF recordExists = 0 THEN
 
@@ -1707,8 +1721,8 @@
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.councelling LIKE '%4%'
-                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM a1.adolescent_today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.adolescent_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1721,8 +1735,8 @@
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.councelling LIKE '%1%'
-                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM a1.adolescent_today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.adolescent_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1735,8 +1749,8 @@
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.councelling LIKE '%2%'
-                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM a1.adolescent_today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.adolescent_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1749,8 +1763,8 @@
             FROM adolescent a1
             JOIN member ON (a1.relationalid= member.caseid)
             WHERE (a1.councelling LIKE '%6%'
-                    AND EXTRACT(MONTH FROM a1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM a1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM a1.adolescent_today)=currentMonth
+                    AND EXTRACT(YEAR FROM a1.adolescent_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1835,8 +1849,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.vaccines LIKE '%BCG%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1851,8 +1865,8 @@
             WHERE (c1.vaccines LIKE '%OPV1%'
                     AND c1.vaccines LIKE '%PCV1%'
                     AND c1.vaccines LIKE '%Penta1%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1867,8 +1881,8 @@
             WHERE (c1.vaccines LIKE '%OPV2%'
                     AND c1.vaccines LIKE '%PCV2%'
                     AND c1.vaccines LIKE '%Penta2%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1882,8 +1896,8 @@
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.vaccines LIKE '%OPV3%'
                     AND c1.vaccines LIKE '%Penta3%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1896,8 +1910,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE ( c1.vaccines LIKE '%PCV3%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1911,8 +1925,8 @@
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.vaccines LIKE '%OPV4%'
                     AND c1.vaccines LIKE '%MR%'
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1925,8 +1939,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=1
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1939,8 +1953,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=1
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1953,8 +1967,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=2
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1967,8 +1981,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=2
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1981,8 +1995,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=3
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -1995,8 +2009,8 @@
             FROM child c1
             JOIN member ON (c1.relationalid= member.caseid)
             WHERE (c1.diseases_Prob=3
-                    AND EXTRACT(MONTH FROM c1.today)=currentMonth
-                    AND EXTRACT(YEAR FROM c1.today)=currentYear)
+                    AND EXTRACT(MONTH FROM c1.child_today)=currentMonth
+                    AND EXTRACT(YEAR FROM c1.child_today)=currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2149,8 +2163,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.mother_nutrition LIKE '%1%'
                     AND p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2165,8 +2179,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.mother_nutrition LIKE '%1%'
                     AND NOT p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2181,8 +2195,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.distrinuted_nutrition = 1
                     AND p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2197,8 +2211,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.distrinuted_nutrition = 1
                     AND NOT p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2213,8 +2227,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.mother_nutrition LIKE '%3%'
                     AND p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2229,8 +2243,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.mother_nutrition LIKE '%3%'
                     AND NOT p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2245,8 +2259,8 @@
             JOIN psrf p1 ON (p1.relationalid= member.caseid)
             WHERE ( n1.mother_nutrition LIKE '%2%'
                     AND NOT p1.preg_status = 1
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2259,8 +2273,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%1%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2273,8 +2287,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%2%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear)
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear)
             AND member.mem_district=district
             AND member.mem_division=division
             AND member.mem_upazilla=upazilla
@@ -2287,8 +2301,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%3%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child6Month
                     AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
@@ -2303,8 +2317,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%3%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child24months
                     AND age(member.member_birth_date) < child60months)
             AND member.mem_district=district
@@ -2319,8 +2333,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%4%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) < child6Month)
             AND member.mem_district=district
             AND member.mem_division=division
@@ -2334,8 +2348,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%4%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child6Month
                     AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
@@ -2350,8 +2364,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%4%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child24Months
                     AND age(member.member_birth_date) < child60Months)
             AND member.mem_district=district
@@ -2366,8 +2380,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%5%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) < child6Month)
             AND member.mem_district=district
             AND member.mem_division=division
@@ -2381,8 +2395,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%5%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child6Month
                     AND age(member.member_birth_date) < child24Months)
             AND member.mem_district=district
@@ -2397,8 +2411,8 @@
             FROM nutrition n1
             JOIN member ON (n1.relationalid= member.caseid)
             WHERE ( n1.child_nutrition LIKE '%5%'
-                    AND EXTRACT(MONTH FROM n1.visit_date) = currentMonth
-                    AND EXTRACT(YEAR FROM n1.visit_date) = currentYear
+                    AND EXTRACT(MONTH FROM n1.today) = currentMonth
+                    AND EXTRACT(YEAR FROM n1.today) = currentYear
                     AND age(member.member_birth_date) >= child24Months
                     AND age(member.member_birth_date) < child60Months)
             AND member.mem_district=district
