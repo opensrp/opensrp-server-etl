@@ -678,6 +678,7 @@ public class PSRFEntity {
 		Last_FP_Method = last_FP_Method;
 	}
 	
+	@Temporal(TemporalType.DATE)
 	public Date getFormat_Permanent_M_Date() {
 		return Format_Permanent_M_Date;
 	}

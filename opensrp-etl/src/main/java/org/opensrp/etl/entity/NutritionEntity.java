@@ -113,6 +113,9 @@ public class NutritionEntity {
 	@Temporal(TemporalType.DATE)
 	private Date existing_Calc_Dob_Confirm;
 	
+	@Temporal(TemporalType.DATE)
+	private Date Today;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp
@@ -459,4 +462,12 @@ public class NutritionEntity {
 		INSTANCEID = iNSTANCEID;
 	}
 	
+	@Temporal(TemporalType.DATE)
+	public Date getToday() {
+		return Today;
+	}
+	
+	public void setToday(Date today) {
+		Today = today;
+	}
 }

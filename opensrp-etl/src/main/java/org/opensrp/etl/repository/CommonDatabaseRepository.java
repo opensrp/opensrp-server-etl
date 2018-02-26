@@ -203,7 +203,7 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		logger.debug("result: " + result.toString());
 		session.close();
 		
-		if (result.size() <= 0) {
+		if (result.size() <= 0 || filtercriteria.getUpdateReport().equals("1")) {
 			int misId = generateMISReport(filtercriteria);
 			if (misId != -1) {
 				result = findById(misId, MIS1ReportEntity.class);
@@ -244,6 +244,9 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		}
 		if (filterCriteria.getProvider() == null) {
 			list.add((T) "provider");
+		}
+		if (filterCriteria.getUpdateReport() == null) {
+			list.add((T) "updateReport");
 		}
 		return list;
 	}
@@ -347,16 +350,18 @@ public class CommonDatabaseRepository implements DatabaseRepository {
 		int Id = -1;
 		try {
 			String hql = "SELECT * FROM generate_mis_report(:division,:district"
-			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY,:provider) m";
+			        + ",:upazilla,:unionname,:ward,:unit,:currentM,:currentY,:provider,:updateReport) m";
 			
 			if (filter.getDivision() != null && filter.getDistrict() != null && filter.getUpazilla() != null
 			        && filter.getUnionname() != null && filter.getWard() != null && filter.getUnit() != null
-			        && filter.getMonth() != null && filter.getYear() != null && filter.getProvider() != null) {
+			        && filter.getMonth() != null && filter.getYear() != null && filter.getProvider() != null
+			        && filter.getUpdateReport() != null) {
 				Query query = session.createSQLQuery(hql).setParameter("division", filter.getDivision())
 				        .setParameter("district", filter.getDistrict()).setParameter("upazilla", filter.getUpazilla())
 				        .setParameter("unionname", filter.getUnionname()).setParameter("ward", filter.getWard())
 				        .setParameter("unit", filter.getUnit()).setParameter("currentM", filter.getMonth())
-				        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider());
+				        .setParameter("currentY", filter.getYear()).setParameter("provider", filter.getProvider())
+				        .setParameter("updateReport", filter.getUpdateReport());
 				List results = query.list();
 				Id = (Integer) results.get(0);
 				logger.info("successfully created 1 row new in mis1report table");

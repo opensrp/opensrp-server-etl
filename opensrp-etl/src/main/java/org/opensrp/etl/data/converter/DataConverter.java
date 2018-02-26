@@ -72,9 +72,8 @@ public class DataConverter {
 					}
 				}
 				catch (Exception e) {
-					//System.out.println("className: "+ className.getName());
-					//System.out.println("property: " + property);
-					//System.out.println(e.toString());
+					logger.debug("className: " + className.getName());
+					logger.debug("property: " + property);
 					logger.error(e);
 				}
 			}

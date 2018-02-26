@@ -167,6 +167,7 @@ public class DeathRegEntity {
 		this.received_time = received_time;
 	}
 	
+	@Temporal(TemporalType.DATE)
 	public Date getVisit_Date() {
 		return Visit_Date;
 	}

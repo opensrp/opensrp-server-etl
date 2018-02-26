@@ -300,11 +300,11 @@ public class ANCEntity {
 		this.existing_ELCO_BRID = existing_ELCO_BRID;
 	}
 	
+	@Temporal(TemporalType.DATE)
 	public Date getExisting_EDD() {
 		return existing_EDD;
 	}
 	
-	@Temporal(TemporalType.DATE)
 	public void setexisting_EDD(Date existing_EDD) {
 		this.existing_EDD = existing_EDD;
 	}
@@ -613,7 +613,6 @@ public class ANCEntity {
 		return existing_LMP;
 	}
 	
-	@Temporal(TemporalType.DATE)
 	public void setexisting_LMP(Date existing_LMP) {
 		this.existing_LMP = existing_LMP;
 	}

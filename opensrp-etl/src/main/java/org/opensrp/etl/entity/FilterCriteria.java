@@ -23,6 +23,8 @@ public class FilterCriteria {
 	
 	private String provider;
 	
+	private String updateReport;
+	
 	public String getDivision() {
 		return division;
 	}
@@ -93,6 +95,14 @@ public class FilterCriteria {
 	
 	public void setProvider(String provider) {
 		this.provider = provider;
+	}
+	
+	public String getUpdateReport() {
+		return updateReport;
+	}
+	
+	public void setUpdateReport(String updateReport) {
+		this.updateReport = updateReport;
 	}
 	
 	@Override
