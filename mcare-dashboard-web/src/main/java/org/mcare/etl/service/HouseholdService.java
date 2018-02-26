@@ -22,7 +22,7 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 	
 	@Transactional
 	@Override
-	public void save(HouseholdEntity householdEntity) {
+	public void save(HouseholdEntity householdEntity) throws Exception {
 		HouseholdEntity existingHouseholdEntity = findByCaseId(householdEntity.caseId);
 		if (existingHouseholdEntity == null) {
 			System.out.println("existingHouseholdEntity is null saving");

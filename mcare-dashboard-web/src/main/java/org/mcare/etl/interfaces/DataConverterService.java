@@ -5,5 +5,5 @@ import org.json.JSONObject;
 
 public interface DataConverterService {
 	
-	public void convertToEntityAndSave(JSONObject t) throws JSONException;
+	public void convertToEntityAndSave(JSONObject t) throws JSONException, Exception;
 }

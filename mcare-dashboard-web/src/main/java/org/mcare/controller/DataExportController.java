@@ -3,7 +3,6 @@
  */
 package org.mcare.controller;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class DataExportController {
 	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
 	                                               String end, String provider, String formName, Model model)
-	    throws ParseException {
+	    throws Exception {
 		
 		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);

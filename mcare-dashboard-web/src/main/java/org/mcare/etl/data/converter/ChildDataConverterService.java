@@ -1,6 +1,5 @@
 package org.mcare.etl.data.converter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.ChildEntity;
 import org.mcare.etl.interfaces.DataConverterService;
@@ -30,7 +29,7 @@ public class ChildDataConverterService implements DataConverterService {
 	private ExceptionService exceptionService;
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+	public void convertToEntityAndSave(JSONObject doc) throws Exception {
 		
 		try {
 			JSONObject details = new JSONObject(doc.getString("details"));

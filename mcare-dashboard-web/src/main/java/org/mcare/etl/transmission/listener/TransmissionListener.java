@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.interfaces.TransmissionServices;
@@ -40,7 +39,7 @@ public class TransmissionListener {
 	
 	private TransmissionServices transmissionServices;
 	
-	public void dataListener() throws JSONException {
+	public void dataListener() throws Exception {
 		markerEntity = markerService.findByName(CommonConstant.MCARE.name());
 		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
 		List<Row> rows = vr.getRows();

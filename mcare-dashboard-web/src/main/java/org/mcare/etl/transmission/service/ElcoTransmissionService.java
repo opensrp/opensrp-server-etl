@@ -1,6 +1,5 @@
 package org.mcare.etl.transmission.service;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.data.converter.ElcoDataConverterService;
 import org.mcare.etl.interfaces.TransmissionServices;
@@ -16,7 +15,7 @@ public class ElcoTransmissionService implements TransmissionServices {
 	}
 	
 	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+	public void convertDataJsonToEntity(JSONObject doc) throws Exception {
 		elcoDataConverterService.convertToEntityAndSave(doc);
 		
 	}

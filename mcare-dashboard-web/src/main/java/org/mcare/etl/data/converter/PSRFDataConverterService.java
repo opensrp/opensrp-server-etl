@@ -3,7 +3,6 @@ package org.mcare.etl.data.converter;
 import java.text.ParseException;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.PSRFEntity;
 import org.mcare.etl.interfaces.DataConverterService;
@@ -12,6 +11,7 @@ import org.mcare.etl.service.PSRFService;
 import org.mcare.etl.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class PSRFDataConverterService implements DataConverterService {
 	
@@ -25,7 +25,7 @@ public class PSRFDataConverterService implements DataConverterService {
 	private ExceptionService exceptionService;
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject elco) throws JSONException {
+	public void convertToEntityAndSave(JSONObject elco) throws Exception {
 		JSONArray psrf = new JSONArray();
 		psrf = elco.getJSONArray("PSRFDETAILS");
 		

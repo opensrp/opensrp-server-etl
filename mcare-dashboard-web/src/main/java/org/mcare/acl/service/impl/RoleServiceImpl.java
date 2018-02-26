@@ -24,7 +24,7 @@ public class RoleServiceImpl implements AclService {
 	
 	@Transactional
 	@Override
-	public <T> long save(T t) {
+	public <T> long save(T t) throws Exception {
 		return repository.save(t);
 	}
 	
@@ -32,7 +32,7 @@ public class RoleServiceImpl implements AclService {
 	@Override
 	public <T> int update(T t) {
 		// TODO Auto-generated method stub
-		return 0;
+		return repository.update(t);
 	}
 	
 	@Transactional
@@ -46,7 +46,7 @@ public class RoleServiceImpl implements AclService {
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id, fieldName, className);
 	}
 	
 	@Transactional

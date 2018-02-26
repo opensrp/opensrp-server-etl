@@ -1,7 +1,6 @@
 package org.mcare.etl.data.converter;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.interfaces.DataConverterService;
@@ -28,7 +27,7 @@ public class BNFDataConverterService implements DataConverterService {
 	}
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject mother) throws JSONException {
+	public void convertToEntityAndSave(JSONObject mother) throws Exception {
 		JSONArray bnfs = new JSONArray();
 		bnfs = mother.getJSONArray("bnfVisitDetails");
 		for (int i = 0; i < bnfs.length(); i++) {

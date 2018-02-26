@@ -1,7 +1,9 @@
 package org.mcare.controller;
 
 import java.util.List;
+import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.mcare.acl.entity.Permission;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,20 +45,61 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value = "role/add.html", method = RequestMethod.GET)
-	public ModelAndView saveRole(Model model) {
+	public ModelAndView saveRole(ModelMap model, HttpSession session) {
 		
 		model.addAttribute("role", new Role());
-		model.addAttribute("permissions", permissionService.findAll("Permission"));
+		int[] permissions = null;
+		session.setAttribute("permissions", permissionService.findAll("Permission"));
+		session.setAttribute("selectedPermissions", permissions);
 		return new ModelAndView("role/add", "command", role);
+		
 	}
 	
-	@RequestMapping(value = "/role/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/role/add.html", method = RequestMethod.POST)
 	public ModelAndView saveRole(@RequestParam(value = "permissions", required = false) int[] permissions,
-	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model) {
+	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,
+	                             HttpSession session) throws Exception {
+		
+		if (binding.hasErrors()) {
+			session.setAttribute("permissions", permissionService.findAll("Permission"));
+			session.setAttribute("selectedPermissions", permissions);
+			return new ModelAndView("/role/add");
+		} else {
+			role.setPermissions(roleServiceImpl.serPermissions(permissions));
+			roleServiceImpl.save(role);
+			return new ModelAndView("redirect:/role/index");
+		}
+	}
+	
+	@RequestMapping(value = "role/{id}/edit.html", method = RequestMethod.GET)
+	public ModelAndView editRole(ModelMap model, HttpSession session, @PathVariable("id") int id) {
+		Role role = roleServiceImpl.findById(id, "id", Role.class);
+		model.addAttribute("role", role);
+		int[] permissions = new int[200];
+		Set<Permission> getPermissions = role.getPermissions();
+		
+		int i = 0;
+		for (Permission permission : getPermissions) {
+			permissions[i] = permission.getId();
+			i++;
+		}
+		session.setAttribute("permissions", permissionService.findAll("Permission"));
+		session.setAttribute("selectedPermissions", permissions);
+		model.addAttribute("id", id);
+		return new ModelAndView("role/edit", "command", role);
+		
+	}
+	
+	@RequestMapping(value = "/role/{id}/edit.html", method = RequestMethod.POST)
+	public ModelAndView editRole(@RequestParam(value = "permissions", required = false) int[] permissions,
+	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,
+	                             HttpSession session, @PathVariable("id") int id) {
 		
 		role.setPermissions(roleServiceImpl.serPermissions(permissions));
-		roleServiceImpl.save(role);
-		return new ModelAndView("redirect:/role/add");
+		role.setId(id);
+		roleServiceImpl.update(role);
+		return new ModelAndView("redirect:/role.html");
+		
 	}
 	
 }

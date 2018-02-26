@@ -24,7 +24,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	}
 	
 	@Transactional
-	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String benificiaryType) {
+	public ExceptionEntity generatedEntityAndSave(JSONObject doc, String message, String benificiaryType) throws Exception {
 		try {
 			exceptionEntity.setCaseId(doc.getString("caseId"));
 			exceptionEntity.setBenificiaryType(benificiaryType);
@@ -48,7 +48,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	
 	@Transactional
 	public ExceptionEntity generatedEntityAndSaveForAction(JSONObject doc, String message, String benificiaryType)
-	    throws JSONException {
+	    throws Exception {
 		exceptionEntity.setCaseId(doc.getString("caseID"));
 		exceptionEntity.setBenificiaryType(benificiaryType);
 		exceptionEntity.setErrorMessage(message);
@@ -61,7 +61,7 @@ public class ExceptionService implements RegisterService<ExceptionEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ExceptionEntity exceptionEntity) {
+	public void save(ExceptionEntity exceptionEntity) throws Exception {
 		
 		ExceptionEntity existingExceptionEntity = findByCaseId(exceptionEntity.getCaseId());
 		if (existingExceptionEntity == null) {

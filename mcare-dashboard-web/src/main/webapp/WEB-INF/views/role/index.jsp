@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<c:forEach var="role" items="${roles}" varStatus="loop">
-                   <a href="">${role.getName()}</a>
+                   <a href="<c:url value="/role/${role.id}/edit.html"/>">${role.getName()}</a>
                 </c:forEach>
 			</div>
 		</div>

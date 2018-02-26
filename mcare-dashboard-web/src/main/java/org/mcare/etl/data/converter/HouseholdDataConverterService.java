@@ -29,7 +29,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 	private ExceptionService exceptionService;
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) {
+	public void convertToEntityAndSave(JSONObject doc) throws Exception {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");

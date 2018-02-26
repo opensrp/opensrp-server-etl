@@ -20,7 +20,7 @@ public class ChildService implements RegisterService<ChildEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ChildEntity childEntity) {
+	public void save(ChildEntity childEntity) throws Exception {
 		ChildEntity existingCHildEntity = findByCaseId(childEntity.caseId);
 		if (existingCHildEntity == null) {
 			databaseRepositoryImpl.save(childEntity);

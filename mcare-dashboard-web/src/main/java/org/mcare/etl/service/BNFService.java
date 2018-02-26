@@ -22,7 +22,7 @@ public class BNFService implements RegisterService<BNFEntity> {
 	
 	@Transactional
 	@Override
-	public void save(BNFEntity bnffEntity) {
+	public void save(BNFEntity bnffEntity) throws Exception {
 		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
 		if (existingbnfEntity == null) {
 			databaseRepositoryImpl.save(bnffEntity);

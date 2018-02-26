@@ -22,7 +22,7 @@ public class PSRFService implements RegisterService<PSRFEntity> {
 	
 	@Transactional
 	@Override
-	public void save(PSRFEntity psrfEntity) {
+	public void save(PSRFEntity psrfEntity) throws Exception {
 		PSRFEntity existingPSRFEntity = findByCaseIdAndToday(psrfEntity.getRelationalId(), psrfEntity.getToday());
 		if (existingPSRFEntity == null) {
 			databaseRepositoryImpl.save(psrfEntity);

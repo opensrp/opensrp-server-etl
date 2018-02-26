@@ -27,7 +27,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	@Override
-	public <T> long save(T t) {
+	public <T> long save(T t) throws Exception {
 		return databaseRepositoryImpl.save(t);
 	}
 	

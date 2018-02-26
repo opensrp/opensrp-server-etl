@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface DataExportService {
 	
-	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName);
+	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName) throws Exception;
 	
 	public void export(List<Object[]> dataSets, HttpServletResponse response);
 	

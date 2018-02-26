@@ -1,6 +1,5 @@
 package org.mcare.etl.transmission.service;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.data.converter.BNFDataConverterService;
 import org.mcare.etl.interfaces.TransmissionServices;
@@ -12,7 +11,7 @@ public class BNFTransmissionService implements TransmissionServices {
 	private BNFDataConverterService bnfDataConverterService;
 	
 	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+	public void convertDataJsonToEntity(JSONObject doc) throws Exception {
 		bnfDataConverterService.convertToEntityAndSave(doc);
 	}
 	

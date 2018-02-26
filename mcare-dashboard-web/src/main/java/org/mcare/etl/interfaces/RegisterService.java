@@ -2,7 +2,7 @@ package org.mcare.etl.interfaces;
 
 public interface RegisterService<T> {
 	
-	public void save(T t);
+	public void save(T t) throws Exception;
 	
 	public boolean delete(T t);
 	

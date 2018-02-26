@@ -191,7 +191,7 @@ public class MotherToANCConverter {
 		return ancVisitKeyMap;
 	}
 	
-	public void ancVisitSave(JSONObject mdoc) throws JSONException, ParseException {
+	public void ancVisitSave(JSONObject mdoc) throws Exception {
 		setANCKeys();
 		try {
 			

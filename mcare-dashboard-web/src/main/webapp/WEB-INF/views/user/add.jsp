@@ -5,6 +5,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="org.mcare.common.util.CheckboxHelperUtil"%>
+
+<%@page import="java.util.List"%>
+<%@page import="org.mcare.acl.entity.Role"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +27,7 @@
 </head>
 
 <body>
-	<c:url var="saveUrl" value="/user/add" />
+	<c:url var="saveUrl" value="/user/add.html" />
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -45,7 +49,9 @@
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label">User Name</label>
 						<div class="col-sm-10">
-							<form:input path="username" />
+							<form:input path="username" required="required" />
+                            <form:errors path="username"/>
+                            ${unigue}
 						</div>
 					</div>
 
@@ -64,7 +70,7 @@
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<form:input path="email" />
+							<form:input path="email" required="required" />
 							<form:errors path="email" />
 						</div>
 					</div>
@@ -80,12 +86,28 @@
 						<div class="col-sm-10">
 							<form:password path="retypePassword" />
 						</div>
+                        ${passwordNotMatch}
 					</div>
+                  <div class="form-group">
+                   <div class="col-sm-offset-2 col-sm-10">
+                      <%   
+                      List<Role>  roles = (List<Role>)session.getAttribute("roles"); 
+                      int[]  selectedRoles = (int[]) session.getAttribute("selectedRoles");
+                      for(Role role:roles){                     
+                     %>                      
+                       <form:checkbox class="checkBoxClass" path="roles"  value="<%=role.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedRoles,role.getId())%>" /><%=role.getName()%>
+                      <% 
+                      }
+                      %>
+                      </div>
+                     </div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<input type="submit" value="Save" />
 						</div>
 					</div>
+     
+                  
 				</form:form>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DatabaseService {
 	
-	public <T> long save(T t);
+	public <T> long save(T t) throws Exception;
 	
 	public <T> int delete(T t);
 	

@@ -20,7 +20,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ActionEntity actionEntity) {
+	public void save(ActionEntity actionEntity) throws Exception {
 		ActionEntity action = getAction(actionEntity);
 		
 		if (action == null) {

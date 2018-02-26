@@ -22,7 +22,7 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ENCCEntity enccEntity) {
+	public void save(ENCCEntity enccEntity) throws Exception {
 		ENCCEntity existingEnccEntity = findByCaseIdAndToday(enccEntity.getRelationalId(), enccEntity.getToday());
 		if (existingEnccEntity == null) {
 			databaseRepositoryImpl.save(enccEntity);

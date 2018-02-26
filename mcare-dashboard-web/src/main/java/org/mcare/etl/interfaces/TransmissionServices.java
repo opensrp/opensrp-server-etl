@@ -5,6 +5,6 @@ import org.json.JSONObject;
 
 public interface TransmissionServices {
 	
-	public void convertDataJsonToEntity(JSONObject t) throws JSONException;
+	public void convertDataJsonToEntity(JSONObject t) throws JSONException, Exception;
 	
 }

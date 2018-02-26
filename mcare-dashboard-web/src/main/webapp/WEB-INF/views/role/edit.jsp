@@ -25,7 +25,7 @@
 </head>
  
 <body>
-<c:url var="saveUrl" value="/role/add.html" />
+<c:url var="saveUrl" value="/role/${id}/edit.html" />
  <nav class="navbar navbar-default">
   <div class="container-fluid">
    <div class="navbar-header">
@@ -48,21 +48,25 @@
       <label class="col-sm-2 control-label">Role Name</label>
       <div class="col-sm-10">
        <form:input path="name" required="required" />
+       <form:input path="id" />
       </div>
                       <form:errors path="name" cssClass="error" />
       
                      <div class="col-sm-10">
                       <%   
                       List<Permission>  permissions = (List<Permission>)session.getAttribute("permissions"); 
+                    
                       int[]  selectedPermissions = (int[]) session.getAttribute("selectedPermissions");
                       for(Permission permission:permissions){                    	
                      %>                      
-                       <form:checkbox class="checkBoxClass" path="permissions"  value="<%=permission.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedPermissions,permission.getId())%>" /><%=permission.getName()%>
+                       <form:checkbox path="permissions" class="checkBoxClass" value="<%=permission.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedPermissions,permission.getId())%>" /><%=permission.getName()%>
                       <% 
                       }
                       %>
-                      <br />
+                      
+                       <br />
                       Check All <input type="checkbox" id="ckbCheckAll" /> 
+                     </div>
                      </div>
                      
      
@@ -78,7 +82,7 @@
  </div>
 
 </body>
+
 <script src="<c:url value='/resources/js/jquery.min.js' />"></script>
 <script src="<c:url value='/resources/js/checkbox.js' />"></script>
-
 </html>

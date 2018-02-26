@@ -70,7 +70,7 @@ public class PNCDataExportServiceImpl implements DataExportService {
 	@Transactional
 	@SuppressWarnings("resource")
 	@Override
-	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName) {
+	public String createCSVAndSave(List<Object[]> dataSets, HttpServletResponse response, String formName) throws Exception {
 		String reportName = formName + System.currentTimeMillis() + ".csv";
 		response.setContentType("text/csv");
 		response.setHeader("Content-disposition", "attachment; " + "filename=" + "a");

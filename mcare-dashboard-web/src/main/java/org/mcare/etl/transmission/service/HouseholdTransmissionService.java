@@ -17,7 +17,7 @@ public class HouseholdTransmissionService implements TransmissionServices {
 	}
 	
 	@Override
-	public void convertDataJsonToEntity(JSONObject doc) {
+	public void convertDataJsonToEntity(JSONObject doc) throws Exception {
 		householdDataConverterService.convertToEntityAndSave(doc);
 		
 	}

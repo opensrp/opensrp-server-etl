@@ -34,7 +34,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 	
 	@Override
-	public <T> long save(T t) {
+	public <T> long save(T t) throws Exception {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		long returnValue = -1;
@@ -48,6 +48,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		catch (HibernateException e) {
 			returnValue = -1;
 			tx.rollback();
+			throw new Exception(e.getMessage());
 		}
 		finally {
 			session.close();

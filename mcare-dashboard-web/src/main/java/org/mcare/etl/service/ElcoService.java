@@ -20,7 +20,7 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ElcoEntity elcoEntity) {
+	public void save(ElcoEntity elcoEntity) throws Exception {
 		ElcoEntity existingElcoEntity = findByCaseId(elcoEntity.caseId);
 		if (existingElcoEntity == null) {
 			databaseRepositoryImpl.save(elcoEntity);

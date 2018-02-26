@@ -102,7 +102,7 @@ public class ChildToENCCConverter {
 		return enccVisitKeyMap;
 	}
 	
-	public void enccVisitSave(JSONObject mdoc) throws JSONException, ParseException {
+	public void enccVisitSave(JSONObject mdoc) throws Exception {
 		setENCCKeys();
 		try {
 			

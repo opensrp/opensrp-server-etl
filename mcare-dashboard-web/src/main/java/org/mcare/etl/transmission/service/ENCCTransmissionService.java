@@ -3,7 +3,6 @@
  */
 package org.mcare.etl.transmission.service;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.data.converter.ENCCDataConverterService;
 import org.mcare.etl.interfaces.TransmissionServices;
@@ -22,7 +21,7 @@ public class ENCCTransmissionService implements TransmissionServices {
 	}
 	
 	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+	public void convertDataJsonToEntity(JSONObject doc) throws Exception {
 		enccDataConverterService.convertToEntityAndSave(doc);
 		
 	}

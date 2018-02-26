@@ -22,7 +22,7 @@ public class ANCService implements RegisterService<ANCEntity> {
 	
 	@Transactional
 	@Override
-	public void save(ANCEntity ancEntity) {
+	public void save(ANCEntity ancEntity) throws Exception {
 		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
 		if (existingancEntity == null) {
 			databaseRepositoryImpl.save(ancEntity);

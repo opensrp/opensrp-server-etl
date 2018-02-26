@@ -20,7 +20,7 @@ public class MotherService implements RegisterService<MotherEntity> {
 	
 	@Transactional
 	@Override
-	public void save(MotherEntity motherEntity) {
+	public void save(MotherEntity motherEntity) throws Exception {
 		MotherEntity existingMotherEntity = findByCaseId(motherEntity.getCaseId());
 		if (existingMotherEntity == null) {
 			databaseRepositoryImpl.save(motherEntity);

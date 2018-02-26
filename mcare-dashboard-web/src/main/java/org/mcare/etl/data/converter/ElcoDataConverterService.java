@@ -32,7 +32,7 @@ public class ElcoDataConverterService implements DataConverterService {
 	}
 	
 	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+	public void convertToEntityAndSave(JSONObject doc) throws Exception {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");

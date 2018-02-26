@@ -98,7 +98,7 @@ public class MotherToPNCConverter {
 		return pncVisitKeyMap;
 	}
 	
-	public void pncVisitSave(JSONObject mdoc) throws JSONException {
+	public void pncVisitSave(JSONObject mdoc) throws Exception {
 		setPNCKeys();
 		try {
 			if (mdoc.has(PNC_Visit_One) && mdoc.isNull(PNC_Visit_One) || mdoc.getJSONObject(PNC_Visit_One).length() == 0) {

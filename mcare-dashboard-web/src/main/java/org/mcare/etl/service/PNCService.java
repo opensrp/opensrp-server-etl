@@ -22,7 +22,7 @@ public class PNCService implements RegisterService<PNCEntity> {
 	
 	@Transactional
 	@Override
-	public void save(PNCEntity pncEntity) {
+	public void save(PNCEntity pncEntity) throws Exception {
 		PNCEntity existingpncEntity = findByCaseIdAndToday(pncEntity.getRelationalid(), pncEntity.getToday());
 		if (existingpncEntity == null) {
 			databaseRepositoryImpl.save(pncEntity);

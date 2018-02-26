@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -31,7 +32,7 @@ public class Role implements GrantedAuthority {
 	@SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq", allocationSize = 1)
 	private int id;
 	
-	@NotEmpty(message = "role name can't be empty")
+	@NotEmpty(message = "Role name can't be empty")
 	@Column(name = "name")
 	private String name;
 	
@@ -44,8 +45,7 @@ public class Role implements GrantedAuthority {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -64,7 +64,7 @@ public class Role implements GrantedAuthority {
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
+	
 	@Override
 	@Transient
 	public String getAuthority() {
