@@ -79,6 +79,8 @@ public class UserController {
 	public String userList(Model model) {
 		List<Account> users = userServiceImpl.findAll("Account");
 		model.addAttribute("users", users);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.err.println("Role" + auth.getAuthorities().toString());
 		return "user/index";
 	}
 	
@@ -126,7 +128,6 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
 		Account account = userServiceImpl.findById(id, "id", Account.class);
-		System.err.println("" + account.toString());
 		int[] selectedRoles = new int[200];
 		model.addAttribute("account", account);
 		Set<Role> getRoles = account.getRoles();
@@ -171,7 +172,6 @@ public class UserController {
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
 		Account gettingAccount = userServiceImpl.findById(id, "id", Account.class);
 		if (userServiceImpl.isValid(account).equalsIgnoreCase("false")) {
-			
 			account.setRoles(gettingAccount.getRoles());
 			account.setId(id);
 			account.setEnabled(true);
@@ -182,7 +182,6 @@ public class UserController {
 			return new ModelAndView("user/password", "command", gettingAccount);
 		}
 		return new ModelAndView("redirect:/user.html");
-		
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

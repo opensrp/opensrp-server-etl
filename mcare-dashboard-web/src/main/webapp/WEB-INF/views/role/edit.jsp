@@ -66,6 +66,7 @@
                       
                        <br />
                       Check All <input type="checkbox" id="ckbCheckAll" /> 
+                      <p>  ${errorPermission}</p>
                      </div>
                      </div>
                      

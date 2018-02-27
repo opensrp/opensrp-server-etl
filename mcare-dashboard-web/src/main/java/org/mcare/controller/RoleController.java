@@ -69,9 +69,18 @@ public class RoleController {
 			session.setAttribute("selectedPermissions", permissions);
 			return new ModelAndView("/role/add");
 		} else {
-			role.setPermissions(roleServiceImpl.serPermissions(permissions));
-			roleServiceImpl.save(role);
-			return new ModelAndView("redirect:/role/index");
+			
+			if (permissions != null) {
+				role.setPermissions(roleServiceImpl.serPermissions(permissions));
+				roleServiceImpl.save(role);
+				return new ModelAndView("redirect:/role/index");
+			} else {
+				session.setAttribute("permissions", permissionService.findAll("Permission"));
+				session.setAttribute("selectedPermissions", permissions);
+				model.addAttribute("errorPermission", "Please Select Permission");
+				return new ModelAndView("/role/add");
+			}
+			
 		}
 	}
 	
@@ -101,10 +110,18 @@ public class RoleController {
 	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,
 	                             HttpSession session, @PathVariable("id") int id) {
 		
-		role.setPermissions(roleServiceImpl.serPermissions(permissions));
-		role.setId(id);
-		roleServiceImpl.update(role);
-		return new ModelAndView("redirect:/role.html");
+		if (permissions != null) {
+			role.setPermissions(roleServiceImpl.serPermissions(permissions));
+			role.setId(id);
+			roleServiceImpl.update(role);
+			return new ModelAndView("redirect:/role.html");
+		} else {
+			session.setAttribute("permissions", permissionService.findAll("Permission"));
+			session.setAttribute("selectedPermissions", permissions);
+			model.addAttribute("id", id);
+			model.addAttribute("errorPermission", "Please Select Permission");
+			return new ModelAndView("role/edit", "command", role);
+		}
 		
 	}
 	

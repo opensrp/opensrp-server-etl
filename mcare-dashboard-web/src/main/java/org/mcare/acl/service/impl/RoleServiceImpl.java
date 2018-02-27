@@ -53,7 +53,7 @@ public class RoleServiceImpl implements AclService {
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		// TODO Auto-generated method stub
-		return null;
+		return repository.findByKey(value, fieldName, className);
 	}
 	
 	@Transactional
