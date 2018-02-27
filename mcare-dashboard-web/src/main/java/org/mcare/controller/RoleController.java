@@ -64,24 +64,17 @@ public class RoleController {
 	                             @ModelAttribute("role") @Valid Role role, BindingResult binding, ModelMap model,
 	                             HttpSession session) throws Exception {
 		
-		if (binding.hasErrors()) {
+		if (permissions != null) {
+			role.setPermissions(roleServiceImpl.serPermissions(permissions));
+			roleServiceImpl.save(role);
+			return new ModelAndView("redirect:/role.html");
+		} else {
 			session.setAttribute("permissions", permissionService.findAll("Permission"));
 			session.setAttribute("selectedPermissions", permissions);
+			model.addAttribute("errorPermission", "Please Select Permission");
 			return new ModelAndView("/role/add");
-		} else {
-			
-			if (permissions != null) {
-				role.setPermissions(roleServiceImpl.serPermissions(permissions));
-				roleServiceImpl.save(role);
-				return new ModelAndView("redirect:/role/index");
-			} else {
-				session.setAttribute("permissions", permissionService.findAll("Permission"));
-				session.setAttribute("selectedPermissions", permissions);
-				model.addAttribute("errorPermission", "Please Select Permission");
-				return new ModelAndView("/role/add");
-			}
-			
 		}
+		
 	}
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_ROLE')")

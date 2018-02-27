@@ -20,86 +20,77 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add user information</title>
+<title>Edit user information</title>
 
 <link type="text/css"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>"
 	rel="stylesheet">
 </head>
+<c:url var="saveUrl" value="/user/${id}/edit.html" />
+<jsp:include page="/WEB-INF/views/css.jsp"/>
+</head>
 
-<body>
-	<c:url var="saveUrl" value="/user/${id}/edit.html" />
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="<c:url value="/"/>">mCare2
-					Dashboard</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="<c:url value="/"/>">Home</a></li>
-				<li><a href="<c:url value="/export"/>">CSV Export</a></li>
-				<li><a href="<c:url value="/logout"/>">Logout</a></li>
-			</ul>
-		</div>
-	</nav>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<jsp:include page="/WEB-INF/views/navbar.jsp"/>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<form:form method="POST" action="${saveUrl}" modelAttribute="account">
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">User Name</label>
-						<div class="col-sm-10">
-							<form:input path="username" readonly="true" required="required" />
-                            <form:errors path="username"/>
-                            ${unigue}
-						</div>
-					</div>
-                    <form:hidden path="id"  />
-                    <form:hidden path="password"/>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">First Name</label>
-						<div class="col-sm-10">
-							<form:input path="firstName" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Last Name</label>
-						<div class="col-sm-10">
-							<form:input path="lastName" />
-						</div>
-					</div>
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label">Email</label>
-						<div class="col-sm-10">
-							<form:input path="email" required="required" />
-							<form:errors path="email" />
-						</div>
-					</div>
-					
-                  <div class="form-group">
-                   <div class="col-sm-offset-2 col-sm-10">
-                      <%   
-                      List<Role>  roles = (List<Role>)session.getAttribute("roles"); 
-                      int[]  selectedRoles = (int[]) session.getAttribute("selectedRoles");
-                      for(Role role:roles){                     
-                     %>                      
-                       <form:checkbox class="checkBoxClass" path="roles"  value="<%=role.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedRoles,role.getId())%>" /><%=role.getName()%>
-                      <% 
-                      }
-                      %>
-                      </div>
-                     </div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit" value="Edit" />
-						</div>
-					</div>
-     
+	<div class="content-wrapper">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Edit an Account</div>
+      <div class="card-body">
+       <form:form method="POST" action="${saveUrl}" modelAttribute="account">
+          <div class="form-group">
+          
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputName">User Name</label>                
+                <form:input path="username" class="form-control" readonly="true" required="required" aria-describedby="nameHelp" placeholder="Enter first name" />
+                ${unigue}
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputLastName">Email</label>                
+                <form:input path="email" class="form-control" required="required" aria-describedby="nameHelp" placeholder="Enter last name" />
+               
+              </div>
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputName">First name</label>
+                <form:input path="firstName" class="form-control" aria-describedby="nameHelp" placeholder="Enter first name"/>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputLastName">Last name</label>
+                <form:input path="lastName"  class="form-control" aria-describedby="nameHelp" placeholder="Enter last name" />
+              </div>
+            </div>
+          </div>
+          <form:hidden path="id"  />
+          <form:hidden path="password"/>
+          <div class="form-group">
+              <div class="form-check">
+                 <%   
+                  List<Role>  roles = (List<Role>)session.getAttribute("roles"); 
+                  int[]  selectedRoles = (int[]) session.getAttribute("selectedRoles");
+                  for(Role role:roles){                     
+                  %>                      
+                  <form:checkbox class="checkBoxClass form-check-input" path="roles"  value="<%=role.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedRoles,role.getId())%>" />
+                   <label class="form-check-label" for="defaultCheck1"> <%=role.getName()%> </label>
                   
-				</form:form>
-			</div>
-		</div>
-	</div>
+                  <% 
+                  }
+                  %>
+              </div>
+          </div>
+          <input type="submit" value="Edit" class="btn btn-primary btn-block" />
+       </form:form>
+        
+      </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <jsp:include page="/WEB-INF/views/footer.jsp"/>
+  </div>
 </body>
 </html>

@@ -43,7 +43,7 @@
               <div class="col-md-6">
                 <label for="exampleInputLastName">Email</label>                
                 <form:input path="email" class="form-control" required="required" aria-describedby="nameHelp" placeholder="Enter last name" />
-                ${unigue}
+               
               </div>
             </div>
             

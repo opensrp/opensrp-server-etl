@@ -18,67 +18,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Add permissions</title>
-
-<link type="text/css"
-	href="<c:url value="/resources/css/bootstrap.min.css"/>"
-	rel="stylesheet">
+<jsp:include page="/WEB-INF/views/css.jsp"/>
 </head>
- 
-<body>
 <c:url var="saveUrl" value="/role/add.html" />
- <nav class="navbar navbar-default">
-  <div class="container-fluid">
-   <div class="navbar-header">
-    <a class="navbar-brand" href="<c:url value="/"/>">mCare2
-     Dashboard</a>
-   </div>
-   <ul class="nav navbar-nav">
-    <li class="active"><a href="<c:url value="/"/>">Home</a></li>
-    <li><a href="<c:url value="/user/administration"/>">Administration</a></li>
-    <li><a href="<c:url value="/logout"/>">Logout</a></li>
-   </ul>
-  </div>
- </nav>
- 
- <div class="container">
-  <div class="row">
-   <div class="col-md-12">
-    <form:form method="POST" action="${saveUrl}" modelAttribute="role">
-     <div class="form-group form-group-lg">
-      <label class="col-sm-2 control-label">Role Name</label>
-      <div class="col-sm-10">
-       <form:input path="name" required="required" />
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<jsp:include page="/WEB-INF/views/navbar.jsp"/>
+	<div class="content-wrapper">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Add  Role</div>
+      <div class="card-body">
+       <form:form method="POST" action="${saveUrl}" modelAttribute="role">
+          <div class="form-group">          
+            <div class="form-row">
+                <label for="exampleInputName">Role Name</label>                
+                <form:input path="name" class="form-control" required="required" aria-describedby="nameHelp" placeholder="Role Name" />
+            </div>            
+          </div>
+          <div class="form-group">
+              <div class="form-check">
+                 <%   
+                 List<Permission>  permissions = (List<Permission>)session.getAttribute("permissions"); 
+                 int[]  selectedPermissions = (int[]) session.getAttribute("selectedPermissions");
+                 for(Permission permission:permissions){                    	
+                 %>                      
+                 <form:checkbox class="checkBoxClass form-check-input" path="permissions"  value="<%=permission.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedPermissions,permission.getId())%>" />
+                 <label class="form-check-label" for="defaultCheck1"> <%=permission.getName()%> </label>
+                 <% 
+                 }
+                %> <br />
+                Check All <input type="checkbox" id="ckbCheckAll" /> 
+                
+                 <p>  ${errorPermission}</p>
+              </div>
+          </div>
+          <input type="submit" value="Save" class="btn btn-primary btn-block" />          
+       </form:form>        
       </div>
-                      <form:errors path="name" cssClass="error" />
-      
-                     <div class="col-sm-10">
-                      <%   
-                      List<Permission>  permissions = (List<Permission>)session.getAttribute("permissions"); 
-                      int[]  selectedPermissions = (int[]) session.getAttribute("selectedPermissions");
-                      for(Permission permission:permissions){                    	
-                     %>                      
-                       <form:checkbox class="checkBoxClass" path="permissions"  value="<%=permission.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedPermissions,permission.getId())%>" /><%=permission.getName()%>
-                      <% 
-                      }
-                      %>
-                      <br />
-                      Check All <input type="checkbox" id="ckbCheckAll" /> 
-                     </div>
-                   <p>  ${errorPermission}</p>
-     
-     </div>
-     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-       <input type="submit" value="Save" />
-      </div>
-     </div>
-    </form:form>
-   </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <jsp:include page="/WEB-INF/views/footer.jsp"/>
   </div>
- </div>
-
 </body>
-<script src="<c:url value='/resources/js/jquery.min.js' />"></script>
-<script src="<c:url value='/resources/js/checkbox.js' />"></script>
-
 </html>
