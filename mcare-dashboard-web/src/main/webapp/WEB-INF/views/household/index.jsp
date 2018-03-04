@@ -133,106 +133,98 @@
 
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Household list
+					<i class="fa fa-table"></i> Household Search
 				</div>
 				<div class="card-body">
 					<form id="search-form">
 						<div class="row">
 							<div class="col-3">
-								<label>Division <select
-									class="custom-select custom-select-lg mb-3" id="division"
-									name="division">
-										<option value="0?">Please Select</option>
-										<%
+								<select class="custom-select custom-select-lg mb-3"
+									id="division" name="division">
+									<option value="0?">Please Select Division</option>
+									<%
 											for (Object[] objects : parentDataList) {
 												if (divId == ((Integer) objects[1]).intValue()) {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+									<%
 											} else {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
+									<%
 											}
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>District <select
-									class="custom-select custom-select-lg mb-3" id="district"
-									name="district">
-										<option value="0?">Please Select</option>
-										<%
+								<select class="custom-select custom-select-lg mb-3"
+									id="district" name="district">
+									<option value="0?">Please Select District</option>
+									<%
 											if (districts != null) {
 												for (Object[] objects : districts) {
 													if (distId == ((Integer) objects[1]).intValue()) {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+									<%
 											} else {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
+									<%
 											}
 												}
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Upazilla <select
-									class="custom-select custom-select-lg mb-3" id="upazila"
+								<select class="custom-select custom-select-lg mb-3" id="upazila"
 									name="upazila">
-										<option value="0?">Please Select</option>
-										<%
+									<option value="0?">Please Select Upazilla</option>
+									<%
 											if (upazilas != null) {
 												for (Object[] objects : upazilas) {
 													if (upzilaId == ((Integer) objects[1]).intValue()) {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+									<%
 											} else {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
+									<%
 											}
 												}
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Union <select
-									class="custom-select custom-select-lg mb-3" id="union"
+								<select class="custom-select custom-select-lg mb-3" id="union"
 									name="union">
-										<option value="0?">Please Select</option>
-										<%
+									<option value="0?">Please Select Union</option>
+									<%
 											if (unions != null) {
 												for (Object[] objects : unions) {
 													if (unionId == ((Integer) objects[1]).intValue()) {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+									<%
 											} else {
 										%>
-										<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-										<%
+									<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
+									<%
 											}
 												}
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Ward <select
+								<select
 									class="custom-select custom-select-lg mb-3" id="ward"
 									name="ward">
-										<option value="0?">Please Select</option>
+										<option value="0?">Please Select Ward</option>
 										<%
 											if (wards != null) {
 												for (Object[] objects : wards) {
@@ -249,13 +241,12 @@
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Subunit <select
+								<select
 									class="custom-select custom-select-lg mb-3" id="subunit"
 									name="subunit">
-										<option value="0?">Please Select</option>
+										<option value="0?">Please Select Subunit</option>
 										<%
 											if (subuits != null) {
 												for (Object[] objects : subuits) {
@@ -272,13 +263,12 @@
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Mauzapara <select
+								<select
 									class="custom-select custom-select-lg mb-3" id="mauzapara"
 									name="mauzapara">
-										<option value="0?">Please Select</option>
+										<option value="0?">Please Select Mauzapara</option>
 										<%
 											if (mauzaparas != null) {
 												for (Object[] objects : mauzaparas) {
@@ -295,12 +285,11 @@
 											}
 										%>
 								</select>
-								</label>
 							</div>
 							<div class="col-3">
-								<label>Provider <select
+								<select
 									class="custom-select custom-select-lg mb-3" name="provider">
-										<option value="">Please Select</option>
+										<option value="">Please Select Provider</option>
 										<%
 											if (providers != null) {
 												for (ProviderEntity objects : providers) {
@@ -317,80 +306,165 @@
 											}
 										%>
 								</select>
-								</label>
 							</div>
 						</div>
+
 
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group">
-									<input type="text" class="form-control"
-										id="exampleFormControlInput1" placeholder="Input your name">
+									<input name="name" type="search" class="form-control"
+										value="<%=name%>" placeholder="">
 								</div>
 							</div>
 							<div class="col-6">
-								<button type="submit" class="btn btn-primary">Submit</button>
+								<button name="search" type="submit" id="bth-search"
+									class="btn btn-primary" value="search">Search</button>
 							</div>
 						</div>
 					</form>
 				</div>
+				<div class="card-footer small text-muted">Updated yesterday at
+					11:59 PM</div>
 			</div>
 
 
 
 
-
-
-			<div class="row">
-				<div class="col-sm-12">
-					<table class="table table-bordered dataTable" id="dataTable"
-						role="grid" aria-describedby="dataTable_info" style="width: 100%;"
-						cellspacing="0" width="100%">
-
-
-						<thead>
-							<tr role="row">
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 140px;">Name</th>
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 79px;">Provider</th>
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 106px;">FWGOBHHID</th>
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 43px;">FWJIVHHID</th>
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 140px;">Registration Date</th>
-								<th tabindex="0" aria-controls="dataTable" rowspan="1"
-									colspan="1" style="width: 225px;">Case Id</th>
-							</tr>
-						</thead>
-
-						<tbody>
-
-							<%
-								for (HouseholdEntity household : households) {
-									pageContext.setAttribute("id", household.getId());
-							%>
-							<tr role="row" class="even">
-								<td><a href="<c:url value="/${id}/view.html"/>"><%=household.getFirstName()%></a></td>
-								<td><%=household.getProvider()%></td>
-								<td><%=household.getFWGOBHHID()%></td>
-								<td><%=household.getFWJIVHHID()%></td>
-								<td><%=household.getRegistrationDate()%></td>
-								<td><%=household.getCaseId()%></td>
-							</tr>
-							<%
-								}
-							%>
-
-						</tbody>
-					</table>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-table"></i> Household List
 				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr role="row">
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 140px;">Name</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 79px;">Provider</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 106px;">FWGOBHHID</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 43px;">FWJIVHHID</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 140px;">Registration Date</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 225px;">Case Id</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr role="row">
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 140px;">Name</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 79px;">Provider</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 106px;">FWGOBHHID</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 43px;">FWJIVHHID</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 140px;">Registration Date</th>
+									<th tabindex="0" aria-controls="dataTable" rowspan="1"
+										colspan="1" style="width: 225px;">Case Id</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									for (HouseholdEntity household : households) {
+										pageContext.setAttribute("id", household.getId());
+								%>
+								<tr role="row" class="even">
+									<td><a href="<c:url value="household/${id}/view.html"/>"><%=household.getFirstName()%></a></td>
+									<td><%=household.getProvider()%></td>
+									<td><%=household.getFWGOBHHID()%></td>
+									<td><%=household.getFWJIVHHID()%></td>
+									<td><%=household.getRegistrationDate()%></td>
+									<td><%=household.getCaseId()%></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card-footer small text-muted">Updated yesterday at
+					11:59 PM</div>
 			</div>
-
-
 		</div>
-		<jsp:include page="/WEB-INF/views/footer.jsp" />
+
+
+		<div class="row">
+			<div class="dataTables_paginate paging_simple_numbers"
+				id="dataTable_paginate">
+				<ul class="pagination">
+					<%
+						if (disabledLINK != 0) {
+					%>
+					<li class="paginate_button page-item previous"
+						id="dataTable_previous"><a aria-controls="dataTable"
+						data-dt-idx="0" tabindex="0" class="page-link"
+						href="?offSet=<%=0%><%=paginationLink%>">Start</a></li>
+
+					<li class="paginate_button page-item previous"
+						id="dataTable_previous"><a aria-controls="dataTable"
+						data-dt-idx="0" tabindex="0" class="page-link"
+						href="?offSet=<%=disabledLINK - 1%><%=paginationLink%>">Previous</a>
+					</li>
+					<%
+						}
+					%>
+
+					<%
+						for (Integer i : pageList) {
+							if (disabledLINK == i) {
+								if (disabledLINK != size) {
+					%>
+					<li class="paginate_button page-item disabled"><a
+						aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+						class="page-link"
+						href="household.html?offSet=<%=i%><%=paginationLink%>"><%=i + ""%></a></li>
+					<%
+						}
+							} else {
+					%>
+					<li class="paginate_button page-item active"><a
+						aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+						class="page-link"
+						href="household.html?offSet=<%=i%><%=paginationLink%>"><%=i + ""%></a></li>
+					<%
+						}
+						}
+					%>
+					<%
+						if (disabledLINK == size) {
+					%>
+
+					<%
+						} else {
+					%>
+					<li class="paginate_button page-item next" id="dataTable_next">
+						<a aria-controls="dataTable" data-dt-idx="7" tabindex="0"
+						class="page-link"
+						href="household.html?offSet=<%=disabledLINK + 1%><%=paginationLink%>">Next</a>
+					</li>
+					<li class="paginate_button page-item next" id="dataTable_next">
+						<a aria-controls="dataTable" data-dt-idx="7" tabindex="0"
+						class="page-link"
+						href="household.html?offSet=<%=size%><%=paginationLink%>">End</a>
+					</li>
+					<%
+						}
+					%>
+				</ul>
+			</div>
+		</div>
+
+
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 </body>
 </html>
