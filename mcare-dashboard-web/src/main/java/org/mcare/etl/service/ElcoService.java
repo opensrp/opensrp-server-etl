@@ -44,10 +44,11 @@ public class ElcoService implements RegisterService<ElcoEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
 	public ElcoEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseRepositoryImpl.findById(id, "id", ElcoEntity.class);
+		
 	}
 	
 	@Transactional

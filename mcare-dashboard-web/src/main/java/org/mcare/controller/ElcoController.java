@@ -7,13 +7,14 @@ import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ElcoEntity;
-import org.mcare.etl.service.HouseholdService;
+import org.mcare.etl.service.ElcoService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ElcoController {
 	
 	@Autowired
-	private HouseholdService householdService;
+	private ElcoService elcoService;
 	
 	@Autowired
 	private PaginationUtil paginationUtil;
@@ -49,7 +50,6 @@ public class ElcoController {
 		search = (String) request.getParameter("search");
 		if (search != null) {
 			searchBuilder = paginationHelperUtil.setParams(request, session);
-			
 		} else {
 			searchBuilder = searchBuilder.clear();
 		}
@@ -59,6 +59,15 @@ public class ElcoController {
 		return "elco/index";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
+	@RequestMapping(value = "elco/{id}/view.html", method = RequestMethod.GET)
+	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+		
+		ElcoEntity household = elcoService.findById(id);
+		System.err.println("elco: " + household.toString());
+		model.addAttribute("household", household);
+		return "elco/view";
+	}
 	/*@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
 	@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {

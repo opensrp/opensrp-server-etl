@@ -88,10 +88,6 @@ public class ElcoEntity extends CommonEntity {
 	
 	private String relationalId;//getting from details
 	
-	/*	@ManyToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "household_id", referencedColumnName = "id")
-		private HouseholdEntity household;*/
-	
 	public int getId() {
 		return id;
 	}
@@ -323,13 +319,5 @@ public class ElcoEntity extends CommonEntity {
 	public void setRelationalId(String relationalId) {
 		this.relationalId = relationalId;
 	}
-	
-	/*	public HouseholdEntity getHousehold() {
-			return household;
-		}
-		
-		public void setHousehold(HouseholdEntity household) {
-			this.household = household;
-		}*/
 	
 }
