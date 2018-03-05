@@ -48,10 +48,6 @@ public class UserServiceImpl implements AclService {
 		return false;
 	}
 	
-	public String isValid(Account account) {
-		return String.valueOf(passwordEncoder.matches(account.getRetypePassword(), account.getPassword()));
-	}
-	
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {
@@ -104,5 +100,9 @@ public class UserServiceImpl implements AclService {
 			}
 		}
 		return roles;
+	}
+
+	public boolean isPasswordMatched(Account account) {
+		return passwordEncoder.matches(account.getRetypePassword(), passwordEncoder.encode(account.getPassword()));
 	}
 }

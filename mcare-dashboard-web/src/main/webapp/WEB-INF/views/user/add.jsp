@@ -21,82 +21,106 @@
 
 <title>Add user information</title>
 
-<jsp:include page="/WEB-INF/views/css.jsp"/>
+<jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
 <c:url var="saveUrl" value="/user/add.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-<jsp:include page="/WEB-INF/views/navbar.jsp"/>
+	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
 	<div class="content-wrapper">
-    <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Register an Account</div>
-      <div class="card-body">
-       <form:form method="POST" action="${saveUrl}" modelAttribute="account">
-          <div class="form-group">
-          
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputName">User Name</label>                
-                <form:input path="username" class="form-control" required="required" aria-describedby="nameHelp" placeholder="Enter first name" />
-                ${unigue}
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputLastName">Email</label>                
-                <form:input path="email" class="form-control" required="required" aria-describedby="nameHelp" placeholder="Enter last name" />
-               
-              </div>
-            </div>
-            
-          </div>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputName">First name</label>
-                <form:input path="firstName" class="form-control" aria-describedby="nameHelp" placeholder="Enter first name"/>
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputLastName">Last name</label>
-                <form:input path="lastName"  class="form-control" aria-describedby="nameHelp" placeholder="Enter last name" />
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputPassword1">Password</label>                
-                <form:password path="password" class="form-control" placeholder="Password" required="required"/>
-              </div>
-              <div class="col-md-6">
-                <label for="exampleConfirmPassword">Confirm password</label>
-                <form:password path="retypePassword"  placeholder="Confirm password" class="form-control" required="required" />
-              </div>
-            </div>
-            ${passwordNotMatch}
-          </div>
-          <div class="form-group">
-              <div class="form-check">
-                 <%   
-                  List<Role>  roles = (List<Role>)session.getAttribute("roles"); 
-                  int[]  selectedRoles = (int[]) session.getAttribute("selectedRoles");
-                  for(Role role:roles){                     
-                  %>                      
-                  <form:checkbox class="checkBoxClass form-check-input" path="roles"  value="<%=role.getId()%>" checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedRoles,role.getId())%>" />
-                   <label class="form-check-label" for="defaultCheck1"> <%=role.getName()%> </label>
-                  
-                  <% 
-                  }
-                  %>
-              </div>
-          </div>
-          <input type="submit" value="Save" class="btn btn-primary btn-block" />
-          
-       </form:form>
-        
-      </div>
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <jsp:include page="/WEB-INF/views/footer.jsp"/>
-  </div>
+		<div class="container-fluid">
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-table"></i> Add User
+				</div>
+				<div class="card-body">
+					<form:form method="POST" action="${saveUrl}"
+						modelAttribute="account">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-3">
+									<label>User Name</label>
+									<form:input path="username" class="form-control"
+										required="required" placeholder="Enter user name" />
+									${unigue}
+								</div>
+								<div class="col-3">
+									<label>Email</label>
+									<form:input path="email" class="form-control"
+										required="required" placeholder="Enter email" />
+
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-3">
+									<label>First name</label>
+									<form:input path="firstName" class="form-control"
+										placeholder="Enter first name" />
+								</div>
+								<div class="col-3">
+									<label>Last name</label>
+									<form:input path="lastName" class="form-control"
+										placeholder="Enter last name" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-3">
+									<label>Password</label>
+									<form:password path="password" class="form-control"
+										placeholder="Password" required="required" />
+								</div>
+								<div class="col-3">
+									<label>Confirm password</label>
+									<form:password path="retypePassword"
+										placeholder="Confirm password" class="form-control"
+										required="required" />
+								</div>
+							</div>
+							${passwordNotMatch}
+						</div>
+						<div class="form-group">
+							<div class="form-check">
+								<div class="row">
+									<%
+										List<Role> roles = (List<Role>) session.getAttribute("roles");
+											int[] selectedRoles = (int[]) session
+													.getAttribute("selectedRoles");
+											for (Role role : roles) {
+									%>
+									<div class="col-3">
+										<form:checkbox class="checkBoxClass form-check-input"
+											path="roles" value="<%=role.getId()%>"
+											checked="<%=CheckboxHelperUtil.checkCheckedBox(selectedRoles,
+							role.getId())%>" />
+										<label class="form-check-label" for="defaultCheck1"> <%=role.getName()%>
+										</label>
+									</div>
+									<%
+										}
+									%>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-3">
+									<input type="submit" value="Save"
+										class="btn btn-primary btn-block" />
+								</div>
+							</div>
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid-->
+		<!-- /.content-wrapper-->
+		<jsp:include page="/WEB-INF/views/footer.jsp" />
+	</div>
 </body>
 </html>

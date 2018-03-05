@@ -92,7 +92,7 @@ public class DataExportController {
 	}
 	*/
 	
-	@RequestMapping(value = "/export/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/export/list.html", method = RequestMethod.GET)
 	public String dataExportGetList(Model model) {
 		List<DataExportEntity> exports = providerServiceImpl.findAll("DataExportEntity");
 		System.err.println("" + exports.toString());
@@ -101,7 +101,7 @@ public class DataExportController {
 	}
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_EXPORT_DATA')")
-	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	@RequestMapping(value = "/export.html", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
 		model.addAttribute("formNames", FormName.values());
 		

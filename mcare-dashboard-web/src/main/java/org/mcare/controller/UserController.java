@@ -101,7 +101,7 @@ public class UserController {
 	                             HttpSession session) {
 		
 		try {
-			if (userServiceImpl.isValid(account).equalsIgnoreCase("false")) {
+			if (userServiceImpl.isPasswordMatched(account)) {
 				account.setEnabled(true);
 				account.setPassword(passwordEncoder.encode(account.getPassword()));
 				account.setRoles(userServiceImpl.setRoles(roles));
@@ -171,7 +171,7 @@ public class UserController {
 	public ModelAndView editPassword(@Valid @ModelAttribute("account") Account account, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
 		Account gettingAccount = userServiceImpl.findById(id, "id", Account.class);
-		if (userServiceImpl.isValid(account).equalsIgnoreCase("false")) {
+		if (userServiceImpl.isPasswordMatched(account)) {
 			account.setRoles(gettingAccount.getRoles());
 			account.setId(id);
 			account.setEnabled(true);

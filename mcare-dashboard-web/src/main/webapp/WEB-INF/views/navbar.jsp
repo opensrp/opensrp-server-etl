@@ -27,11 +27,20 @@
             <span class="nav-link-text">Household List</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/export/list">
-            <i class="fa fa-fw fa-table"></i>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExport" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Export</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseExport">
+            <li>
+              <a href="<c:url value="/export.html"/>">Export CSV</a>
+            </li>
+             <li>
+              <a href="<c:url value="/export/list.html"/>">List</a>
+            </li>
+          </ul>
         </li>
         
          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">

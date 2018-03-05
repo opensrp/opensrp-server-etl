@@ -16,3 +16,6 @@
 
 <link type="text/css"
 	href="<c:url value="/resources/css/sb-admin.css"/>" rel="stylesheet">
+
+<link type="text/css"
+	href="<c:url value="/resources/css/jquery-ui.css"/>" rel="stylesheet">
