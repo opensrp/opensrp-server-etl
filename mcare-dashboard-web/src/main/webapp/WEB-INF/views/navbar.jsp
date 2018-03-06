@@ -26,6 +26,10 @@
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Household List</span>
           </a>
+          <a class="nav-link" href="<c:url value="/elco.html"/>">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Elco List</span>
+          </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">

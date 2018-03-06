@@ -77,8 +77,6 @@ public class HouseholdService implements RegisterService<HouseholdEntity> {
 		return databaseRepositoryImpl.count();
 	}
 	
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	//@PostFilter("hasPermission(filterObject, 'PERM_READ_ELCO')")
 	@Transactional
 	public <T> List<T> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
 		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
