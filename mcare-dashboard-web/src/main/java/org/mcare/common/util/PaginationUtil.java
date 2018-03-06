@@ -1,7 +1,5 @@
 package org.mcare.common.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
-import org.mcare.etl.service.HouseholdService;
+import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class PaginationUtil {
 	private ProviderServiceImpl providerServiceImpl;
 	
 	@Autowired
-	private HouseholdService householdService;
+	private DatabaseServiceImpl databaseServiceImpl;
 	
 	public PaginationUtil() {
 		
@@ -45,15 +43,15 @@ public class PaginationUtil {
 		if (offset != null) {
 			int offsetReal = Integer.parseInt(offset);
 			offsetReal = offsetReal * 10;
-			data = householdService.search(searchBuilder, result, offsetReal, entityClassName);
+			data = databaseServiceImpl.search(searchBuilder, result, offsetReal, entityClassName);
 			if (session.getAttribute("size") == null) {
-				size = householdService.countBySearch(searchBuilder, entityClassName);
+				size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
 				session.setAttribute("size", size / 10);
 			}
 			
 		} else {
-			data = householdService.search(searchBuilder, result, 0, entityClassName);
-			size = householdService.countBySearch(searchBuilder, entityClassName);
+			data = databaseServiceImpl.search(searchBuilder, result, 0, entityClassName);
+			size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
 			if ((size % result) == 0) {
 				session.setAttribute("size", (size / 10) - 1);
 			} else {
@@ -117,18 +115,4 @@ public class PaginationUtil {
 		
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void dd() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-	    IllegalArgumentException, InvocationTargetException {
-		
-		try {
-			Class cls = Class.forName("org.mcare.etl.service.HouseholdService");
-			Object obj = cls.newInstance();
-			
-			Method method = cls.getDeclaredMethod("print");
-			method.invoke(obj, 7);
-		}
-		catch (SecurityException e) {}
-		catch (NoSuchMethodException e) {}
-	}
 }

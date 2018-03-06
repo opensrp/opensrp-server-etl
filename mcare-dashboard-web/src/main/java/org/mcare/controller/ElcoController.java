@@ -68,14 +68,5 @@ public class ElcoController {
 		model.addAttribute("household", household);
 		return "elco/view";
 	}
-	/*@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
-	@RequestMapping(value = "/{id}/view.html", method = RequestMethod.GET)
-	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		
-		HouseholdEntity household = householdService.findById(id);
-		System.err.println("" + household.getDivision());
-		model.addAttribute("household", household);
-		return "household/view";
-		
-	}*/
+	
 }
