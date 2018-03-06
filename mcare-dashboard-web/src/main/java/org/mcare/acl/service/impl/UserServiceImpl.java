@@ -105,4 +105,8 @@ public class UserServiceImpl implements AclService {
 	public boolean isPasswordMatched(Account account) {
 		return passwordEncoder.matches(account.getRetypePassword(), passwordEncoder.encode(account.getPassword()));
 	}
+
+	public boolean isUserAlreadyExist(Account account) {
+		return repository.findByUserName(account.getUsername(), "username", Account.class);
+	}
 }

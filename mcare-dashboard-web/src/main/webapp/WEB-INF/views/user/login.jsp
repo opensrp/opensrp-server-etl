@@ -41,12 +41,12 @@
             </div>
         </c:if>
           <div class="form-group">
-            <label for="exampleInputEmail1">User Name</label>
-            <input class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter UserName">
+            <label>User Name</label>
+            <input class="form-control" id="username" name="username" placeholder="UserName">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input class="form-control"id="password" name="password" placeholder="Password">
+            <label>Password</label>
+            <input type="password" class="form-control"id="password" name="password" placeholder="Password">
           </div>
           <!--<div class="form-group">
             <div class="form-check">

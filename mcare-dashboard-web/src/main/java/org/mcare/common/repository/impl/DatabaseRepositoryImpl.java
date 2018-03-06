@@ -115,6 +115,16 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public boolean findByUserName(String value, String fieldName, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq(fieldName, value));
+		List<Object> result = criteria.list();
+		session.close();
+		return (result.size() > 0 ? true : false);
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		Session session = sessionFactory.openSession();

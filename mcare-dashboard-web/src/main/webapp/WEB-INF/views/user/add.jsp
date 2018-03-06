@@ -42,7 +42,7 @@
 									<label>User Name</label>
 									<form:input path="username" class="form-control"
 										required="required" placeholder="Enter user name" />
-									${unigue}
+									${unique}
 								</div>
 								<div class="col-3">
 									<label>Email</label>

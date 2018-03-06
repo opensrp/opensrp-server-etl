@@ -21,13 +21,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Edit user information</title>
+<title>Change Password</title>
 
 <link type="text/css"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>"
 	rel="stylesheet">
 </head>
-<c:url var="saveUrl" value="/user/${id}/edit.html" />
+<c:url var="saveUrl" value="/user/${id}/password.html" />
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
 
@@ -38,7 +38,8 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Reset Password
+					<i class="fa fa-table"></i><a href="/user.html">User List</a> /
+					Reset Password
 				</div>
 				<div class="card-body">
 					<form:form method="POST" action="${saveUrl}"
@@ -46,7 +47,7 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">
-									<label>Password</label>
+									<label>New Password</label>
 									<form:password path="password" required="required" />
 								</div>
 							</div>
