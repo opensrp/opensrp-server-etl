@@ -38,7 +38,7 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> <a href="/user.html">User List</a> /
+					<i class="fa fa-table"></i> <a href="/user.html"> User List</a> /
 					Edit Account
 				</div>
 				<div class="card-body">
@@ -51,7 +51,7 @@
 									<form:input path="username" class="form-control"
 										readonly="true" required="required"
 										aria-describedby="nameHelp" placeholder="Enter first name" />
-									${unigue}
+									${unique}
 								</div>
 								<div class="col-3">
 									<label for="exampleInputLastName">Email</label>

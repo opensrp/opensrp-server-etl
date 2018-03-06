@@ -103,7 +103,7 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
-		Account account = userServiceImpl.findById(id, "id", Account.class);
+		Account account = findAccountById(id);
 		model.addAttribute("account", account);
 		model.addAttribute("id", id);
 		setSelectedRolesAttributes(getSelectedRoles(account), session);
@@ -115,7 +115,6 @@ public class UserController {
 	public ModelAndView editUser(@RequestParam(value = "roles", required = false) int[] roles,
 	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
 	                             HttpSession session, @PathVariable("id") int id) {
-		
 		account.setRoles(userServiceImpl.setRoles(roles));
 		account.setId(id);
 		account.setEnabled(true);
@@ -127,10 +126,8 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.GET)
 	public ModelAndView editPassword(Model model, HttpSession session, @PathVariable("id") int id) {
-		Account account = userServiceImpl.findById(id, "id", Account.class);
-		
+		Account account = findAccountById(id);
 		model.addAttribute("account", account);
-		
 		return new ModelAndView("user/password", "command", account);
 	}
 	
@@ -138,12 +135,12 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.POST)
 	public ModelAndView editPassword(@Valid @ModelAttribute("account") Account account, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
-		Account gettingAccount = userServiceImpl.findById(id, "id", Account.class);
+		Account gettingAccount = findAccountById(id);
 		if (userServiceImpl.isPasswordMatched(account)) {
-			account.setRoles(gettingAccount.getRoles());
 			account.setId(id);
 			account.setEnabled(true);
 			account.setPassword(passwordEncoder.encode(account.getPassword()));
+			account.setRoles(gettingAccount.getRoles());
 			userServiceImpl.update(account);
 		} else {
 			setPasswordNotMatchedAttribute(model);
@@ -201,6 +198,11 @@ public class UserController {
 			i++;
 		}
 		return selectedRoles;
+	}
+
+	private Account findAccountById(int id) {
+		Account account = userServiceImpl.findById(id, "id", Account.class);
+		return account;
 	}
 
 	private void setPasswordNotMatchedAttribute(ModelMap model) {
