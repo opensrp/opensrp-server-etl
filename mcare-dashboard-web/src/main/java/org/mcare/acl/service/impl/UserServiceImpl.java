@@ -17,16 +17,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements AclService {
-	
+
 	@Autowired
 	private DatabaseRepositoryImpl repository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private AccountDao accountDao;
-	
+
 	@Transactional
 	public void registerNewUserAccount(Account account) throws Exception {
 		try {
@@ -37,9 +37,9 @@ public class UserServiceImpl implements AclService {
 		catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-		
+
 	}
-	
+
 	private boolean emailExist(String email) {
 		Account account = repository.findByKey(email, "email", Account.class);
 		if (account != null) {
@@ -47,48 +47,44 @@ public class UserServiceImpl implements AclService {
 		}
 		return false;
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {
 		return repository.save(t);
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> int update(T t) {
 		return repository.update(t);
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> boolean delete(T t) {
-		// TODO Auto-generated method stub
-		return false;
+		return repository.delete(t);
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return repository.findById(id, fieldName, className);
-		
+
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByKey(value, fieldName, className);
 	}
-	
+
 	@Transactional
 	@Override
 	public <T> List<T> findAll(String tableClass) {
-		// TODO Auto-generated method stub
 		return repository.findAll(tableClass);
 	}
-	
+
 	@Transactional
 	public Set<Role> setRoles(int[] selectedRoles) {
 		Set<Role> roles = new HashSet<Role>();
