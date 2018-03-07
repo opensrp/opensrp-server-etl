@@ -1,10 +1,12 @@
 package org.mcare.etl.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.etl.entity.ChildEntity;
 import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +60,11 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 	
 	@Override
 	public ENCCEntity findByCaseId(String caseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseRepositoryImpl.findByKey(caseId, "caseId", ENCCEntity.class);
+	}
+
+	public List<ENCCEntity> findByRelationalId(String caseId) {
+		return databaseRepositoryImpl.findAllByCaseId(caseId, "relationalId", ENCCEntity.class);
 	}
 	
 }

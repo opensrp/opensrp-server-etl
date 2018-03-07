@@ -31,9 +31,9 @@
           </a>
         </li>
          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="<c:url value="/elco.html"/>">
+          <a class="nav-link" href="<c:url value="/child.html"/>">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Elco List</span>
+            <span class="nav-link-text">Child List</span>
           </a>
         </li>
 

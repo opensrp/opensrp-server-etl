@@ -47,8 +47,7 @@ public class ChildService implements RegisterService<ChildEntity> {
 	
 	@Override
 	public ChildEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseRepositoryImpl.findById(id, "id", ChildEntity.class);
 	}
 	
 	@Transactional

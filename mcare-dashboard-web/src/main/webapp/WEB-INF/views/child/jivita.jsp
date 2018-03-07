@@ -17,104 +17,104 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Household Details</title>
+<title>Child Details</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="/role/add" />
+<c:url var="saveUrl" value="child/${id}/view.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/household.html">Household List</a>
+				<li class="breadcrumb-item"><a href="/child.html">Child List</a>
 				</li>
-				<li class="breadcrumb-item active">Details of ${household.getFirstName()}</li>
+				<li class="breadcrumb-item active">Details of ${child.getJIVITAHHID()}</li>
 			</ol>
 			<div class="row">
 				<div class="col-4">
-					<p>Name : ${household.getFirstName()}</p>
+					<p>Name : ${child.getFirstName()}</p>
 				</div>
 				<div class="col-4">
-					<p>Birth Date : ${household.getBirthDate()}</p>
+					<p>Birth Date : ${child.getBirthDate()}</p>
 				</div>
 				<div class="col-4">
-					<p>Gender : ${household.getGender()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>caseId : ${household.getCaseId()}</p>
-				</div>
-				<div class="col-4">
-					<p>Provider : ${household.getProvider()}</p>
-				</div>
-				<div class="col-4">
-					<p>Start : ${household.getStart()}</p>
+					<p>Gender : ${child.getGender()}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-4">
-					<p>End : ${household.getEnd()}</p>
+					<p>caseId : ${child.getCaseId()}</p>
 				</div>
 				<div class="col-4">
-					<p>RegistrationDate : ${household.getRegistrationDate()}</p>
+					<p>Provider : ${child.getProvider()}</p>
 				</div>
 				<div class="col-4">
-					<p>Country : ${household.getCountry()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>Division : ${household.getDivision()}</p>
-				</div>
-				<div class="col-4">
-					<p>District : ${household.getDistrict()}</p>
-				</div>
-				<div class="col-4">
-					<p>Upazila : ${household.getUpazila()}</p>
+					<p>Start : ${child.getStart()}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-4">
-					<p>Union : ${household.getUnion()}</p>
+					<p>End : ${child.getEnd()}</p>
 				</div>
 				<div class="col-4">
-					<p>Ward : ${household.getWard()}</p>
+					<p>RegistrationDate : ${child.getRegistrationDate()}</p>
 				</div>
 				<div class="col-4">
-					<p>Subunit : ${household.getSubunit()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>MauzaPara : ${household.getMauzaPara()}</p>
-				</div>
-				<div class="col-4">
-					<p>UserType : ${household.getUserType()}</p>
-				</div>
-				<div class="col-4">
-					<p>CurrentFormStatus : ${household.getCurrentFormStatus()}</p>
+					<p>Country : ${child.getCountry()}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-4">
-					<p>ReceivedTime : ${household.getReceivedTime()}</p>
+					<p>Division : ${child.getDivision()}</p>
 				</div>
 				<div class="col-4">
-					<p>FWGOBHHID : ${household.getFWGOBHHID()}</p>
+					<p>District : ${child.getDistrict()}</p>
 				</div>
 				<div class="col-4">
-					<p>FWNHHMBRNUM : ${household.getFWNHHMBRNUM()}</p>
+					<p>Upazila : ${child.getUpazila()}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-4">
-					<p>FWNHHMWRA : ${household.getFWNHHMWRA()}</p>
+					<p>Union : ${child.getUnion()}</p>
 				</div>
 				<div class="col-4">
-					<p>ELCO : ${household.getELCO()}</p>
+					<p>Ward : ${child.getWard()}</p>
+				</div>
+				<div class="col-4">
+					<p>Subunit : ${child.getSubunit()}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<p>MauzaPara : ${child.getMauzaPara()}</p>
+				</div>
+				<div class="col-4">
+					<p>UserType : ${child.getUserType()}</p>
+				</div>
+				<div class="col-4">
+					<p>CurrentFormStatus : ${child.getCurrentFormStatus()}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<p>ReceivedTime : ${child.getReceivedTime()}</p>
+				</div>
+				<div class="col-4">
+					<p>FWGOBHHID : ${child.getGOBHHID()}</p>
+				</div>
+				<div class="col-4">
+					<p>FWNHHMBRNUM : ${child.getFWBNFCHILDNAME()}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<p>FWNHHMWRA : ${child.getFWBNFCHILDNAME()}</p>
+				</div>
+				<div class="col-4">
+					<p>ELCO : ${child.getFWWOMFNAME()}</p>
 				</div>
 			</div>
 		</div>
