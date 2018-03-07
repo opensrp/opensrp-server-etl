@@ -38,7 +38,8 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Edit Account
+					<i class="fa fa-table"></i> <a href="/user.html"> User List</a> /
+					Edit Account
 				</div>
 				<div class="card-body">
 					<form:form method="POST" action="${saveUrl}"
@@ -50,7 +51,7 @@
 									<form:input path="username" class="form-control"
 										readonly="true" required="required"
 										aria-describedby="nameHelp" placeholder="Enter first name" />
-									${unigue}
+									${unique}
 								</div>
 								<div class="col-3">
 									<label for="exampleInputLastName">Email</label>
@@ -103,8 +104,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">
-									<input type="submit" value="Edit"
-										class="btn btn-primary btn-block"/>
+									<input type="submit" value="Save"
+										class="btn btn-primary btn-block" />
 								</div>
 							</div>
 						</div>
