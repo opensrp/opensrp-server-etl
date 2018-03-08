@@ -65,10 +65,8 @@ public class ENCCEntity {
 	
 	private String encc_current_formStatus;
 	
-	@Temporal(TemporalType.DATE)
 	private Date START_DATE;
 	
-	@Temporal(TemporalType.DATE)
 	private Date END_DATE;
 	
 	@Temporal(TemporalType.DATE)
@@ -83,7 +81,7 @@ public class ENCCEntity {
 	private String relationalId;
 	
 	private String enccName;
-			
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
 	@CreationTimestamp

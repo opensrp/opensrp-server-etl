@@ -44,10 +44,10 @@ public class MotherService implements RegisterService<MotherEntity> {
 		
 	}
 	
+	@Transactional
 	@Override
 	public MotherEntity findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseRepositoryImpl.findById(id, "id", MotherEntity.class);
 	}
 	
 	@Transactional

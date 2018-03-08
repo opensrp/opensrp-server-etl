@@ -310,7 +310,7 @@ public class MotherToANCConverter {
 		ancEntity.setToday(DateUtil.getDateFromString(ancVisit, ancVisitKeyMap.get("today")));
 		ancEntity.setClientVersion(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("clientVersion"))));
 		
-		ancEntity.setReceived_time(DateUtil.getDateFromString(ancVisit, ancVisitKeyMap.get("received_time")));
+		ancEntity.setReceived_time(DateUtil.getDateTimeFromString(ancVisit, ancVisitKeyMap.get("received_time")));
 		
 		ancEntity.setTimeStamp(Long.parseLong(ancVisit.getString(ancVisitKeyMap.get("timeStamp"))));
 		
