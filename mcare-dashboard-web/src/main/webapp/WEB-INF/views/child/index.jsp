@@ -337,15 +337,17 @@
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Provider</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 106px;">FW WOM FNAME</th>
+													style="width: 106px;">Mother Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 43px;">JIVITA HHID</th>
+													style="width: 106px;">Father Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 225px;">Child Visits</th>
 												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 43px;">JIVITA HHID</th>
+												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Birth Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">Case Id</th>
+													style="width: 225px;">ENCC</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -355,15 +357,17 @@
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Provider</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 106px;">FW WOM FNAME</th>
+													style="width: 106px;">Mother Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 43px;">JIVITA HHID</th>
+													style="width: 106px;">Father Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 225px;">Child Visits</th>
 												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 43px;">JIVITA HHID</th>
+												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Birth Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">Case Id</th>
+													style="width: 225px;">ENCC</th>
 											</tr>
 										</tfoot>
 										<tbody>
@@ -375,10 +379,11 @@
 												<td><a href="<c:url value="child/${id}/view.html"/>"><%=child.getFirstName()%></a></td>
 												<td><%=child.getProvider()%></td>
 												<td><%=child.getFWWOMFNAME()%></td>
-												<td><a href="<c:url value="child/${id}/jivita.html"/>"><%=child.getJIVITAHHID()%></a></td>
+												<td><%=child.getFWHUSNAME()%></td>
 												<td><a href="<c:url value="child/${id}/visits.html"/>"><%=child.getFWBNFCHLDVITSTS()%></a></td>
+												<td><%=child.getJIVITAHHID()%></td>
 												<td><%=child.getBirthDate()%></td>
-												<td><a href="<c:url value="child/${id}/encc.html"/>"><%=child.getCaseId()%></a></td>
+												<td><a href="<c:url value="child/${id}/encc.html"/>">ENCC</a></td>
 											</tr>
 											<%
 												}

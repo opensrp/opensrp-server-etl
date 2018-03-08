@@ -1,5 +1,6 @@
 package org.mcare.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
+import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.ChildEntity;
 import org.mcare.etl.entity.ENCCEntity;
+import org.mcare.etl.service.ActionService;
 import org.mcare.etl.service.ChildService;
 import org.mcare.etl.service.ENCCService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
@@ -29,6 +32,9 @@ public class ChildController {
 
 	@Autowired
 	private ENCCService enccService;
+
+	@Autowired
+	private ActionService actionService;
 
 	@Autowired
 	private PaginationUtil paginationUtil;
@@ -62,48 +68,71 @@ public class ChildController {
 		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<ChildEntity> entityClassName = ChildEntity.class;
 		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
+
+		//setENCCSize(session);
+
+
 		return "child/index";
+	}
+
+	private void setENCCSize(HttpSession session) {
+		List<ChildEntity> childList = childService.findAll();
+		List<Integer> enccSize = new ArrayList<Integer>();
+		for (ChildEntity child: childList) {
+			List<ENCCEntity> encclist = enccService.findByRelationalId(child.getCaseId());
+
+			if ( encclist != null && !encclist.isEmpty()) {
+				System.out.println("encc size: " + encclist.size());
+				enccSize.add(encclist.size());
+				//child.setCountOfENCC(encclist.size());
+			} else {
+				//child.setCountOfENCC(0);
+			}
+		}
+
+		session.setAttribute("enccSize", enccSize);
+
+		System.out.println("child list size: " + childList.size());
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
 	@RequestMapping(value = "child/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		setChildAttribute(model, id);
+		ChildEntity child = childService.findById(id);
+		model.addAttribute("child", child);
 		return "child/view";
-	}
-
-	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
-	@RequestMapping(value = "child/{id}/jivita.html", method = RequestMethod.GET)
-	public String jivita(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		setChildAttribute(model, id);
-		return "child/jivita";
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
 	@RequestMapping(value = "child/{id}/visits.html", method = RequestMethod.GET)
 	public String visits(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		setChildAttribute(model, id);
-		return "child/visits";
+		ChildEntity child = childService.findById(id);
+		session.setAttribute("child", child);
+
+		List<ActionEntity> actionlist = actionService.findAllByCaseId(child.getCaseId());
+		session.setAttribute("actionlist", actionlist);
+
+		if (actionlist != null && !actionlist.isEmpty()) {
+			return "child/visits";
+		} else {
+			return "child/notfound";
+		}
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
 	@RequestMapping(value = "child/{id}/encc.html", method = RequestMethod.GET)
 	public String encc(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		ChildEntity child = childService.findById(id);
+		session.setAttribute("child", child);
+
 		List<ENCCEntity> encclist = enccService.findByRelationalId(child.getCaseId());
+		session.setAttribute("encclist", encclist);
 
 		if (encclist != null && !encclist.isEmpty()) {
-			session.setAttribute("child", child);
-			session.setAttribute("encclist", encclist);
 			return "child/encc";
 		} else {
-			return "child/index";
+			return "child/notfound";
 		}
-	}
-
-	private void setChildAttribute(Model model, int id) {
-		ChildEntity child = childService.findById(id);
-		model.addAttribute("child", child);
 	}
 }
 

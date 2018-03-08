@@ -19,42 +19,65 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Child Details</title>
+<title>ENCC Information</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="child/${id}/view.html" />
+<c:url var="saveUrl" value="child/${id}/encc.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/encc.html">encc List</a>
-				</li>
-				<li class="breadcrumb-item active">ENCC count ${encclist.size()} of ${child.getCaseId()}</li>
-			</ol>
-			<div class="row">
-				<%
-					List<ENCCEntity> enccList = (List<ENCCEntity>) session.getAttribute("encclist");
-					for (ENCCEntity encc : enccList) {
-				%>
-				<div class="col-4">
-					<p>Name : <%=encc.getEnccName()%></p>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-table"></i> ENCC count
+					${encclist.size()} of ${child.getCaseId()}
 				</div>
-				<div class="col-4">
-					<p>FW ENCC HDCOV : <%=encc.getFWENCCHDCOV()%></p>
+				<div class="card-body">
+					<div class="table-responsive">
+						<div id="dataTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4">
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-bordered dataTable" id="dataTable"
+										style="width: 100%;">
+										<thead>
+											<tr>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 140px;">Name</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 79px;">FW ENCC HDCOV</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">FW ENCC DSFVRCLD</th>
+												</tr>
+										</thead>
+										<tbody>
+											<%
+												List<ENCCEntity> enccList = (List<ENCCEntity>) session
+														.getAttribute("encclist");
+												for (ENCCEntity encc : enccList) {
+											%>
+											<tr class="even">
+												<td><%=encc.getEnccName()%></td>
+												<td><%=encc.getFWENCCHDCOV()%></td>
+												<td><%=encc.getFWENCCDSFVRCLD()%></td>
+											</tr>
+											<%
+												}
+											%>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-4">
-					<p>FW ENCC DSFVRCLD : <%=encc.getFWENCCDSFVRCLD()%></p>
-				</div>
-				<%
-					}
-				%>
+				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>
-	</div>
-	<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 </body>
 </html>

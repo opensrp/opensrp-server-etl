@@ -1,9 +1,12 @@
 package org.mcare.etl.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ChildEntity;
+import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,11 @@ public class ChildService implements RegisterService<ChildEntity> {
 	@Override
 	public ChildEntity findByCaseId(String caseId) {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", ChildEntity.class);
+	}
+	
+	@Transactional
+	public List<ChildEntity> findAll() {
+		return databaseRepositoryImpl.findAll(ChildEntity.class);
 	}
 	
 }

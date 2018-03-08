@@ -1,5 +1,7 @@
 package org.mcare.etl.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
@@ -44,23 +46,26 @@ public class ActionService implements RegisterService<ActionEntity> {
 		return databaseRepositoryImpl.delete(t);
 		
 	}
-	
+
 	@Override
 	public void update(ActionEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
 	public ActionEntity findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Transactional
 	@Override
 	public ActionEntity findByCaseId(String caseId) {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", ActionEntity.class);
 	}
-	
+
+	public List<ActionEntity> findAllByCaseId(String caseId) {
+		return databaseRepositoryImpl.findAllByCaseId(caseId, "caseId", ActionEntity.class);
+	}
 }

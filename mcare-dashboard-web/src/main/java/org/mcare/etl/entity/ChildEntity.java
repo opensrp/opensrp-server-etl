@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "child")
@@ -221,5 +222,4 @@ public class ChildEntity extends CommonEntity {
 	public void setBirthDateAndTime(Date birthDateAndTime) {
 		this.birthDateAndTime = birthDateAndTime;
 	}
-	
 }

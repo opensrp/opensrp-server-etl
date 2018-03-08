@@ -1,3 +1,5 @@
+<%@page import="org.mcare.etl.entity.ActionEntity"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -17,105 +19,66 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Child Details</title>
+<title>ENCC Information</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="child/${id}/view.html" />
+<c:url var="saveUrl" value="child/${id}/visits.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/child.html">Child List</a>
-				</li>
-				<li class="breadcrumb-item active">Details of ${child.getJIVITAHHID()}</li>
-			</ol>
-			<div class="row">
-				<div class="col-4">
-					<p>Name : ${child.getFirstName()}</p>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-table"></i> Action count
+					${actionlist.size()} of ${child.getCaseId()}
 				</div>
-				<div class="col-4">
-					<p>Birth Date : ${child.getBirthDate()}</p>
+				<div class="card-body">
+					<div class="table-responsive">
+						<div id="dataTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4">
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-bordered dataTable" id="dataTable"
+										style="width: 100%;">
+										<thead>
+											<tr>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 140px;">BeneficiaryType</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 79px;">ScheduleName</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">VisitCode</th>
+													<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">Expiry Date</th>
+												</tr>
+										</thead>
+										<tbody>
+											<%
+												List<ActionEntity> actionlist = (List<ActionEntity>) session
+														.getAttribute("actionlist");
+												for (ActionEntity action : actionlist) {
+											%>
+											<tr class="even">
+												<td><%=action.getBeneficiaryType()%></td>
+												<td><%=action.getScheduleName()%></td>
+												<td><%=action.getVisitCode()%></td>
+												<td><%=action.getExpiryDate()%></td>
+												
+											</tr>
+											<%
+												}
+											%>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-4">
-					<p>Gender : ${child.getGender()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>caseId : ${child.getCaseId()}</p>
-				</div>
-				<div class="col-4">
-					<p>Provider : ${child.getProvider()}</p>
-				</div>
-				<div class="col-4">
-					<p>Start : ${child.getStart()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>End : ${child.getEnd()}</p>
-				</div>
-				<div class="col-4">
-					<p>RegistrationDate : ${child.getRegistrationDate()}</p>
-				</div>
-				<div class="col-4">
-					<p>Country : ${child.getCountry()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>Division : ${child.getDivision()}</p>
-				</div>
-				<div class="col-4">
-					<p>District : ${child.getDistrict()}</p>
-				</div>
-				<div class="col-4">
-					<p>Upazila : ${child.getUpazila()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>Union : ${child.getUnion()}</p>
-				</div>
-				<div class="col-4">
-					<p>Ward : ${child.getWard()}</p>
-				</div>
-				<div class="col-4">
-					<p>Subunit : ${child.getSubunit()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>MauzaPara : ${child.getMauzaPara()}</p>
-				</div>
-				<div class="col-4">
-					<p>UserType : ${child.getUserType()}</p>
-				</div>
-				<div class="col-4">
-					<p>CurrentFormStatus : ${child.getCurrentFormStatus()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>ReceivedTime : ${child.getReceivedTime()}</p>
-				</div>
-				<div class="col-4">
-					<p>FWGOBHHID : ${child.getGOBHHID()}</p>
-				</div>
-				<div class="col-4">
-					<p>FWNHHMBRNUM : ${child.getFWBNFCHILDNAME()}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-4">
-					<p>FWNHHMWRA : ${child.getFWBNFCHILDNAME()}</p>
-				</div>
-				<div class="col-4">
-					<p>ELCO : ${child.getFWWOMFNAME()}</p>
-				</div>
+				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
