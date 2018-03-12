@@ -17,11 +17,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ENCC Not Found</title>
+<title>Not Found</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="child/${id}/notfound.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
@@ -29,7 +28,7 @@
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="/child.html"> Back to Child List</a></li>
 			</ol>
-			<div>ENCC of ${child.getFirstName()} not completed</div>
+			<div>Not Found</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>

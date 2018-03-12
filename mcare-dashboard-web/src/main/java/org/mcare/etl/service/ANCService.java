@@ -1,6 +1,7 @@
 package org.mcare.etl.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -60,5 +61,10 @@ public class ANCService implements RegisterService<ANCEntity> {
 	@Transactional
 	public ANCEntity findByCaseIdAndToday(String relationalId, Date today) {
 		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, ANCEntity.class);
+	}
+
+	@Transactional
+	public List<ANCEntity> findAllCompletedANCVisits(String caseId) {
+		return databaseRepositoryImpl.findAllCompletedANCVisits(caseId);
 	}
 }

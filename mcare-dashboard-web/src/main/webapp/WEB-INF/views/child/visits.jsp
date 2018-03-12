@@ -31,8 +31,8 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Action count
-					${actionlist.size()} of ${child.getCaseId()}
+					<i class="fa fa-table"></i> <a href="/child.html">Child List</a> /
+					Pending Visits of ${child.getFirstName()} ( ${actionlist.size()} )
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -45,14 +45,16 @@
 										<thead>
 											<tr>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 140px;">BeneficiaryType</th>
+													style="width: 140px;">Provider</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 79px;">ScheduleName</th>
+													style="width: 79px;">Visit Code</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 106px;">VisitCode</th>
-													<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">Start Date</th>
+												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 106px;">Expiry Date</th>
-												</tr>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">Alert Status</th>
+											</tr>
 										</thead>
 										<tbody>
 											<%
@@ -61,11 +63,11 @@
 												for (ActionEntity action : actionlist) {
 											%>
 											<tr class="even">
-												<td><%=action.getBeneficiaryType()%></td>
-												<td><%=action.getScheduleName()%></td>
+												<td><%=action.getProvider()%></td>
 												<td><%=action.getVisitCode()%></td>
+												<td><%=action.getStartDate()%></td>
 												<td><%=action.getExpiryDate()%></td>
-												
+												<td><%=action.getAlertStatus()%></td>
 											</tr>
 											<%
 												}

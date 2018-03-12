@@ -112,12 +112,12 @@
 					</form:form>
 
 				</div>
+				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>
-	</div>
-	<!-- /.container-fluid-->
-	<!-- /.content-wrapper-->
-	<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<!-- /.container-fluid-->
+		<!-- /.content-wrapper-->
+		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 </body>
 </html>

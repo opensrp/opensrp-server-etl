@@ -31,8 +31,8 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> ENCC count
-					${encclist.size()} of ${child.getCaseId()}
+					<i class="fa fa-table"></i> <a href="/child.html">Child List</a> /
+					ENCC of ${child.getFirstName()} ( ${encclist.size()} )
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -45,12 +45,18 @@
 										<thead>
 											<tr>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 140px;">Name</th>
+													style="width: 140px;">ENCC Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 79px;">FW ENCC HDCOV</th>
+													style="width: 140px;">Current Form Status</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 106px;">FW ENCC DSFVRCLD</th>
-												</tr>
+													style="width: 140px;">Received Time</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 79px;">Start Date</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">End Date</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 106px;">ENCC Date</th>
+											</tr>
 										</thead>
 										<tbody>
 											<%
@@ -60,8 +66,11 @@
 											%>
 											<tr class="even">
 												<td><%=encc.getEnccName()%></td>
-												<td><%=encc.getFWENCCHDCOV()%></td>
-												<td><%=encc.getFWENCCDSFVRCLD()%></td>
+												<td><%=encc.getEncc_current_formStatus()%></td>
+												<td><%=encc.getReceived_time()%></td>
+												<td><%=encc.getSTART_DATE()%></td>
+												<td><%=encc.getEND_DATE()%></td>
+												<td><%=encc.getFWENCCDATE()%></td>
 											</tr>
 											<%
 												}

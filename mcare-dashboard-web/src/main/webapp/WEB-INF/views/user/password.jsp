@@ -79,6 +79,7 @@
 					</form:form>
 
 				</div>
+				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>
 		<!-- /.container-fluid-->

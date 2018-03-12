@@ -14,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "child")
@@ -74,7 +73,7 @@ public class ChildEntity extends CommonEntity {
 	
 	@Column(name = "birth_date_and_time")
 	private Date birthDateAndTime;//details
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "mother_id", referencedColumnName = "id")
 	private MotherEntity mother;

@@ -17,7 +17,6 @@ public class ActionService implements RegisterService<ActionEntity> {
 	private DatabaseRepositoryImpl databaseRepositoryImpl;
 	
 	public ActionService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Transactional
@@ -42,20 +41,18 @@ public class ActionService implements RegisterService<ActionEntity> {
 	
 	@Transactional
 	@Override
-	public boolean delete(ActionEntity t) {
-		return databaseRepositoryImpl.delete(t);
+	public boolean delete(ActionEntity actionEntity) {
+		return databaseRepositoryImpl.delete(actionEntity);
 		
 	}
 
 	@Override
-	public void update(ActionEntity t) {
-		// TODO Auto-generated method stub
-		
+	public void update(ActionEntity actionEntity) {
+		databaseRepositoryImpl.update(actionEntity);
 	}
 
 	@Override
 	public ActionEntity findById(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -65,7 +62,13 @@ public class ActionService implements RegisterService<ActionEntity> {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", ActionEntity.class);
 	}
 
+	@Transactional
 	public List<ActionEntity> findAllByCaseId(String caseId) {
 		return databaseRepositoryImpl.findAllByCaseId(caseId, "caseId", ActionEntity.class);
+	}
+
+	@Transactional
+	public List<ActionEntity> findAllPendingENCCVisits(String caseId, String provider) {
+		return databaseRepositoryImpl.findAllPendingENCCVisits(caseId, provider);
 	}
 }

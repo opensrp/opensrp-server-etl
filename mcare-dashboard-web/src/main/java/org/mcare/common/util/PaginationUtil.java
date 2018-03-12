@@ -17,22 +17,28 @@ import org.springframework.ui.Model;
 
 @Component
 public class PaginationUtil {
-	
+
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
-	
+
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
-	
+
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
-	
+
+	@Autowired
+	private SearchBuilder searchBuilder;
+
+	@Autowired
+	private PaginationHelperUtil paginationHelperUtil;
+
 	public PaginationUtil() {
-		
+
 	}
-	
+
 	public <T> void pagination(HttpServletRequest request, HttpSession session, SearchBuilder searchBuilder,
-	                           Class<?> entityClassName, Model model) {
+			Class<?> entityClassName, Model model) {
 		List<Object[]> parentData = locationServiceImpl.getParentData();
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
 		String offset = (String) request.getParameter("offSet");
@@ -48,7 +54,7 @@ public class PaginationUtil {
 				size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
 				session.setAttribute("size", size / 10);
 			}
-			
+
 		} else {
 			data = databaseServiceImpl.search(searchBuilder, result, 0, entityClassName);
 			size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
@@ -61,10 +67,10 @@ public class PaginationUtil {
 		System.err.println("data:" + data.toString());
 		session.setAttribute("parentData", parentData);
 		session.setAttribute("providers", providers);
-		
+
 		/*when user click on any page number then this part will be executed. 
 		 * else part will be executed on load i.e first time on page*/
-		
+
 		if (offset != null) {
 			int listsize = Integer.parseInt(session.getAttribute("size").toString());
 			if (Integer.parseInt(offset) < 6) {
@@ -77,7 +83,7 @@ public class PaginationUtil {
 						pageList.add(i);
 					}
 				}
-				
+
 			} else {
 				if (listsize >= 10 && Integer.parseInt(offset) - 5 > 0) {
 					List<Integer> temp = new ArrayList<Integer>();
@@ -112,7 +118,22 @@ public class PaginationUtil {
 		}
 		session.setAttribute("pageList", pageList);
 		session.setAttribute("dataList", data);
-		
+
 	}
-	
+
+
+	public <T> void createPagination(HttpServletRequest request,
+			HttpSession session, Model model, Class<T> entityClassName) {
+		String search = "";
+		search = (String) request.getParameter("search");
+		if (search != null) {
+			searchBuilder = paginationHelperUtil.setParams(request, session);
+		} else {
+			searchBuilder = searchBuilder.clear();
+		}
+		PaginationHelperUtil.getPaginationLink(request, session);
+
+		pagination(request, session, searchBuilder, entityClassName, model);
+	}
+
 }

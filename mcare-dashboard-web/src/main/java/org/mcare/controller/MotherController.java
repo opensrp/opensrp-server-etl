@@ -1,15 +1,18 @@
 package org.mcare.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
-import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
+import org.mcare.etl.entity.ANCEntity;
+import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.MotherEntity;
+import org.mcare.etl.service.ANCService;
 import org.mcare.etl.service.MotherService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
-import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,10 @@ public class MotherController {
 	
 	@Autowired
 	private MotherService motherService;
-	
+
+	@Autowired
+	private ANCService ancService;
+
 	@Autowired
 	private PaginationUtil paginationUtil;
 	
@@ -33,12 +39,6 @@ public class MotherController {
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
 	
-	@Autowired
-	private SearchBuilder searchBuilder;
-	
-	@Autowired
-	private PaginationHelperUtil paginationHelperUtil;
-	
 	public MotherController() {
 		
 	}
@@ -46,26 +46,32 @@ public class MotherController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER_LIST')")
 	@RequestMapping(value = "/mother.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		String search = "";
-		search = (String) request.getParameter("search");
-		if (search != null) {
-			searchBuilder = paginationHelperUtil.setParams(request, session);
-		} else {
-			searchBuilder = searchBuilder.clear();
-		}
-		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<MotherEntity> entityClassName = MotherEntity.class;
-		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
+		paginationUtil.createPagination(request, session, model, entityClassName);
 		return "mother/index";
 	}
 	
-	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
 	@RequestMapping(value = "mother/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		
 		MotherEntity household = motherService.findById(id);
-		System.err.println("elco: " + household.toString());
 		model.addAttribute("household", household);
 		return "mother/view";
+	}
+
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
+	@RequestMapping(value = "mother/{id}/visits_completed.html", method = RequestMethod.GET)
+	public String visits(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+		MotherEntity mother = motherService.findById(id);
+		session.setAttribute("mother", mother);
+
+		List<ANCEntity> anclist = ancService.findAllCompletedANCVisits(mother.getCaseId());
+		session.setAttribute("anclist", anclist);
+
+		if (anclist != null && !anclist.isEmpty()) {
+			return "mother/visits";
+		} else {
+			return "child/notfound";
+		}
 	}
 }

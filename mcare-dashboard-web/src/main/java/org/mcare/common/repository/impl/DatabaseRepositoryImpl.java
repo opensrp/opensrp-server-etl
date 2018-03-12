@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
+import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.params.builder.SearchBuilder;
@@ -153,6 +154,28 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<T> result = criteria.list();
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
+	}
+
+	public List<ActionEntity> findAllPendingENCCVisits(String caseId, String provider) {
+		Session session = sessionFactory.openSession();
+		List<ActionEntity> result = null;
+
+		try {
+			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
+					 + "and provider = :provider_id "
+					 + "and isActionActive = :is_action_active "
+					 + "and visitCode LIKE :visit_code ");
+			query.setParameter("case_id", caseId);
+			query.setParameter("provider_id", provider);
+			query.setParameter("is_action_active", true);
+			query.setParameter("visit_code", "encc%");
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
@@ -343,5 +366,22 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 
 		return count;
+	}
+
+	public List<ANCEntity> findAllCompletedANCVisits(String caseId) {
+		Session session = sessionFactory.openSession();
+		List<ANCEntity> result = null;
+
+		try {
+			Query query = session.createQuery("from ANCEntity "
+					 + "where relationalid = :case_id ");
+			query.setParameter("case_id", caseId);
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

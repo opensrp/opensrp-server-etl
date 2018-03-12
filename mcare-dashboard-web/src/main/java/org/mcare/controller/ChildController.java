@@ -1,6 +1,5 @@
 package org.mcare.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,31 +67,7 @@ public class ChildController {
 		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<ChildEntity> entityClassName = ChildEntity.class;
 		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
-
-		//setENCCSize(session);
-
-
 		return "child/index";
-	}
-
-	private void setENCCSize(HttpSession session) {
-		List<ChildEntity> childList = childService.findAll();
-		List<Integer> enccSize = new ArrayList<Integer>();
-		for (ChildEntity child: childList) {
-			List<ENCCEntity> encclist = enccService.findByRelationalId(child.getCaseId());
-
-			if ( encclist != null && !encclist.isEmpty()) {
-				System.out.println("encc size: " + encclist.size());
-				enccSize.add(encclist.size());
-				//child.setCountOfENCC(encclist.size());
-			} else {
-				//child.setCountOfENCC(0);
-			}
-		}
-
-		session.setAttribute("enccSize", enccSize);
-
-		System.out.println("child list size: " + childList.size());
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
@@ -109,7 +84,7 @@ public class ChildController {
 		ChildEntity child = childService.findById(id);
 		session.setAttribute("child", child);
 
-		List<ActionEntity> actionlist = actionService.findAllByCaseId(child.getCaseId());
+		List<ActionEntity> actionlist = actionService.findAllPendingENCCVisits(child.getCaseId(), child.getProvider());
 		session.setAttribute("actionlist", actionlist);
 
 		if (actionlist != null && !actionlist.isEmpty()) {
