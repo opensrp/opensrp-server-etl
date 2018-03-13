@@ -1,6 +1,7 @@
 package org.mcare.etl.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -60,5 +61,9 @@ public class PNCService implements RegisterService<PNCEntity> {
 	@Transactional
 	public PNCEntity findByCaseIdAndToday(String relationalId, Date today) {
 		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, PNCEntity.class);
+	}
+
+	public List<PNCEntity> findAllByCaseId(String caseId) {
+		return databaseRepositoryImpl.findAllByCaseId(caseId, "PNCEntity");
 	}
 }

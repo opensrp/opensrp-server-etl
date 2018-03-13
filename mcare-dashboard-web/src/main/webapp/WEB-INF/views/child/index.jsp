@@ -346,9 +346,9 @@
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Birth Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">ENCC (Completed)</th>
+													style="width: 225px;">Visits (Completed)</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">Child Visits (Pending)</th>
+													style="width: 225px;">Visits (Pending)</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -366,9 +366,9 @@
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Birth Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">ENCC (Completed)</th>
+													style="width: 225px;">Visits (Completed)</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 225px;">Child Visits (Pending)</th>
+													style="width: 225px;">Visits (Pending)</th>
 											</tr>
 										</tfoot>
 										<tbody>
@@ -383,8 +383,8 @@
 												<td><%=child.getFWHUSNAME()%></td>
 												<td><%=child.getJIVITAHHID()%></td>
 												<td><%=child.getBirthDate()%></td>
-												<td><a href="<c:url value="child/${id}/encc.html"/>">ENCC</a></td>
-												<td><a href="<c:url value="child/${id}/visits.html"/>">Pending Visits</a></td>
+												<td><a href="<c:url value="child/${id}/encc.html"/>">Visit Details</a></td>
+												<td><a href="<c:url value="child/${id}/visits.html"/>">Visit Details</a></td>
 											</tr>
 											<%
 												}

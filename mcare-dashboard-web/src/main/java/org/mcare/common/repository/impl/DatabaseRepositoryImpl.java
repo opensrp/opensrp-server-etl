@@ -15,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
+import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,29 +156,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
-
-	public List<ActionEntity> findAllPendingENCCVisits(String caseId, String provider) {
-		Session session = sessionFactory.openSession();
-		List<ActionEntity> result = null;
-
-		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
-					 + "and provider = :provider_id "
-					 + "and isActionActive = :is_action_active "
-					 + "and visitCode LIKE :visit_code ");
-			query.setParameter("case_id", caseId);
-			query.setParameter("provider_id", provider);
-			query.setParameter("is_action_active", true);
-			query.setParameter("visit_code", "encc%");
-			result = query.list();
-			session.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
 
 	public <T> List<T> findAll(Class<?> className) {
 		Session session = sessionFactory.openSession();
@@ -368,13 +346,61 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return count;
 	}
 
-	public List<ANCEntity> findAllCompletedANCVisits(String caseId) {
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
 		Session session = sessionFactory.openSession();
-		List<ANCEntity> result = null;
+		List<ActionEntity> result = null;
 
 		try {
-			Query query = session.createQuery("from ANCEntity "
-					 + "where relationalid = :case_id ");
+			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
+					+ "and provider = :provider_id "
+					+ "and isActionActive = :is_action_active "
+					+ "and visitCode LIKE :visit_code ");
+			query.setParameter("case_id", caseId);
+			query.setParameter("provider_id", provider);
+			query.setParameter("is_action_active", true);
+			query.setParameter("visit_code", "encc%");
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId,
+			String provider) {
+		Session session = sessionFactory.openSession();
+		List<ActionEntity> result = null;
+
+		try {
+			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
+					// + "and provider = :provider_id "
+					+ "and isActionActive = :is_action_active "
+					+ "and (visitCode LIKE :visit_code "
+					+ "or visitCode LIKE :visit_code_pnc "
+					+ "or visitCode = :visit_code_bnf "
+					+ ")");
+			query.setParameter("case_id", caseId);
+			//query.setParameter("provider_id", provider);
+			query.setParameter("is_action_active", true);
+			query.setParameter("visit_code", "anc%");
+			query.setParameter("visit_code_pnc", "pnc%");
+			query.setParameter("visit_code_bnf", "BirthNotificationPregnancyStatusFollowUp");
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public <T> List<T> findAllByCaseId(String caseId, String className) {
+		Session session = sessionFactory.openSession();
+		List<T> result = null;
+		try {
+			Query query = session.createQuery("from " + className + " where relationalId = :case_id ");
 			query.setParameter("case_id", caseId);
 			result = query.list();
 			session.close();

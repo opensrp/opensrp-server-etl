@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
-import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.ChildEntity;
@@ -47,9 +46,6 @@ public class ChildController {
 	@Autowired
 	private SearchBuilder searchBuilder;
 
-	@Autowired
-	private PaginationHelperUtil paginationHelperUtil;
-
 	public ChildController() {
 
 	}
@@ -57,16 +53,8 @@ public class ChildController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD_LIST')")
 	@RequestMapping(value = "/child.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		String search = "";
-		search = (String) request.getParameter("search");
-		if (search != null) {
-			searchBuilder = paginationHelperUtil.setParams(request, session);
-		} else {
-			searchBuilder = searchBuilder.clear();
-		}
-		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<ChildEntity> entityClassName = ChildEntity.class;
-		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
+		paginationUtil.createPagination(request, session, model, entityClassName);
 		return "child/index";
 	}
 
@@ -80,17 +68,17 @@ public class ChildController {
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
 	@RequestMapping(value = "child/{id}/visits.html", method = RequestMethod.GET)
-	public String visits(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+	public String visitsPending(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		ChildEntity child = childService.findById(id);
 		session.setAttribute("child", child);
 
-		List<ActionEntity> actionlist = actionService.findAllPendingENCCVisits(child.getCaseId(), child.getProvider());
+		List<ActionEntity> actionlist = actionService.findAllPendingChildVisits(child.getCaseId(), child.getProvider());
 		session.setAttribute("actionlist", actionlist);
 
 		if (actionlist != null && !actionlist.isEmpty()) {
 			return "child/visits";
 		} else {
-			return "child/notfound";
+			return "/notfound";
 		}
 	}
 
@@ -106,7 +94,7 @@ public class ChildController {
 		if (encclist != null && !encclist.isEmpty()) {
 			return "child/encc";
 		} else {
-			return "child/notfound";
+			return "/notfound";
 		}
 	}
 }

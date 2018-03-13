@@ -25,9 +25,6 @@
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/child.html"> Back to Child List</a></li>
-			</ol>
 			<div>Not Found</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />

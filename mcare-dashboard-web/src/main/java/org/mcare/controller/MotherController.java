@@ -9,9 +9,14 @@ import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
+import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.entity.MotherEntity;
+import org.mcare.etl.entity.PNCEntity;
 import org.mcare.etl.service.ANCService;
+import org.mcare.etl.service.ActionService;
+import org.mcare.etl.service.BNFService;
 import org.mcare.etl.service.MotherService;
+import org.mcare.etl.service.PNCService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -29,6 +34,15 @@ public class MotherController {
 
 	@Autowired
 	private ANCService ancService;
+
+	@Autowired
+	private ActionService actionService;
+
+	@Autowired
+	private BNFService bnfService;
+
+	@Autowired
+	private PNCService pncService;
 
 	@Autowired
 	private PaginationUtil paginationUtil;
@@ -60,18 +74,37 @@ public class MotherController {
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
-	@RequestMapping(value = "mother/{id}/visits_completed.html", method = RequestMethod.GET)
-	public String visits(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+	@RequestMapping(value = "mother/{id}/visits_pending.html", method = RequestMethod.GET)
+	public String visitsPending(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		MotherEntity mother = motherService.findById(id);
 		session.setAttribute("mother", mother);
 
-		List<ANCEntity> anclist = ancService.findAllCompletedANCVisits(mother.getCaseId());
+		List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), mother.getProvider());
+		session.setAttribute("actionlist", actionlist);
+
+		if (actionlist != null && !actionlist.isEmpty()) {
+			return "mother/visits_pending";
+		} else {
+			return "/notfound";
+		}
+	}
+
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
+	@RequestMapping(value = "mother/{id}/visits_completed.html", method = RequestMethod.GET)
+	public String visitsCompleted(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+		MotherEntity mother = motherService.findById(id);
+		session.setAttribute("mother", mother);
+
+		List<ANCEntity> anclist = ancService.findAllByCaseId(mother.getCaseId());
+		List<BNFEntity> bnflist = bnfService.findAllByCaseId(mother.getCaseId());
+		List<PNCEntity> pnclist = pncService.findAllByCaseId(mother.getCaseId());
+		
 		session.setAttribute("anclist", anclist);
 
 		if (anclist != null && !anclist.isEmpty()) {
-			return "mother/visits";
+			return "mother/visits_completed";
 		} else {
-			return "child/notfound";
+			return "/notfound";
 		}
 	}
 }

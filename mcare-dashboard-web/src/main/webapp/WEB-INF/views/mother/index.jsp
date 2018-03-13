@@ -26,8 +26,6 @@
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="/mother.html" />
-
 <%
 	List<MotherEntity> mothers = (List<MotherEntity>) session
 			.getAttribute("dataList");
@@ -337,7 +335,7 @@
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Provider</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 43px;">JIVITA Household ID</th>
+													style="width: 43px;">JIVITA HHID</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Registration Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
@@ -377,8 +375,8 @@
 												<td><%=mother.getMotherJIVIHID()%></td>
 												<td><%=mother.getRegistrationDate()%></td>
 												<td><%=mother.getMotherWomLMP()%></td>
-												<td><a href="<c:url value="mother/${id}/view.html"/>">Visit Details</a></td>
-												<td><a href="<c:url value="mother/${id}/view.html"/>">Visit Details</a></td>
+												<td><a href="<c:url value="mother/${id}/visits_completed.html"/>">Visit Details</a></td>
+												<td><a href="<c:url value="mother/${id}/visits_pending.html"/>">Visit Details</a></td>
 											</tr>
 											<%
 												}
@@ -456,7 +454,6 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>

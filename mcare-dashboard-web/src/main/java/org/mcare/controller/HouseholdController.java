@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
-import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.service.HouseholdService;
@@ -39,9 +38,6 @@ public class HouseholdController {
 	@Autowired
 	private SearchBuilder searchBuilder;
 	
-	@Autowired
-	private PaginationHelperUtil paginationHelperUtil;
-	
 	public HouseholdController() {
 		
 	}
@@ -49,16 +45,8 @@ public class HouseholdController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_HOUSEHOLD_LIST')")
 	@RequestMapping(value = "/household.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		String search = "";
-		search = (String) request.getParameter("search");
-		if (search != null) {
-			searchBuilder = paginationHelperUtil.setParams(request, session);
-		} else {
-			searchBuilder = searchBuilder.clear();
-		}
-		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<HouseholdEntity> entityClassName = HouseholdEntity.class;
-		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
+		paginationUtil.createPagination(request, session, model, entityClassName);
 		return "household/index";
 	}
 	

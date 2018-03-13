@@ -64,7 +64,7 @@ public class ANCService implements RegisterService<ANCEntity> {
 	}
 
 	@Transactional
-	public List<ANCEntity> findAllCompletedANCVisits(String caseId) {
-		return databaseRepositoryImpl.findAllCompletedANCVisits(caseId);
+	public List<ANCEntity> findAllByCaseId(String caseId) {
+		return databaseRepositoryImpl.findAllByCaseId(caseId, "ANCEntity");
 	}
 }

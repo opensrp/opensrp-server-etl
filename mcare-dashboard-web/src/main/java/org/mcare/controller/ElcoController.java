@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
-import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ElcoEntity;
 import org.mcare.etl.service.ElcoService;
@@ -35,10 +34,7 @@ public class ElcoController {
 	
 	@Autowired
 	private SearchBuilder searchBuilder;
-	
-	@Autowired
-	private PaginationHelperUtil paginationHelperUtil;
-	
+
 	public ElcoController() {
 		
 	}
@@ -46,16 +42,8 @@ public class ElcoController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO_LIST')")
 	@RequestMapping(value = "/elco.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		String search = "";
-		search = (String) request.getParameter("search");
-		if (search != null) {
-			searchBuilder = paginationHelperUtil.setParams(request, session);
-		} else {
-			searchBuilder = searchBuilder.clear();
-		}
-		PaginationHelperUtil.getPaginationLink(request, session);
 		Class<ElcoEntity> entityClassName = ElcoEntity.class;
-		paginationUtil.pagination(request, session, searchBuilder, entityClassName, model);
+		paginationUtil.createPagination(request, session, model, entityClassName);
 		return "elco/index";
 	}
 	

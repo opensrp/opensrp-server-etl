@@ -68,7 +68,13 @@ public class ActionService implements RegisterService<ActionEntity> {
 	}
 
 	@Transactional
-	public List<ActionEntity> findAllPendingENCCVisits(String caseId, String provider) {
-		return databaseRepositoryImpl.findAllPendingENCCVisits(caseId, provider);
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
+		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, provider);
+	}
+
+	@Transactional
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId,
+			String provider) {
+		return databaseRepositoryImpl.findAllPendingMotherVisits(caseId, provider);
 	}
 }

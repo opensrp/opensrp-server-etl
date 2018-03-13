@@ -1,6 +1,7 @@
 package org.mcare.etl.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -22,27 +23,26 @@ public class BNFService implements RegisterService<BNFEntity> {
 	
 	@Transactional
 	@Override
-	public void save(BNFEntity bnffEntity) throws Exception {
-		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnffEntity.getRelationalId(), bnffEntity.getFWBNFDATE());
+	public void save(BNFEntity bnfEntity) throws Exception {
+		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnfEntity.getRelationalId(), bnfEntity.getFWBNFDATE());
 		if (existingbnfEntity == null) {
-			databaseRepositoryImpl.save(bnffEntity);
+			databaseRepositoryImpl.save(bnfEntity);
 		} else {
 			if (delete(existingbnfEntity))
-				databaseRepositoryImpl.save(bnffEntity);
+				databaseRepositoryImpl.save(bnfEntity);
 		}
 		
 	}
 	
 	@Transactional
 	@Override
-	public boolean delete(BNFEntity bnffEntity) {
-		return databaseRepositoryImpl.delete(bnffEntity);
+	public boolean delete(BNFEntity bnfEntity) {
+		return databaseRepositoryImpl.delete(bnfEntity);
 	}
 	
 	@Override
-	public void update(BNFEntity t) {
-		// TODO Auto-generated method stub
-		
+	public void update(BNFEntity bnfEntity) {
+		databaseRepositoryImpl.update(bnfEntity);
 	}
 	
 	@Override
@@ -60,6 +60,11 @@ public class BNFService implements RegisterService<BNFEntity> {
 	public BNFEntity findByCaseId(String caseId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Transactional
+	public List<BNFEntity> findAllByCaseId(String caseId) {
+		return databaseRepositoryImpl.findAllByCaseId(caseId, "BNFEntity");
 	}
 	
 }

@@ -26,8 +26,6 @@
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-<c:url var="saveUrl" value="/role/add" />
-
 <%
 	List<HouseholdEntity> households = (List<HouseholdEntity>) session
 			.getAttribute("dataList");
@@ -333,13 +331,13 @@
 										<thead>
 											<tr>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 140px;">Name</th>
+													style="width: 140px;">Household Head Name</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Provider</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 106px;">FWGOBHHID</th>
+													style="width: 106px;">GOB HHID</th>
 												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 43px;">FWJIVHHID</th>
+													style="width: 43px;">JIVITA HHID</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 140px;">Registration Date</th>
 												<th tabindex="0" rowspan="1" colspan="1"
