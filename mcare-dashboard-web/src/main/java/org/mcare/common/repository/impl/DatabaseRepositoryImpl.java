@@ -13,9 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
-import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
-import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -375,14 +373,14 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
 		try {
 			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
-					// + "and provider = :provider_id "
+					+ "and provider = :provider_id "
 					+ "and isActionActive = :is_action_active "
 					+ "and (visitCode LIKE :visit_code "
 					+ "or visitCode LIKE :visit_code_pnc "
 					+ "or visitCode = :visit_code_bnf "
 					+ ")");
 			query.setParameter("case_id", caseId);
-			//query.setParameter("provider_id", provider);
+			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
 			query.setParameter("visit_code", "anc%");
 			query.setParameter("visit_code_pnc", "pnc%");

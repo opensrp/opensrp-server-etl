@@ -13,10 +13,11 @@ import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 @Component
 public class PaginationUtil {
+
+	private static final int RESULT_SIZE = 10;
 
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
@@ -37,44 +38,63 @@ public class PaginationUtil {
 
 	}
 
+	public <T> void createPagination(HttpServletRequest request,
+			HttpSession session, Class<T> entityClassName) {
+		String search = "";
+		search = (String) request.getParameter("search");
+		if (search != null) {
+			searchBuilder = paginationHelperUtil.setParams(request, session);
+		} else {
+			searchBuilder = searchBuilder.clear();
+		}
+		PaginationHelperUtil.getPaginationLink(request, session);
+
+		pagination(request, session, searchBuilder, entityClassName);
+	}
+
 	public <T> void pagination(HttpServletRequest request, HttpSession session, SearchBuilder searchBuilder,
-			Class<?> entityClassName, Model model) {
-		List<Object[]> parentData = locationServiceImpl.getParentData();
-		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+			Class<?> entityClassName) {
+
+		setParentDataAttribute(session);
+		setProviderAttribute(session);
+
 		String offset = (String) request.getParameter("offSet");
-		int result = 10;
 		int size = 0;
-		List<Integer> pageList = new ArrayList<Integer>();
 		List<Object> data;
+
 		if (offset != null) {
 			int offsetReal = Integer.parseInt(offset);
-			offsetReal = offsetReal * 10;
-			data = databaseServiceImpl.search(searchBuilder, result, offsetReal, entityClassName);
+			offsetReal = offsetReal * RESULT_SIZE;
+			data = databaseServiceImpl.search(searchBuilder, RESULT_SIZE, offsetReal, entityClassName);
 			if (session.getAttribute("size") == null) {
 				size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
-				session.setAttribute("size", size / 10);
+				session.setAttribute("size", size / RESULT_SIZE);
 			}
 
 		} else {
-			data = databaseServiceImpl.search(searchBuilder, result, 0, entityClassName);
+			data = databaseServiceImpl.search(searchBuilder, RESULT_SIZE, 0, entityClassName);
 			size = databaseServiceImpl.countBySearch(searchBuilder, entityClassName);
-			if ((size % result) == 0) {
-				session.setAttribute("size", (size / 10) - 1);
+			if ((size % RESULT_SIZE) == 0) {
+				session.setAttribute("size", (size / RESULT_SIZE) - 1);
 			} else {
-				session.setAttribute("size", size / 10);
+				session.setAttribute("size", size / RESULT_SIZE);
 			}
 		}
-		System.err.println("data:" + data.toString());
-		session.setAttribute("parentData", parentData);
-		session.setAttribute("providers", providers);
 
+		session.setAttribute("dataList", data);
+
+		createPageList(session, offset);
+	}
+
+	private void createPageList(HttpSession session, String offset) {
 		/*when user click on any page number then this part will be executed. 
 		 * else part will be executed on load i.e first time on page*/
+		List<Integer> pageList = new ArrayList<Integer>();
 
 		if (offset != null) {
 			int listsize = Integer.parseInt(session.getAttribute("size").toString());
 			if (Integer.parseInt(offset) < 6) {
-				if (listsize >= 10) {
+				if (listsize >= RESULT_SIZE) {
 					for (int i = 1; i <= 9; i++) {
 						pageList.add(i);
 					}
@@ -85,7 +105,7 @@ public class PaginationUtil {
 				}
 
 			} else {
-				if (listsize >= 10 && Integer.parseInt(offset) - 5 > 0) {
+				if (listsize >= RESULT_SIZE && Integer.parseInt(offset) - 5 > 0) {
 					List<Integer> temp = new ArrayList<Integer>();
 					for (int i = Integer.parseInt(offset); i > Integer.parseInt(offset) - 5; i--) {
 						temp.add(i);
@@ -94,11 +114,11 @@ public class PaginationUtil {
 						pageList.add(temp.get(i));
 					}
 				}
-				if (listsize >= 10 && Integer.parseInt(offset) + 5 < listsize) {
+				if (listsize >= RESULT_SIZE && Integer.parseInt(offset) + 5 < listsize) {
 					for (int i = Integer.parseInt(offset) + 1; i < Integer.parseInt(offset) + 5; i++) {
 						pageList.add(i);
 					}
-				} else if (listsize >= 10) {
+				} else if (listsize >= RESULT_SIZE) {
 					for (int i = Integer.parseInt(offset) + 1; i < listsize; i++) {
 						pageList.add(i);
 					}
@@ -106,8 +126,8 @@ public class PaginationUtil {
 			}
 		} else {
 			int listsize = Integer.parseInt(session.getAttribute("size").toString());
-			if (listsize >= 10) {
-				for (int i = 1; i <= 10; i++) {
+			if (listsize >= RESULT_SIZE) {
+				for (int i = 1; i <= RESULT_SIZE; i++) {
 					pageList.add(i);
 				}
 			} else {
@@ -117,23 +137,15 @@ public class PaginationUtil {
 			}
 		}
 		session.setAttribute("pageList", pageList);
-		session.setAttribute("dataList", data);
-
 	}
 
-
-	public <T> void createPagination(HttpServletRequest request,
-			HttpSession session, Model model, Class<T> entityClassName) {
-		String search = "";
-		search = (String) request.getParameter("search");
-		if (search != null) {
-			searchBuilder = paginationHelperUtil.setParams(request, session);
-		} else {
-			searchBuilder = searchBuilder.clear();
-		}
-		PaginationHelperUtil.getPaginationLink(request, session);
-
-		pagination(request, session, searchBuilder, entityClassName, model);
+	private void setProviderAttribute(HttpSession session) {
+		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+		session.setAttribute("providers", providers);
 	}
 
+	private void setParentDataAttribute(HttpSession session) {
+		List<Object[]> parentData = locationServiceImpl.getParentData();
+		session.setAttribute("parentData", parentData);
+	}
 }

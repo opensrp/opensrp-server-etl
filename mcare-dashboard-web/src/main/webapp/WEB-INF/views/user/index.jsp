@@ -21,7 +21,9 @@
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
+
 <c:url var="saveUrl" value="/role/add" />
+
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
