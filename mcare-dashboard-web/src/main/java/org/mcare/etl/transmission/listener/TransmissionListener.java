@@ -22,23 +22,23 @@ import org.springframework.stereotype.Service;
 @Configuration
 @EnableAsync
 public class TransmissionListener {
-	
+
 	//private static final Logger logger = Logger.getLogger(TransmissionListener.class);
-	
+
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;
-	
+
 	@Autowired
 	private SourceDBRepository sourceDBRepository;
-	
+
 	@Autowired
 	private MarkerService markerService;
-	
+
 	@Autowired
 	private MarkerEntity markerEntity;
-	
+
 	private TransmissionServices transmissionServices;
-	
+
 	public void dataListener() throws Exception {
 		markerEntity = markerService.findByName(CommonConstant.MCARE.name());
 		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
@@ -58,8 +58,8 @@ public class TransmissionListener {
 				rowCount--;
 				System.out.println("mcare etl process running rowCount:" + rowCount);
 			}
-			
+
 		}
-		
+
 	}
 }
