@@ -136,10 +136,8 @@ public class DefaultApplicationSettingService {
 		try {
 			ScriptRunner sr = new ScriptRunner(con, false, false);
 
-			if(!locationServiceImpl.isExist("location")) {
-				for(String sqlScriptPath: sqlScriptPaths) {
-					runScript(sqlScriptPath, sr);
-				}
+			for(String sqlScriptPath: sqlScriptPaths) {
+				runScript(sqlScriptPath, sr);
 			}
 		} catch (Exception e) {
 			System.err.println("Failed to Execute script"
