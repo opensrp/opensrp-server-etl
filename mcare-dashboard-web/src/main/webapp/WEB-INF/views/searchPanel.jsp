@@ -13,9 +13,6 @@
 <%
 	List<ProviderEntity> providers = (List<ProviderEntity>) session
 			.getAttribute("providers");
-	List<Integer> pageList = (List<Integer>) session
-			.getAttribute("pageList");
-	String offSet = request.getParameter("offSet");
 
 	Map<String, String> paginationAtributes = (Map<String, String>) session
 			.getAttribute("paginationAtributes");
@@ -67,21 +64,6 @@
 	if (paginationAtributes.containsKey("name")) {
 		name = paginationAtributes.get("name");
 	}
-
-	// String paginationLink = divisionLink+districtLink+upazilaLink+unionLink + subunitLink+mauzaparaLink+providerLink+nameLink+searchLink;
-	/* disabledLINK has been used to to make current page number nonhiperlink i.e unclickable
-	e.g if user is at page number 15 then page number 15 should not be clickable*/
-	String paginationLink = "";
-	if (paginationAtributes.containsKey("paginationLink")) {
-		paginationLink = paginationAtributes.get("paginationLink");
-	}
-	int disabledLINK = 0;
-	if (offSet != null) {
-		disabledLINK = Integer.parseInt(offSet);
-	}
-	/* size is used for moving user to end page  by clicking on END link*/
-	int size = Integer
-			.parseInt(session.getAttribute("size").toString());
 
 	List<Object[]> parentDataList = (List<Object[]>) session
 			.getAttribute("parentData");

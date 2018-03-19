@@ -15,6 +15,7 @@
 	
 <context:component-scan base-package="org.mcare.controller" />	
 <context:component-scan base-package="org.mcare.acl" />
+<context:component-scan base-package="org.mcare.reports" />
 <context:component-scan base-package="org.mcare.etl" />
 <context:component-scan base-package="org.mcare.etl" />
 <context:component-scan base-package="org.mcare.etl.entity" />
@@ -23,6 +24,8 @@
 <context:component-scan base-package="org.mcare.etl.transmission.listener" />
 <context:component-scan base-package="org.mcare.etl.service" />
 <context:property-placeholder location="classpath:hibernate.properties" />
+
+
 
 <bean name="transmissionServiceFactory" class="org.mcare.etl.transmission.service.TransmissionServiceFactory"/>
   

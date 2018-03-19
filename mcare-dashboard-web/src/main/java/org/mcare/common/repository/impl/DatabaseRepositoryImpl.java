@@ -408,4 +408,57 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
+
+
+	public <T> List<T> findAllMother(String className) {
+		Session session = sessionFactory.openSession();
+		List<T> result = null;
+		try {
+			Query query = session.createQuery("from " + className);
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public <T> List<T>  findScheduledVisits(String visitCode) {
+		Session session = sessionFactory.openSession();
+		List<T> result = null;
+
+		try {
+			String sql = "select count(*) from action "
+		             + "where visit_code = :visit_code "
+					 + "and is_action_active= :is_action_active ";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setParameter("is_action_active", true);
+			query.setParameter("visit_code", visitCode);
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (List<T>) result;
+	}
+
+	public <T> List<T> findAllCompletedVisits(String className,String fieldName, String value) {
+		Session session = sessionFactory.openSession();
+		List<T> result = null;
+		try {
+			String sql = "select count(*) from "
+		             + className
+		             + " where "+ fieldName + " = :fieldValue ";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setParameter("fieldValue", value);
+			result = query.list();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

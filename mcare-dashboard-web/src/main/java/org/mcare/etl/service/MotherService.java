@@ -1,5 +1,7 @@
 package org.mcare.etl.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
@@ -56,4 +58,8 @@ public class MotherService implements RegisterService<MotherEntity> {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", MotherEntity.class);
 	}
 	
+	@Transactional
+	public List<MotherEntity> findAllMother() {
+		return databaseRepositoryImpl.findAllMother("MotherEntity");
+	}
 }

@@ -20,6 +20,7 @@ import org.mcare.etl.service.BNFService;
 import org.mcare.etl.service.MotherService;
 import org.mcare.etl.service.PNCService;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
+import org.mcare.reports.MotherReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,9 @@ public class MotherController {
 
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
+
+	@Autowired
+	private MotherReport motherReport;
 
 	public MotherController() {
 
@@ -132,4 +136,12 @@ public class MotherController {
 			return "/notfound";
 		}
 	}
+
+
+	@RequestMapping(value = "/report.html", method = RequestMethod.GET)
+	public String showReport(HttpServletRequest request, HttpSession session, Model model) {
+		motherReport.createReport();
+		return "mother/report";
+	}
+
 }
