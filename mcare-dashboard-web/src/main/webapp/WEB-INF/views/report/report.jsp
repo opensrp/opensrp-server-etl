@@ -51,7 +51,7 @@
 		var csv = [];
 		var rows = document.querySelectorAll("table tbody tr");
 		
-		document.write(rows.length);
+		//document.write(rows.length);
 		
 	    for (var i = 0; i < rows.length; i++) {
 			var row = [], cols = rows[i].querySelectorAll("td");
