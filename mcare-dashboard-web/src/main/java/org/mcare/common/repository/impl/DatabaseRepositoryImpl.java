@@ -177,7 +177,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 	
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
-		System.out.println("finding caseId and today relationalId:" + relationalId);
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq("relationalId", relationalId));
@@ -185,13 +184,22 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<T> result = criteria.list();
 		session.close();
-		System.out.println("finding result:" + result.toString());
+		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
+	public <T> T findByCaseIdAndBNFDate(String relationalId, Date bnfdate, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq("relationalId", relationalId));
+		criteria.add(Restrictions.eq("FWBNFDATE", bnfdate));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
 	public ActionEntity getAction(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
-		
 		Criteria criteria = session.createCriteria(ActionEntity.class);
 		criteria.add(Restrictions.eq("visitCode", visitCode));
 		criteria.add(Restrictions.eq("caseId", caseId));
@@ -200,7 +208,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		@SuppressWarnings("unchecked")
 		List<ActionEntity> actions = criteria.list();
 		session.close();
-		
 		if (actions.size() == 0) {
 			return null;
 		}

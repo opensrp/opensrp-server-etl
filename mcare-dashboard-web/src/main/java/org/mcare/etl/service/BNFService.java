@@ -24,7 +24,7 @@ public class BNFService implements RegisterService<BNFEntity> {
 	@Transactional
 	@Override
 	public void save(BNFEntity bnfEntity) throws Exception {
-		BNFEntity existingbnfEntity = findByCaseIdAndToday(bnfEntity.getRelationalId(), bnfEntity.getFWBNFDATE());
+		BNFEntity existingbnfEntity = findByCaseIdAndBNFDate(bnfEntity.getRelationalId(), bnfEntity.getFWBNFDATE());
 		if (existingbnfEntity == null) {
 			databaseRepositoryImpl.save(bnfEntity);
 		} else {
@@ -52,8 +52,8 @@ public class BNFService implements RegisterService<BNFEntity> {
 	}
 	
 	@Transactional
-	public BNFEntity findByCaseIdAndToday(String relationalId, Date FWBNFDATE) {
-		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, FWBNFDATE, BNFEntity.class);
+	public BNFEntity findByCaseIdAndBNFDate(String relationalId, Date FWBNFDATE) {
+		return databaseRepositoryImpl.findByCaseIdAndBNFDate(relationalId, FWBNFDATE, BNFEntity.class);
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class BNFService implements RegisterService<BNFEntity> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Transactional
 	public List<BNFEntity> findAllByCaseId(String caseId) {
 		return databaseRepositoryImpl.findAllByCaseId(caseId, "BNFEntity");
