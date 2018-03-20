@@ -64,7 +64,7 @@
 												}
 											%>
 										</tbody>
-									</table>s
+									</table>
 								</div>
 							</div>
 						</div>
