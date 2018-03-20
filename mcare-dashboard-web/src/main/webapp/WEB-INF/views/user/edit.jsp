@@ -26,10 +26,10 @@
 <link type="text/css"
 	href="<c:url value="/resources/css/bootstrap.min.css"/>"
 	rel="stylesheet">
-</head>
-<c:url var="saveUrl" value="/user/${id}/edit.html" />
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
+
+<c:url var="saveUrl" value="/user/${id}/edit.html" />
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />

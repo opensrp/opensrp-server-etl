@@ -369,12 +369,11 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<ActionEntity> result = null;
 		
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
-			        // + "and provider = :provider_id "
+			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
 			        + "and isActionActive = :is_action_active " + "and (visitCode LIKE :visit_code "
 			        + "or visitCode LIKE :visit_code_pnc " + "or visitCode = :visit_code_bnf " + ")");
 			query.setParameter("case_id", caseId);
-			//query.setParameter("provider_id", provider);
+			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
 			query.setParameter("visit_code", "anc%");
 			query.setParameter("visit_code_pnc", "pnc%");

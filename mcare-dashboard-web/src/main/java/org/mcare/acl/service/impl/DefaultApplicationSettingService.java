@@ -1,70 +1,94 @@
 package org.mcare.acl.service.impl;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.entity.Permission;
 import org.mcare.acl.entity.Role;
 import org.mcare.etl.entity.MarkerEntity;
 import org.mcare.etl.service.MarkerService;
 import org.mcare.etl.util.CommonConstant;
+import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ibatis.common.jdbc.ScriptRunner;
+
 @Service
 public class DefaultApplicationSettingService {
-	
+
 	@Autowired
 	private MarkerService markerService;
-	
+
 	@Autowired
 	private MarkerEntity markerEntity;
-	
+
 	@Autowired
 	private PermissionServiceImpl permissionServiceImpl;
-	
+
 	@Autowired
 	private RoleServiceImpl roleServiceImpl;
-	
+
 	@Autowired
 	private UserServiceImpl userServiceImpl;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Autowired
+	private LocationServiceImpl locationServiceImpl;
+
 	public DefaultApplicationSettingService() {
-		
+
 	}
-	
-	public void saveDefaultAppSetting() {
+
+	public void saveDefaultAppSetting() throws ClassNotFoundException,
+	SQLException {
 		System.err.println("Calling automatically ...............");
+
+		//MarkerEntity Initialization
 		MarkerEntity entity = new MarkerEntity();
 		entity.setName(CommonConstant.MCARE.name());
 		entity.setTimeStamp(0);
-		
+
 		MarkerEntity markerEntity = markerService.findByName(CommonConstant.MCARE.name());
 		if (markerEntity == null) {
 			markerService.save(entity);
 		}
-		
+
 		try {
 			permissionServiceImpl.addPermission();
 		}
 		catch (Exception e) {
 			System.err.println("onApplicationEvent:" + e.getMessage());
 		}
+
+		//Create default admin User
 		String userName = "admin";
 		String roleName = "ROLE_ADMIN";
 		Role role = new Role();
 		role.setName(roleName);
 		Role gettingRole = roleServiceImpl.findByKey(role.getName(), "name", Role.class);
-		
+
 		try {
 			if (gettingRole == null) {
-				
+
 				Set<Permission> permissions = new HashSet<Permission>();
 				List<Permission> allPermissions = permissionServiceImpl.findAll("Permission");
 				for (Permission permission : allPermissions) {
@@ -77,7 +101,7 @@ public class DefaultApplicationSettingService {
 		catch (Exception e) {
 			System.err.println("onApplicationEvent:" + e.getMessage());
 		}
-		
+
 		Account account = userServiceImpl.findByKey(userName, "username", Account.class);
 		Account acc = new Account();
 		acc.setUsername(userName);
@@ -98,6 +122,33 @@ public class DefaultApplicationSettingService {
 		catch (Exception e) {
 			System.err.println("onApplicationEvent:" + e.getMessage());
 		}
+
+
+		//Execute some location and provider SQL script automatically
+		System.err.println("Executing location and provider SQL scripts");
+		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/location.sql", "src/main/resources/location_tag.sql"
+				, "src/main/resources/location_tag_map.sql", "src/main/resources/provider.sql");
+
+		Connection con = sessionFactory.
+				getSessionFactoryOptions().getServiceRegistry().
+				getService(ConnectionProvider.class).getConnection();
+
+		try {
+			ScriptRunner sr = new ScriptRunner(con, false, false);
+
+			for(String sqlScriptPath: sqlScriptPaths) {
+				runScript(sqlScriptPath, sr);
+			}
+		} catch (Exception e) {
+			System.err.println("Failed to Execute script"
+					+ " The error is " + e.getMessage());
+		}
 	}
-	
+
+	public void runScript(String aSQLScriptFilePath, ScriptRunner sr)
+			throws FileNotFoundException, IOException, SQLException {
+		Reader reader = new BufferedReader(
+				new FileReader(aSQLScriptFilePath));
+		sr.runScript(reader);
+	}
 }

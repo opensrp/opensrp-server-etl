@@ -13,17 +13,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-<meta charset="utf-8">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
-<title>ENCC Information</title>
-
-<jsp:include page="/WEB-INF/views/css.jsp" />
-</head>
-<c:url var="saveUrl" value="child/${id}/encc.html" />
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
@@ -32,7 +23,7 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> <a href="/child.html">Child List</a> /
-					ENCC of ${child.getFirstName()} ( ${encclist.size()} )
+					${encclist.size()} ENCC of ${child.getFirstName()}
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -77,7 +68,6 @@
 											%>
 										</tbody>
 									</table>
-
 								</div>
 							</div>
 						</div>

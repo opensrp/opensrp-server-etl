@@ -1,5 +1,7 @@
 package org.mcare.etl.transmission.listener;
 
+import java.sql.SQLException;
+
 import org.mcare.acl.service.impl.DefaultApplicationSettingService;
 import org.mcare.etl.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +11,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationStartupListener implements ApplicationListener<ContextRefreshedEvent> {
-	
+
 	@Autowired
 	private DefaultApplicationSettingService defaultSystemSettingService;
-	
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		System.out.println(CommonConstant.MCARE.name() + "Application Stating............"
-		        + event.getApplicationContext().getId());
-		defaultSystemSettingService.saveDefaultAppSetting();
+
+		if(event.getApplicationContext().getParent() != null) {
+			System.out.println(CommonConstant.MCARE.name() + " Application Stating............"
+					+ event.getApplicationContext().getId());
+			try {
+				defaultSystemSettingService.saveDefaultAppSetting();
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

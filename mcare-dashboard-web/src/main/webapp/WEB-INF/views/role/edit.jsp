@@ -20,7 +20,9 @@
 <title>Edit Role</title>
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
+
 <c:url var="saveUrl" value="/role/${id}/edit.html" />
+
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">

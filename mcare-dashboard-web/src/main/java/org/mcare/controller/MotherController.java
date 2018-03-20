@@ -1,11 +1,13 @@
 package org.mcare.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
+import org.mcare.common.util.ControllerUtil;
 import org.mcare.common.util.PaginationUtil;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
@@ -28,7 +30,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MotherController {
-	
+
+	private static final String MOTHER = "Mother";
+
+	private static final String MOTHER_HTML = "mother.html";
+
 	@Autowired
 	private MotherService motherService;
 
@@ -46,30 +52,45 @@ public class MotherController {
 
 	@Autowired
 	private PaginationUtil paginationUtil;
-	
+
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
-	
+
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
-	
+
 	public MotherController() {
-		
+
 	}
-	
+
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER_LIST')")
 	@RequestMapping(value = "/mother.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
+		ControllerUtil.setSessionAttributes(session, MOTHER_HTML, MOTHER);
 		Class<MotherEntity> entityClassName = MotherEntity.class;
-		paginationUtil.createPagination(request, session, model, entityClassName);
+		paginationUtil.createPagination(request, session, entityClassName);
+
+		//createDetails(session);
+
 		return "mother/index";
 	}
-	
+
+	private void createDetails(HttpSession session) {
+		List<MotherEntity> mothers = (List<MotherEntity>) session
+				.getAttribute("dataList");
+		List<Integer> actionSize = new ArrayList<Integer>();
+		for (MotherEntity mother : mothers) {
+			List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), mother.getProvider());
+			session.setAttribute("actionlist", actionlist);
+		}
+	}
+
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
 	@RequestMapping(value = "mother/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		MotherEntity household = motherService.findById(id);
 		model.addAttribute("household", household);
+		session.setAttribute("title", "Mother Details");
 		return "mother/view";
 	}
 
@@ -78,6 +99,7 @@ public class MotherController {
 	public String visitsPending(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 		MotherEntity mother = motherService.findById(id);
 		session.setAttribute("mother", mother);
+		session.setAttribute("title", "Pending Visits");
 
 		List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), mother.getProvider());
 		session.setAttribute("actionlist", actionlist);
@@ -98,8 +120,11 @@ public class MotherController {
 		List<ANCEntity> anclist = ancService.findAllByCaseId(mother.getCaseId());
 		List<BNFEntity> bnflist = bnfService.findAllByCaseId(mother.getCaseId());
 		List<PNCEntity> pnclist = pncService.findAllByCaseId(mother.getCaseId());
-		
+
 		session.setAttribute("anclist", anclist);
+		session.setAttribute("bnflist", bnflist);
+		session.setAttribute("pnclist", pnclist);
+		session.setAttribute("title", "Completed Visits");
 
 		if (anclist != null && !anclist.isEmpty()) {
 			return "mother/visits_completed";

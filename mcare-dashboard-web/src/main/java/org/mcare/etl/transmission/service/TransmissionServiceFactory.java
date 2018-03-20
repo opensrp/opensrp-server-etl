@@ -7,25 +7,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransmissionServiceFactory {
 	public TransmissionServiceFactory(){
-		
+
 	}
 	@Autowired
 	private HouseholdTransmissionService householdTransmissionService;
-	
+
 	@Autowired
 	private ElcoTransmissionService elcoTransmissionService;
-	
+
 	@Autowired
 	private MotherTransmissionService motherTransmissionService;
-	
+
 	@Autowired
 	private ChildTransmissionService childTransmissionService;
-	
+
 	@Autowired
 	private ActionTransmissionService actionTransmissionService;
-	
+
 	private TransmissionServices transmissionServices;
-	
+
 	private TransmissionServices getTransmissionService(String transmissionServiceType) {
 		if (transmissionServiceType.equals("HouseHold")) {
 			transmissionServices = householdTransmissionService;
@@ -44,15 +44,15 @@ public class TransmissionServiceFactory {
 		}
 		else {
 			transmissionServices=null;
-			
+
 		}
-			System.err.println("come:");
+
 		return transmissionServices;
-		
+
 	}
-	
+
 	public TransmissionServices getTransmissionType(String transmissionType) {
 		return getTransmissionService(transmissionType);
 	}
-	
+
 }
