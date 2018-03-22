@@ -10,7 +10,6 @@ import net.sf.dynamicreports.report.builder.column.Columns;
 import net.sf.dynamicreports.report.builder.component.Components;
 import net.sf.dynamicreports.report.builder.datatype.DataTypes;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
-import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 
 import org.mcare.etl.entity.MotherEntity;
@@ -29,6 +28,7 @@ public class MotherReport {
 	}
 
 	public void createReport() {
+
 		JasperReportBuilder report = DynamicReports.report();
 
 		Columns.column("Mother Id", "id", DataTypes.integerType());
@@ -52,13 +52,13 @@ public class MotherReport {
 			report.show();
 
 			//export the report to a pdf file
-			//report.toPdf(new FileOutputStream("c:/report.pdf"));
+			report.toPdf(new FileOutputStream("/home/asha/Downloads/report.pdf"));
 		} catch (DRException e) {
 			e.printStackTrace();
 		}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
