@@ -29,6 +29,7 @@ public class ScheduleMonitoringController {
 			}
 			
 		}
+		model.addAttribute("data", data);
 		return "schedule-monitoring/index";
 	}
 	

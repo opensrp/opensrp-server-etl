@@ -20,6 +20,8 @@
 <title> Schedule Monitoring</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
+<link type="text/css"
+	href="<c:url value="/resources/css/dataTables.jqueryui.min.css"/>" rel="stylesheet">
 </head>
 
 <c:url var="saveUrl" value="/role/add" />
@@ -46,6 +48,8 @@
 									<th>Actions</th>
 								</tr>
 							</thead>
+							
+							
 							<tfoot>
 								<tr>
 									<th>FullName</th>
@@ -55,8 +59,17 @@
 									<th>Actions</th>
 								</tr>
 							</tfoot>
-							<tbody>
-								
+							<tbody>	
+								<c:forEach items="${data}" var="rows">
+									<tr>
+						                <td>${rows[0]}</td>
+						                <td>${rows[1]}</td>
+						                <td>${rows[2]}</td>
+						                <td>${rows[3]}</td>
+						                <td>${rows[4]}</td>
+						                
+					           		</tr>
+				           		</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -67,6 +80,13 @@
 		<!-- /.container-fluid-->
 		<!-- /.content-wrapper-->
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
+		<script src="<c:url value='/resources/js/jquery.dataTables.min.js'/>"></script>
+		<script src="<c:url value='/resources/js/dataTables.jqueryui.min.js'/>"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+		    $('#dataTable').DataTable();
+		} );
+		</script>
 	</div>
 </body>
 </html>
