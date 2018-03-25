@@ -29,4 +29,24 @@ public class ReportService {
 			String value) {
 		return databaseRepositoryImpl.findAllCompletedVisits(className, fieldName, value);
 	}
+
+	@Transactional
+	public List<Object> findAllANC1Data() {
+		return databaseRepositoryImpl.findAllANCData("ancrv_1");
+	}
+
+	@Transactional
+	public List<Object> findAllANC2Data() {
+		return databaseRepositoryImpl.findAllANCData("ancrv_2");
+	}
+
+	@Transactional
+	public List<Object> findAllANC3Data() {
+		return databaseRepositoryImpl.findAllANCData("ancrv_3");
+	}
+
+	@Transactional
+	public List<Object> findAllANC4Data() {
+		return databaseRepositoryImpl.findAllANCData("ancrv_4");
+	}
 }

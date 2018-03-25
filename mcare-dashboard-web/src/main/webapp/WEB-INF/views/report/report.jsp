@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -60,12 +61,12 @@
 	function export_table_to_csv() {
 		//document.write(5 + 6);
 		var csv = [];
-		var rows = document.querySelectorAll("table tbody tr");
+		var rows = document.querySelectorAll("table thead tr, table tbody tr");
 
-		//document.write(rows.length);
+		document.write(rows.length);
 
 		for ( var i = 0; i < rows.length; i++) {
-			var row = [], cols = rows[i].querySelectorAll("td");
+			var row = [], cols = rows[i].querySelectorAll("th, td");
 
 			for ( var j = 0; j < cols.length; j++)
 				row.push(cols[j].innerText);
@@ -114,33 +115,83 @@
 													style="width: 140px;">Form</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Scheduled</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 140px;">Completed</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 79px;">Expired</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 140px;">Form</th>
-												<th tabindex="0" rowspan="1" colspan="1"
-													style="width: 79px;">Scheduled</th>
-											</tr>
-										</tfoot>
 										<tbody>
+											<%
+												List<Object> result = (List<Object>) session
+														.getAttribute("ANC1List");
+												Iterator itr = result.iterator();
+												while (itr.hasNext()) {
+													Object[] obj = (Object[]) itr.next();
+													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
+													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
+													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+											%>
 											<tr class="even">
 												<td>ANC1</td>
-												<td>${ANC1}</td>
+												<td><%=scheduled.toString()%></td>
+												<td><%=completed.toString()%></td>
+												<td><%=expired.toString()%></td>
 											</tr>
+											<%
+												}
+												List<Object> result2 = (List<Object>) session
+														.getAttribute("ANC2List");
+												itr = result2.iterator();
+												while (itr.hasNext()) {
+													Object[] obj = (Object[]) itr.next();
+													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
+													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
+													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+											%>
 											<tr class="even">
 												<td>ANC2</td>
-												<td>${ANC2}</td>
+												<td><%=scheduled.toString()%></td>
+												<td><%=completed.toString()%></td>
+												<td><%=expired.toString()%></td>
 											</tr>
+											<%
+												}
+												List<Object> result3 = (List<Object>) session
+														.getAttribute("ANC3List");
+												itr = result3.iterator();
+												while (itr.hasNext()) {
+													Object[] obj = (Object[]) itr.next();
+													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
+													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
+													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+											%>
 											<tr class="even">
 												<td>ANC3</td>
-												<td>${ANC3}</td>
+												<td><%=scheduled.toString()%></td>
+												<td><%=completed.toString()%></td>
+												<td><%=expired.toString()%></td>
 											</tr>
+											<%
+												}
+												List<Object> result4 = (List<Object>) session
+														.getAttribute("ANC4List");
+												itr = result4.iterator();
+												while (itr.hasNext()) {
+													Object[] obj = (Object[]) itr.next();
+													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
+													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
+													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+											%>
 											<tr class="even">
 												<td>ANC4</td>
-												<td>${ANC4}</td>
+												<td><%=scheduled.toString()%></td>
+												<td><%=completed.toString()%></td>
+												<td><%=expired.toString()%></td>
 											</tr>
+											<%
+												}
+											%>
 										</tbody>
 									</table>
 								</div>
