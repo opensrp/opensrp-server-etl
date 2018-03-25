@@ -3,6 +3,6 @@ package org.mcare.schedule.monitoring.service.impl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChildScheduleMonitoringServiceImpl {
+public class ENCCScheduleMonitoringServiceImpl {
 
 }
