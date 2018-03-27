@@ -16,54 +16,6 @@
 
 	Map<String, String> paginationAtributes = (Map<String, String>) session
 			.getAttribute("paginationAtributes");
-	String division = "";
-	int divId = 0;
-	if (paginationAtributes.containsKey("divId")) {
-		divId = Integer.parseInt(paginationAtributes.get("divId"));
-	}
-
-	int distId = 0;
-	if (paginationAtributes.containsKey("distId")) {
-		distId = Integer.parseInt(paginationAtributes.get("distId"));
-	}
-
-	int upzilaId = 0;
-	if (paginationAtributes.containsKey("upzilaId")) {
-		upzilaId = Integer
-				.parseInt(paginationAtributes.get("upzilaId"));
-	}
-	String union = "";
-	int unionId = 0;
-	if (paginationAtributes.containsKey("unionId")) {
-		unionId = Integer.parseInt(paginationAtributes.get("unionId"));
-	}
-
-	int wardId = 0;
-	if (paginationAtributes.containsKey("wardId")) {
-		wardId = Integer.parseInt(paginationAtributes.get("wardId"));
-	}
-
-	int subunitId = 0;
-	if (paginationAtributes.containsKey("subunitId")) {
-		subunitId = Integer.parseInt(paginationAtributes
-				.get("subunitId"));
-	}
-
-	int mauzaparaId = 0;
-	if (paginationAtributes.containsKey("mauzaparaId")) {
-		mauzaparaId = Integer.parseInt(paginationAtributes
-				.get("mauzaparaId"));
-	}
-
-	String provider = "";
-	if (paginationAtributes.containsKey("provider")) {
-		provider = paginationAtributes.get("provider");
-	}
-
-	String name = "";
-	if (paginationAtributes.containsKey("name")) {
-		name = paginationAtributes.get("name");
-	}
 
 	// String paginationLink = divisionLink+districtLink+upazilaLink+unionLink + subunitLink+mauzaparaLink+providerLink+nameLink+searchLink;
 	/* disabledLINK has been used to to make current page number nonhiperlink i.e unclickable
