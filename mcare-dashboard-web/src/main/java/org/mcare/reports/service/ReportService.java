@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,22 +32,22 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<Object> findAllANC1Data() {
-		return databaseRepositoryImpl.findAllANCData("ancrv_1");
+	public List<Object> findAllANC1Data(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.findAllANCData("ancrv_1", searchBuilder);
 	}
 
 	@Transactional
-	public List<Object> findAllANC2Data() {
-		return databaseRepositoryImpl.findAllANCData("ancrv_2");
+	public List<Object> findAllANC2Data(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.findAllANCData("ancrv_2", searchBuilder);
 	}
 
 	@Transactional
-	public List<Object> findAllANC3Data() {
-		return databaseRepositoryImpl.findAllANCData("ancrv_3");
+	public List<Object> findAllANC3Data(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.findAllANCData("ancrv_3", searchBuilder);
 	}
 
 	@Transactional
-	public List<Object> findAllANC4Data() {
-		return databaseRepositoryImpl.findAllANCData("ancrv_4");
+	public List<Object> findAllANC4Data(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.findAllANCData("ancrv_4", searchBuilder);
 	}
 }

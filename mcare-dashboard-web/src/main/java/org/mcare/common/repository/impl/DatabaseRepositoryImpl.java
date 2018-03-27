@@ -460,15 +460,34 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
-	public <T> List<T> findAllANCData(String ancType) {
+	public <T> List<T> findAllANCData(String ancType,SearchBuilder searchBuilder) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
 		try {
-			String sql = "SELECT (select count(*) as scheduled from action where visit_code = :ancType and is_action_active=true), "
-					+ "(select count(*) as completed from anc WHERE ancname= :ancType), "
-					+ "count(*) as expired FROM action "
-					+ "WHERE visit_code = :ancType and alert_status='expired'";
-			//String sql = "select count(*) from action ";
+			String condition1 = "where a.visit_code = :ancType and a.is_action_active=true ";
+			String condition2 = "WHERE a.ancname= :ancType ";
+			String condition3 = "WHERE a.visit_code = :ancType and a.alert_status='expired' ";
+
+			if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
+				String wardCondition = "and upper(m.ward) = upper('" + searchBuilder.getWard() + "') ";
+				condition1 = condition1 + wardCondition;
+				condition2 = condition2 + wardCondition;
+				condition3 = condition3 + wardCondition;
+			}
+
+			String sql = "SELECT "
+					+ "(select count(*) as scheduled from action a "
+					+ "join mother m on (m.case_id=a.case_id) "
+					+ condition1
+					+ "), "
+					+ "(select count(*) as completed from anc a "
+					+ "join mother m on (m.case_id=a.relationalid) "
+					+ condition2
+					+ "), "
+					+ "count(*) as expired FROM action a "
+					+ "join mother m on (m.case_id=a.case_id) "
+					+ condition3;
+
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setParameter("ancType", ancType);
 			result = query.list();

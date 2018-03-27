@@ -3,6 +3,8 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -25,8 +27,8 @@
 <script>
 	$(document).ready(function() {
 		$('#dataTable').DataTable({
-			"bInfo" : false,
-			"bPaginate" : false
+			bFilter: false,
+			bInfo: false
 		});
 	});
 
@@ -41,8 +43,6 @@
 
 		// Download link
 		downloadLink = document.createElement("a");
-
-		// File name
 		downloadLink.download = filename;
 
 		// We have to create a link to the file
@@ -53,35 +53,24 @@
 
 		// Add the link to your DOM
 		document.body.appendChild(downloadLink);
-
-		// Lanzamos
 		downloadLink.click();
 	}
 
 	function export_table_to_csv() {
-		//document.write(5 + 6);
 		var csv = [];
 		var rows = document.querySelectorAll("table thead tr, table tbody tr");
 
-		document.write(rows.length);
+		//document.write(rows.length);
 
 		for ( var i = 0; i < rows.length; i++) {
 			var row = [], cols = rows[i].querySelectorAll("th, td");
-
 			for ( var j = 0; j < cols.length; j++)
 				row.push(cols[j].innerText);
-
 			csv.push(row.join(","));
 		}
 
-		// Download CSV
 		download_csv(csv.join("\n"), "table.csv");
 	}
-
-	document.querySelector("button").addEventListener("click", function() {
-		var html = document.querySelector("table").outerHTML;
-		export_table_to_csv();
-	});
 </script>
 
 <title>${title.toString()}</title>
@@ -96,6 +85,8 @@
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
+
+			<jsp:include page="/WEB-INF/views/searchPanel.jsp" />
 
 			<div class="card mb-3">
 				<div class="card-header">
@@ -119,6 +110,8 @@
 													style="width: 140px;">Completed</th>
 												<th tabindex="0" rowspan="1" colspan="1"
 													style="width: 79px;">Expired</th>
+												<th tabindex="0" rowspan="1" colspan="1"
+													style="width: 79px;">% of Expired</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -131,12 +124,17 @@
 													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
 													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
 													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+													Double expiredPercentage = (expired.doubleValue() / scheduled
+															.doubleValue()) * 100;
+													DecimalFormat df = new DecimalFormat("##.00");
+													df.setRoundingMode(RoundingMode.CEILING);
 											%>
 											<tr class="even">
 												<td>ANC1</td>
 												<td><%=scheduled.toString()%></td>
 												<td><%=completed.toString()%></td>
 												<td><%=expired.toString()%></td>
+												<td><%=df.format(expiredPercentage)%></td>
 											</tr>
 											<%
 												}
@@ -148,12 +146,17 @@
 													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
 													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
 													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+													Double expiredPercentage = (expired.doubleValue() / scheduled
+															.doubleValue()) * 100;
+													DecimalFormat df = new DecimalFormat("##.00");
+													df.setRoundingMode(RoundingMode.CEILING);
 											%>
 											<tr class="even">
 												<td>ANC2</td>
 												<td><%=scheduled.toString()%></td>
 												<td><%=completed.toString()%></td>
 												<td><%=expired.toString()%></td>
+												<td><%=df.format(expiredPercentage)%></td>
 											</tr>
 											<%
 												}
@@ -165,12 +168,17 @@
 													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
 													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
 													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+													Double expiredPercentage = (expired.doubleValue() / scheduled
+															.doubleValue()) * 100;
+													DecimalFormat df = new DecimalFormat("##.00");
+													df.setRoundingMode(RoundingMode.CEILING);
 											%>
 											<tr class="even">
 												<td>ANC3</td>
 												<td><%=scheduled.toString()%></td>
 												<td><%=completed.toString()%></td>
 												<td><%=expired.toString()%></td>
+												<td><%=df.format(expiredPercentage)%></td>
 											</tr>
 											<%
 												}
@@ -182,12 +190,17 @@
 													Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
 													Integer completed = Integer.parseInt(String.valueOf(obj[1]));
 													Integer expired = Integer.parseInt(String.valueOf(obj[2]));
+													Double expiredPercentage = (expired.doubleValue() / scheduled
+															.doubleValue()) * 100;
+													DecimalFormat df = new DecimalFormat("##.00");
+													df.setRoundingMode(RoundingMode.CEILING);
 											%>
 											<tr class="even">
 												<td>ANC4</td>
 												<td><%=scheduled.toString()%></td>
 												<td><%=completed.toString()%></td>
 												<td><%=expired.toString()%></td>
+												<td><%=df.format(expiredPercentage)%></td>
 											</tr>
 											<%
 												}
