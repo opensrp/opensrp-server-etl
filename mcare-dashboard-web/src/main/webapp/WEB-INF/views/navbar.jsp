@@ -83,7 +83,23 @@
 					<li><a href="<c:url value="/user.html"/>">List</a></li>
 					<li><a href="<c:url value="/user/add.html"/>">Add</a></li>
 
-				</ul></li>
+				</ul>
+				
+			</li>
+			
+			<li class="nav-item" data-toggle="tooltip" data-placement="right"
+				title="Components"><a
+				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+				href="#collapseFWAMonotoring" data-parent="#exampleAccordion"> <i
+					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">FWA Work Monitoring</span>
+			</a>
+				<ul class="sidenav-second-level collapse" id="collapseFWAMonotoring">
+					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ANC</a></li>
+					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">PNC</a></li>
+					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ENCC</a></li>
+				</ul>
+				
+			</li>
 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right"
 				title="Link"><a class="nav-link" href="#"> <i

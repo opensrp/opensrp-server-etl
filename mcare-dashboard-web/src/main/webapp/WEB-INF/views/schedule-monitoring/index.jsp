@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<%@page import="org.mcare.acl.entity.ProviderEntity"%>
+<%@page import="org.mcare.schedule.monitoring.utils.ScheduleMonitoringUtil"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -25,16 +28,58 @@
 </head>
 
 <c:url var="saveUrl" value="/role/add" />
+<%
+List<ProviderEntity> providers = (List<ProviderEntity>) session
+			.getAttribute("providers");
 
+String provider = (String)session.getAttribute("provider");
+List<Object[]> data = (List<Object[]>) session.getAttribute("data");
+
+%>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
 			<!-- Example DataTables Card-->
+			
+			<div class="card mb-3">
+				
+				<div class="card-body">
+					<form id="search-form">
+						<div class="row">
+							<div class="col-3">
+								<select class="custom-select custom-select-lg mb-3" name="provider">
+									<option value="">Please Select Provider</option>
+									<%
+										if (providers != null) {
+											for (ProviderEntity objects : providers) {
+												if (provider.equalsIgnoreCase(objects.getProvider())) {
+												%>
+												<option value="<%=objects.getProvider()%>" selected><%=objects.getProvider()%></option>
+												<%
+													} else {
+												%>
+													<option value="<%=objects.getProvider()%>"><%=objects.getProvider()%></option>
+													<%
+													}
+											}
+										}
+												%>
+								</select>
+							</div>
+							<div class="col-6">
+								<button name="search" type="submit" id="bth-search"
+									class="btn btn-primary" value="search">Search</button>
+							</div>
+						</div>			
+					</form>
+				</div>
+				<div class="card-footer small text-muted"></div>
+			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Schedule Monitoring
+					<i class="fa fa-table"></i> FWA Work Monitoring
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -42,10 +87,10 @@
 							<thead>
 								<tr>
 									<th>FullName</th>
-									<th>User Name</th>
-									<th>Email</th>
-									<th>Role</th>
-									<th>Actions</th>
+									<th>Unique Id</th>
+									<th>LMP/GA</th>
+									<th>Shedule Status</th>
+									<th>Schedule Due</th>
 								</tr>
 							</thead>
 							
@@ -53,23 +98,35 @@
 							<tfoot>
 								<tr>
 									<th>FullName</th>
-									<th>User Name</th>
-									<th>Email</th>
-									<th>Role</th>
-									<th>Actions</th>
+									<th>Unique Id</th>
+									<th>LMP/GA</th>
+									<th>Shedule Status</th>
+									<th>Schedule Due</th>
 								</tr>
 							</tfoot>
-							<tbody>	
-								<c:forEach items="${data}" var="rows">
-									<tr>
-						                <td>${rows[0]}</td>
-						                <td>${rows[1]}</td>
-						                <td>${rows[2]}</td>
-						                <td>${rows[3]}</td>
-						                <td>${rows[4]}</td>
+							<tbody id="tableBody">	
+								
+								<%
+								if (data != null) {
+								for (Object[] row : data) {
+								Map<String, String> map = ScheduleMonitoringUtil.getScheduleStatus(row[10].toString()); %>
+									<tr id="">						                
+						               <td><%=row[0]%><br/>
+						               <%=row[1]%><br/>
+						                 <%=row[2]%>,
+						                  <%=row[3]%>
+						                 <br/>
+						                 <%=row[4]%>
+						                </td>
+						                <td> <%=row[5]%>  <%=row[6]%></td>
+						                <td> <%=row[7]%><br/> <%=row[8]%></td>
+						                <td bgcolor="">ANC1: 2017-20-02</td>
+						                <td bgcolor="<%=map.get("bgColor") %>"><%=map.get("message") %>
+						                <br /><%=map.get("date") %><br /><%=map.get("visitCode") %></td>
 						                
 					           		</tr>
-				           		</c:forEach>
+				           	<% }	
+						}%>
 							</tbody>
 						</table>
 					</div>

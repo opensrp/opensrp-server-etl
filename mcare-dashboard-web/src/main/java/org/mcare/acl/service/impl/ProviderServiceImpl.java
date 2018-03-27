@@ -2,8 +2,10 @@ package org.mcare.acl.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.common.interfaces.DatabaseService;
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,11 @@ public class ProviderServiceImpl implements DatabaseService {
 	@Override
 	public <T> List<T> findAll(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);
+	}
+	
+	public void setProviderAttribute(HttpSession session) {
+		List<ProviderEntity> providers = findAll("ProviderEntity");
+		session.setAttribute("providers", providers);
 	}
 	
 }
