@@ -95,8 +95,8 @@
 			</a>
 				<ul class="sidenav-second-level collapse" id="collapseFWAMonotoring">
 					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ANC</a></li>
-					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">PNC</a></li>
-					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ENCC</a></li>
+					<li><a href="<c:url value="/fwa/pnc/monitoring.html"/>">PNC</a></li>
+					<li><a href="<c:url value="/fwa/encc/monitoring.html"/>">ENCC</a></li>
 				</ul>
 				
 			</li>

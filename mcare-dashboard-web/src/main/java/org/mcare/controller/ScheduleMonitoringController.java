@@ -8,7 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.schedule.monitoring.ScheduleMonitoring;
+import org.mcare.schedule.monitoring.service.ScheduleMonitoringService;
 import org.mcare.schedule.monitoring.service.impl.ANCScheduleMonitoringServiceImpl;
+import org.mcare.schedule.monitoring.service.impl.ENCCScheduleMonitoringServiceImpl;
+import org.mcare.schedule.monitoring.service.impl.PNCScheduleMonitoringServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +30,17 @@ public class ScheduleMonitoringController {
 	@Autowired
 	private ANCScheduleMonitoringServiceImpl ancScheduleMonitoringServiceImpl;
 	
+	@Autowired
+	private PNCScheduleMonitoringServiceImpl pncScheduleMonitoringServiceImpl;
+	
+	@Autowired
+	private ENCCScheduleMonitoringServiceImpl enccScheduleMonitoringServiceImpl;
+	
+	private ScheduleMonitoringService scheduleMonitoringService;
+	
 	@RequestMapping(value = "/fwa/anc/monitoring.html", method = RequestMethod.GET)
-	public String search(HttpServletRequest request, HttpSession session, Model model) {
-		
+	public String anc(HttpServletRequest request, HttpSession session, Model model) {
+		scheduleMonitoringService = ancScheduleMonitoringServiceImpl;
 		String provider = request.getParameter("provider");
 		
 		/*for (Object[] objects : data) {
@@ -42,10 +53,9 @@ public class ScheduleMonitoringController {
 		List<Object[]> data = new ArrayList<Object[]>();
 		
 		if (provider != null) {
-			data = scheduleMonitoring.getData(provider, "");
-			
+			data = scheduleMonitoring.getData(provider, "ANC");
 			session.setAttribute("provider", provider);
-			session.setAttribute("ancScheduleMonitoringServiceImpl", ancScheduleMonitoringServiceImpl);
+			session.setAttribute("scheduleMonitoringService", scheduleMonitoringService);
 		} else {
 			data = new ArrayList<Object[]>();
 			
@@ -54,5 +64,47 @@ public class ScheduleMonitoringController {
 		session.setAttribute("data", data);
 		providerServiceImpl.setProviderAttribute(session);
 		return "schedule-monitoring/index";
+	}
+	
+	@RequestMapping(value = "/fwa/pnc/monitoring.html", method = RequestMethod.GET)
+	public String pnc(HttpServletRequest request, HttpSession session, Model model) {
+		scheduleMonitoringService = pncScheduleMonitoringServiceImpl;
+		String provider = request.getParameter("provider");
+		
+		List<Object[]> data = new ArrayList<Object[]>();
+		
+		if (provider != null) {
+			data = scheduleMonitoring.getData(provider, "PNC");
+			session.setAttribute("provider", provider);
+			session.setAttribute("scheduleMonitoringService", scheduleMonitoringService);
+		} else {
+			data = new ArrayList<Object[]>();
+			
+			session.setAttribute("provider", "");
+		}
+		session.setAttribute("data", data);
+		providerServiceImpl.setProviderAttribute(session);
+		return "schedule-monitoring/pnc";
+	}
+	
+	@RequestMapping(value = "/fwa/encc/monitoring.html", method = RequestMethod.GET)
+	public String encc(HttpServletRequest request, HttpSession session, Model model) {
+		scheduleMonitoringService = enccScheduleMonitoringServiceImpl;
+		String provider = request.getParameter("provider");
+		
+		List<Object[]> data = new ArrayList<Object[]>();
+		
+		if (provider != null) {
+			data = scheduleMonitoring.getData(provider, "ENCC");
+			session.setAttribute("provider", provider);
+			session.setAttribute("scheduleMonitoringService", scheduleMonitoringService);
+		} else {
+			data = new ArrayList<Object[]>();
+			
+			session.setAttribute("provider", "");
+		}
+		session.setAttribute("data", data);
+		providerServiceImpl.setProviderAttribute(session);
+		return "schedule-monitoring/encc";
 	}
 }

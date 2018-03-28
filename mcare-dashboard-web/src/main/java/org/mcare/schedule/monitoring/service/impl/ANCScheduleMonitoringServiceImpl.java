@@ -17,13 +17,15 @@ public class ANCScheduleMonitoringServiceImpl implements ScheduleMonitoringServi
 	
 	@Transactional
 	@Override
-	public List<Object[]> getData(String provider, String caseId) {
-		
+	public List<Object[]> getData(String provider) {
+		String scheduleName = "Ante Natal Care Reminder Visit";
+		String userType = "";
+		String caseId = "";
 		String sqlQuery = "select first_name, motherhusname,motherjivihid,mothergobhhid,mauza_para,motherwomnid,motherwombid,"
 		        + "motherwomlmp,round(date_part('days', now()-mother.motherwomlmp)/7),case_id ,(select concat_ws(',',alert_status,expiry_date,is_action_active,visit_code) "
-		        + "from action where action.case_id=mother.case_id and action.schedule_name='Ante Natal Care Reminder Visit' "
+		        + "from action where action.case_id=mother.case_id and action.schedule_name=:scheduleName "
 		        + "order by action.id desc limit 1 ) from mother where provider=:provider and "
-		        + "  date_part('days', now()-mother.motherwomlmp)<308 and NOT EXISTS"
+		        + "  date_part('days', now()-mother.motherwomlmp)<=308 and NOT EXISTS"
 		        + "(SELECT 1 FROM action  WHERE mother.case_id = action.case_id AND"
 		        + " action.schedule_name = 'Post Natal Care Reminder Visit')  ";
 		/*String sqlQuery = "SELECT DISTINCT ON (a.case_id) m.id,  m.first_name, m.motherhusname,m.motherjivihid,"
@@ -36,15 +38,17 @@ public class ANCScheduleMonitoringServiceImpl implements ScheduleMonitoringServi
 		        + "WHERE m.case_id = ac.case_id AND ac.schedule_name = 'Post Natal Care Reminder Visit')"
 		        + "ORDER  BY a.case_id,  a.id desc;";*/
 		
-		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, sqlQuery);
+		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, scheduleName, userType, sqlQuery);
 	}
 	
 	@Transactional
 	@Override
 	public List<Object[]> getSubmittedScheduleData(String provider, String caseId) {
+		String userType = "";
+		String scheduleName = "";
 		String sqlQuery = "select m.provider,a.fwancdate, a.ancname,a.anc_current_formstatus from mother as m  "
 		        + "join anc as a on m.case_id=a.relationalid where provider=:provider and "
 		        + "m.case_id=:case_id order by a.id asc";
-		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, sqlQuery);
+		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, scheduleName, userType, sqlQuery);
 	}
 }

@@ -492,7 +492,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 	
-	public List<Object[]> executeSelectQuery(String provider, String caseId, String sqlQuery) {
+	public List<Object[]> executeSelectQuery(String provider, String caseId, String scheduleName, String userType,
+	                                         String sqlQuery) {
 		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
 		
@@ -501,6 +502,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		if (!caseId.isEmpty()) {
 			query.setParameter("case_id", caseId);
+		}
+		if (!scheduleName.isEmpty()) {
+			query.setParameter("scheduleName", scheduleName);
+		}
+		if (!userType.isEmpty()) {
+			query.setParameter("userType", userType);
 		}
 		List<Object[]> results = query.list();
 		

@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title> ANC Work monitoring</title>
+<title> ENCC Work monitoring</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 <link type="text/css"
@@ -83,29 +83,29 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> ANC Work monitoring of  <%=provider %>
+					<i class="fa fa-table"></i> ENCC Work monitoring of  <%=provider %>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-bordered" id="dataTable">
 							<thead>
 								<tr>
-									<th>FullName</th>
-									<th>Unique Id</th>
-									<th>LMP/GA</th>
-									<th>Shedule Status</th>
-									<th>Schedule Due</th>
+									<th>Profile</th>
+									<th>Mother Unique Id</th>
+									<th>DOB</th>									
+									<th>ENCC Status</th>
+									<th>ENCC Due</th>
 								</tr>
 							</thead>
 							
 							
 							<tfoot>
 								<tr>
-									<th>FullName</th>
-									<th>Unique Id</th>
-									<th>LMP/GA</th>
-									<th>Shedule Status</th>
-									<th>Schedule Due</th>
+									<th>Profile</th>
+									<th>Mother Unique Id</th>
+									<th>DOB</th>									
+									<th>ENCC Status</th>
+									<th>ENCC Due</th>
 								</tr>
 							</tfoot>
 							<tbody id="tableBody">	
@@ -114,48 +114,48 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 								if (data != null) {
 									
 								for (Object[] row : data) {
-									List<Object[]> ancs= new ArrayList<Object[]>();
-									//String schedule = row[10].toString();
+									List<Object[]> pncs= new ArrayList<Object[]>();
 									String schedule ="";
 									if(row[9]!=null){
-										 schedule = row[10].toString();
+										 schedule = row[9].toString();
 									}else{
 										schedule="";
 									}
+									
 									Map<String, String> map = ScheduleMonitoringUtil.getScheduleStatus(schedule); 
 									try{
-										String case_id= row[9].toString();
-									 ancs =  new ScheduleMonitoringUtil().getSubmittedScheduleData(provider,case_id,scheduleMonitoringService);
+										String case_id= row[8].toString();
+										pncs =  new ScheduleMonitoringUtil().getSubmittedScheduleData(provider,case_id,scheduleMonitoringService);
 									}catch(Exception e){
 										
 									}
-									
 									String name = row[0].toString();
-									String husbandName = row[1].toString();
+									String motherName = row[1].toString();
 									String jivitaHHID = row[2].toString();
 									String goHHID = row[3].toString();
 									String mouzaPara = row[4].toString();
 									String nid = row[5].toString();
 									String brid = row[6].toString();
-									String lmp = row[7].toString();
-									String ga = row[8].toString();
+									String dob = row[7].toString();
+									
 								%>
 									<tr id="">						                
-						                <td><%=name%><br/>
-						               <%=husbandName%><br/>
+						               <td><%=name%><br/>
+						               <%=motherName%><br/>
 						                 <%=jivitaHHID%>,
 						                  <%=goHHID%>
 						                 <br/>
 						                 <%=mouzaPara%>
 						                </td>
 						                <td> NID:<%=nid%><br /> BRID: <%=brid%></td>
-						                <td> <%=lmp%><br/> <%=ga%></td>
-						                <td>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_1",1) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_2",2) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_3",3) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_4",4) %>
 						                
+						                
+						                <td> <%=dob%></td>
+						                <td>
+						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_1",1) %>
+						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_2",2) %>
+						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_3",3) %>
+						               
 						                </td>
 						                <td bgcolor="<%=map.get("bgColor") %>"><%=map.get("message") %>
 						                <br /><%=map.get("date") %><br /><%=map.get("visitCode") %></td>
