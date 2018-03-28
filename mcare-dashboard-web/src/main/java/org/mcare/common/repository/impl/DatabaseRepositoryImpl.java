@@ -460,21 +460,16 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
-	public List<Object[]> executeSelectQuery(String provider, String scheduleName, String sqlQuery) {
-
+	public List<Object[]> executeSelectQuery(String provider, String caseId, String sqlQuery) {
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
 
-		query.setParameter("provider", provider);
-
+		if (!provider.isEmpty()) {
+			query.setParameter("provider", provider);
+		}
+		if (!caseId.isEmpty()) {
+			query.setParameter("case_id", caseId);
+		}
 		List<Object[]> results = query.list();
-
-		/*for (Object[] objects : results) {
-			System.err.println("objects:" + objects.length);
-			for (int i = 0; i < objects.length; i++) {
-
-			}
-
-		}*/
 
 		return results;
 	}

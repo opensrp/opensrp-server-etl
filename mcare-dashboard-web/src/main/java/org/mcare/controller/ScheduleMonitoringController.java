@@ -1,5 +1,6 @@
 package org.mcare.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.schedule.monitoring.ScheduleMonitoring;
+import org.mcare.schedule.monitoring.service.impl.ANCScheduleMonitoringServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,9 @@ public class ScheduleMonitoringController {
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
 	
+	@Autowired
+	private ANCScheduleMonitoringServiceImpl ancScheduleMonitoringServiceImpl;
+	
 	@RequestMapping(value = "/fwa/anc/monitoring.html", method = RequestMethod.GET)
 	public String search(HttpServletRequest request, HttpSession session, Model model) {
 		
@@ -34,18 +39,20 @@ public class ScheduleMonitoringController {
 			}
 			
 		}*/
+		List<Object[]> data = new ArrayList<Object[]>();
 		
 		if (provider != null) {
-			List<Object[]> data = scheduleMonitoring.getData(provider, "");
-			session.setAttribute("data", data);
-			System.err.println("data:" + data.size());
-			session.setAttribute("provider", provider);
-		} else {
+			data = scheduleMonitoring.getData(provider, "");
 			
-			providerServiceImpl.setProviderAttribute(session);
+			session.setAttribute("provider", provider);
+			session.setAttribute("ancScheduleMonitoringServiceImpl", ancScheduleMonitoringServiceImpl);
+		} else {
+			data = new ArrayList<Object[]>();
 			
 			session.setAttribute("provider", "");
 		}
+		session.setAttribute("data", data);
+		providerServiceImpl.setProviderAttribute(session);
 		return "schedule-monitoring/index";
 	}
 }
