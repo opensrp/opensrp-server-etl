@@ -43,13 +43,6 @@ public class ScheduleMonitoringController {
 		scheduleMonitoringService = ancScheduleMonitoringServiceImpl;
 		String provider = request.getParameter("provider");
 		
-		/*for (Object[] objects : data) {
-			System.err.println("objects:" + objects.length);
-			for (int i = 0; i < objects.length; i++) {
-				System.err.println("" + objects[i]);
-			}
-			
-		}*/
 		List<Object[]> data = new ArrayList<Object[]>();
 		
 		if (provider != null) {
@@ -63,7 +56,7 @@ public class ScheduleMonitoringController {
 		}
 		session.setAttribute("data", data);
 		providerServiceImpl.setProviderAttribute(session);
-		return "schedule-monitoring/index";
+		return "schedule-monitoring/anc";
 	}
 	
 	@RequestMapping(value = "/fwa/pnc/monitoring.html", method = RequestMethod.GET)

@@ -19,33 +19,37 @@ public class ScheduleMonitoringUtil {
 		
 		if (!schedule.isEmpty()) {
 			String[] scheduleStringToArray = schedule.split(",");
-			if ("f".equalsIgnoreCase(scheduleStringToArray[2])) {
+			String alertStatus = scheduleStringToArray[0];
+			String expiryDate = scheduleStringToArray[1];
+			String isActionActive = scheduleStringToArray[2];
+			String visitCode = scheduleStringToArray[3];
+			if ("f".equalsIgnoreCase(isActionActive)) {
 				map.put("status", "false");
-				map.put("bgColor", "green");
+				map.put("bgColor", "Gainsboro");
 				map.put("message", "");
 				map.put("date", "");
 				map.put("visitCode", "");
 			} else {
-				if ("urgent".equalsIgnoreCase(scheduleStringToArray[0])) {
+				if ("urgent".equalsIgnoreCase(alertStatus)) {
 					map.put("bgColor", "red");
-					map.put("message", "");
-					map.put("date", scheduleStringToArray[1]);
-					map.put("visitCode", scheduleStringToArray[3]);
-				} else if ("upcoming".equalsIgnoreCase(scheduleStringToArray[0])) {
+					map.put("message", "urgent");
+					map.put("date", expiryDate);
+					map.put("visitCode", visitCode);
+				} else if ("upcoming".equalsIgnoreCase(alertStatus)) {
 					map.put("bgColor", "yellow");
-					map.put("message", "");
-					map.put("visitCode", scheduleStringToArray[3]);
-					map.put("date", scheduleStringToArray[1]);
-				} else if ("expired".equalsIgnoreCase(scheduleStringToArray[0])) {
+					map.put("message", "upcoming");
+					map.put("visitCode", visitCode);
+					map.put("date", expiryDate);
+				} else if ("expired".equalsIgnoreCase(alertStatus)) {
 					map.put("bgColor", "");
 					map.put("message", "expired");
 					map.put("visitCode", "");
 					map.put("date", "");
-				} else if ("normal".equalsIgnoreCase(scheduleStringToArray[0])) {
+				} else if ("normal".equalsIgnoreCase(alertStatus)) {
 					map.put("bgColor", "green");
 					map.put("message", "");
-					map.put("visitCode", scheduleStringToArray[3]);
-					map.put("date", scheduleStringToArray[1]);
+					map.put("visitCode", visitCode);
+					map.put("date", expiryDate);
 				}
 			}
 		} else {
@@ -72,7 +76,7 @@ public class ScheduleMonitoringUtil {
 		colorMap.put("urgent", "red");
 	}
 	
-	public static String getScheduleSubmittedOrNotMessage(List<Object[]> objects, String visitCode, int scheduleNumber) {
+	public static String generateMessageForScheduleSubmittions(List<Object[]> objects, String visitCode, int scheduleNumber) {
 		String filteredVisitCode = "";
 		String red = "red";
 		String message = "";
@@ -111,5 +115,45 @@ public class ScheduleMonitoringUtil {
 			message = "Still Birth";
 		}
 		return message;
+	}
+	
+	public static StringBuilder generateMessageForNoScheduleSubmittions(String schedule) {
+		StringBuilder sb = new StringBuilder();
+		String red = "red";
+		if (!schedule.isEmpty()) {
+			String[] scheduleStringToArray = schedule.split(",");
+			String visitCode = scheduleStringToArray[3];
+			String[] visitCodeStringToArray = visitCode.split("_");
+			String visitCodeWithoutNumber = visitCodeStringToArray[0];
+			int visitCodeNumber = Integer.parseInt(visitCodeStringToArray[1]);
+			String alertStatus = scheduleStringToArray[0];
+			if (visitCodeNumber == 2) {
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_1"
+				        + "<br/>");
+			} else if (visitCodeNumber == 3) {
+				
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_1"
+				        + "<br/>");
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_2"
+				        + "<br/>");
+				
+				if ("expired".equalsIgnoreCase(alertStatus)) {
+					sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_3"
+					        + "<br/>");
+				}
+			} else if (visitCodeNumber == 4) {
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_1"
+				        + "<br/>");
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_2"
+				        + "<br/>");
+				sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_3"
+				        + "<br/>");
+				if ("expired".equalsIgnoreCase(alertStatus)) {
+					sb.append("<span  class='fa fa-close' style=color:" + red + "></span> " + visitCodeWithoutNumber + "_4"
+					        + "<br/>");
+				}
+			}
+		}
+		return sb;
 	}
 }
