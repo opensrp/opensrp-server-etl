@@ -115,7 +115,7 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 									
 								for (Object[] row : data) {
 									List<Object[]> ancs= new ArrayList<Object[]>();
-									//String schedule = row[10].toString();
+									
 									String schedule ="";
 									if(row[9]!=null){
 										 schedule = row[10].toString();
@@ -139,6 +139,11 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 									String brid = row[6].toString();
 									String lmp = row[7].toString();
 									String ga = row[8].toString();
+									
+									StringBuilder noScheduleSubmissionMessage= new StringBuilder();
+									if(ancs.size() ==0){
+										noScheduleSubmissionMessage = ScheduleMonitoringUtil.generateMessageForNoScheduleSubmittions(schedule);
+									}
 								%>
 									<tr id="">						                
 						                <td><%=name%><br/>
@@ -151,10 +156,11 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 						                <td> NID:<%=nid%><br /> BRID: <%=brid%></td>
 						                <td> <%=lmp%><br/> <%=ga%></td>
 						                <td>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_1",1) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_2",2) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_3",3) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(ancs,"ancrv_4",4) %>
+						                 <%=noScheduleSubmissionMessage %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(ancs,"ancrv_1",1) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(ancs,"ancrv_2",2) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(ancs,"ancrv_3",3) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(ancs,"ancrv_4",4) %>
 						                
 						                </td>
 						                <td bgcolor="<%=map.get("bgColor") %>"><%=map.get("message") %>

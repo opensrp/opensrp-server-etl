@@ -137,6 +137,10 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 									String nid = row[5].toString();
 									String brid = row[6].toString();
 									String dob = row[7].toString();
+									StringBuilder noScheduleSubmissionMessage= new StringBuilder();
+									if(pncs.size() ==0){
+										noScheduleSubmissionMessage = ScheduleMonitoringUtil.generateMessageForNoScheduleSubmittions(schedule);
+									}
 									
 								%>
 									<tr id="">						                
@@ -152,9 +156,10 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 						                
 						                <td> <%=dob%></td>
 						                <td>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_1",1) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_2",2) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"enccrv_3",3) %>
+						                <%=noScheduleSubmissionMessage %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"enccrv_1",1) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"enccrv_2",2) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"enccrv_3",3) %>
 						               
 						                </td>
 						                <td bgcolor="<%=map.get("bgColor") %>"><%=map.get("message") %>

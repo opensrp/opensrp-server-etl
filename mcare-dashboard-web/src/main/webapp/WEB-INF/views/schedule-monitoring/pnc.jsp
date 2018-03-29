@@ -141,6 +141,10 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 									String brid = row[6].toString();
 									String dateOfOutcome = row[7].toString();
 									String deliveryStatus = ScheduleMonitoringUtil.getOutcomeMessage(Integer.parseInt(row[10].toString()));
+									StringBuilder noScheduleSubmissionMessage= new StringBuilder();
+									if(pncs.size() ==0){
+										noScheduleSubmissionMessage = ScheduleMonitoringUtil.generateMessageForNoScheduleSubmittions(schedule);
+									}
 								%>
 									<tr id="">						                
 						               <td><%=name%><br/>
@@ -155,9 +159,10 @@ List<Object[]> data = (List<Object[]>) session.getAttribute("data");
 						                <td> <%=deliveryStatus%></td>
 						                <td> <%=dateOfOutcome%></td>
 						                <td>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"pncrv_1",1) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"pncrv_2",2) %>
-						                <%=ScheduleMonitoringUtil.getScheduleSubmittedOrNotMessage(pncs,"pncrv_3",3) %>
+						                 <%=noScheduleSubmissionMessage %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"pncrv_1",1) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"pncrv_2",2) %>
+						                <%=ScheduleMonitoringUtil.generateMessageForScheduleSubmittions(pncs,"pncrv_3",3) %>
 						               
 						                </td>
 						                <td bgcolor="<%=map.get("bgColor") %>"><%=map.get("message") %>
