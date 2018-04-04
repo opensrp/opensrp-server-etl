@@ -93,11 +93,11 @@
 				<div class="row">
 					<div class="col-3">
 						<label>Start Date</label> <input class="form-control" type=text
-							name="start" required id="start">
+							name="start" id="start">
 					</div>
 					<div class="col-3">
 						<label>End Date</label> <input class="form-control" type="text"
-							name="end" required id="end">
+							name="end" id="end">
 
 					</div>
 				</div>
