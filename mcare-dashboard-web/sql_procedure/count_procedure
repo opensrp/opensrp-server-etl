@@ -1,0 +1,75 @@
+CREATE OR REPLACE FUNCTION my_function(arr text[]) 
+RETURNS TABLE(visitcode character varying, schedulecount integer
+              , completecount integer, expiredCount integer)
+AS $$
+DECLARE
+  conditionQuery text := '';
+  div text := '';
+  dis text := '';
+  upa text := '';
+  uni text := '';
+  war text := '';
+  sub text := '';
+  mau text := '';
+  pro text := '';
+BEGIN
+  div := arr[1];
+  dis := arr[2];
+  upa := arr[3];
+  uni := arr[4];
+  war := arr[5];
+  sub := arr[6];
+  mau := arr[7];
+  pro := arr[8];
+
+  DROP TABLE IF EXISTS temp_table;
+  EXECUTE format('
+   CREATE TABLE IF NOT EXISTS %I (
+    visitCode varchar(70),
+    scheduleCount int,
+    completeCount int,
+    expiredCount int
+   )', 'temp_table');
+   
+   insert into temp_table(visitCode) 
+   select visit_code from "viewANCPNCNotSubmitted"
+   where not visit_code = 'mis_elco'
+   group by visit_code;
+
+   if (div != '') THEN
+       conditionQuery := E' where division=\'' || div || E'\'';
+   END IF;
+   
+   EXECUTE 'update temp_table
+   set scheduleCount = c.schedule_count from 
+   (select visit_code, count(*) from "viewANCPNCNotSubmitted"' 
+   || conditionQuery
+   || ' group by visit_code) as c(visit_code, schedule_count) 
+   where temp_table.visitCode = c.visit_code';
+   
+  
+   /*update temp_table
+   set scheduleCount = c.schedule_count from 
+   (select visit_code, count(*) from "viewANCPNCNotSubmitted"
+    where division = div  
+    group by visit_code) as c(visit_code, schedule_count) 
+   where temp_table.visitCode = c.visit_code;*/
+
+   EXECUTE 'update temp_table
+   set completeCount = c.anccount from 
+   (select ancname, count(*) from "viewANCSubmitted" '
+   || conditionQuery
+   || ' group by ancname) as c(ancname, anccount) 
+   where temp_table.visitCode = c.ancname';
+   
+    EXECUTE 'update temp_table
+   set completeCount = c.pnccount from 
+   (select pncname, count(*) from "viewPNCSubmitted" '
+   || conditionQuery
+   || ' group by pncname) as c(pncname, pnccount) 
+   where temp_table.visitCode = c.pncname';
+
+   RETURN QUERY SELECT * from temp_table;
+  
+END;
+$$ LANGUAGE plpgsql;
