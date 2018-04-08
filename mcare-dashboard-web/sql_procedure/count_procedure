@@ -4,6 +4,7 @@ RETURNS TABLE(visitcode character varying, schedulecount integer
 AS $$
 DECLARE
   conditionQuery text := '';
+  scheduleQuery text := '';
   div text := '';
   dis text := '';
   upa text := '';
@@ -12,15 +13,19 @@ DECLARE
   sub text := '';
   mau text := '';
   pro text := '';
+  start_date text := '';
+  end_date text := '';
 BEGIN
-  div := arr[1];
-  dis := arr[2];
+  div := upper(arr[1]);
+  dis := upper(arr[2]);
   upa := arr[3];
   uni := arr[4];
   war := arr[5];
   sub := arr[6];
   mau := arr[7];
   pro := arr[8];
+  start_date := arr[9];
+  end_date := arr[10];
 
   DROP TABLE IF EXISTS temp_table;
   EXECUTE format('
@@ -31,43 +36,111 @@ BEGIN
     expiredCount int
    )', 'temp_table');
    
-   insert into temp_table(visitCode) 
+   insert into temp_table(visitCode)
    select visit_code from "viewANCPNCNotSubmitted"
    where not visit_code = 'mis_elco'
    group by visit_code;
 
+   insert into temp_table(visitCode)
+   select visit_code from "viewENCCNotSubmitted"
+   group by visit_code;
+
    if (div != '') THEN
-       conditionQuery := E' where division=\'' || div || E'\'';
+       conditionQuery := E' and division=\'' || div || E'\'';
    END IF;
+
+   if (dis != '') THEN
+       conditionQuery := conditionQuery || E' and district=\'' || dis || E'\'';
+   END IF;
+
+   if (upa != '') THEN
+       conditionQuery := conditionQuery || E' and upazila=\'' || upa || E'\'';
+   END IF;
+
+   if (uni != '') THEN
+       conditionQuery := conditionQuery || E' and unions=\'' || uni || E'\'';
+   END IF;
+
+   /*if (war != '') THEN
+       conditionQuery := E' where ward=\'' || war || E'\'';
+   END IF;*/
    
-   EXECUTE 'update temp_table
-   set scheduleCount = c.schedule_count from 
-   (select visit_code, count(*) from "viewANCPNCNotSubmitted"' 
-   || conditionQuery
-   || ' group by visit_code) as c(visit_code, schedule_count) 
-   where temp_table.visitCode = c.visit_code';
-   
-  
-   /*update temp_table
-   set scheduleCount = c.schedule_count from 
-   (select visit_code, count(*) from "viewANCPNCNotSubmitted"
-    where division = div  
-    group by visit_code) as c(visit_code, schedule_count) 
-   where temp_table.visitCode = c.visit_code;*/
+   if (sub != '') THEN
+       conditionQuery := conditionQuery || E' and subunit=\'' || sub || E'\'';
+   END IF;
+
+   if (mau != '') THEN
+       conditionQuery := conditionQuery || E' and mauza_para=\'' || mau || E'\'';
+   END IF;
+
+   if (pro != '') THEN
+       conditionQuery := conditionQuery || E' and provider=\'' || pro || E'\'';
+   END IF;
+
+   scheduleQuery := conditionQuery;
+
+   if (start_date != '' AND start_date != '') THEN
+       conditionQuery := conditionQuery
+       || E' and visit_date between \''|| start_date || E'\' and \'' || end_date || E'\'';
+       scheduleQuery := scheduleQuery
+       || E' and start_date between \''|| start_date || E'\' and \'' || end_date || E'\'';
+   END IF;
 
    EXECUTE 'update temp_table
-   set completeCount = c.anccount from 
-   (select ancname, count(*) from "viewANCSubmitted" '
-   || conditionQuery
-   || ' group by ancname) as c(ancname, anccount) 
-   where temp_table.visitCode = c.ancname';
-   
+   set scheduleCount = c.schedule_count from
+   (select visit_code, count(*) from "viewANCPNCNotSubmitted"'
+   || ' where is_action_active=true'
+   || scheduleQuery
+   || ' group by visit_code) as c(visit_code, schedule_count)
+   where temp_table.visitCode = c.visit_code';
+
     EXECUTE 'update temp_table
-   set completeCount = c.pnccount from 
+   set scheduleCount = c.schedule_count from
+   (select visit_code, count(*) from "viewENCCNotSubmitted" '
+   || 'where is_action_active=true'
+   || scheduleQuery
+   || ' group by visit_code) as c(visit_code, schedule_count)
+   where temp_table.visitCode = c.visit_code';
+
+   EXECUTE 'update temp_table
+   set completeCount = c.anccount from
+   (select ancname, count(*) from "viewANCSubmitted"'
+   || E' where anc_current_formstatus=\'urgent\' or anc_current_formstatus=\'upcoming\''
+   || conditionQuery
+   || ' group by ancname) as c(ancname, anccount)
+   where temp_table.visitCode = c.ancname';
+
+   EXECUTE 'update temp_table
+   set completeCount = c.pnccount from
    (select pncname, count(*) from "viewPNCSubmitted" '
+   || E' where pnc_current_formstatus=\'urgent\' or pnc_current_formstatus=\'upcoming\''
    || conditionQuery
    || ' group by pncname) as c(pncname, pnccount) 
    where temp_table.visitCode = c.pncname';
+
+   EXECUTE 'update temp_table
+   set completeCount = c.encccount from
+   (select enccname, count(*) from "viewENCCSubmitted" '
+   || E' where encc_current_formstatus=\'urgent\' or encc_current_formstatus=\'upcoming\''
+   || conditionQuery
+   || ' group by enccname) as c(enccname, encccount)
+   where temp_table.visitCode = c.enccname';
+
+   EXECUTE 'update temp_table
+   set completeCount = c.bnfcount from
+   (select count(*) from "viewBNFSubmitted" '
+   || E' where user_type=\'FD\' '
+   || conditionQuery
+   || ') as c(bnfcount)'
+   || E' where temp_table.visitCode = \'BirthNotificationPregnancyStatusFollowUp\'';
+
+   EXECUTE 'update temp_table
+   set completeCount = c.psrfcount from
+   (select count(*) from "viewPSRFSubmitted" '
+   || E' where user_type=\'FD\' '
+   || conditionQuery
+   || ') as c(psrfcount)'
+   || E' where temp_table.visitCode = \'ELCO PSRF\'';
 
    RETURN QUERY SELECT * from temp_table;
   
