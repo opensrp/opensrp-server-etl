@@ -58,245 +58,50 @@
 								</thead>
 								<tbody>
 									<%
-										List<Object> ANC1List = (List<Object>) session.getAttribute("ANC1List");
-										Iterator itr = ANC1List.iterator();
+										if(session.getAttribute("allList") != null){
+										List<Object> allList = (List<Object>) session.getAttribute("allList");
+										Iterator itr = allList.iterator();
 										while (itr.hasNext()) {
 											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
+											Integer scheduled;
+											Integer completed;
+											Integer expired;
+											if (String.valueOf(obj[1]) != null && !String.valueOf(obj[1]).isEmpty()
+													&& !String.valueOf(obj[1]).equalsIgnoreCase("null")) {
+												scheduled = Integer.parseInt(String.valueOf(obj[1]));;
+											} else {
+												scheduled = new Integer(0);
+											}
+											if (String.valueOf(obj[2]) != null && !String.valueOf(obj[2]).isEmpty() 
+													&& !String.valueOf(obj[2]).equalsIgnoreCase("null")) {
+												completed = Integer.parseInt(String.valueOf(obj[2]));
+											} else {
+												completed = new Integer(0);
+											}
+											if (String.valueOf(obj[3]) != null && !String.valueOf(obj[3]).isEmpty() 
+													&& !String.valueOf(obj[3]).equalsIgnoreCase("null")) {
+												expired = Integer.parseInt(String.valueOf(obj[3]));
+											} else {
+												expired = new Integer(0);
+											}
+											Double expiredPercentage;
+											if (scheduled == 0) {
+												expiredPercentage = 0.0;
+											} else {
+												expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
+											}
 											DecimalFormat df = new DecimalFormat("0.00");
 											df.setRoundingMode(RoundingMode.CEILING);
 									%>
 									<tr>
-										<td>ANCRV1</td>
+										<td><%=String.valueOf(obj[0])%></td>
 										<td><%=scheduled.toString()%></td>
 										<td><%=completed.toString()%></td>
 										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
+										<td><%=df.format(expiredPercentage)%>%</td>
 									</tr>
 									<%
 										}
-										List<Object> ANC2List = (List<Object>) session.getAttribute("ANC2List");
-										itr = ANC2List.iterator();
-									    while (itr.hasNext()) {
-									    	Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ANCRV2</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> ANC3List = (List<Object>) session.getAttribute("ANC3List");
-										itr = ANC3List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ANCRV3</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> ANC4List = (List<Object>) session.getAttribute("ANC4List");
-										itr = ANC4List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ANCRV4</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> PNC1List = (List<Object>) session.getAttribute("PNC1List");
-										itr = PNC1List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>PNC1</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> PNC2List = (List<Object>) session.getAttribute("PNC2List");
-										itr = PNC2List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>PNC2</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> PNC3List = (List<Object>) session.getAttribute("PNC3List");
-										itr = PNC3List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>PNC3</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> ENCC1List = (List<Object>) session.getAttribute("ENCC1List");
-										itr = ENCC1List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ENCC1</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> ENCC2List = (List<Object>) session.getAttribute("ENCC2List");
-										itr = ENCC2List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ENCC2</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> ENCC3List = (List<Object>) session.getAttribute("ENCC3List");
-										itr = ENCC3List.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>ENCC3</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> BNFList = (List<Object>) session.getAttribute("BNFList");
-										itr = BNFList.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>BNF</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
-										}
-										List<Object> PSRFList = (List<Object>) session.getAttribute("PSRFList");
-										itr = PSRFList.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											Integer scheduled = Integer.parseInt(String.valueOf(obj[0]));
-											Integer completed = Integer.parseInt(String.valueOf(obj[1]));
-											Integer expired = Integer.parseInt(String.valueOf(obj[2]));
-											Double expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
-									%>
-									<tr>
-										<td>PSRF</td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%></td>
-									</tr>
-									<%
 										}
 									%>
 								</tbody>
