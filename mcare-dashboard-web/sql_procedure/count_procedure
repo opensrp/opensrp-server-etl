@@ -105,7 +105,7 @@ BEGIN
    EXECUTE 'update temp_table
    set completeCount = c.anccount from
    (select ancname, count(*) from "viewANCSubmitted"'
-   || E' where anc_current_formstatus=\'urgent\' or anc_current_formstatus=\'upcoming\''
+   || E' where (anc_current_formstatus=\'urgent\' or anc_current_formstatus=\'upcoming\')'
    || conditionQuery
    || ' group by ancname) as c(ancname, anccount)
    where temp_table.visitCode = c.ancname';
@@ -113,7 +113,7 @@ BEGIN
    EXECUTE 'update temp_table
    set completeCount = c.pnccount from
    (select pncname, count(*) from "viewPNCSubmitted" '
-   || E' where pnc_current_formstatus=\'urgent\' or pnc_current_formstatus=\'upcoming\''
+   || E' where (pnc_current_formstatus=\'urgent\' or pnc_current_formstatus=\'upcoming\')'
    || conditionQuery
    || ' group by pncname) as c(pncname, pnccount) 
    where temp_table.visitCode = c.pncname';
@@ -121,7 +121,7 @@ BEGIN
    EXECUTE 'update temp_table
    set completeCount = c.encccount from
    (select enccname, count(*) from "viewENCCSubmitted" '
-   || E' where encc_current_formstatus=\'urgent\' or encc_current_formstatus=\'upcoming\''
+   || E' where (encc_current_formstatus=\'urgent\' or encc_current_formstatus=\'upcoming\')'
    || conditionQuery
    || ' group by enccname) as c(enccname, encccount)
    where temp_table.visitCode = c.enccname';
