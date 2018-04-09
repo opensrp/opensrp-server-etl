@@ -29,7 +29,7 @@ BEGIN
 
   DROP TABLE IF EXISTS temp_table;
   EXECUTE format('
-   CREATE TABLE IF NOT EXISTS %I (
+   CREATE TEMPORARY TABLE IF NOT EXISTS %I (
     visitCode varchar(70),
     scheduleCount int,
     completeCount int,
@@ -141,6 +141,22 @@ BEGIN
    || conditionQuery
    || ') as c(psrfcount)'
    || E' where temp_table.visitCode = \'ELCO PSRF\'';
+
+   EXECUTE 'update temp_table
+   set expiredCount = c.expire_count from
+   (select visit_code, count(*) from "viewANCPNCNotSubmitted"'
+   || E' where alert_status = \'urgent\' and expiry_date < current_date'
+   || scheduleQuery
+   || ' group by visit_code) as c(visit_code, expire_count)
+   where temp_table.visitCode = c.visit_code';
+
+   EXECUTE 'update temp_table
+   set expiredCount = c.expire_count from
+   (select visit_code, count(*) from "viewENCCNotSubmitted"'
+   || E' where alert_status = \'urgent\' and expiry_date < current_date'
+   || scheduleQuery
+   || ' group by visit_code) as c(visit_code, expire_count)
+   where temp_table.visitCode = c.visit_code';
 
    RETURN QUERY SELECT * from temp_table;
   
