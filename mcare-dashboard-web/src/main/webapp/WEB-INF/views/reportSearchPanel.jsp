@@ -14,57 +14,6 @@
 	List<ProviderEntity> providers = (List<ProviderEntity>) session
 			.getAttribute("providers");
 
-	Map<String, String> paginationAtributes = (Map<String, String>) session
-			.getAttribute("paginationAtributes");
-	String division = "";
-	int divId = 0;
-	if (paginationAtributes.containsKey("divId")) {
-		divId = Integer.parseInt(paginationAtributes.get("divId"));
-	}
-
-	int distId = 0;
-	if (paginationAtributes.containsKey("distId")) {
-		distId = Integer.parseInt(paginationAtributes.get("distId"));
-	}
-
-	int upzilaId = 0;
-	if (paginationAtributes.containsKey("upzilaId")) {
-		upzilaId = Integer
-				.parseInt(paginationAtributes.get("upzilaId"));
-	}
-	String union = "";
-	int unionId = 0;
-	if (paginationAtributes.containsKey("unionId")) {
-		unionId = Integer.parseInt(paginationAtributes.get("unionId"));
-	}
-
-	int wardId = 0;
-	if (paginationAtributes.containsKey("wardId")) {
-		wardId = Integer.parseInt(paginationAtributes.get("wardId"));
-	}
-
-	int subunitId = 0;
-	if (paginationAtributes.containsKey("subunitId")) {
-		subunitId = Integer.parseInt(paginationAtributes
-				.get("subunitId"));
-	}
-
-	int mauzaparaId = 0;
-	if (paginationAtributes.containsKey("mauzaparaId")) {
-		mauzaparaId = Integer.parseInt(paginationAtributes
-				.get("mauzaparaId"));
-	}
-
-	String provider = "";
-	if (paginationAtributes.containsKey("provider")) {
-		provider = paginationAtributes.get("provider");
-	}
-
-	String name = "";
-	if (paginationAtributes.containsKey("name")) {
-		name = paginationAtributes.get("name");
-	}
-
 	List<Object[]> parentDataList = (List<Object[]>) session
 			.getAttribute("parentData");
 	List<Object[]> districts = (List<Object[]>) session
@@ -109,18 +58,12 @@
 						name="division">
 						<option value="0?">Please Select Division</option>
 						<%
-										for (Object[] objects : parentDataList) {
-											if (divId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							for (Object[] objects : parentDataList) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-										}
-									%>
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -128,20 +71,14 @@
 						name="district">
 						<option value="0?">Please Select District</option>
 						<%
-										if (districts != null) {
-											for (Object[] objects : districts) {
-												if (distId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (districts != null) {
+							    for (Object[] objects : districts) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							    }
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -149,20 +86,14 @@
 						name="upazila">
 						<option value="0?">Please Select Upazilla</option>
 						<%
-										if (upazilas != null) {
-											for (Object[] objects : upazilas) {
-												if (upzilaId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (upazilas != null) {
+								for (Object[] objects : upazilas) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -170,20 +101,14 @@
 						name="union">
 						<option value="0?">Please Select Union</option>
 						<%
-										if (unions != null) {
-											for (Object[] objects : unions) {
-												if (unionId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (unions != null) {
+								for (Object[] objects : unions) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -191,20 +116,14 @@
 						name="ward">
 						<option value="0?">Please Select Ward</option>
 						<%
-										if (wards != null) {
-											for (Object[] objects : wards) {
-												if (wardId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (wards != null) {
+								for (Object[] objects : wards) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -212,20 +131,14 @@
 						name="subunit">
 						<option value="0?">Please Select Subunit</option>
 						<%
-										if (subuits != null) {
-											for (Object[] objects : subuits) {
-												if (subunitId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (subuits != null) {
+								for (Object[] objects : subuits) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -233,40 +146,28 @@
 						name="mauzapara">
 						<option value="0?">Please Select Mauzapara</option>
 						<%
-										if (mauzaparas != null) {
-											for (Object[] objects : mauzaparas) {
-												if (mauzaparaId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (mauzaparas != null) {
+								for (Object[] objects : mauzaparas) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
 					<select class="custom-select custom-select-lg mb-3" name="provider">
 						<option value="">Please Select Provider</option>
 						<%
-										if (providers != null) {
-											for (ProviderEntity objects : providers) {
-												if (provider.equalsIgnoreCase(objects.getProvider())) {
-									%>
-						<option value="<%=objects.getProvider()%>" selected><%=objects.getProvider()%></option>
-						<%
-										} else {
-									%>
+							if (providers != null) {
+								for (ProviderEntity objects : providers) {
+						%>
 						<option value="<%=objects.getProvider()%>"><%=objects.getProvider()%></option>
 						<%
-										}
-											}
-										}
-									%>
+								}
+							}
+						%>
 					</select>
 				</div>
 			</div>

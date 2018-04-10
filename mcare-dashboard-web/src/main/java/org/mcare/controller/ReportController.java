@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.mcare.common.util.PaginationHelperUtil;
 import org.mcare.common.util.PaginationUtil;
-import org.mcare.etl.entity.ChildEntity;
 import org.mcare.reports.service.ReportSearchBuilder;
 import org.mcare.reports.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,21 +35,17 @@ public class ReportController {
 
 	@RequestMapping(value = "/reportCount.html", method = RequestMethod.GET)
 	public String showReport(HttpServletRequest request, HttpSession session, Model model) {
-
 		reportSearchBuilder = paginationHelperUtil.setParamsForReport(request, session);
+		paginationUtil.setProviderAttribute(session);
+		paginationUtil.setParentDataAttribute(session);
 
-		Class<ChildEntity> entityClassName = ChildEntity.class;
-		paginationUtil.createPagination(request, session, entityClassName);
+		System.err.println("list of counts from procedure");
 
-		setListToSession(session);
+		List<Object> allList = (List<Object>) reportService.findFormWiseReport(reportSearchBuilder);
+		session.setAttribute("allList", allList);
+
+		System.err.println("set session allList");
 
 		return "report/report";
-	}
-
-	private void setListToSession(HttpSession session) {
-		System.err.println("count list from procedure");
-		List<Object> allList = (List<Object>) reportService.findFormWiseReport(reportSearchBuilder);
-		System.err.println("set session allList");
-		session.setAttribute("allList", allList);
 	}
 }

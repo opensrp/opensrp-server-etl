@@ -139,12 +139,12 @@ public class PaginationUtil {
 		session.setAttribute("pageList", pageList);
 	}
 
-	private void setProviderAttribute(HttpSession session) {
+	public void setProviderAttribute(HttpSession session) {
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
 		session.setAttribute("providers", providers);
 	}
 
-	private void setParentDataAttribute(HttpSession session) {
+	public void setParentDataAttribute(HttpSession session) {
 		List<Object[]> parentData = locationServiceImpl.getParentData();
 		session.setAttribute("parentData", parentData);
 	}
