@@ -1,10 +1,12 @@
-CREATE OR REPLACE FUNCTION my_function(arr text[]) 
+CREATE OR REPLACE FUNCTION generate_form_wise_report(arr text[])
 RETURNS TABLE(visitcode character varying, schedulecount integer
-              , completecount integer, expiredCount integer)
+              , completecount integer, expiredCount integer
+              , expiredPercentageCount float)
 AS $$
 DECLARE
-  conditionQuery text := '';
-  scheduleQuery text := '';
+  filterString text := '';
+  completeCountFilterString text := '';
+  expiredConditionString text := '';
   div text := '';
   dis text := '';
   upa text := '';
@@ -33,9 +35,10 @@ BEGIN
     visitCode varchar(70),
     scheduleCount int,
     completeCount int,
-    expiredCount int
+    expiredCount int,
+    expiredPercentageCount float
    )', 'temp_table');
-   
+
    insert into temp_table(visitCode)
    select visit_code from "viewANCPNCNotSubmitted"
    where not visit_code = 'mis_elco'
@@ -46,119 +49,140 @@ BEGIN
    group by visit_code;
 
    if (div != '') THEN
-       conditionQuery := E' and division=\'' || div || E'\'';
+       filterString := E' where division=\'' || div || E'\'';
    END IF;
 
    if (dis != '') THEN
-       conditionQuery := conditionQuery || E' and district=\'' || dis || E'\'';
+       filterString := filterString || E' and district=\'' || dis || E'\'';
    END IF;
 
    if (upa != '') THEN
-       conditionQuery := conditionQuery || E' and upazila=\'' || upa || E'\'';
+       filterString := filterString || E' and upazila=\'' || upa || E'\'';
    END IF;
 
    if (uni != '') THEN
-       conditionQuery := conditionQuery || E' and unions=\'' || uni || E'\'';
+       filterString := filterString || E' and unions=\'' || uni || E'\'';
    END IF;
 
    /*if (war != '') THEN
-       conditionQuery := E' where ward=\'' || war || E'\'';
+       filterString := E' where ward=\'' || war || E'\'';
    END IF;*/
-   
+
    if (sub != '') THEN
-       conditionQuery := conditionQuery || E' and subunit=\'' || sub || E'\'';
+       filterString := filterString || E' and subunit=\'' || sub || E'\'';
    END IF;
 
    if (mau != '') THEN
-       conditionQuery := conditionQuery || E' and mauza_para=\'' || mau || E'\'';
+       filterString := filterString || E' and mauza_para=\'' || mau || E'\'';
    END IF;
 
-   if (pro != '') THEN
-       conditionQuery := conditionQuery || E' and provider=\'' || pro || E'\'';
+   IF (pro != '') THEN
+       IF(filterString != '') THEN
+           filterString := filterString || E' and provider=\'' || pro || E'\'';
+       ELSE
+           filterString := filterString || E' where provider=\'' || pro || E'\'';
+       END IF;
    END IF;
 
-   scheduleQuery := conditionQuery;
+   completeCountFilterString := filterString;
 
    if (start_date != '' AND start_date != '') THEN
-       conditionQuery := conditionQuery
-       || E' and visit_date between \''|| start_date || E'\' and \'' || end_date || E'\'';
-       scheduleQuery := scheduleQuery
-       || E' and start_date between \''|| start_date || E'\' and \'' || end_date || E'\'';
+       if(filterString != '') THEN
+           completeCountFilterString := completeCountFilterString
+                             || E' and visit_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+           filterString := filterString
+                             || E' and start_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+        ELSE
+           completeCountFilterString := completeCountFilterString
+                             || E' where visit_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+           filterString := filterString
+                             || E' where start_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+        END IF;
+   END IF;
+
+
+   IF(filterString != '') THEN
+       expiredConditionString := E' and alert_status = \'urgent\' and expiry_date < current_date';
+   ELSE
+       expiredConditionString := E' where alert_status = \'urgent\' and expiry_date < current_date';
    END IF;
 
    EXECUTE 'update temp_table
    set scheduleCount = c.schedule_count from
-   (select visit_code, count(*) from "viewANCPNCNotSubmitted"'
-   || ' where is_action_active=true'
-   || scheduleQuery
+   (select visit_code, count(*) from "viewANCPNCNotSubmitted" '
+   || filterString
    || ' group by visit_code) as c(visit_code, schedule_count)
    where temp_table.visitCode = c.visit_code';
 
     EXECUTE 'update temp_table
    set scheduleCount = c.schedule_count from
    (select visit_code, count(*) from "viewENCCNotSubmitted" '
-   || 'where is_action_active=true'
-   || scheduleQuery
+   || filterString
    || ' group by visit_code) as c(visit_code, schedule_count)
    where temp_table.visitCode = c.visit_code';
 
    EXECUTE 'update temp_table
    set completeCount = c.anccount from
-   (select ancname, count(*) from "viewANCSubmitted"'
-   || E' where (anc_current_formstatus=\'urgent\' or anc_current_formstatus=\'upcoming\')'
-   || conditionQuery
+   (select ancname, count(*) from "viewANCSubmitted" '
+   || completeCountFilterString
    || ' group by ancname) as c(ancname, anccount)
    where temp_table.visitCode = c.ancname';
 
    EXECUTE 'update temp_table
    set completeCount = c.pnccount from
    (select pncname, count(*) from "viewPNCSubmitted" '
-   || E' where (pnc_current_formstatus=\'urgent\' or pnc_current_formstatus=\'upcoming\')'
-   || conditionQuery
-   || ' group by pncname) as c(pncname, pnccount) 
+   || completeCountFilterString
+   || ' group by pncname) as c(pncname, pnccount)
    where temp_table.visitCode = c.pncname';
 
    EXECUTE 'update temp_table
    set completeCount = c.encccount from
    (select enccname, count(*) from "viewENCCSubmitted" '
-   || E' where (encc_current_formstatus=\'urgent\' or encc_current_formstatus=\'upcoming\')'
-   || conditionQuery
+   || completeCountFilterString
    || ' group by enccname) as c(enccname, encccount)
    where temp_table.visitCode = c.enccname';
 
    EXECUTE 'update temp_table
    set completeCount = c.bnfcount from
    (select count(*) from "viewBNFSubmitted" '
-   || E' where user_type=\'FD\' '
-   || conditionQuery
+   || completeCountFilterString
    || ') as c(bnfcount)'
    || E' where temp_table.visitCode = \'BirthNotificationPregnancyStatusFollowUp\'';
 
    EXECUTE 'update temp_table
    set completeCount = c.psrfcount from
    (select count(*) from "viewPSRFSubmitted" '
-   || E' where user_type=\'FD\' '
-   || conditionQuery
+   || completeCountFilterString
    || ') as c(psrfcount)'
    || E' where temp_table.visitCode = \'ELCO PSRF\'';
 
    EXECUTE 'update temp_table
    set expiredCount = c.expire_count from
    (select visit_code, count(*) from "viewANCPNCNotSubmitted"'
-   || E' where alert_status = \'urgent\' and expiry_date < current_date'
-   || scheduleQuery
+   || filterString
+   || expiredConditionString
    || ' group by visit_code) as c(visit_code, expire_count)
    where temp_table.visitCode = c.visit_code';
 
    EXECUTE 'update temp_table
    set expiredCount = c.expire_count from
    (select visit_code, count(*) from "viewENCCNotSubmitted"'
-   || E' where alert_status = \'urgent\' and expiry_date < current_date'
-   || scheduleQuery
+   || filterString
+   || expiredConditionString
    || ' group by visit_code) as c(visit_code, expire_count)
    where temp_table.visitCode = c.visit_code';
 
+   UPDATE temp_table
+   SET expiredPercentageCount=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
+   FROM (SELECT t.visitCode, t.scheduleCount, t.expiredCount FROM temp_table t)
+   AS subquery(visit_code, schedule_count, expire_count)
+   WHERE temp_table.visitCode = subquery.visit_code;
+
    RETURN QUERY SELECT * from temp_table;
-  
+
 END;
 $$ LANGUAGE plpgsql;
