@@ -64,9 +64,9 @@ BEGIN
        filterString := filterString || E' and unions=\'' || uni || E'\'';
    END IF;
 
-   /*if (war != '') THEN
-       filterString := E' where ward=\'' || war || E'\'';
-   END IF;*/
+   if (war != '') THEN
+       filterString := filterString || E' and ward=\'' || war || E'\'';
+   END IF;
 
    if (sub != '') THEN
        filterString := filterString || E' and subunit=\'' || sub || E'\'';
@@ -182,7 +182,12 @@ BEGIN
    AS subquery(visit_code, schedule_count, expire_count)
    WHERE temp_table.visitCode = subquery.visit_code;
 
-   RETURN QUERY SELECT * from temp_table;
+   RETURN QUERY SELECT ttable.visitCode
+       , coalesce(ttable.scheduleCount, 0) as scheduleCount
+       , coalesce(ttable.completeCount, 0) as completeCount
+       , coalesce(ttable.expiredCount, 0) as expiredCount
+       , coalesce(ttable.expiredPercentageCount, 0) as expiredPercentageCount
+       from temp_table ttable;
 
 END;
 $$ LANGUAGE plpgsql;

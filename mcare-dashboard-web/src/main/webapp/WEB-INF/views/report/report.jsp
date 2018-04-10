@@ -68,21 +68,6 @@
 											String completed = String.valueOf(obj[2]);
 											String expired = String.valueOf(obj[3]);
 											String expiredPercentage = String.valueOf(obj[4]);
-											if(formName.equalsIgnoreCase("null") || formName.isEmpty()) {
-												formName = "0";
-											}
-											if(scheduled.equalsIgnoreCase("null") || scheduled.isEmpty()) {
-												scheduled = "0";
-											}
-											if(completed.equalsIgnoreCase("null") || completed.isEmpty()) {
-												completed = "0";
-											}
-											if(expired.equalsIgnoreCase("null") || expired.isEmpty()) {
-												expired = "0";
-											}
-											if(expiredPercentage.equalsIgnoreCase("null") || expiredPercentage.isEmpty()) {
-												expiredPercentage = "0";
-											}
 									%>
 									<tr>
 										<td><%=formName%></td>
