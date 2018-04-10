@@ -1,0 +1,29 @@
+-- View: public."viewANCSubmitted"
+
+-- DROP VIEW public."viewANCSubmitted";
+
+CREATE OR REPLACE VIEW public."viewANCSubmitted" AS
+ SELECT mt.first_name,
+    mt.motherwomlmp,
+    mt.case_id,
+    mt.motherwomnid,
+    mt.motherwombid,
+    mt.provider,
+    mt.division,
+    mt.district,
+    mt.upazila,
+    mt.unions,
+    mt.ward,
+    mt.subunit,
+    mt.mauza_para,
+    anc.ancname,
+    anc.anc_current_formstatus,
+    anc.today AS visit_date,
+    anc.start,
+    anc.end_time,
+    anc.received_time
+   FROM mother mt
+     JOIN anc anc ON mt.case_id::text = anc.relationalid::text;
+
+ALTER TABLE public."viewANCSubmitted"
+    OWNER TO postgres;

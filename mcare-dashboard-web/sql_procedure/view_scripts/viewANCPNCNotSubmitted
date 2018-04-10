@@ -1,0 +1,29 @@
+-- View: public."viewANCPNCNotSubmitted"
+
+-- DROP VIEW public."viewANCPNCNotSubmitted";
+
+CREATE OR REPLACE VIEW public."viewANCPNCNotSubmitted" AS
+ SELECT mt.first_name,
+    mt.motherwomlmp,
+    mt.case_id,
+    mt.motherwomnid,
+    mt.motherwombid,
+    mt.provider,
+    mt.division,
+    mt.district,
+    mt.upazila,
+    mt.unions,
+    mt.ward,
+    mt.subunit,
+    mt.mauza_para,
+    act.schedule_name,
+    act.alert_status,
+    act.visit_code,
+    act.is_action_active,
+    act.start_date,
+    act.expiry_date
+   FROM mother mt
+     JOIN action act ON mt.case_id::text = act.case_id::text AND act.is_action_active = true;
+
+ALTER TABLE public."viewANCPNCNotSubmitted"
+    OWNER TO postgres;

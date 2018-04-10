@@ -1,0 +1,29 @@
+-- View: public."viewPNCSubmitted"
+
+-- DROP VIEW public."viewPNCSubmitted";
+
+CREATE OR REPLACE VIEW public."viewPNCSubmitted" AS
+ SELECT mt.first_name,
+    mt.motherwomlmp,
+    mt.case_id,
+    mt.motherwomnid,
+    mt.motherwombid,
+    mt.provider,
+    mt.division,
+    mt.district,
+    mt.upazila,
+    mt.unions,
+    mt.ward,
+    mt.subunit,
+    mt.mauza_para,
+    pnc.pncname,
+    pnc.pnc_current_formstatus,
+    pnc.today AS visit_date,
+    pnc.start,
+    pnc.end_time,
+    pnc.received_time
+   FROM mother mt
+     JOIN pnc pnc ON mt.case_id::text = pnc.relationalid::text;
+
+ALTER TABLE public."viewPNCSubmitted"
+    OWNER TO postgres;

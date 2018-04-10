@@ -1,0 +1,32 @@
+-- View: public."viewENCCNotSubmitted"
+
+-- DROP VIEW public."viewENCCNotSubmitted";
+
+CREATE OR REPLACE VIEW public."viewENCCNotSubmitted" AS
+ SELECT ch.fwbnfchildname AS child_name,
+    ch.fwbnfname AS mother_name,
+    ch.fwhusname AS father_name,
+    ch.case_id,
+    ch.relational_id,
+    ch.fwwomnid,
+    ch.fwwombid,
+    ch.wbnfdob AS child_birth_date,
+    ch.provider,
+    ch.division,
+    ch.district,
+    ch.upazila,
+    ch.unions,
+    ch.ward,
+    ch.subunit,
+    ch.mauza_para,
+    act.schedule_name,
+    act.alert_status,
+    act.visit_code,
+    act.is_action_active,
+    act.start_date,
+    act.expiry_date
+   FROM child ch
+     JOIN action act ON ch.case_id::text = act.case_id::text AND act.is_action_active = true;
+
+ALTER TABLE public."viewENCCNotSubmitted"
+    OWNER TO postgres;
