@@ -63,42 +63,33 @@
 										Iterator itr = allList.iterator();
 										while (itr.hasNext()) {
 											Object[] obj = (Object[]) itr.next();
-											Integer scheduled;
-											Integer completed;
-											Integer expired;
-											if (String.valueOf(obj[1]) != null && !String.valueOf(obj[1]).isEmpty()
-													&& !String.valueOf(obj[1]).equalsIgnoreCase("null")) {
-												scheduled = Integer.parseInt(String.valueOf(obj[1]));;
-											} else {
-												scheduled = new Integer(0);
+											String formName = String.valueOf(obj[0]);
+											String scheduled = String.valueOf(obj[1]);
+											String completed = String.valueOf(obj[2]);
+											String expired = String.valueOf(obj[3]);
+											String expiredPercentage = String.valueOf(obj[4]);
+											if(formName.equalsIgnoreCase("null") || formName.isEmpty()) {
+												formName = "0";
 											}
-											if (String.valueOf(obj[2]) != null && !String.valueOf(obj[2]).isEmpty() 
-													&& !String.valueOf(obj[2]).equalsIgnoreCase("null")) {
-												completed = Integer.parseInt(String.valueOf(obj[2]));
-											} else {
-												completed = new Integer(0);
+											if(scheduled.equalsIgnoreCase("null") || scheduled.isEmpty()) {
+												scheduled = "0";
 											}
-											if (String.valueOf(obj[3]) != null && !String.valueOf(obj[3]).isEmpty() 
-													&& !String.valueOf(obj[3]).equalsIgnoreCase("null")) {
-												expired = Integer.parseInt(String.valueOf(obj[3]));
-											} else {
-												expired = new Integer(0);
+											if(completed.equalsIgnoreCase("null") || completed.isEmpty()) {
+												completed = "0";
 											}
-											Double expiredPercentage;
-											if (scheduled == 0) {
-												expiredPercentage = 0.0;
-											} else {
-												expiredPercentage = (expired.doubleValue() / scheduled.doubleValue()) * 100;
+											if(expired.equalsIgnoreCase("null") || expired.isEmpty()) {
+												expired = "0";
 											}
-											DecimalFormat df = new DecimalFormat("0.00");
-											df.setRoundingMode(RoundingMode.CEILING);
+											if(expiredPercentage.equalsIgnoreCase("null") || expiredPercentage.isEmpty()) {
+												expiredPercentage = "0";
+											}
 									%>
 									<tr>
-										<td><%=String.valueOf(obj[0])%></td>
-										<td><%=scheduled.toString()%></td>
-										<td><%=completed.toString()%></td>
-										<td><%=expired.toString()%></td>
-										<td><%=df.format(expiredPercentage)%>%</td>
+										<td><%=formName%></td>
+										<td><%=scheduled%></td>
+										<td><%=completed%></td>
+										<td><%=expired%></td>
+										<td><%=expiredPercentage%>%</td>
 									</tr>
 									<%
 										}

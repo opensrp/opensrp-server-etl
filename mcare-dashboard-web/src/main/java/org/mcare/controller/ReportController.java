@@ -49,7 +49,7 @@ public class ReportController {
 
 	private void setListToSession(HttpSession session) {
 		System.err.println("count list from procedure");
-		List<Object> allList = (List<Object>) reportService.findCountReport(reportSearchBuilder);
+		List<Object> allList = (List<Object>) reportService.findFormWiseReport(reportSearchBuilder);
 		System.err.println("set session allList");
 		session.setAttribute("allList", allList);
 	}

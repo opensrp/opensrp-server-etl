@@ -11,7 +11,6 @@ public class ReportSearchBuilder extends SearchBuilder{
 	private String end;
 
 	public ReportSearchBuilder() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getStart() {
