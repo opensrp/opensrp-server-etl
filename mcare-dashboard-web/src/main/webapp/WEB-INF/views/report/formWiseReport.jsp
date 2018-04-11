@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>${title.toString()}</title>
+<title>Form Wise Report Status</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 <link rel="stylesheet" href="/resources/css/jquery-ui.css">
@@ -41,12 +41,12 @@
 
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Report
+					<i class="fa fa-table"></i> Form Wise Report Status
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12">
-							<table class="display" id="formCountTable" style="width: 100%;">
+							<table class="display" id="formWiseAggregatedListTable" style="width: 100%;">
 								<thead>
 									<tr>
 										<th>Form</th>
@@ -58,16 +58,16 @@
 								</thead>
 								<tbody>
 									<%
-										if(session.getAttribute("allList") != null){
-										List<Object> allList = (List<Object>) session.getAttribute("allList");
-										Iterator itr = allList.iterator();
-										while (itr.hasNext()) {
-											Object[] obj = (Object[]) itr.next();
-											String formName = String.valueOf(obj[0]);
-											String scheduled = String.valueOf(obj[1]);
-											String completed = String.valueOf(obj[2]);
-											String expired = String.valueOf(obj[3]);
-											String expiredPercentage = String.valueOf(obj[4]);
+										if(session.getAttribute("formWiseAggregatedList") != null){
+										List<Object> formWiseAggregatedList = (List<Object>) session.getAttribute("formWiseAggregatedList");
+										Iterator formWiseAggregatedListIterator = formWiseAggregatedList.iterator();
+										while (formWiseAggregatedListIterator.hasNext()) {
+											Object[] formWiseObject = (Object[]) formWiseAggregatedListIterator.next();
+											String formName = String.valueOf(formWiseObject[0]);
+											String scheduled = String.valueOf(formWiseObject[1]);
+											String completed = String.valueOf(formWiseObject[2]);
+											String expired = String.valueOf(formWiseObject[3]);
+											String expiredPercentage = String.valueOf(formWiseObject[4]);
 									%>
 									<tr>
 										<td><%=formName%></td>
@@ -104,7 +104,7 @@
 <script src="<c:url value='/resources/js/datepicker.js' />"></script>
 <script>
 	$(document).ready(function() {
-		$('#formCountTable').DataTable({
+		$('#formWiseAggregatedListTable').DataTable({
 			"paginate" : false
 		});
 	});

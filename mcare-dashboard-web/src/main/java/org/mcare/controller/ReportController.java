@@ -5,10 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mcare.common.util.PaginationHelperUtil;
-import org.mcare.common.util.PaginationUtil;
-import org.mcare.reports.service.ReportSearchBuilder;
+import org.mcare.common.util.SearchUtil;
 import org.mcare.reports.service.ReportService;
+import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,30 +21,21 @@ public class ReportController {
 	private ReportService reportService;
 
 	@Autowired
-	private PaginationUtil paginationUtil;
+	private SearchUtil searchUtil;
 
 	@Autowired
-	private PaginationHelperUtil paginationHelperUtil;
-
-	@Autowired
-	private ReportSearchBuilder reportSearchBuilder;
+	private SearchFilterBuilder searchFilterBuilder;
 
 	public ReportController() {
 	}
 
-	@RequestMapping(value = "/reportCount.html", method = RequestMethod.GET)
-	public String showReport(HttpServletRequest request, HttpSession session, Model model) {
-		reportSearchBuilder = paginationHelperUtil.setParamsForReport(request, session);
-		paginationUtil.setProviderAttribute(session);
-		paginationUtil.setParentDataAttribute(session);
-
-		System.err.println("list of counts from procedure");
-
-		List<Object> allList = (List<Object>) reportService.findFormWiseReport(reportSearchBuilder);
-		session.setAttribute("allList", allList);
-
-		System.err.println("set session allList");
-
-		return "report/report";
+	@RequestMapping(value = "/formWiseReport.html", method = RequestMethod.GET)
+	public String showFormWiseReport(HttpServletRequest request, HttpSession session, Model model) {
+		searchFilterBuilder = searchUtil.setParamsForReport(request, session);
+		searchUtil.setProviderAttribute(session);
+		searchUtil.setDivisionAttribute(session);
+		List<Object> formWiseAggregatedList = (List<Object>) reportService.findFormWiseReport(searchFilterBuilder);
+		session.setAttribute("formWiseAggregatedList", formWiseAggregatedList);
+		return "report/formWiseReport";
 	}
 }

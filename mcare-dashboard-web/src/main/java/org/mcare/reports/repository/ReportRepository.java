@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mcare.reports.service.ReportSearchBuilder;
+import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,77 +18,78 @@ public class ReportRepository {
 	public ReportRepository() {
 	}
 
-	public <T> List<T> findFormWiseReport(ReportSearchBuilder reportSearchBuilder) {
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findFormWiseReport(SearchFilterBuilder searchFilterBuilder) {
 		Session session = sessionFactory.openSession();
-		List<T> result = null;
+		List<T> formWiseAggregatedList = null;
 		try {
 			String hql = "select * from generate_form_wise_report(array[:division,:district,:upazila"
 					+ ",:union,:ward,:subunit,:mauzapara,:provider,:start_date,:end_date])";
 			Query query = session.createSQLQuery(hql);
 
-			if (reportSearchBuilder.getDivision() != null && !reportSearchBuilder.getDivision().isEmpty()) {
-				query.setParameter("division", reportSearchBuilder.getDivision());
+			if (searchFilterBuilder.getDivision() != null && !searchFilterBuilder.getDivision().isEmpty()) {
+				query.setParameter("division", searchFilterBuilder.getDivision());
 			} else {
 				query.setParameter("division", "");
 			}
-			if (reportSearchBuilder.getDistrict() != null && !reportSearchBuilder.getDistrict().isEmpty()) {
-				query.setParameter("district", reportSearchBuilder.getDistrict());
+			if (searchFilterBuilder.getDistrict() != null && !searchFilterBuilder.getDistrict().isEmpty()) {
+				query.setParameter("district", searchFilterBuilder.getDistrict());
 			} else {
 				query.setParameter("district", "");
 			}
 
-			if (reportSearchBuilder.getUpazila() != null && !reportSearchBuilder.getUpazila().isEmpty()) {
-				query.setParameter("upazila", reportSearchBuilder.getUpazila());
+			if (searchFilterBuilder.getUpazila() != null && !searchFilterBuilder.getUpazila().isEmpty()) {
+				query.setParameter("upazila", searchFilterBuilder.getUpazila());
 			} else {
 				query.setParameter("upazila", "");
 			}
 
-			if (reportSearchBuilder.getUnion() != null && !reportSearchBuilder.getUnion().isEmpty()) {
-				query.setParameter("union", reportSearchBuilder.getUnion());
+			if (searchFilterBuilder.getUnion() != null && !searchFilterBuilder.getUnion().isEmpty()) {
+				query.setParameter("union", searchFilterBuilder.getUnion());
 			} else {
 				query.setParameter("union", "");
 			}
 
-			if (reportSearchBuilder.getWard() != null && !reportSearchBuilder.getWard().isEmpty()) {
-				query.setParameter("ward", reportSearchBuilder.getWard());
+			if (searchFilterBuilder.getWard() != null && !searchFilterBuilder.getWard().isEmpty()) {
+				query.setParameter("ward", searchFilterBuilder.getWard());
 			} else {
 				query.setParameter("ward", "");
 			}
 
-			if (reportSearchBuilder.getSubunit() != null && !reportSearchBuilder.getSubunit().isEmpty()) {
-				query.setParameter("subunit", reportSearchBuilder.getSubunit());
+			if (searchFilterBuilder.getSubunit() != null && !searchFilterBuilder.getSubunit().isEmpty()) {
+				query.setParameter("subunit", searchFilterBuilder.getSubunit());
 			} else {
 				query.setParameter("subunit", "");
 			}
 
-			if (reportSearchBuilder.getMauzapara() != null && !reportSearchBuilder.getMauzapara().isEmpty()) {
-				query.setParameter("mauzapara", reportSearchBuilder.getMauzapara());
+			if (searchFilterBuilder.getMauzapara() != null && !searchFilterBuilder.getMauzapara().isEmpty()) {
+				query.setParameter("mauzapara", searchFilterBuilder.getMauzapara());
 			} else {
 				query.setParameter("mauzapara", "");
 			}
 
-			if (reportSearchBuilder.getProvider() != null && !reportSearchBuilder.getProvider().isEmpty()) {
-				query.setParameter("provider", reportSearchBuilder.getProvider());
+			if (searchFilterBuilder.getProvider() != null && !searchFilterBuilder.getProvider().isEmpty()) {
+				query.setParameter("provider", searchFilterBuilder.getProvider());
 			} else {
 				query.setParameter("provider", "");
 			}
 
-			if (reportSearchBuilder.getStart() != null && !reportSearchBuilder.getStart().isEmpty() 
-					&& reportSearchBuilder.getEnd() != null && !reportSearchBuilder.getEnd().isEmpty()) {
-				query.setParameter("start_date", reportSearchBuilder.getStart());
-				query.setParameter("end_date", reportSearchBuilder.getEnd());
+			if (searchFilterBuilder.getStart() != null && !searchFilterBuilder.getStart().isEmpty() 
+					&& searchFilterBuilder.getEnd() != null && !searchFilterBuilder.getEnd().isEmpty()) {
+				query.setParameter("start_date", searchFilterBuilder.getStart());
+				query.setParameter("end_date", searchFilterBuilder.getEnd());
 			} else {
 				query.setParameter("start_date", "");
 				query.setParameter("end_date", "");
 			}
 
-			result = query.list();
-			System.err.println("result data fetched");
+			formWiseAggregatedList = query.list();
+			System.err.println("findFormWiseReport fetched successfull formWiseAggregatedList size: " + formWiseAggregatedList.size());
 			session.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("findFormWiseReport error:" + e.getMessage());
 		}
-		return result;
+		return formWiseAggregatedList;
 	}
 }

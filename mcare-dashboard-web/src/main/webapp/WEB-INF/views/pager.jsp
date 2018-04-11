@@ -31,21 +31,6 @@
 	/* size is used for moving user to end page  by clicking on END link*/
 	int size = Integer
 			.parseInt(session.getAttribute("size").toString());
-
-	List<Object[]> parentDataList = (List<Object[]>) session
-			.getAttribute("parentData");
-	List<Object[]> districts = (List<Object[]>) session
-			.getAttribute("districtListByParent");
-	List<Object[]> upazilas = (List<Object[]>) session
-			.getAttribute("upazilasListByParent");
-	List<Object[]> unions = (List<Object[]>) session
-			.getAttribute("unionsListByParent");
-	List<Object[]> wards = (List<Object[]>) session
-			.getAttribute("wardsListByParent");
-	List<Object[]> subuits = (List<Object[]>) session
-			.getAttribute("subunitListByParent");
-	List<Object[]> mauzaparas = (List<Object[]>) session
-			.getAttribute("mauzaparaListByParent");
 %>
 
 <div class="row">

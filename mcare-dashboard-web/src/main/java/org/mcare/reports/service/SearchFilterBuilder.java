@@ -4,13 +4,13 @@ import org.mcare.params.builder.SearchBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReportSearchBuilder extends SearchBuilder{
+public class SearchFilterBuilder extends SearchBuilder{
 
 	private String start;
 
 	private String end;
 
-	public ReportSearchBuilder() {
+	public SearchFilterBuilder() {
 	}
 
 	public String getStart() {

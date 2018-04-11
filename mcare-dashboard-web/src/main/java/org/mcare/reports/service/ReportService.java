@@ -22,7 +22,7 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<Object> findFormWiseReport(ReportSearchBuilder reportSearchBuilder) {
+	public List<Object> findFormWiseReport(SearchFilterBuilder reportSearchBuilder) {
 		return reportRepository.findFormWiseReport(reportSearchBuilder);
 	}
 }

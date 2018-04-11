@@ -15,7 +15,7 @@
 			.getAttribute("providers");
 
 	List<Object[]> parentDataList = (List<Object[]>) session
-			.getAttribute("parentData");
+			.getAttribute("divisions");
 	List<Object[]> districts = (List<Object[]>) session
 			.getAttribute("districtListByParent");
 	List<Object[]> upazilas = (List<Object[]>) session
