@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.mcare.acl.entity.Account;
@@ -29,6 +30,8 @@ import com.ibatis.common.jdbc.ScriptRunner;
 
 @Service
 public class DefaultApplicationSettingService {
+
+	private static final Logger logger = Logger.getLogger(DefaultApplicationSettingService.class);
 
 	@Autowired
 	private MarkerService markerService;
@@ -60,7 +63,7 @@ public class DefaultApplicationSettingService {
 
 	public void saveDefaultAppSetting() throws ClassNotFoundException,
 	SQLException {
-		System.err.println("Calling automatically ...............");
+		logger.info("saving default settings ...............");
 
 		//MarkerEntity Initialization
 		MarkerEntity entity = new MarkerEntity();
@@ -76,7 +79,7 @@ public class DefaultApplicationSettingService {
 			permissionServiceImpl.addPermission();
 		}
 		catch (Exception e) {
-			System.err.println("onApplicationEvent:" + e.getMessage());
+			logger.error("error adding permissions" + e.getMessage());
 		}
 
 		//Create default admin User
@@ -99,7 +102,7 @@ public class DefaultApplicationSettingService {
 			}
 		}
 		catch (Exception e) {
-			System.err.println("onApplicationEvent:" + e.getMessage());
+			logger.error("error saving roles:" + e.getMessage());
 		}
 
 		Account account = userServiceImpl.findByKey(userName, "username", Account.class);
@@ -120,12 +123,12 @@ public class DefaultApplicationSettingService {
 			}
 		}
 		catch (Exception e) {
-			System.err.println("onApplicationEvent:" + e.getMessage());
+			logger.error("error saving default user:" + e.getMessage());
 		}
 
 
 		//Execute some location and provider SQL script automatically
-		System.err.println("Executing location and provider SQL scripts");
+		logger.info("Executing location and provider SQL scripts");
 		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/location.sql", "src/main/resources/location_tag.sql"
 				, "src/main/resources/location_tag_map.sql", "src/main/resources/provider.sql");
 
@@ -140,7 +143,7 @@ public class DefaultApplicationSettingService {
 				runScript(sqlScriptPath, sr);
 			}
 		} catch (Exception e) {
-			System.err.println("Failed to Execute script"
+			logger.error("Failed to Execute script"
 					+ " The error is " + e.getMessage());
 		}
 	}

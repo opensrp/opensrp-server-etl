@@ -29,4 +29,9 @@ public class SearchFilterBuilder extends SearchBuilder{
 		this.end = end;
 	}
 
+	@Override
+	public String toString() {
+		return "SearchFilterBuilder [start=" + start + ", end=" + end + "]";
+	}
+
 }

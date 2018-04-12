@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SearchUtil {
+
+	private static final Logger logger = Logger.getLogger(SearchUtil.class);
 
 	private static final int DIVISION_TAG_ID = 1;
 
@@ -34,15 +37,18 @@ public class SearchUtil {
 
 	public void setProviderAttribute(HttpSession session) {
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+		logger.debug("set session attribute providers: " + providers.size());
 		session.setAttribute("providers", providers);
 	}
 
 	public void setDivisionAttribute(HttpSession session) {
 		List<Object[]> divisions = locationServiceImpl.getLocationByTagId(DIVISION_TAG_ID);
+		logger.debug("set session attribute divisions: " + divisions.size());
 		session.setAttribute("divisions", divisions);
 	}
-	
+
 	public SearchFilterBuilder setParamsForReport(HttpServletRequest request, HttpSession session) {
+		logger.debug("setting filter from request string: " + request.getQueryString());
 		String division = "";
 		String district = "";
 		String upazila = "";
@@ -94,7 +100,6 @@ public class SearchUtil {
 		if (request.getParameterMap().containsKey("end")) {
 			end = (String) request.getParameter("end");
 		}
-		System.err.println("provider:" + provider);
 		searchFilterBuilder.setDivision(PaginationHelperUtil.locationName(division));
 		searchFilterBuilder.setDistrict(PaginationHelperUtil.locationName(district));
 		searchFilterBuilder.setUpazila(PaginationHelperUtil.locationName(upazila));
@@ -106,6 +111,7 @@ public class SearchUtil {
 		searchFilterBuilder.setName(name);
 		searchFilterBuilder.setStart(start);
 		searchFilterBuilder.setEnd(end);
+		logger.info("successfully set report filters: " + searchFilterBuilder.toString());
 		return searchFilterBuilder;
 	}
 }

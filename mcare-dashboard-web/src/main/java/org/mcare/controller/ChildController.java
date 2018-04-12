@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.ControllerUtil;
 import org.mcare.common.util.PaginationUtil;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ChildController {
+
+	private static final Logger logger = Logger.getLogger(ChildController.class);
 
 	private static final String CHILD = "Child";
 
@@ -68,6 +71,7 @@ public class ChildController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_CHILD')")
 	@RequestMapping(value = "child/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
+		logger.info("viewing child details");
 		session.setAttribute("title", "Child Details");
 		ChildEntity child = childService.findById(id);
 		model.addAttribute("child", child);

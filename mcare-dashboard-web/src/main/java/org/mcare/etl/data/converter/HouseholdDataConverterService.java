@@ -2,6 +2,7 @@ package org.mcare.etl.data.converter;
 
 import java.text.ParseException;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.etl.entity.HouseholdEntity;
@@ -14,26 +15,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HouseholdDataConverterService implements DataConverterService {
-	
+
+	private static final Logger logger = Logger.getLogger(HouseholdDataConverterService.class);
+
 	public HouseholdDataConverterService() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Autowired
 	private HouseholdService householdService;
-	
+
 	@Autowired
 	private HouseholdEntity householdEntity;
-	
+
 	@Autowired
 	private ExceptionService exceptionService;
-	
+
 	@Override
 	public void convertToEntityAndSave(JSONObject doc) throws Exception {
 		String caseID = "";
 		try {
 			caseID = doc.getString("caseId");
-			
+
 			householdEntity.setBirthDate(DateUtil.getDateFromString(doc, "FWHOHBIRTHDATE"));
 			if (doc.has("caseId"))
 				householdEntity.setCaseId(doc.getString("caseId"));
@@ -48,7 +51,7 @@ public class HouseholdDataConverterService implements DataConverterService {
 			} else {
 				householdEntity.setELCO(Integer.parseInt(doc.getString("ELCO")));
 			}
-			
+
 			householdEntity.setEnd(DateUtil.getDateTimeFromString(doc, "END"));
 			if (doc.has("external_user_ID"))
 				householdEntity.setExternalUserId(doc.getString("external_user_ID"));
@@ -62,13 +65,13 @@ public class HouseholdDataConverterService implements DataConverterService {
 			} else {
 				householdEntity.setFWNHHMBRNUM("");
 			}
-			
+
 			if (doc.has("FWNHHMWRA") && !doc.getString("FWNHHMWRA").isEmpty()) {
 				householdEntity.setFWNHHMWRA(doc.getString("FWNHHMWRA"));
 			} else {
 				householdEntity.setFWNHHMWRA("");
 			}
-			
+
 			if (doc.has("FWHOHGENDER") && !doc.getString("FWHOHGENDER").isEmpty()) {
 				householdEntity.setGender(doc.getString("FWHOHGENDER"));
 			} else {
@@ -80,16 +83,16 @@ public class HouseholdDataConverterService implements DataConverterService {
 			//householdEntity.setLastName(doc.getString("FWHOHLNAME"));
 			householdEntity.setMauzaPara(doc.getString("FWMAUZA_PARA"));
 			householdEntity.setProvider(doc.getString("PROVIDERID"));
-			
+
 			householdEntity.setRegistrationDate(DateUtil.getDateFromString(doc, "FWNHREGDATE"));
-			
+
 			householdEntity.setStart(DateUtil.getDateTimeFromString(doc, "START"));
-			
+
 			householdEntity.setSubmissionTime(doc.getLong("SUBMISSIONDATE"));
 			householdEntity.setSubunit(doc.getString("FWSUBUNIT"));
-			
+
 			householdEntity.setToday(DateUtil.getDateFromString(doc, "TODAY"));
-			
+
 			householdEntity.setUnion(doc.getString("FWUNION"));
 			householdEntity.setUpazila(doc.getString("FWUPAZILLA"));
 			householdEntity.setUserType(doc.getString("user_type"));
@@ -97,14 +100,14 @@ public class HouseholdDataConverterService implements DataConverterService {
 			householdEntity.setFWGOBHHID(doc.getString("FWGOBHHID"));
 			JSONObject details = new JSONObject(doc.getString("details"));
 			householdEntity.setReceivedTime(DateUtil.getDateTimeFromString(details, "received_time"));
-			System.out.println("saving household entity");
+			logger.info("saving household entity");
 			householdService.save(householdEntity);
-			
+
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
 			exceptionService.generatedEntityAndSave(doc, e.fillInStackTrace().toString(), "household");
-			
+
 		}
 		catch (NumberFormatException e) {
 			e.printStackTrace();

@@ -22,7 +22,6 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	public void test() {
-		System.err.println("" + databaseRepositoryImpl);
 		databaseRepositoryImpl.test();
 	}
 	

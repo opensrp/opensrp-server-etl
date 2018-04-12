@@ -3,6 +3,7 @@ package org.mcare.common.repository.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -22,18 +23,20 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DatabaseRepositoryImpl implements DatabaseRepository {
-	
+
+	private static final Logger logger = Logger.getLogger(DatabaseRepositoryImpl.class);
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public DatabaseRepositoryImpl() {
-		
+
 	}
-	
+
 	public void test() {
-		System.err.println("sessionFactory:" + sessionFactory);
+		logger.debug("sessionFactory:" + sessionFactory);
 	}
-	
+
 	@Override
 	public <T> long save(T t) throws Exception {
 		Session session = sessionFactory.openSession();
@@ -42,6 +45,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		try {
 			tx = session.beginTransaction();
 			session.save(t);
+			logger.info("saved successfully: " + t.getClass().getName());
 			returnValue = 1;
 			if (!tx.wasCommitted())
 				tx.commit();
@@ -56,7 +60,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-	
+
 	@Override
 	public <T> int update(T t) {
 		Session session = sessionFactory.openSession();
@@ -78,7 +82,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-	
+
 	@Override
 	public <T> boolean delete(T t) {
 		Session session = sessionFactory.openSession();
@@ -86,6 +90,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		boolean returnValue = false;
 		try {
 			tx = session.beginTransaction();
+			logger.info("deleting: " + t.getClass().getName());
 			session.delete(t);
 			if (!tx.wasCommitted())
 				tx.commit();
@@ -97,12 +102,11 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			
+
 		}
-		System.err.println("returnValue::" + returnValue);
 		return returnValue;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
@@ -112,9 +116,9 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<T> result = criteria.list();
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public boolean findByUserName(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
@@ -124,7 +128,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (result.size() > 0 ? true : false);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> findAll(String tableClass) {
@@ -137,15 +141,15 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			result = (List<T>) query.list();
 		}
 		catch (Exception e) {
-			System.out.println("error:" + e.getMessage());
+			logger.error("error:" + e.getMessage());
 		}
 		finally {
 			session.close();
 		}
-		
+
 		return (List<T>) result;
 	}
-	
+
 	public <T> List<T> findAllByCaseId(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -155,7 +159,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
-	
+
 	public <T> List<T> findAll(Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -165,7 +169,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
-	
+
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
@@ -176,7 +180,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -187,7 +191,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	public <T> T findByCaseIdAndBNFDate(String relationalId, Date bnfdate, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -198,7 +202,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	public ActionEntity getAction(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(ActionEntity.class);
@@ -214,7 +218,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return (ActionEntity) actions.get(0);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> List<T> list(int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
@@ -227,16 +231,16 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			session.close();
 		}
 		catch (Exception e) {
-			
+
 		}
-		
+
 		return products;
 	}
-	
+
 	public int count() {
 		return sessionFactory.openSession().createCriteria(HouseholdEntity.class).list().size();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String sqlQuery, String paramName, int paramValue) {
 		Session session = sessionFactory.openSession();
@@ -252,22 +256,21 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return results;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(entityClassName);
-		
+
 		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			System.err.println("searchBuilder.getDivision():" + searchBuilder.getDivision());
 			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 		}
 		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			
+
 			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
 		}
 		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			
+
 			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
 		}
 		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
@@ -282,47 +285,45 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
 			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
 		}
-		
+
 		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
-			System.err.println("searchBuilder.getDivision():" + searchBuilder.getProvider());
 			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
 		}
 		if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
-			
 			criteria.add(Restrictions.ilike("firstName", searchBuilder.getName().toUpperCase(), MatchMode.ANYWHERE));
 		}
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
 		criteria.addOrder(Order.desc("created"));
-		
+
 		List<T> products = null;
 		try {
 			products = (List<T>) criteria.list();
 			session.close();
 		}
 		catch (Exception e) {
-			
+			logger.error(e);
 		}
-		
+
 		return products;
 	}
-	
+
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		int count = 0;
 		Criteria criteria = session.createCriteria(entityClassName);
 		try {
-			
+
 			if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 			}
 			if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
 			}
 			if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
 			}
 			if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
@@ -349,17 +350,17 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		catch (Exception e) {
 			session.close();
 		}
-		
+
 		return count;
 	}
-	
+
 	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
-		
+
 		try {
 			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-			        + "and isActionActive = :is_action_active " + "and visitCode LIKE :visit_code ");
+					+ "and isActionActive = :is_action_active " + "and visitCode LIKE :visit_code ");
 			query.setParameter("case_id", caseId);
 			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
@@ -372,15 +373,15 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public List<ActionEntity> findAllPendingMotherVisits(String caseId, String provider) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
-		
+
 		try {
 			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-			        + "and isActionActive = :is_action_active " + "and (visitCode LIKE :visit_code "
-			        + "or visitCode LIKE :visit_code_pnc " + "or visitCode = :visit_code_bnf " + ")");
+					+ "and isActionActive = :is_action_active " + "and (visitCode LIKE :visit_code "
+					+ "or visitCode LIKE :visit_code_pnc " + "or visitCode = :visit_code_bnf " + ")");
 			query.setParameter("case_id", caseId);
 			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
@@ -395,7 +396,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public <T> List<T> findAllByCaseId(String caseId, String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -410,7 +411,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public <T> List<T> findAllMother(String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -424,14 +425,14 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public <T> List<T> findScheduledVisits(String visitCode) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
-		
+
 		try {
 			String sql = "select count(*) from action " + "where visit_code = :visit_code "
-			        + "and is_action_active= :is_action_active ";
+					+ "and is_action_active= :is_action_active ";
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setParameter("is_action_active", true);
 			query.setParameter("visit_code", visitCode);
@@ -443,7 +444,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return (List<T>) result;
 	}
-	
+
 	public <T> List<T> findAllCompletedVisits(String className, String fieldName, String value) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -459,7 +460,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public <T> List<T> findAllANCData(String ancType, SearchBuilder searchBuilder) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -467,20 +468,20 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			String condition1 = "where a.visit_code = :ancType and a.is_action_active=true ";
 			String condition2 = "WHERE a.ancname= :ancType ";
 			String condition3 = "WHERE a.visit_code = :ancType and a.alert_status='expired' ";
-			
+
 			if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
 				String wardCondition = "and upper(m.ward) = upper('" + searchBuilder.getWard() + "') ";
 				condition1 = condition1 + wardCondition;
 				condition2 = condition2 + wardCondition;
 				condition3 = condition3 + wardCondition;
 			}
-			
+
 			String sql = "SELECT " + "(select count(*) as scheduled from action a "
-			        + "join mother m on (m.case_id=a.case_id) " + condition1 + "), "
-			        + "(select count(*) as completed from anc a " + "join mother m on (m.case_id=a.relationalid) "
-			        + condition2 + "), " + "count(*) as expired FROM action a " + "join mother m on (m.case_id=a.case_id) "
-			        + condition3;
-			
+					+ "join mother m on (m.case_id=a.case_id) " + condition1 + "), "
+					+ "(select count(*) as completed from anc a " + "join mother m on (m.case_id=a.relationalid) "
+					+ condition2 + "), " + "count(*) as expired FROM action a " + "join mother m on (m.case_id=a.case_id) "
+					+ condition3;
+
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setParameter("ancType", ancType);
 			result = query.list();
@@ -491,12 +492,12 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	public List<Object[]> executeSelectQuery(String provider, String caseId, String scheduleName, String userType,
-	                                         String sqlQuery) {
-		
+			String sqlQuery) {
+
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		
+
 		if (!provider.isEmpty()) {
 			query.setParameter("provider", provider);
 		}
@@ -510,7 +511,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			query.setParameter("userType", userType);
 		}
 		List<Object[]> results = query.list();
-		
+
 		return results;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PaginationHelperUtil {
+
+	private static final Logger logger = Logger.getLogger(PaginationHelperUtil.class);
 
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
@@ -28,11 +31,10 @@ public class PaginationHelperUtil {
 	public static int getParentId(String locationName) {
 		int parentId = 0;
 		try {
-			//System.err.println("locationName:::::::::::::::;" + locationName);
 			if (locationName != null && !locationName.isEmpty() && !locationName.equalsIgnoreCase("0?")) {
 				String[] div = locationName.split("\\?");
 				parentId = Integer.parseInt(div[0]);
-				System.err.println("parentId::" + parentId);
+				logger.info("parentId::" + parentId);
 			}
 		}
 		catch (Exception e) {
@@ -48,7 +50,7 @@ public class PaginationHelperUtil {
 			if (locationName != null && !locationName.isEmpty() && !locationName.equalsIgnoreCase("0?")) {
 				String[] div = locationName.split("\\?");
 				name = div[1];
-				System.err.println("name::" + name);
+				logger.info("location name::" + name);
 			}
 		}
 		catch (Exception e) {
@@ -113,7 +115,6 @@ public class PaginationHelperUtil {
 		if (request.getParameterMap().containsKey("name")) {
 			name = (String) request.getParameter("name");
 		}
-		System.err.println("provider:" + provider);
 		searchBuilder.setDivision(locationName(division));
 		searchBuilder.setDistrict(locationName(district));
 		searchBuilder.setUpazila(locationName(upazila));
@@ -123,6 +124,7 @@ public class PaginationHelperUtil {
 		searchBuilder.setMauzapara(locationName(mauzapara));
 		searchBuilder.setProvider(provider);
 		searchBuilder.setName(name);
+		logger.debug("set searchBuilder: " + searchBuilder.toString());
 		return searchBuilder;
 
 	}

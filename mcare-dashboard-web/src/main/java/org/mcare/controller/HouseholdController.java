@@ -68,7 +68,6 @@ public class HouseholdController {
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
 
 		HouseholdEntity household = householdService.findById(id);
-		System.err.println("" + household.getDivision());
 		model.addAttribute("household", household);
 		session.setAttribute("title", "Household Details");
 		return "household/view";

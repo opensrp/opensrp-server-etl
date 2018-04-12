@@ -16,7 +16,6 @@ public class DateUtil {
 	public static DateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static Date parseDate(String date) throws ParseException {
-		System.err.println("Date:" + date);
 		try {
 			return yyyyMMdd.parse(date);
 		}
