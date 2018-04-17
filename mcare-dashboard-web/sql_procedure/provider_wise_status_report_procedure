@@ -1,0 +1,194 @@
+CREATE OR REPLACE FUNCTION generate_provider_wise_report(filterArray text[])
+RETURNS TABLE(visitcode character varying, schedulecount integer
+              , completecount integer, expiredCount integer
+              , expiredPercentageCount float)
+AS $$
+DECLARE
+  filterString text := '';
+  completeCountFilterString text := '';
+  expiredConditionString text := '';
+  div text := '';
+  dis text := '';
+  upa text := '';
+  uni text := '';
+  war text := '';
+  sub text := '';
+  mau text := '';
+  pro text := '';
+  start_date text := '';
+  end_date text := '';
+BEGIN
+  /*Search Filter Assignments*/
+  div := upper(filterArray[1]);
+  dis := upper(filterArray[2]);
+  upa := filterArray[3];
+  uni := filterArray[4];
+  war := filterArray[5];
+  sub := filterArray[6];
+  mau := filterArray[7];
+  pro := filterArray[8];
+  start_date := filterArray[9];
+  end_date := filterArray[10];
+
+  /*Generating Temporary Table to populate aggregated values*/
+  DROP TABLE IF EXISTS provider_temp_table;
+  EXECUTE format('
+   CREATE TEMPORARY TABLE IF NOT EXISTS %I (
+    provider varchar(70),
+    scheduleCount int,
+    completeCount int,
+    expiredCount int,
+    expiredPercentageCount float
+   )', 'provider_temp_table');
+
+   DROP TABLE IF EXISTS temporary_table;
+   CREATE TABLE temporary_table (
+    provider varchar(70),
+    counts int
+   );
+
+   /*Creating conditional query string*/
+   if (div != '') THEN
+       filterString := E' where division=\'' || div || E'\'';
+   END IF;
+
+   if (dis != '') THEN
+       filterString := filterString || E' and district=\'' || dis || E'\'';
+   END IF;
+
+   if (upa != '') THEN
+       filterString := filterString || E' and upazila=\'' || upa || E'\'';
+   END IF;
+
+   if (uni != '') THEN
+       filterString := filterString || E' and unions=\'' || uni || E'\'';
+   END IF;
+
+   if (war != '') THEN
+       filterString := filterString || E' and ward=\'' || war || E'\'';
+   END IF;
+
+   if (sub != '') THEN
+       filterString := filterString || E' and subunit=\'' || sub || E'\'';
+   END IF;
+
+   if (mau != '') THEN
+       filterString := filterString || E' and mauza_para=\'' || mau || E'\'';
+   END IF;
+
+   IF (pro != '') THEN
+       IF(filterString != '') THEN
+           filterString := filterString || E' and provider=\'' || pro || E'\'';
+       ELSE
+           filterString := filterString || E' where provider=\'' || pro || E'\'';
+       END IF;
+   END IF;
+
+   completeCountFilterString := filterString;
+
+   if (start_date != '' AND start_date != '') THEN
+       if(filterString != '') THEN
+           completeCountFilterString := completeCountFilterString
+                             || E' and visit_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+           filterString := filterString
+                             || E' and start_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+        ELSE
+           completeCountFilterString := completeCountFilterString
+                             || E' where visit_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+           filterString := filterString
+                             || E' where start_date between \''|| start_date || E'\' and \''
+                             || end_date || E'\'';
+        END IF;
+   END IF;
+
+
+   IF(filterString != '') THEN
+       expiredConditionString := E' and alert_status = \'urgent\' and expiry_date < current_date';
+   ELSE
+       expiredConditionString := E' where alert_status = \'urgent\' and expiry_date < current_date';
+   END IF;
+
+    /*inserting schedule count*/
+   EXECUTE 'insert into temporary_table(provider, counts)
+   select provider, count(*) 
+   from "viewANCPNCNotSubmitted" '
+   || filterString
+   || ' group by provider union select provider, count(*) from "viewENCCNotSubmitted"'
+   || filterString
+   || ' group by provider
+   order by provider';
+   
+   
+    insert into provider_temp_table(provider, scheduleCount)
+    SELECT provider, SUM(counts) AS scheduleCount
+    FROM temporary_table
+    GROUP BY provider;
+
+    TRUNCATE temporary_table;
+
+    /*inserting completed count*/
+    EXECUTE 'insert into temporary_table(provider, counts)
+    select provider, count(*) 
+    from "viewENCCSubmitted" '
+    || completeCountFilterString
+    || ' group by provider
+    union 
+    select provider, count(*) from "viewANCSubmitted" '
+    || completeCountFilterString
+    || ' group by provider
+    union 
+    select provider, count(*) from "viewPNCSubmitted" '
+    || completeCountFilterString
+    || ' group by provider
+    union 
+    select provider, count(*) from "viewBNFSubmitted" '
+    || completeCountFilterString
+    || ' group by provider
+    union 
+    select provider, count(*) from "viewPSRFSubmitted" '
+    || completeCountFilterString
+    || ' group by provider
+    order by provider';
+
+
+    update provider_temp_table
+    set completeCount = completed.counts from
+    (select provider, SUM(counts) from temporary_table 
+      group by provider) as completed(providername, counts)
+    where provider_temp_table.provider = completed.providername;
+
+    TRUNCATE temporary_table;
+
+    /*inserting expired count*/
+    EXECUTE 'insert into temporary_table(provider, counts)
+    select provider, count(*) from "viewANCPNCNotSubmitted" '
+    || filterString
+    || expiredConditionString
+    || ' group by provider
+    union 
+    select provider, count(*) from "viewENCCNotSubmitted" '
+    || filterString
+    || expiredConditionString
+    || ' group by provider';
+
+    update provider_temp_table
+    set expiredCount = expired.counts from
+    (select provider, SUM(counts) from temporary_table 
+      group by provider) as expired(providername, counts)
+    where provider_temp_table.provider = expired.providername;
+
+    DROP table temporary_table;
+
+   /*Return whole temp_table data*/
+   RETURN QUERY SELECT ttable.provider
+       , coalesce(ttable.scheduleCount, 0) as scheduleCount
+       , coalesce(ttable.completeCount, 0) as completeCount
+       , coalesce(ttable.expiredCount, 0) as expiredCount
+       , coalesce(ttable.expiredPercentageCount, 0) as expiredPercentageCount
+       from provider_temp_table ttable;
+
+END;
+$$ LANGUAGE plpgsql;
