@@ -85,11 +85,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-12" align="right">
-						<button onclick="export_table_to_csv()">Export CSV file</button>
-					</div>
-				</div>
 				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>

@@ -177,6 +177,9 @@
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
 				</div>
+				<!-- <div class="col-6" align="right">
+						<button class="btn btn-primary" onclick="export_table_to_csv()">Export CSV</button>
+				</div> -->
 			</div>
 		</form>
 	</div>
