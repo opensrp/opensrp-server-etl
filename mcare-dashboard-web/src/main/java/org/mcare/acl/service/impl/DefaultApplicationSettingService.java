@@ -130,7 +130,8 @@ public class DefaultApplicationSettingService {
 		//Execute some location and provider SQL script automatically
 		logger.info("Executing location and provider SQL scripts");
 		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/location.sql", "src/main/resources/location_tag.sql"
-				, "src/main/resources/location_tag_map.sql", "src/main/resources/provider.sql");
+				, "src/main/resources/location_tag_map.sql", "src/main/resources/provider.sql"
+				, "src/main/resources/form.sql");
 
 		Connection con = sessionFactory.
 				getSessionFactoryOptions().getServiceRegistry().

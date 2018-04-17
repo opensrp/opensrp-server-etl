@@ -1,0 +1,12 @@
+insert into form (id,formName) VALUES (1,'ancrv_1');
+insert into form (id,formName) VALUES (2,'ancrv_2');
+insert into form (id,formName) VALUES (3,'ancrv_3');
+insert into form (id,formName) VALUES (4,'ancrv_4');
+insert into form (id,formName) VALUES (5,'pncrv_1');
+insert into form (id,formName) VALUES (6,'pncrv_2');
+insert into form (id,formName) VALUES (7,'pncrv_3');
+insert into form (id,formName) VALUES (8,'enccrv_1');
+insert into form (id,formName) VALUES (9,'enccrv_2');
+insert into form (id,formName) VALUES (10,'enccrv_3');
+insert into form (id,formName) VALUES (11,'BirthNotificationPregnancyStatusFollowUp');
+insert into form (id,formName) VALUES (12,'ELCO PSRF');

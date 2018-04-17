@@ -1,4 +1,4 @@
-<%@page import="org.mcare.acl.entity.ProviderEntity"%>
+<%@page import="org.mcare.acl.entity.FormNameEntity"%>
 <%@page import="org.mcare.common.util.PaginationHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -11,8 +11,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	List<ProviderEntity> providers = (List<ProviderEntity>) session
-			.getAttribute("providers");
+	List<FormNameEntity> forms = (List<FormNameEntity>) session
+			.getAttribute("forms");
 
 	List<Object[]> divisions = (List<Object[]>) session
 			.getAttribute("divisions");
@@ -157,13 +157,13 @@
 					</select>
 				</div>
 				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" name="provider">
-						<option value="">Please Select Provider</option>
+					<select class="custom-select custom-select-lg mb-3" name="formName">
+						<option value="">Please Select Form Name</option>
 						<%
-							if (providers != null) {
-								for (ProviderEntity objects : providers) {
+							if (forms != null) {
+								for (FormNameEntity objects : forms) {
 						%>
-						<option value="<%=objects.getProvider()%>"><%=objects.getProvider()%></option>
+						<option value="<%=objects.getFormName()%>"><%=objects.getFormName()%></option>
 						<%
 								}
 							}

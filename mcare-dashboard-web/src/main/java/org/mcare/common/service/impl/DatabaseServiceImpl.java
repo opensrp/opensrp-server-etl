@@ -70,5 +70,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
 	}
+
+	@Transactional
+	public <T> List<T> findAllFormNames(String tableClass) {
+		return databaseRepositoryImpl.findAll(tableClass);
+	}
 	
 }

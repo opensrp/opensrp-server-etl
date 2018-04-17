@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.mcare.acl.entity.FormNameEntity;
 import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
+import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class SearchUtil {
 	@Autowired
 	private PaginationHelperUtil paginationHelperUtil;
 
+	@Autowired
+	private DatabaseServiceImpl databaseServiceImpl;
+
 	public SearchUtil() {
 	}
 
@@ -45,6 +50,12 @@ public class SearchUtil {
 		List<Object[]> divisions = locationServiceImpl.getLocationByTagId(DIVISION_TAG_ID);
 		logger.debug("set session attribute divisions: " + divisions.size());
 		session.setAttribute("divisions", divisions);
+	}
+
+	public void setFormAttribute(HttpSession session) {
+		List<FormNameEntity> forms = databaseServiceImpl.findAllFormNames("FormNameEntity");
+		logger.debug("set session attribute forms: " + forms.size());
+		session.setAttribute("forms", forms);
 	}
 
 	public SearchFilterBuilder setParamsForReport(HttpServletRequest request, HttpSession session) {
@@ -90,6 +101,9 @@ public class SearchUtil {
 		}
 		if (request.getParameterMap().containsKey("provider")) {
 			provider = (String) request.getParameter("provider");
+		}
+		if (request.getParameterMap().containsKey("formName")) {
+			provider = (String) request.getParameter("formName");
 		}
 		if (request.getParameterMap().containsKey("name")) {
 			name = (String) request.getParameter("name");

@@ -25,4 +25,9 @@ public class ReportService {
 	public List<Object> findFormWiseReport(SearchFilterBuilder reportSearchBuilder) {
 		return reportRepository.findFormWiseReport(reportSearchBuilder);
 	}
+
+	@Transactional
+	public List<Object> findProviderWiseReport(SearchFilterBuilder reportSearchBuilder) {
+		return reportRepository.findProviderWiseReport(reportSearchBuilder);
+	}
 }
