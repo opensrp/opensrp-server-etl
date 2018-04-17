@@ -7,6 +7,7 @@ DECLARE
   filterString text := '';
   completeCountFilterString text := '';
   expiredConditionString text := '';
+  formConditionString text := '';
   div text := '';
   dis text := '';
   upa text := '';
@@ -14,7 +15,7 @@ DECLARE
   war text := '';
   sub text := '';
   mau text := '';
-  pro text := '';
+  form text := '';
   start_date text := '';
   end_date text := '';
 BEGIN
@@ -26,7 +27,7 @@ BEGIN
   war := filterArray[5];
   sub := filterArray[6];
   mau := filterArray[7];
-  pro := filterArray[8];
+  form := filterArray[8];
   start_date := filterArray[9];
   end_date := filterArray[10];
 
@@ -41,13 +42,14 @@ BEGIN
     expiredPercentageCount float
    )', 'provider_temp_table');
 
-   DROP TABLE IF EXISTS temporary_table;
-   CREATE TABLE temporary_table (
+   /*Creating a helper Temporary Table to populate aggregated values*/
+   DROP TABLE IF EXISTS helper_table;
+   CREATE TABLE helper_table (
     provider varchar(70),
     counts int
    );
 
-   /*Creating conditional query string*/
+   /*Creating location conditions query string*/
    if (div != '') THEN
        filterString := E' where division=\'' || div || E'\'';
    END IF;
@@ -76,16 +78,9 @@ BEGIN
        filterString := filterString || E' and mauza_para=\'' || mau || E'\'';
    END IF;
 
-   IF (pro != '') THEN
-       IF(filterString != '') THEN
-           filterString := filterString || E' and provider=\'' || pro || E'\'';
-       ELSE
-           filterString := filterString || E' where provider=\'' || pro || E'\'';
-       END IF;
-   END IF;
-
    completeCountFilterString := filterString;
 
+   /*Creating date conditions query string*/
    if (start_date != '' AND start_date != '') THEN
        if(filterString != '') THEN
            completeCountFilterString := completeCountFilterString
@@ -104,15 +99,27 @@ BEGIN
         END IF;
    END IF;
 
+   /*Creating form conditions query string only for sheduled and expired count*/
+   IF (form != '') THEN
+       IF(filterString != '') THEN
+           filterString := filterString || E' and visit_code=\'' || form || E'\'';
+       ELSE
+           filterString := filterString || E' where visit_code=\'' || form || E'\'';
+       END IF;
+   END IF;
 
+   /*Creating expired count conditions query string */
    IF(filterString != '') THEN
        expiredConditionString := E' and alert_status = \'urgent\' and expiry_date < current_date';
    ELSE
        expiredConditionString := E' where alert_status = \'urgent\' and expiry_date < current_date';
    END IF;
 
-    /*inserting schedule count*/
-   EXECUTE 'insert into temporary_table(provider, counts)
+   /*inserting all the provider name into temporary table */
+   insert into provider_temp_table(provider) select p.provider from provider p;
+
+   /*inserting schedule count into helper table*/
+   EXECUTE 'insert into helper_table(provider, counts)
    select provider, count(*) 
    from "viewANCPNCNotSubmitted" '
    || filterString
@@ -120,50 +127,145 @@ BEGIN
    || filterString
    || ' group by provider
    order by provider';
-   
-   
-    insert into provider_temp_table(provider, scheduleCount)
-    SELECT provider, SUM(counts) AS scheduleCount
-    FROM temporary_table
-    GROUP BY provider;
 
-    TRUNCATE temporary_table;
+    /*updating temporary table with schedule count*/
+    update provider_temp_table
+    set scheduleCount = scheduled.counts from
+    (select provider, SUM(counts) from helper_table
+     group by provider) as scheduled(providername, counts)
+    where provider_temp_table.provider = scheduled.providername;
 
-    /*inserting completed count*/
-    EXECUTE 'insert into temporary_table(provider, counts)
-    select provider, count(*) 
-    from "viewENCCSubmitted" '
-    || completeCountFilterString
-    || ' group by provider
-    union 
-    select provider, count(*) from "viewANCSubmitted" '
-    || completeCountFilterString
-    || ' group by provider
-    union 
-    select provider, count(*) from "viewPNCSubmitted" '
-    || completeCountFilterString
-    || ' group by provider
-    union 
-    select provider, count(*) from "viewBNFSubmitted" '
-    || completeCountFilterString
-    || ' group by provider
-    union 
-    select provider, count(*) from "viewPSRFSubmitted" '
-    || completeCountFilterString
-    || ' group by provider
-    order by provider';
+    TRUNCATE helper_table;
 
+    /*inserting completed count into helper table*/
+    IF(form != '') THEN
+        IF(completeCountFilterString != '') THEN
+            IF (form = 'ancrv_1' OR form = 'ancrv_2' OR form = 'ancrv_3' OR form = 'ancrv_4') THEN
+               formConditionString := E' and ancname = \'' || form || E'\'';
 
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewANCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF(form = 'pncrv_1' OR form = 'pncrv_2' OR form = 'pncrv_3') THEN
+               formConditionString := E' and pncname = \'' || form || E'\'';
+
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewPNCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF(form = 'enccrv_1' OR form = 'enccrv_2' OR form = 'enccrv_3') THEN
+               formConditionString := E' and enccname = \'' || form || E'\'';
+
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewENCCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF (form = 'BirthNotificationPregnancyStatusFollowUp') THEN
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewBNFSubmitted" '
+               || completeCountFilterString
+               || ' group by provider';
+            END IF;
+            IF (form = 'ELCO PSRF') THEN
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewPSRFSubmitted" '
+               || completeCountFilterString
+               || ' group by provider';
+            END IF;
+       ELSE
+           IF (form = 'ancrv_1' OR form = 'ancrv_2' OR form = 'ancrv_3' OR form = 'ancrv_4') THEN
+               formConditionString := E' where ancname = \'' || form || E'\'';
+
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewANCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF(form = 'pncrv_1' OR form = 'pncrv_2' OR form = 'pncrv_3') THEN
+               formConditionString := E' where pncname = \'' || form || E'\'';
+
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewPNCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF(form = 'enccrv_1' OR form = 'enccrv_2' OR form = 'enccrv_3') THEN
+               formConditionString := E' where enccname = \'' || form || E'\'';
+
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewENCCSubmitted" '
+               || completeCountFilterString
+               || formConditionString
+               || ' group by provider';
+            END IF;
+            IF (form = 'BirthNotificationPregnancyStatusFollowUp') THEN
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewBNFSubmitted" '
+               || completeCountFilterString
+               || ' group by provider';
+            END IF;
+            IF (form = 'ELCO PSRF') THEN
+               EXECUTE 'insert into helper_table(provider, counts)
+               select provider, count(*)
+               from "viewPSRFSubmitted" '
+               || completeCountFilterString
+               || ' group by provider';
+            END IF;
+        END IF;
+    ELSE
+        EXECUTE 'insert into helper_table(provider, counts)
+        select provider, count(*)
+        from "viewENCCSubmitted" '
+        || completeCountFilterString
+        || ' group by provider
+        union
+        select provider, count(*) from "viewANCSubmitted" '
+        || completeCountFilterString
+        || ' group by provider
+        union
+        select provider, count(*) from "viewPNCSubmitted" '
+        || completeCountFilterString
+        || ' group by provider
+        union
+        select provider, count(*) from "viewBNFSubmitted" '
+        || completeCountFilterString
+        || ' group by provider
+        union
+        select provider, count(*) from "viewPSRFSubmitted" '
+        || completeCountFilterString
+        || ' group by provider
+        order by provider';
+    END IF;
+
+    /*updating temporary table with completed count*/
     update provider_temp_table
     set completeCount = completed.counts from
-    (select provider, SUM(counts) from temporary_table 
+    (select provider, SUM(counts) from helper_table
       group by provider) as completed(providername, counts)
     where provider_temp_table.provider = completed.providername;
 
-    TRUNCATE temporary_table;
+    TRUNCATE helper_table;
 
-    /*inserting expired count*/
-    EXECUTE 'insert into temporary_table(provider, counts)
+    /*inserting expired count into helper table*/
+    EXECUTE 'insert into helper_table(provider, counts)
     select provider, count(*) from "viewANCPNCNotSubmitted" '
     || filterString
     || expiredConditionString
@@ -174,15 +276,23 @@ BEGIN
     || expiredConditionString
     || ' group by provider';
 
+    /*updating temporary table with expired count*/
     update provider_temp_table
     set expiredCount = expired.counts from
-    (select provider, SUM(counts) from temporary_table 
+    (select provider, SUM(counts) from helper_table
       group by provider) as expired(providername, counts)
     where provider_temp_table.provider = expired.providername;
 
-    DROP table temporary_table;
+    DROP table helper_table;
 
-   /*Return whole temp_table data*/
+    /*Query to update temporary table with expired percentage values*/
+    UPDATE provider_temp_table
+    SET expiredPercentageCount=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
+    FROM (SELECT t.provider, t.scheduleCount, t.expiredCount FROM provider_temp_table t)
+    AS subquery(provider, schedule_count, expire_count)
+    WHERE provider_temp_table.provider = subquery.provider;
+
+   /*Return whole temporary table data*/
    RETURN QUERY SELECT ttable.provider
        , coalesce(ttable.scheduleCount, 0) as scheduleCount
        , coalesce(ttable.completeCount, 0) as completeCount
