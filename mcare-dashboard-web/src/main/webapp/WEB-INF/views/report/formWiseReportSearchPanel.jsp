@@ -1,4 +1,4 @@
-<%@page import="org.mcare.acl.entity.FormNameEntity"%>
+<%@page import="org.mcare.acl.entity.ProviderEntity"%>
 <%@page import="org.mcare.common.util.PaginationHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -11,21 +11,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	List<FormNameEntity> forms = (List<FormNameEntity>) session
-			.getAttribute("forms");
+	@SuppressWarnings("unchecked")
+	List<ProviderEntity> providers = (List<ProviderEntity>) session
+			.getAttribute("providers");
 
+	@SuppressWarnings("unchecked")
 	List<Object[]> divisions = (List<Object[]>) session
 			.getAttribute("divisions");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> districts = (List<Object[]>) session
 			.getAttribute("districtListByParent");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> upazilas = (List<Object[]>) session
 			.getAttribute("upazilasListByParent");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> unions = (List<Object[]>) session
 			.getAttribute("unionsListByParent");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> wards = (List<Object[]>) session
 			.getAttribute("wardsListByParent");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> subuits = (List<Object[]>) session
 			.getAttribute("subunitListByParent");
+
+	@SuppressWarnings("unchecked")
 	List<Object[]> mauzaparas = (List<Object[]>) session
 			.getAttribute("mauzaparaListByParent");
 %>
@@ -72,11 +86,11 @@
 						<option value="0?">Please Select District</option>
 						<%
 							if (districts != null) {
-							    for (Object[] objects : districts) {
+								for (Object[] objects : districts) {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-							    }
+							}
 							}
 						%>
 					</select>
@@ -91,7 +105,7 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -106,7 +120,7 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -121,7 +135,7 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -136,7 +150,7 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -151,21 +165,21 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
 				</div>
 				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" name="formName">
-						<option value="">Please Select Form Name</option>
+					<select class="custom-select custom-select-lg mb-3" name="provider">
+						<option value="">Please Select Provider</option>
 						<%
-							if (forms != null) {
-								for (FormNameEntity objects : forms) {
+							if (providers != null) {
+								for (ProviderEntity objects : providers) {
 						%>
-						<option value="<%=objects.getFormName()%>"><%=objects.getFormName()%></option>
+						<option value="<%=objects.getProvider()%>"><%=objects.getProvider()%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -177,8 +191,12 @@
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
 				</div>
-				<!--  <div class="col-6" align="right">
-						<button class="btn btn-primary" onclick="export_table_to_csv()">Export CSV</button>
+				<!-- <div class="col-6" align="right">
+					<button class="btn btn-primary" id="export" data-export="export">Export
+						CSV</button>
+				</div> 
+				<div class="col-6" align="right">
+						<button class="btn btn-primary" onclick="export_table_to_csv()">Export</button>
 				</div> -->
 			</div>
 		</form>

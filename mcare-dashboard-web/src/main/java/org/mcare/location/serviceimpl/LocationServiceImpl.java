@@ -41,6 +41,7 @@ public class LocationServiceImpl implements LocationService {
 		return databaseRepositoryImpl.executeSelectQuery(sqlQuery, "parentId", parentId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> boolean isExist(String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;

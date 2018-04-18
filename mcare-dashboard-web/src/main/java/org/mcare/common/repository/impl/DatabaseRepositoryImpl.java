@@ -354,6 +354,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return count;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
@@ -374,6 +375,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ActionEntity> findAllPendingMotherVisits(String caseId, String provider) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
@@ -397,6 +399,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findAllByCaseId(String caseId, String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -412,6 +415,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findAllMother(String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -426,6 +430,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findScheduledVisits(String visitCode) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -445,6 +450,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (List<T>) result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findAllCompletedVisits(String className, String fieldName, String value) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -461,6 +467,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findAllANCData(String ancType, SearchBuilder searchBuilder) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;
@@ -493,6 +500,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String provider, String caseId, String scheduleName, String userType,
 			String sqlQuery) {
 

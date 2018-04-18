@@ -43,14 +43,6 @@ public class UserServiceImpl implements AclService {
 
 	}
 
-	private boolean emailExist(String email) {
-		Account account = repository.findByKey(email, "email", Account.class);
-		if (account != null) {
-			return true;
-		}
-		return false;
-	}
-
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {

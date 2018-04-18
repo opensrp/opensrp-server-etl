@@ -27,8 +27,8 @@
 <title>Form Wise Report Status</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
-<link rel="stylesheet" href="/resources/css/jquery-ui.css">
-<link rel="stylesheet" href="/resources/css/dataTables.jqueryui.min.css">
+<link rel="stylesheet" href="../../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../../resources/css/dataTables.jqueryui.min.css">
 </head>
 
 
@@ -37,7 +37,7 @@
 	<div class="content-wrapper">
 		<div class="container-fluid">
 
-			<jsp:include page="/WEB-INF/views/reportSearchPanel.jsp" />
+			<jsp:include page="formWiseReportSearchPanel.jsp" />
 
 			<div class="card mb-3">
 				<div class="card-header">
@@ -92,11 +92,11 @@
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 </body>
-<script src="<c:url value='/resources/js/jquery-1.12.4.js' />"></script>
-<script src="<c:url value='/resources/js/jquery.dataTables.min.js' />"></script>
-<script src="<c:url value='/resources/js/dataTables.jqueryui.min.js' />"></script>
-<script src="<c:url value='/resources/js/jquery-ui.js' />"></script>
-<script src="<c:url value='/resources/js/datepicker.js' />"></script>
+<script src="<c:url value='../../resources/js/jquery-1.12.4.js' />"></script>
+<script src="<c:url value='../../resources/js/jquery.dataTables.min.js' />"></script>
+<script src="<c:url value='../../resources/js/dataTables.jqueryui.min.js' />"></script>
+<script src="<c:url value='../../resources/js/jquery-ui.js' />"></script>
+<script src="<c:url value='../../resources/js/datepicker.js' />"></script>
 <script>
 	$(document).ready(function() {
 		$('#formWiseAggregatedListTable').DataTable({

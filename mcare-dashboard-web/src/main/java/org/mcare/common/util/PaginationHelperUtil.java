@@ -59,7 +59,6 @@ public class PaginationHelperUtil {
 		return name;
 	}
 
-	@SuppressWarnings("null")
 	public void setParentLocationToSession(String location, String sessionName, HttpSession session) {
 		if (location != null && !location.isEmpty() && !location.equalsIgnoreCase("0?")) {
 			String[] divisionName = location.split("\\?");

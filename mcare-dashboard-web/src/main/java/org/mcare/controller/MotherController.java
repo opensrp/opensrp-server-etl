@@ -1,6 +1,5 @@
 package org.mcare.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,16 +76,6 @@ public class MotherController {
 		//createDetails(session);
 
 		return "mother/index";
-	}
-
-	private void createDetails(HttpSession session) {
-		List<MotherEntity> mothers = (List<MotherEntity>) session
-				.getAttribute("dataList");
-		List<Integer> actionSize = new ArrayList<Integer>();
-		for (MotherEntity mother : mothers) {
-			List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), mother.getProvider());
-			session.setAttribute("actionlist", actionlist);
-		}
 	}
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_MOTHER')")
