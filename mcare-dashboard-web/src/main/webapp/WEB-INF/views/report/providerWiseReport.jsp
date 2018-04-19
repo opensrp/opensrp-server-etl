@@ -27,8 +27,8 @@
 <title>Provider Wise Report Status</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
-<link rel="stylesheet" href="../../resources/css/jquery-ui.css">
-<link rel="stylesheet" href="../../resources/css/dataTables.jqueryui.min.css">
+<link rel="stylesheet" href="/resources/css/jquery-ui.css">
+<link rel="stylesheet" href="/resources/css/dataTables.jqueryui.min.css">
 </head>
 
 
@@ -92,14 +92,14 @@
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 </body>
-<script src="<c:url value='../../resources/js/jquery-1.12.4.js' />"></script>
-<script src="<c:url value='../../resources/js/jquery.dataTables.min.js' />"></script>
-<script src="<c:url value='../../resources/js/dataTables.jqueryui.min.js' />"></script>
-<script src="<c:url value='../../resources/js/jquery-ui.js' />"></script>
-<script src="<c:url value='../../resources/js/datepicker.js' />"></script>
-<script src="<c:url value='../../resources/js/jspdf.debug.js' />"></script>
-<script src="<c:url value='../../resources/js/jquery.tabletoCSV.js' />"></script>
-<script src="<c:url value='../../resources/js/jquery.tabletoPDF.js' />"></script>
+<script src="<c:url value='/resources/js/jquery-1.12.4.js' />"></script>
+<script src="<c:url value='/resources/js/jquery.dataTables.min.js' />"></script>
+<script src="<c:url value='/resources/js/dataTables.jqueryui.min.js' />"></script>
+<script src="<c:url value='/resources/js/jquery-ui.js' />"></script>
+<script src="<c:url value='/resources/js/datepicker.js' />"></script>
+<script src="<c:url value='/resources/js/jspdf.debug.js' />"></script>
+<script src="<c:url value='/resources/js/jquery.tabletoCSV.js' />"></script>
+<script src="<c:url value='/resources/js/jquery.tabletoPDF.js' />"></script>
 <script>
 	$(document).ready(function() {
 		$('#providerWiseAggregatedListTable').DataTable({
