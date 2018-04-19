@@ -42,6 +42,50 @@
 	@SuppressWarnings("unchecked")
 	List<Object[]> mauzaparas = (List<Object[]>) session
 			.getAttribute("mauzaparaListByParent");
+
+	Map<String, String> selectedFilter = (Map<String, String>) session
+			.getAttribute("selectedFilter");
+	String division = "";
+	int divId = 0;
+	if (selectedFilter.containsKey("divId")) {
+		divId = Integer.parseInt(selectedFilter.get("divId"));
+	}
+
+	int distId = 0;
+	if (selectedFilter.containsKey("distId")) {
+		distId = Integer.parseInt(selectedFilter.get("distId"));
+	}
+
+	int upzilaId = 0;
+	if (selectedFilter.containsKey("upzilaId")) {
+		upzilaId = Integer.parseInt(selectedFilter.get("upzilaId"));
+	}
+	String union = "";
+	int unionId = 0;
+	if (selectedFilter.containsKey("unionId")) {
+		unionId = Integer.parseInt(selectedFilter.get("unionId"));
+	}
+
+	int wardId = 0;
+	if (selectedFilter.containsKey("wardId")) {
+		wardId = Integer.parseInt(selectedFilter.get("wardId"));
+	}
+
+	int subunitId = 0;
+	if (selectedFilter.containsKey("subunitId")) {
+		subunitId = Integer.parseInt(selectedFilter.get("subunitId"));
+	}
+
+	int mauzaparaId = 0;
+	if (selectedFilter.containsKey("mauzaparaId")) {
+		mauzaparaId = Integer.parseInt(selectedFilter
+				.get("mauzaparaId"));
+	}
+
+	String formName = "";
+	if (selectedFilter.containsKey("formName")) {
+		formName = selectedFilter.get("formName");
+	}
 %>
 
 
@@ -73,9 +117,15 @@
 						<option value="0?">Please Select Division</option>
 						<%
 							for (Object[] objects : divisions) {
+								if (divId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
+							}
 							}
 						%>
 					</select>
@@ -86,11 +136,17 @@
 						<option value="0?">Please Select District</option>
 						<%
 							if (districts != null) {
-							    for (Object[] objects : districts) {
+								for (Object[] objects : districts) {
+									if (distId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-							    }
+							}
+								}
 							}
 						%>
 					</select>
@@ -102,9 +158,15 @@
 						<%
 							if (upazilas != null) {
 								for (Object[] objects : upazilas) {
+									if (upzilaId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
+							}
 								}
 							}
 						%>
@@ -117,9 +179,15 @@
 						<%
 							if (unions != null) {
 								for (Object[] objects : unions) {
+									if (unionId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
+							}
 								}
 							}
 						%>
@@ -132,9 +200,15 @@
 						<%
 							if (wards != null) {
 								for (Object[] objects : wards) {
+									if (wardId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
+							}
 								}
 							}
 						%>
@@ -147,9 +221,15 @@
 						<%
 							if (subuits != null) {
 								for (Object[] objects : subuits) {
+									if (subunitId == ((Integer) objects[1]).intValue()) {
+						%>
+						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
+							}
 								}
 							}
 						%>
@@ -165,7 +245,7 @@
 						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-								}
+							}
 							}
 						%>
 					</select>
@@ -176,9 +256,15 @@
 						<%
 							if (forms != null) {
 								for (FormNameEntity objects : forms) {
+									if (formName.equalsIgnoreCase(objects.getFormName())) {
+						%>
+						<option value="<%=objects.getFormName()%>" selected><%=objects.getFormName()%></option>
+						<%
+							} else {
 						%>
 						<option value="<%=objects.getFormName()%>"><%=objects.getFormName()%></option>
 						<%
+							}
 								}
 							}
 						%>
@@ -191,9 +277,12 @@
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
 				</div>
-				<!--  <div class="col-6" align="right">
-						<button class="btn btn-primary" onclick="export_table_to_csv()">Export CSV</button>
-				</div> -->
+				<div class="col-3" align="right">
+					<button class="btn btn-primary" id="exportcsv" data-export="export">Export CSV</button>
+				</div>
+				<div class="col-3" align="right">
+					<button class="btn btn-primary" id="exportpdf" data-export="export">Export PDF</button>
+				</div>
 			</div>
 		</form>
 	</div>

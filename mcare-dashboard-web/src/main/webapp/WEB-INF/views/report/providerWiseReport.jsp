@@ -45,7 +45,7 @@
 				</div>
 				<div class="card-body">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-12" id="content">
 							<table class="display" id="providerWiseAggregatedListTable" style="width: 100%;">
 								<thead>
 									<tr>
@@ -97,6 +97,9 @@
 <script src="<c:url value='../../resources/js/dataTables.jqueryui.min.js' />"></script>
 <script src="<c:url value='../../resources/js/jquery-ui.js' />"></script>
 <script src="<c:url value='../../resources/js/datepicker.js' />"></script>
+<script src="<c:url value='../../resources/js/jspdf.debug.js' />"></script>
+<script src="<c:url value='../../resources/js/jquery.tabletoCSV.js' />"></script>
+<script src="<c:url value='../../resources/js/jquery.tabletoPDF.js' />"></script>
 <script>
 	$(document).ready(function() {
 		$('#providerWiseAggregatedListTable').DataTable({
@@ -104,45 +107,12 @@
 		});
 	});
 
-	function download_csv(csv, filename) {
-		var csvFile;
-		var downloadLink;
+	$("#exportcsv").click(function(){
+		  $("table").tableToCSV();
+	});
 
-		// CSV FILE
-		csvFile = new Blob([ csv ], {
-			type : "text/csv"
-		});
-
-		// Download link
-		downloadLink = document.createElement("a");
-		downloadLink.download = filename;
-
-		// We have to create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-
-		// Make sure that the link is not displayed
-		downloadLink.style.display = "none";
-
-		// Add the link to your DOM
-		document.body.appendChild(downloadLink);
-		downloadLink.click();
-	}
-
-	function export_table_to_csv() {
-		var csv = [];
-		var rows = document.querySelectorAll("table thead tr, table tbody tr");
-
-		//document.write(rows.length);
-		//console.log("length: " + rows.length);
-
-		for ( var i = 0; i < rows.length; i++) {
-			var row = [], cols = rows[i].querySelectorAll("th, td");
-			for ( var j = 0; j < cols.length; j++)
-				row.push(cols[j].innerText);
-			csv.push(row.join(","));
-		}
-
-		download_csv(csv.join("\n"), "table.csv");
-	}
+	$("#exportpdf").click(function(){
+		$("table").tableToPDF();
+	});
 </script>
 </html>
