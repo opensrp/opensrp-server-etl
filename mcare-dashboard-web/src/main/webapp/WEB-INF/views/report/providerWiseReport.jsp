@@ -27,8 +27,6 @@
 <title>Provider Wise Report Status</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
-<link rel="stylesheet" href="/resources/css/jquery-ui.css">
-<link rel="stylesheet" href="/resources/css/dataTables.jqueryui.min.css">
 </head>
 
 

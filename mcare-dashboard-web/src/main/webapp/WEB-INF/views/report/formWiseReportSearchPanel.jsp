@@ -277,12 +277,12 @@
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
 				</div>
-				 <div class="col-3" align="right">
+				 <!-- <div class="col-3" align="right">
 					<button class="btn btn-primary" id="exportcsv" data-export="export">Export CSV</button>
 				</div>
 				<div class="col-3" align="right">
 					<button class="btn btn-primary" id="exportpdf" data-export="export">Export PDF</button>
-				</div>
+				</div> -->
 			</div>
 		</form>
 	</div>
