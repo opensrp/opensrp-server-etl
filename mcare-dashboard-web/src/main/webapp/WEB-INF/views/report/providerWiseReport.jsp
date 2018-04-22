@@ -27,6 +27,8 @@
 <title>Provider Wise Report Status</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
+<link type="text/css"
+	href="<c:url value="/resources/css/dataTables.jqueryui.min.css"/>" rel="stylesheet">
 </head>
 
 

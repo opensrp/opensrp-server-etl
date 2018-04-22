@@ -86,6 +86,16 @@
 	if (selectedFilter.containsKey("formName")) {
 		formName = selectedFilter.get("formName");
 	}
+
+	String start = "";
+	if (selectedFilter.containsKey("start")) {
+		start = selectedFilter.get("start");
+	}
+
+	String end = "";
+	if (selectedFilter.containsKey("end")) {
+		end = selectedFilter.get("end");
+	}
 %>
 
 
@@ -100,11 +110,11 @@
 				<div class="row">
 					<div class="col-3">
 						<label>Start Date</label> <input class="form-control" type=text
-							name="start" id="start">
+							name="start" id="start" value="<%=start%>">
 					</div>
 					<div class="col-3">
 						<label>End Date</label> <input class="form-control" type="text"
-							name="end" id="end">
+							name="end" id="end" value="<%=end%>">
 
 					</div>
 				</div>
@@ -277,12 +287,12 @@
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
 				</div>
-				<!-- <div class="col-3" align="right">
+				<div class="col-3" align="right">
 					<button class="btn btn-primary" id="exportcsv" data-export="export">Export CSV</button>
 				</div>
 				<div class="col-3" align="right">
 					<button class="btn btn-primary" id="exportpdf" data-export="export">Export PDF</button>
-				</div> -->
+				</div>
 			</div>
 		</form>
 	</div>

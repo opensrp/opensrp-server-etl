@@ -128,7 +128,18 @@ public class ReportController {
 			map.put("formName", formName);
 		}
 
-		session.setAttribute("selectedFilter", map);
+		String start = "";
+		if (request.getParameterMap().containsKey("start")) {
+			start = request.getParameter("start") == null ? "" : request.getParameter("start");
+			map.put("start", start);
+		}
 
+		String end = "";
+		if (request.getParameterMap().containsKey("end")) {
+			end = request.getParameter("end") == null ? "" : request.getParameter("end");
+			map.put("end", end);
+		}
+
+		session.setAttribute("selectedFilter", map);
 	}
 }

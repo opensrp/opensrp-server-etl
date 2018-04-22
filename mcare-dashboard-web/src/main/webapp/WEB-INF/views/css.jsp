@@ -19,6 +19,3 @@
 
 <link type="text/css"
 	href="<c:url value="/resources/css/jquery-ui.css"/>" rel="stylesheet">
-
-<link type="text/css"
-	href="<c:url value="/resources/css/dataTables.jqueryui.min.css"/>" rel="stylesheet">
