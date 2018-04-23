@@ -1,6 +1,7 @@
 package org.mcare.acl.service.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -127,11 +128,19 @@ public class DefaultApplicationSettingService {
 		}
 
 
-		//Execute some location and provider SQL script automatically
-		logger.info("Executing location and provider SQL scripts");
-		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/location.sql", "src/main/resources/location_tag.sql"
-				, "src/main/resources/location_tag_map.sql", "src/main/resources/provider.sql"
-				, "src/main/resources/form.sql");
+		//Execute some location, form and provider SQL script automatically
+		String rootPath = "";
+		try {
+			rootPath = new File(".").getCanonicalPath();
+		} catch (IOException e) {
+			logger.error("error getting rootPath: " + e);
+		}
+
+		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql"
+				, "src/main/resources/scripts/location_tag.sql"
+				, "src/main/resources/scripts/location_tag_map.sql"
+				, "src/main/resources/scripts/provider.sql"
+				, "src/main/resources/scripts/form.sql");
 
 		Connection con = sessionFactory.
 				getSessionFactoryOptions().getServiceRegistry().
@@ -141,7 +150,8 @@ public class DefaultApplicationSettingService {
 			ScriptRunner sr = new ScriptRunner(con, false, false);
 
 			for(String sqlScriptPath: sqlScriptPaths) {
-				runScript(sqlScriptPath, sr);
+				logger.info("Executing SQL script: " + sqlScriptPath);
+				runScript(rootPath+"/"+sqlScriptPath, sr);
 			}
 		} catch (Exception e) {
 			logger.error("Failed to Execute script"
