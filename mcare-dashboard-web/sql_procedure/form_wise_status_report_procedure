@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION generate_form_wise_report(filterArray text[])
 RETURNS TABLE(visitcode character varying, schedulecount integer
               , completecount integer, expiredCount integer
-              , expiredPercentageCount float)
+              , expiredPercentage float)
 AS $$
 DECLARE
   filterString text := '';
@@ -38,7 +38,7 @@ BEGIN
     scheduleCount int,
     completeCount int,
     expiredCount int,
-    expiredPercentageCount float
+    expiredPercentage float
    )', 'temp_table');
 
    /*Inserting all the visit codes except encc codes, to temporary table*/
@@ -192,7 +192,7 @@ BEGIN
 
    /*Query to update temp_table with expired percentage values*/
    UPDATE temp_table
-   SET expiredPercentageCount=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
+   SET expiredPercentage=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
    FROM (SELECT t.visitCode, t.scheduleCount, t.expiredCount FROM temp_table t)
    AS subquery(visit_code, schedule_count, expire_count)
    WHERE temp_table.visitCode = subquery.visit_code;
@@ -202,7 +202,7 @@ BEGIN
        , coalesce(ttable.scheduleCount, 0) as scheduleCount
        , coalesce(ttable.completeCount, 0) as completeCount
        , coalesce(ttable.expiredCount, 0) as expiredCount
-       , coalesce(ttable.expiredPercentageCount, 0) as expiredPercentageCount
+       , coalesce(ttable.expiredPercentage, 0) as expiredPercentage
        from temp_table ttable;
 
 END;
