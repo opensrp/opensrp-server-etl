@@ -522,4 +522,44 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
 		return results;
 	}
+
+	public <T> List<T> findAllActionByCaseIdAndVisitCode(String relationalid, String ancName) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(ActionEntity.class);
+		criteria.add(Restrictions.eq("caseId", relationalid));
+		criteria.add(Restrictions.eq("visitCode", ancName));
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
+	}
+
+	public int updateIsActionActive(String relationalid, String ancName,
+			String alertStatus, boolean isActionActive) {
+		logger.error("updating action entity");
+		Session session = sessionFactory.openSession();
+		int Id = -1;
+		try {
+			String hql = "UPDATE action SET is_action_active = :isActionActive "
+					+ " WHERE case_id = :caseId "
+					+ " and visit_code = :visitCode "
+					+ " and alert_status = :alertStatus";
+
+			if (relationalid != null && ancName != null && alertStatus != null) {
+				Query query = session.createSQLQuery(hql)
+						.setParameter("caseId", relationalid)
+						.setParameter("visitCode", ancName)
+						.setParameter("alertStatus", alertStatus)
+						.setParameter("isActionActive", isActionActive);
+				Id = 0;
+				logger.info("successfully created 1 row updated in action table");
+			}
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return Id;
+	}
 }
