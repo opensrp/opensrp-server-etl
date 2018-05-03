@@ -4,22 +4,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
-import org.apache.log4j.Logger;
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.etl.entity.ANCEntity;
-import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ANCService implements RegisterService<ANCEntity> {
-
-	private static final Logger logger = Logger.getLogger(ANCService.class);
-
 	@Autowired
 	private DatabaseRepositoryImpl databaseRepositoryImpl;
+
+	@Autowired
+	private DatabaseServiceImpl databaseServiceImpl;
 
 	public ANCService() {
 	}
@@ -30,43 +28,11 @@ public class ANCService implements RegisterService<ANCEntity> {
 		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
 
 		if (existingancEntity == null) {
+			System.err.println("new anc entry");
 			databaseRepositoryImpl.save(ancEntity);
-			dataCorrectInActionTable(ancEntity);
+			databaseServiceImpl.actionCorrectionForAnachronousSubmission(ancEntity.getRelationalid()
+					, ancEntity.getAncName(), ancEntity.getAnc_current_formStatus());
 		}
-	}
-
-	private void dataCorrectInActionTable(ANCEntity ancEntity) {
-		List<ActionEntity> actionEntityList = findAllActionByCaseIdAndVisitCode(ancEntity.getRelationalid()
-				, ancEntity.getAncName());
-
-		logger.error("actionEntityList: " + actionEntityList.size());
-
-		if(actionEntityList != null) {
-			for(ActionEntity actionEntity : actionEntityList) {
-				if(actionEntity.getAlertStatus().equalsIgnoreCase("upcoming")  
-						&& actionEntity.getIsActionActive() == true) {
-					logger.info("actionEntity case id: " + actionEntity.getCaseId());
-					updateIsActionActive(ancEntity.getRelationalid(), ancEntity.getAncName(), "upcoming", false);
-				} else if(!actionEntity.getAlertStatus().equalsIgnoreCase("upcoming")  
-						&& actionEntity.getIsActionActive() == false) {
-					logger.info("else if actionEntity case id: " + actionEntity.getCaseId());
-					updateIsActionActive(ancEntity.getRelationalid(), ancEntity.getAncName()
-							, actionEntity.getAlertStatus(), true);
-				} else {
-					logger.info("else actionEntity case id: " + actionEntity.getCaseId());
-				}
-			}
-		}
-	}
-
-	private void updateIsActionActive(String relationalid, String ancName,
-			String alertStatus, boolean isActionActive) {
-		databaseRepositoryImpl.updateIsActionActive(relationalid, ancName, alertStatus, isActionActive);
-	}
-
-	private List<ActionEntity> findAllActionByCaseIdAndVisitCode(
-			String relationalid, String ancName) {
-		return databaseRepositoryImpl.findAllActionByCaseIdAndVisitCode(relationalid, ancName);
 	}
 
 	@Transactional

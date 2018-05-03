@@ -61,6 +61,7 @@ public class TransmissionListener {
 			}
 
 		}
+		logger.info("no new data to process, rowCount:" + rowCount);
 
 	}
 }
