@@ -65,8 +65,8 @@
 		name = paginationAtributes.get("name");
 	}
 
-	List<Object[]> parentDataList = (List<Object[]>) session
-			.getAttribute("parentData");
+	List<Object[]> divisions = (List<Object[]>) session
+			.getAttribute("divisions");
 	List<Object[]> districts = (List<Object[]>) session
 			.getAttribute("districtListByParent");
 	List<Object[]> upazilas = (List<Object[]>) session
@@ -94,7 +94,7 @@
 						name="division">
 						<option value="0?">Please Select Division</option>
 						<%
-										for (Object[] objects : parentDataList) {
+										for (Object[] objects : divisions) {
 											if (divId == ((Integer) objects[1]).intValue()) {
 									%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>

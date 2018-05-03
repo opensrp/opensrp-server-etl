@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.util.DateUtil;
@@ -32,28 +33,30 @@ import com.google.gson.Gson;
  */
 @Controller
 public class DataExportController {
-	
+
+	private static final Logger logger = Logger.getLogger(DataExportController.class);
+
 	@Autowired
 	private DataExportServiceFactory dataExportServiceFactory;
-	
+
 	private DataExportService dataExportService;
-	
+
 	@Autowired
 	private ProviderEntity providerEntity;
-	
+
 	@Autowired
 	private ProviderServiceImpl providerServiceImpl;
-	
+
 	public DataExportController() {
-		
+
 	}
-	
+
 	@PostAuthorize("hasPermission(returnObject, 'PERM_EXPORT_DATA')")
 	@RequestMapping(value = "/search")
 	public ResponseEntity<String> getExportRequest(final HttpServletResponse response, @RequestParam String start,
-	                                               String end, String provider, String formName, Model model)
-	    throws Exception {
-		
+			String end, String provider, String formName, Model model)
+					throws Exception {
+
 		String reportName = null;
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(formName);
 		Date startDate = DateUtil.parseDate(start);
@@ -61,9 +64,9 @@ public class DataExportController {
 		List<Object[]> datas = dataExportService.getData(startDate, endDate, provider, formName);
 		reportName = dataExportService.createCSVAndSave(datas, response, formName);
 		return new ResponseEntity<String>(new Gson().toJson(reportName), HttpStatus.OK);
-		
+
 	}
-	
+
 	/*@RequestMapping(value = "/log", method = RequestMethod.GET)
 	public HttpServletResponse getLogAsCSV(final HttpServletResponse response, @RequestParam String roleName)
 	    throws IOException {
@@ -71,57 +74,57 @@ public class DataExportController {
 		response.setContentType("text/csv");
 		String reportName = "CSV_Report_Name.csv";
 		response.setHeader("Content-disposition", "attachment;filename=" + reportName);
-		
+
 		ArrayList<String> rows = new ArrayList<String>();
 		rows.add("Name,Result");
 		rows.add("\n");
-		
+
 		for (int i = 0; i < 10; i++) {
 			rows.add("Java Honk,Success");
 			rows.add("\n");
 		}
-		
+
 		Iterator<String> iter = rows.iterator();
 		while (iter.hasNext()) {
 			String outputString = (String) iter.next();
 			response.getOutputStream().print(outputString);
 		}
-		
+
 		response.getOutputStream().flush();
 		return response;
 	}
-	*/
-	
+	 */
+
 	@RequestMapping(value = "/export/list.html", method = RequestMethod.GET)
 	public String dataExportGetList(Model model) {
 		List<DataExportEntity> exports = providerServiceImpl.findAll("DataExportEntity");
-		System.err.println("" + exports.toString());
+		logger.debug("export Entity: " + exports.toString());
 		model.addAttribute("exports", exports);
 		return "export/list";
 	}
-	
+
 	@PostAuthorize("hasPermission(returnObject, 'PERM_EXPORT_DATA')")
 	@RequestMapping(value = "/export.html", method = RequestMethod.GET)
 	public String dataExportGet(Model model) {
 		model.addAttribute("formNames", FormName.values());
-		
+
 		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
 		model.addAttribute("providers", providers);
-		
+
 		return "export/exportForm";
 	}
-	
+
 	/*@RequestMapping(value = "/export", method = RequestMethod.POST)
 	public ModelAndView dataExportPost(@ModelAttribute("form") FormEntity form, ModelMap model, HttpServletResponse response) {
 		System.err.println("dataExportServiceFactory;"
 		        + dataExportServiceFactory.getDataExportServiceWithFormName(form.getFormName()).getData(null, null,
 		            "provider"));
-		
+
 		dataExportService = dataExportServiceFactory.getDataExportServiceWithFormName(form.getFormName());
 		List<Object[]> datas = dataExportService.getData(null, null, "provider");
 		dataExportService.export(datas, response);
 		System.err.println("form:" + form.getFormName() + "  Start:" + form.getStart());
 		return new ModelAndView("redirect:/export");
 	}*/
-	
+
 }

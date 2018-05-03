@@ -1,0 +1,29 @@
+-- View: public."viewPSRFSubmitted"
+
+-- DROP VIEW public."viewPSRFSubmitted";
+
+CREATE OR REPLACE VIEW public."viewPSRFSubmitted" AS
+ SELECT mt.first_name,
+    mt.motherwomlmp,
+    mt.case_id,
+    mt.motherwomnid,
+    mt.motherwombid,
+    mt.provider,
+    mt.division,
+    mt.district,
+    mt.upazila,
+    mt.unions,
+    mt.ward,
+    mt.subunit,
+    mt.mauza_para,
+    psrf.user_type,
+    psrf.current_formstatus,
+    psrf.today AS visit_date,
+    psrf.start,
+    psrf.end_time,
+    psrf.received_time
+   FROM mother mt
+     JOIN psrf psrf ON mt.case_id::text = psrf.relationalid::text AND psrf.user_type::text = 'FD'::text;
+
+ALTER TABLE public."viewPSRFSubmitted"
+    OWNER TO postgres;

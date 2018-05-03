@@ -2,6 +2,7 @@ package org.mcare.etl.transmission.listener;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 public class TransmissionListener {
 
-	//private static final Logger logger = Logger.getLogger(TransmissionListener.class);
+	private static final Logger logger = Logger.getLogger(TransmissionListener.class);
 
 	@Autowired
 	private TransmissionServiceFactory transmissionServiceFactory;
@@ -44,7 +45,7 @@ public class TransmissionListener {
 		ViewResult vr = sourceDBRepository.allData(markerEntity.getTimeStamp());
 		List<Row> rows = vr.getRows();
 		int rowCount = rows.size();
-		System.out.println("rows:" + rowCount);
+		logger.debug("rows:" + rowCount);
 		for (Row row : rows) {
 			JSONObject jsonData = new JSONObject(row.getValue());
 			long currentDocumentTimeStamp = Long.parseLong(jsonData.getString("timeStamp"));
@@ -56,7 +57,7 @@ public class TransmissionListener {
 					markerService.update(markerEntity);
 				}
 				rowCount--;
-				System.out.println("mcare etl process running rowCount:" + rowCount);
+				logger.info("mcare etl process running rowCount:" + rowCount);
 			}
 
 		}

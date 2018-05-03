@@ -6,10 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mcare.acl.entity.ProviderEntity;
-import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
-import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,12 +17,6 @@ public class PaginationUtil {
 	private static final int RESULT_SIZE = 10;
 
 	@Autowired
-	private LocationServiceImpl locationServiceImpl;
-
-	@Autowired
-	private ProviderServiceImpl providerServiceImpl;
-
-	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
 
 	@Autowired
@@ -33,6 +24,9 @@ public class PaginationUtil {
 
 	@Autowired
 	private PaginationHelperUtil paginationHelperUtil;
+
+	@Autowired
+	private SearchUtil searchUtil;
 
 	public PaginationUtil() {
 
@@ -55,8 +49,8 @@ public class PaginationUtil {
 	public <T> void pagination(HttpServletRequest request, HttpSession session, SearchBuilder searchBuilder,
 			Class<?> entityClassName) {
 
-		setParentDataAttribute(session);
-		setProviderAttribute(session);
+		searchUtil.setDivisionAttribute(session);
+		searchUtil.setProviderAttribute(session);
 
 		String offset = (String) request.getParameter("offSet");
 		int size = 0;
@@ -137,15 +131,5 @@ public class PaginationUtil {
 			}
 		}
 		session.setAttribute("pageList", pageList);
-	}
-
-	private void setProviderAttribute(HttpSession session) {
-		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
-		session.setAttribute("providers", providers);
-	}
-
-	private void setParentDataAttribute(HttpSession session) {
-		List<Object[]> parentData = locationServiceImpl.getParentData();
-		session.setAttribute("parentData", parentData);
 	}
 }

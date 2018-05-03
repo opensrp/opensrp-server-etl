@@ -19,69 +19,15 @@ public class ReportService {
 	private ReportRepository reportRepository;
 
 	public ReportService() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Transactional
-	public <T> List<T> findScheduledVisits(String visitCode) {
-		return databaseRepositoryImpl.findScheduledVisits(visitCode);
+	public List<Object> findFormWiseReport(SearchFilterBuilder reportSearchBuilder) {
+		return reportRepository.findReportDataList(reportSearchBuilder, "generate_form_wise_report");
 	}
 
 	@Transactional
-	public List<Object> findAllCompletedVisits(String className, String fieldName,
-			String value) {
-		return databaseRepositoryImpl.findAllCompletedVisits(className, fieldName, value);
-	}
-
-	@Transactional
-	public List<Object> findAllANC1Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("ancrv_1", searchBuilder, "anc", "ancname", "mother");
-	}
-
-	@Transactional
-	public List<Object> findAllANC2Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("ancrv_2", searchBuilder, "anc", "ancname", "mother");
-	}
-
-	@Transactional
-	public List<Object> findAllANC3Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("ancrv_3", searchBuilder, "anc", "ancname", "mother");
-	}
-
-	@Transactional
-	public List<Object> findAllANC4Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("ancrv_4", searchBuilder, "anc", "ancname", "mother");
-	}
-
-	public List<Object> findAllPNC1Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("pncrv_1", searchBuilder, "pnc", "pncname", "mother");
-	}
-
-	public List<Object> findAllPNC2Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("pncrv_2", searchBuilder, "pnc", "pncname", "mother");
-	}
-
-	public List<Object> findAllPNC3Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("pncrv_3", searchBuilder, "pnc", "pncname", "mother");
-	}
-
-	public List<Object> findAllENCC1Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("enccrv_1", searchBuilder, "encc", "enccname", "child");
-	}
-
-	public List<Object> findAllENCC2Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("enccrv_2", searchBuilder, "encc", "enccname", "child");
-	}
-
-	public List<Object> findAllENCC3Data(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFormData("enccrv_3", searchBuilder, "encc", "enccname", "child");
-	}
-
-	public List<Object> findAllBNFData(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFDData("BirthNotificationPregnancyStatusFollowUp", searchBuilder, "bnf");
-	}
-
-	public List<Object> findAllPSRFData(ReportSearchBuilder searchBuilder) {
-		return reportRepository.findAllFDData("ELCO PSRF", searchBuilder, "psrf");
+	public List<Object> findProviderWiseReport(SearchFilterBuilder reportSearchBuilder) {
+		return reportRepository.findReportDataList(reportSearchBuilder, "generate_provider_wise_report");
 	}
 }

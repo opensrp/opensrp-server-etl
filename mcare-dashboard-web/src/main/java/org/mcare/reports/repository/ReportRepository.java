@@ -2,16 +2,18 @@ package org.mcare.reports.repository;
 
 import java.util.List;
 
-import org.hibernate.SQLQuery;
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mcare.params.builder.SearchBuilder;
-import org.mcare.reports.service.ReportSearchBuilder;
+import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReportRepository {
+
+	private static final Logger logger = Logger.getLogger(ReportRepository.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -19,127 +21,83 @@ public class ReportRepository {
 	public ReportRepository() {
 	}
 
-	public <T> List<T> findAllFormData(String formType, ReportSearchBuilder searchBuilder, String tableClass, String fieldName, String joinTable) {
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findReportDataList(SearchFilterBuilder searchFilterBuilder, String procedureName) {
 		Session session = sessionFactory.openSession();
-		List<T> result = null;
+		List<T> aggregatedList = null;
 		try {
-			String sql = createSQLStringFormData(searchBuilder, tableClass, fieldName,
-					joinTable);
+			String hql = "select * from " + procedureName + "(array[:division,:district,:upazila"
+					+ ",:union,:ward,:subunit,:mauzapara,:provider,:start_date,:end_date])";
+			Query query = session.createSQLQuery(hql);
+			setParameter(searchFilterBuilder, query);
+			aggregatedList = query.list();
 
-			SQLQuery query = session.createSQLQuery(sql);
-			query.setParameter("formType", formType);
-			result = query.list();
+			logger.info("Report Data fetched successfully from " + procedureName 
+					+", aggregatedList size: " + aggregatedList.size());
 			session.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Data fetch from " + procedureName + " error:" + e.getMessage());
 		}
-		return result;
+		return aggregatedList;
 	}
 
-	public <T> List<T> findAllFDData(String formType,SearchBuilder searchBuilder, String tableClass) {
-		Session session = sessionFactory.openSession();
-		List<T> result = null;
-		try {
-			String sql = createSQLStringFDData(searchBuilder, tableClass);
+	private void setParameter(SearchFilterBuilder searchFilterBuilder,
+			Query query) {
+		if (searchFilterBuilder.getDivision() != null && !searchFilterBuilder.getDivision().isEmpty()) {
+			query.setParameter("division", searchFilterBuilder.getDivision());
+		} else {
+			query.setParameter("division", "");
+		}
+		if (searchFilterBuilder.getDistrict() != null && !searchFilterBuilder.getDistrict().isEmpty()) {
+			query.setParameter("district", searchFilterBuilder.getDistrict());
+		} else {
+			query.setParameter("district", "");
+		}
 
-			SQLQuery query = session.createSQLQuery(sql);
-			query.setParameter("formType", formType);
-			result = query.list();
-			session.close();
+		if (searchFilterBuilder.getUpazila() != null && !searchFilterBuilder.getUpazila().isEmpty()) {
+			query.setParameter("upazila", searchFilterBuilder.getUpazila());
+		} else {
+			query.setParameter("upazila", "");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+
+		if (searchFilterBuilder.getUnion() != null && !searchFilterBuilder.getUnion().isEmpty()) {
+			query.setParameter("union", searchFilterBuilder.getUnion());
+		} else {
+			query.setParameter("union", "");
 		}
-		return result;
+
+		if (searchFilterBuilder.getWard() != null && !searchFilterBuilder.getWard().isEmpty()) {
+			query.setParameter("ward", searchFilterBuilder.getWard());
+		} else {
+			query.setParameter("ward", "");
+		}
+
+		if (searchFilterBuilder.getSubunit() != null && !searchFilterBuilder.getSubunit().isEmpty()) {
+			query.setParameter("subunit", searchFilterBuilder.getSubunit());
+		} else {
+			query.setParameter("subunit", "");
+		}
+
+		if (searchFilterBuilder.getMauzapara() != null && !searchFilterBuilder.getMauzapara().isEmpty()) {
+			query.setParameter("mauzapara", searchFilterBuilder.getMauzapara());
+		} else {
+			query.setParameter("mauzapara", "");
+		}
+
+		if (searchFilterBuilder.getProvider() != null && !searchFilterBuilder.getProvider().isEmpty()) {
+			query.setParameter("provider", searchFilterBuilder.getProvider());
+		} else {
+			query.setParameter("provider", "");
+		}
+
+		if (searchFilterBuilder.getStart() != null && !searchFilterBuilder.getStart().isEmpty() 
+				&& searchFilterBuilder.getEnd() != null && !searchFilterBuilder.getEnd().isEmpty()) {
+			query.setParameter("start_date", searchFilterBuilder.getStart());
+			query.setParameter("end_date", searchFilterBuilder.getEnd());
+		} else {
+			query.setParameter("start_date", "");
+			query.setParameter("end_date", "");
+		}
 	}
-
-	private String createSQLStringFormData(ReportSearchBuilder searchBuilder,
-			String tableClass, String fieldName, String joinTable) {
-		String condition1 = "where a.visit_code = :formType and a.is_action_active=true ";
-		String condition2 = "WHERE a."+ fieldName + " = :formType ";
-		String condition3 = "WHERE a.visit_code = :formType and a.alert_status='urgent' "
-				+ "and a.is_action_active=true and a.expiry_date < current_date ";
-
-		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			String wardCondition = "and upper(m.division) = upper('" + searchBuilder.getDivision() + "') ";
-			condition1 = condition1 + wardCondition;
-			condition2 = condition2 + wardCondition;
-			condition3 = condition3 + wardCondition;
-		}
-
-		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			String wardCondition = "and upper(m.district) = upper('" + searchBuilder.getDistrict() + "') ";
-			condition1 = condition1 + wardCondition;
-			condition2 = condition2 + wardCondition;
-			condition3 = condition3 + wardCondition;
-		}
-
-		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			String wardCondition = "and upper(m.upazila) = upper('" + searchBuilder.getUpazila() + "') ";
-			condition1 = condition1 + wardCondition;
-			condition2 = condition2 + wardCondition;
-			condition3 = condition3 + wardCondition;
-		}
-
-		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
-			String wardCondition = "and upper(m.ward) = upper('" + searchBuilder.getWard() + "') ";
-			condition1 = condition1 + wardCondition;
-			condition2 = condition2 + wardCondition;
-			condition3 = condition3 + wardCondition;
-		}
-
-		if (searchBuilder.getStart() != null && !searchBuilder.getStart().isEmpty() 
-				&& searchBuilder.getEnd() != null && !searchBuilder.getEnd().isEmpty()) {
-			String dateRangeCondition = "and a.start_date between '" + searchBuilder.getStart() + "' and '" 
-					+ searchBuilder.getEnd() + "' ";
-			condition1 = condition1 + dateRangeCondition;
-			//condition2 = condition2 + dateRangeCondition;
-			condition3 = condition3 + dateRangeCondition;
-		}
-
-		String sql = "SELECT "
-				+ "(select count(*) as scheduled from action a "
-				+ "join " + joinTable + " m on (m.case_id=a.case_id) "
-				+ condition1
-				+ "), "
-				+ "(select count(*) as completed from " + tableClass + " a "
-				+ "join " + joinTable + " m on (m.case_id=a.relationalid) "
-				+ condition2
-				+ "), "
-				+ "count(*) as expired FROM action a "
-				+ "join " + joinTable + " m on (m.case_id=a.case_id) "
-				+ condition3;
-		return sql;
-	}
-
-	private String createSQLStringFDData(SearchBuilder searchBuilder,
-			String tableClass) {
-		String condition1 = "where a.visit_code = :formType and a.is_action_active=true ";
-		String condition2 = "where a.user_type = 'FD' ";
-		String condition3 = "WHERE a.visit_code = :formType and a.alert_status='urgent' "
-				+ "and a.is_action_active=true and a.expiry_date < current_date ";
-
-		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
-			String wardCondition = "and upper(m.ward) = upper('" + searchBuilder.getWard() + "') ";
-			condition1 = condition1 + wardCondition;
-			condition2 = condition2 + wardCondition;
-			condition3 = condition3 + wardCondition;
-		}
-
-		String sql = "SELECT "
-				+ "(select count(*) as scheduled from action a "
-				+ "join mother m on (m.case_id=a.case_id) "
-				+ condition1
-				+ "), "
-				+ "(select count(*) as completed from " + tableClass + " a "
-				+ "join mother m on (m.case_id=a.relationalid) "
-				+ condition2
-				+ "), "
-				+ "count(*) as expired FROM action a "
-				+ "join mother m on (m.case_id=a.case_id) "
-				+ condition3;
-		return sql;
-	}
-
 }

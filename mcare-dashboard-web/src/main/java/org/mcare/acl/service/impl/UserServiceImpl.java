@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.apache.log4j.Logger;
 import org.mcare.acl.dao.AccountDao;
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.entity.Role;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements AclService {
+
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private DatabaseRepositoryImpl repository;
@@ -38,14 +41,6 @@ public class UserServiceImpl implements AclService {
 			throw new Exception(e.getMessage());
 		}
 
-	}
-
-	private boolean emailExist(String email) {
-		Account account = repository.findByKey(email, "email", Account.class);
-		if (account != null) {
-			return true;
-		}
-		return false;
 	}
 
 	@Transactional
@@ -90,7 +85,7 @@ public class UserServiceImpl implements AclService {
 		Set<Role> roles = new HashSet<Role>();
 		if (selectedRoles != null) {
 			for (int roleId : selectedRoles) {
-				System.err.println(roleId);
+				logger.debug("adding roleId: " + roleId);
 				Role role = repository.findById(roleId, "id", Role.class);
 				roles.add(role);
 			}

@@ -1,0 +1,32 @@
+-- View: public."viewENCCSubmitted"
+
+-- DROP VIEW public."viewENCCSubmitted";
+
+CREATE OR REPLACE VIEW public."viewENCCSubmitted" AS
+ SELECT ch.fwbnfchildname AS child_name,
+    ch.fwbnfname AS mother_name,
+    ch.fwhusname AS father_name,
+    ch.case_id,
+    ch.relational_id,
+    ch.fwwomnid,
+    ch.fwwombid,
+    ch.wbnfdob AS child_birth_date,
+    ch.provider,
+    ch.division,
+    ch.district,
+    ch.upazila,
+    ch.unions,
+    ch.ward,
+    ch.subunit,
+    ch.mauza_para,
+    enc.enccname,
+    enc.encc_current_formstatus,
+    enc.today AS visit_date,
+    enc.start_date,
+    enc.end_date,
+    enc.received_time
+   FROM child ch
+     JOIN encc enc ON ch.case_id::text = enc.relationalid::text;
+
+ALTER TABLE public."viewENCCSubmitted"
+    OWNER TO postgres;

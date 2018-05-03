@@ -11,74 +11,91 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
+	@SuppressWarnings("unchecked")
 	List<ProviderEntity> providers = (List<ProviderEntity>) session
 			.getAttribute("providers");
 
-	Map<String, String> paginationAtributes = (Map<String, String>) session
-			.getAttribute("paginationAtributes");
+	@SuppressWarnings("unchecked")
+	List<Object[]> divisions = (List<Object[]>) session
+			.getAttribute("divisions");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> districts = (List<Object[]>) session
+			.getAttribute("districtListByParent");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> upazilas = (List<Object[]>) session
+			.getAttribute("upazilasListByParent");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> unions = (List<Object[]>) session
+			.getAttribute("unionsListByParent");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> wards = (List<Object[]>) session
+			.getAttribute("wardsListByParent");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> subuits = (List<Object[]>) session
+			.getAttribute("subunitListByParent");
+
+	@SuppressWarnings("unchecked")
+	List<Object[]> mauzaparas = (List<Object[]>) session
+			.getAttribute("mauzaparaListByParent");
+
+	Map<String, String> selectedFilter = (Map<String, String>) session
+			.getAttribute("selectedFilter");
 	String division = "";
 	int divId = 0;
-	if (paginationAtributes.containsKey("divId")) {
-		divId = Integer.parseInt(paginationAtributes.get("divId"));
+	if (selectedFilter.containsKey("divId")) {
+		divId = Integer.parseInt(selectedFilter.get("divId"));
 	}
 
 	int distId = 0;
-	if (paginationAtributes.containsKey("distId")) {
-		distId = Integer.parseInt(paginationAtributes.get("distId"));
+	if (selectedFilter.containsKey("distId")) {
+		distId = Integer.parseInt(selectedFilter.get("distId"));
 	}
 
 	int upzilaId = 0;
-	if (paginationAtributes.containsKey("upzilaId")) {
-		upzilaId = Integer
-				.parseInt(paginationAtributes.get("upzilaId"));
+	if (selectedFilter.containsKey("upzilaId")) {
+		upzilaId = Integer.parseInt(selectedFilter.get("upzilaId"));
 	}
 	String union = "";
 	int unionId = 0;
-	if (paginationAtributes.containsKey("unionId")) {
-		unionId = Integer.parseInt(paginationAtributes.get("unionId"));
+	if (selectedFilter.containsKey("unionId")) {
+		unionId = Integer.parseInt(selectedFilter.get("unionId"));
 	}
 
 	int wardId = 0;
-	if (paginationAtributes.containsKey("wardId")) {
-		wardId = Integer.parseInt(paginationAtributes.get("wardId"));
+	if (selectedFilter.containsKey("wardId")) {
+		wardId = Integer.parseInt(selectedFilter.get("wardId"));
 	}
 
 	int subunitId = 0;
-	if (paginationAtributes.containsKey("subunitId")) {
-		subunitId = Integer.parseInt(paginationAtributes
-				.get("subunitId"));
+	if (selectedFilter.containsKey("subunitId")) {
+		subunitId = Integer.parseInt(selectedFilter.get("subunitId"));
 	}
 
 	int mauzaparaId = 0;
-	if (paginationAtributes.containsKey("mauzaparaId")) {
-		mauzaparaId = Integer.parseInt(paginationAtributes
+	if (selectedFilter.containsKey("mauzaparaId")) {
+		mauzaparaId = Integer.parseInt(selectedFilter
 				.get("mauzaparaId"));
 	}
 
 	String provider = "";
-	if (paginationAtributes.containsKey("provider")) {
-		provider = paginationAtributes.get("provider");
+	if (selectedFilter.containsKey("provider")) {
+		provider = selectedFilter.get("provider");
 	}
 
-	String name = "";
-	if (paginationAtributes.containsKey("name")) {
-		name = paginationAtributes.get("name");
+	String start = "";
+	if (selectedFilter.containsKey("start")) {
+		start = selectedFilter.get("start");
 	}
 
-	List<Object[]> parentDataList = (List<Object[]>) session
-			.getAttribute("parentData");
-	List<Object[]> districts = (List<Object[]>) session
-			.getAttribute("districtListByParent");
-	List<Object[]> upazilas = (List<Object[]>) session
-			.getAttribute("upazilasListByParent");
-	List<Object[]> unions = (List<Object[]>) session
-			.getAttribute("unionsListByParent");
-	List<Object[]> wards = (List<Object[]>) session
-			.getAttribute("wardsListByParent");
-	List<Object[]> subuits = (List<Object[]>) session
-			.getAttribute("subunitListByParent");
-	List<Object[]> mauzaparas = (List<Object[]>) session
-			.getAttribute("mauzaparaListByParent");
+	String end = "";
+	if (selectedFilter.containsKey("end")) {
+		end = selectedFilter.get("end");
+	}
 %>
 
 
@@ -93,11 +110,11 @@
 				<div class="row">
 					<div class="col-3">
 						<label>Start Date</label> <input class="form-control" type=text
-							name="start" required id="start">
+							name="start" id="start" value="<%=start%>">
 					</div>
 					<div class="col-3">
 						<label>End Date</label> <input class="form-control" type="text"
-							name="end" required id="end">
+							name="end" id="end" value="<%=end%>">
 
 					</div>
 				</div>
@@ -109,18 +126,18 @@
 						name="division">
 						<option value="0?">Please Select Division</option>
 						<%
-										for (Object[] objects : parentDataList) {
-											if (divId == ((Integer) objects[1]).intValue()) {
-									%>
+							for (Object[] objects : divisions) {
+								if (divId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-										}
-									%>
+							}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -128,20 +145,20 @@
 						name="district">
 						<option value="0?">Please Select District</option>
 						<%
-										if (districts != null) {
-											for (Object[] objects : districts) {
-												if (distId == ((Integer) objects[1]).intValue()) {
-									%>
+							if (districts != null) {
+								for (Object[] objects : districts) {
+									if (distId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -149,20 +166,20 @@
 						name="upazila">
 						<option value="0?">Please Select Upazilla</option>
 						<%
-										if (upazilas != null) {
-											for (Object[] objects : upazilas) {
-												if (upzilaId == ((Integer) objects[1]).intValue()) {
-									%>
+							if (upazilas != null) {
+								for (Object[] objects : upazilas) {
+									if (upzilaId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -170,20 +187,20 @@
 						name="union">
 						<option value="0?">Please Select Union</option>
 						<%
-										if (unions != null) {
-											for (Object[] objects : unions) {
-												if (unionId == ((Integer) objects[1]).intValue()) {
-									%>
+							if (unions != null) {
+								for (Object[] objects : unions) {
+									if (unionId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -191,20 +208,20 @@
 						name="ward">
 						<option value="0?">Please Select Ward</option>
 						<%
-										if (wards != null) {
-											for (Object[] objects : wards) {
-												if (wardId == ((Integer) objects[1]).intValue()) {
-									%>
+							if (wards != null) {
+								for (Object[] objects : wards) {
+									if (wardId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -212,20 +229,20 @@
 						name="subunit">
 						<option value="0?">Please Select Subunit</option>
 						<%
-										if (subuits != null) {
-											for (Object[] objects : subuits) {
-												if (subunitId == ((Integer) objects[1]).intValue()) {
-									%>
+							if (subuits != null) {
+								for (Object[] objects : subuits) {
+									if (subunitId == ((Integer) objects[1]).intValue()) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
@@ -233,40 +250,34 @@
 						name="mauzapara">
 						<option value="0?">Please Select Mauzapara</option>
 						<%
-										if (mauzaparas != null) {
-											for (Object[] objects : mauzaparas) {
-												if (mauzaparaId == ((Integer) objects[1]).intValue()) {
-									%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-										} else {
-									%>
+							if (mauzaparas != null) {
+								for (Object[] objects : mauzaparas) {
+						%>
 						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-3">
 					<select class="custom-select custom-select-lg mb-3" name="provider">
 						<option value="">Please Select Provider</option>
 						<%
-										if (providers != null) {
-											for (ProviderEntity objects : providers) {
-												if (provider.equalsIgnoreCase(objects.getProvider())) {
-									%>
+							if (providers != null) {
+								for (ProviderEntity objects : providers) {
+									if (provider.equalsIgnoreCase(objects.getProvider())) {
+						%>
 						<option value="<%=objects.getProvider()%>" selected><%=objects.getProvider()%></option>
 						<%
-										} else {
-									%>
+							} else {
+						%>
 						<option value="<%=objects.getProvider()%>"><%=objects.getProvider()%></option>
 						<%
-										}
-											}
-										}
-									%>
+							}
+								}
+							}
+						%>
 					</select>
 				</div>
 			</div>
@@ -275,6 +286,12 @@
 				<div class="col-6">
 					<button name="search" type="submit" id="bth-search"
 						class="btn btn-primary" value="search">Search</button>
+				</div>
+				 <div class="col-3" align="right">
+					<button class="btn btn-primary" id="exportcsv" data-export="export">Export CSV</button>
+				</div>
+				<div class="col-3" align="right">
+					<button class="btn btn-primary" id="exportpdf" data-export="export">Export PDF</button>
 				</div>
 			</div>
 		</form>

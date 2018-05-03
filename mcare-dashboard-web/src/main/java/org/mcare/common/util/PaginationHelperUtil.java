@@ -7,23 +7,22 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
-import org.mcare.reports.service.ReportSearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PaginationHelperUtil {
 
+	private static final Logger logger = Logger.getLogger(PaginationHelperUtil.class);
+
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
 
 	@Autowired
 	private SearchBuilder searchBuilder;
-
-	@Autowired
-	private ReportSearchBuilder reportSearchBuilder;
 
 	public PaginationHelperUtil() {
 
@@ -32,11 +31,10 @@ public class PaginationHelperUtil {
 	public static int getParentId(String locationName) {
 		int parentId = 0;
 		try {
-			//System.err.println("locationName:::::::::::::::;" + locationName);
 			if (locationName != null && !locationName.isEmpty() && !locationName.equalsIgnoreCase("0?")) {
 				String[] div = locationName.split("\\?");
 				parentId = Integer.parseInt(div[0]);
-				System.err.println("parentId::" + parentId);
+				logger.info("parentId::" + parentId);
 			}
 		}
 		catch (Exception e) {
@@ -52,7 +50,7 @@ public class PaginationHelperUtil {
 			if (locationName != null && !locationName.isEmpty() && !locationName.equalsIgnoreCase("0?")) {
 				String[] div = locationName.split("\\?");
 				name = div[1];
-				System.err.println("name::" + name);
+				logger.info("location name::" + name);
 			}
 		}
 		catch (Exception e) {
@@ -61,7 +59,6 @@ public class PaginationHelperUtil {
 		return name;
 	}
 
-	@SuppressWarnings("null")
 	public void setParentLocationToSession(String location, String sessionName, HttpSession session) {
 		if (location != null && !location.isEmpty() && !location.equalsIgnoreCase("0?")) {
 			String[] divisionName = location.split("\\?");
@@ -117,7 +114,6 @@ public class PaginationHelperUtil {
 		if (request.getParameterMap().containsKey("name")) {
 			name = (String) request.getParameter("name");
 		}
-		System.err.println("provider:" + provider);
 		searchBuilder.setDivision(locationName(division));
 		searchBuilder.setDistrict(locationName(district));
 		searchBuilder.setUpazila(locationName(upazila));
@@ -127,75 +123,8 @@ public class PaginationHelperUtil {
 		searchBuilder.setMauzapara(locationName(mauzapara));
 		searchBuilder.setProvider(provider);
 		searchBuilder.setName(name);
+		logger.debug("set searchBuilder: " + searchBuilder.toString());
 		return searchBuilder;
-
-	}
-
-	public ReportSearchBuilder setParamsForReport(HttpServletRequest request, HttpSession session) {
-		String division = "";
-		String district = "";
-		String upazila = "";
-		String union = "";
-		String ward = "";
-		String subunit = "";
-		String mauzapara = "";
-		String provider = "";
-		String name = "";
-		String start = "";
-		String end = "";
-
-		if (request.getParameterMap().containsKey("division")) {
-			division = (String) request.getParameter("division");
-			this.setParentLocationToSession(division, "districtListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("district")) {
-			district = (String) request.getParameter("district");
-			this.setParentLocationToSession(district, "upazilasListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("upazila")) {
-			upazila = (String) request.getParameter("upazila");
-			this.setParentLocationToSession(upazila, "unionsListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("union")) {
-			union = (String) request.getParameter("union");
-			this.setParentLocationToSession(union, "wardsListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("ward")) {
-			ward = (String) request.getParameter("ward");
-			this.setParentLocationToSession(ward, "subunitListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("subunit")) {
-			subunit = (String) request.getParameter("subunit");
-			this.setParentLocationToSession(subunit, "mauzaparaListByParent", session);
-		}
-		if (request.getParameterMap().containsKey("mauzapara")) {
-			mauzapara = (String) request.getParameter("mauzapara");
-		}
-		if (request.getParameterMap().containsKey("provider")) {
-			provider = (String) request.getParameter("provider");
-		}
-		if (request.getParameterMap().containsKey("name")) {
-			name = (String) request.getParameter("name");
-		}
-		if (request.getParameterMap().containsKey("start")) {
-			start = (String) request.getParameter("start");
-		}
-		if (request.getParameterMap().containsKey("end")) {
-			end = (String) request.getParameter("end");
-		}
-		System.err.println("provider:" + provider);
-		reportSearchBuilder.setDivision(locationName(division));
-		reportSearchBuilder.setDistrict(locationName(district));
-		reportSearchBuilder.setUpazila(locationName(upazila));
-		reportSearchBuilder.setUnion(locationName(union));
-		reportSearchBuilder.setWard(locationName(ward));
-		reportSearchBuilder.setSubunit(locationName(subunit));
-		reportSearchBuilder.setMauzapara(locationName(mauzapara));
-		reportSearchBuilder.setProvider(provider);
-		reportSearchBuilder.setName(name);
-		reportSearchBuilder.setStart(start);
-		reportSearchBuilder.setEnd(end);
-		return reportSearchBuilder;
 
 	}
 
@@ -294,5 +223,4 @@ public class PaginationHelperUtil {
 		session.setAttribute("paginationAtributes", map);
 		return map;
 	}
-
 }

@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ChildEntity;
-import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

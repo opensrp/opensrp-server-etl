@@ -1,0 +1,29 @@
+-- View: public."viewBNFSubmitted"
+
+-- DROP VIEW public."viewBNFSubmitted";
+
+CREATE OR REPLACE VIEW public."viewBNFSubmitted" AS
+ SELECT mt.first_name,
+    mt.motherwomlmp,
+    mt.case_id,
+    mt.motherwomnid,
+    mt.motherwombid,
+    mt.provider,
+    mt.division,
+    mt.district,
+    mt.upazila,
+    mt.unions,
+    mt.ward,
+    mt.subunit,
+    mt.mauza_para,
+    bnf.user_type,
+    bnf.bnf_current_formstatus,
+    bnf.today AS visit_date,
+    bnf.start,
+    bnf.end_time,
+    bnf.received_time
+   FROM mother mt
+     JOIN bnf bnf ON mt.case_id::text = bnf.relationalid::text AND bnf.user_type::text = 'FD'::text;
+
+ALTER TABLE public."viewBNFSubmitted"
+    OWNER TO postgres;

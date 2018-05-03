@@ -22,7 +22,6 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	@Transactional
 	public void test() {
-		System.err.println("" + databaseRepositoryImpl);
 		databaseRepositoryImpl.test();
 	}
 	
@@ -70,6 +69,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Transactional
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
+	}
+
+	@Transactional
+	public <T> List<T> findAllFormNames(String tableClass) {
+		return databaseRepositoryImpl.findAll(tableClass);
 	}
 	
 	@Transactional

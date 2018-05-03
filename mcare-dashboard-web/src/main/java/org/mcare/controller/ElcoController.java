@@ -56,9 +56,7 @@ public class ElcoController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ELCO')")
 	@RequestMapping(value = "elco/{id}/view.html", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, HttpSession session, Model model, @PathVariable("id") int id) {
-		
 		ElcoEntity elco = elcoService.findById(id);
-		System.err.println("elco: " + elco.toString());
 		session.setAttribute("title", "Elco Details");
 		model.addAttribute("household", elco);
 		return "elco/view";

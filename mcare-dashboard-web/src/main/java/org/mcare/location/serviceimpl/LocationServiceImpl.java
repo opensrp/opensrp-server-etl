@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,11 +27,11 @@ public class LocationServiceImpl implements LocationService {
 
 	@Transactional
 	@Override
-	public List<Object[]> getParentData() {
+	public List<Object[]> getLocationByTagId(int tagId) {
 		// TODO Auto-generated method stub
 		String sqlQuery = "SELECT location.name,location.location_id FROM location left join location_tag_map  on location.location_id =location_tag_map.location_id "
 				+ "WHERE location_tag_id=:location_tag_id";
-		return databaseRepositoryImpl.executeSelectQuery(sqlQuery, "location_tag_id", 1);
+		return databaseRepositoryImpl.executeSelectQuery(sqlQuery, "location_tag_id", tagId);
 	}
 
 	@Transactional
@@ -42,6 +41,7 @@ public class LocationServiceImpl implements LocationService {
 		return databaseRepositoryImpl.executeSelectQuery(sqlQuery, "parentId", parentId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> boolean isExist(String className) {
 		Session session = sessionFactory.openSession();
 		List<T> result = null;

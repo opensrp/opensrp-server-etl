@@ -10,6 +10,7 @@ package org.mcare.acl.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.mcare.acl.entity.Account;
 import org.mcare.acl.dao.AbstractHbnDao;
 import org.springframework.dao.DataAccessException;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository("accountDao")
 public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao {
+
+	private static final Logger logger = Logger.getLogger(HbnAccountDao.class);
 
 	@Override
 	public Account getByUsername(String username) {
@@ -32,9 +35,9 @@ public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao
 		Account account = null;
 		try {
 			account = getByUsername(username);
-			System.out.println("username:" + account.getAuthorities().toString());
+			logger.info("username:" + account.getAuthorities().toString());
 		} catch (Exception e) {
-			System.err.println("account null: " + e);
+			logger.error("account null: " + e);
 		}
 		return account;
 	}

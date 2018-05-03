@@ -44,12 +44,16 @@
 			</a></li>
 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Charts"><a class="nav-link"
-				href="<c:url value="/reportCount.html"/>"> <i
-					class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Report</span>
-			</a></li>
+				title="Components"><a
+				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+				href="#collapseReport" data-parent="#exampleAccordion"> <i
+					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">Report</span>
+			</a>
+				<ul class="sidenav-second-level collapse" id="collapseReport">
+					<li><a href="<c:url value="/formWiseReport.html"/>">Form Wise Report Status</a></li>
+					<li><a href="<c:url value="/providerWiseReport.html"/>">Provider Wise Report Status</a></li>
 
-
+				</ul></li>
 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right"
 				title="Components"><a
@@ -83,23 +87,20 @@
 					<li><a href="<c:url value="/user.html"/>">List</a></li>
 					<li><a href="<c:url value="/user/add.html"/>">Add</a></li>
 
-				</ul>
-				
-			</li>
-			
+				</ul></li>
+
 			<li class="nav-item" data-toggle="tooltip" data-placement="right"
 				title="Components"><a
 				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
 				href="#collapseFWAMonotoring" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">FWA Work Monitoring</span>
+					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">FWA
+						Work Monitoring</span>
 			</a>
 				<ul class="sidenav-second-level collapse" id="collapseFWAMonotoring">
 					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ANC</a></li>
 					<li><a href="<c:url value="/fwa/pnc/monitoring.html"/>">PNC</a></li>
 					<li><a href="<c:url value="/fwa/encc/monitoring.html"/>">ENCC</a></li>
-				</ul>
-				
-			</li>
+				</ul></li>
 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right"
 				title="Link"><a class="nav-link" href="#"> <i
