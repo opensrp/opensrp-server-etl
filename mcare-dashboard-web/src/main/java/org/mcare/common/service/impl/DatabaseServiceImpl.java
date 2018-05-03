@@ -80,6 +80,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return databaseRepositoryImpl.findAll(tableClass);
 	}
 
+	@Transactional
 	public void actionCorrectionForAnachronousSubmission(String caseId, String visitCode, String alertStatus) {
 		logger.info("in actionCorrectionForanachronousSubmission");
 		List<ActionEntity> actionList = databaseRepositoryImpl.findAllActionByCaseIdAndVisitCode(caseId
@@ -97,5 +98,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 				databaseRepositoryImpl.update(action);
 			}
 		}
+	}
+
+	@Transactional
+	public List<Object[]> getQueryData(String provider, String caseId, String scheduleName, String userType, String sqlQuery) {
+		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, scheduleName, userType, sqlQuery);
 	}
 }

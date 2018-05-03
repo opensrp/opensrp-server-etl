@@ -37,19 +37,6 @@
 <bean name="enccService" class="org.mcare.etl.service.ENCCService"/>
 <bean name="actionService" class="org.mcare.etl.service.ActionService"/>
 
-
-<bean name="householdRepository" class="org.mcare.etl.repository.HouseholdRepository"/>
-<bean name="elcoRepository" class="org.mcare.etl.repository.ElcoRepository"/>
-<bean name="psrfRepository" class="org.mcare.etl.repository.PSRFRepository"/> 
-<bean name="motherRepository" class="org.mcare.etl.repository.MotherRepository"/>
-<bean name="ancRepository" class="org.mcare.etl.repository.ANCRepository"/>
-<bean name="pncRepository" class="org.mcare.etl.repository.PNCRepository"/>
-<bean name="bnfRepository" class="org.mcare.etl.repository.BNFRepository"/>
-<bean name="childRepository" class="org.mcare.etl.repository.ChildRepository"/>
-<bean name="enccRepository" class="org.mcare.etl.repository.ENCCRepository"/>
-<bean name="actionRepository" class="org.mcare.etl.repository.ActionRepository"/>
-<bean name="exceptionRepository" class="org.mcare.etl.repository.ExceptionRepository"/>
-
 <bean name="householdTransmissionService" class="org.mcare.etl.transmission.service.HouseholdTransmissionService"/>
 <bean name="elcoTransmissionService" class="org.mcare.etl.transmission.service.ElcoTransmissionService"/>
 <bean name="psrfTransmissionService" class="org.mcare.etl.transmission.service.PSRFTransmissionService"/> 

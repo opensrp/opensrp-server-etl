@@ -27,7 +27,7 @@
         <property name="annotatedClasses">
             <list>
              <value>org.mcare.data.export.entity.DataExportEntity</value>
-                <value>org.mcare.acl.entity.UserEntity</value>
+               
                  <value>org.mcare.etl.entity.HouseholdEntity</value>
                 <value>org.mcare.etl.entity.ElcoEntity</value>
                 <value>org.mcare.etl.entity.ActionEntity</value>
