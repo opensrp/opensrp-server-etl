@@ -38,40 +38,35 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
-
+	
 	private static final Logger logger = Logger.getLogger(UserController.class);
-
+	
 	private static final String ATTRIBUTE_PASSWORD_NOT_MATCH = "passwordNotMatch";
-
+	
 	private static final String ATTRIBUTE_UNIQUE_USER = "unique";
-
+	
 	private static final String MESSAGE_PASSWORD_NOT_MATCHED = "Password Does not match";
-
+	
 	private static final String MESSAGE_DUPLICATE_USER_NAME = "User name alreday taken";
-
+	
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
-
+	
 	@Autowired
 	private Account account;
-
+	
 	@Autowired
 	private Permission permission;
-
+	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
-
+	
 	@Autowired
 	private RoleServiceImpl roleServiceImpl;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@RequestMapping("/")
-	public String showView(Model model) {
-		return "user/home";
-	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
 	@RequestMapping(value = "/user.html", method = RequestMethod.GET)
 	public String userList(Model model) {
@@ -81,7 +76,7 @@ public class UserController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return "user/index";
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_USER')")
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.GET)
 	public ModelAndView saveUser(Model model, HttpSession session) {
@@ -90,19 +85,19 @@ public class UserController {
 		setSelectedRolesAttributes(selectedRoles, session);
 		return new ModelAndView("user/add", "command", account);
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_USER')")
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.POST)
 	public ModelAndView saveUser(@RequestParam(value = "roles", required = false) int[] roles,
-			@Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
-			HttpSession session) {
+	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
+	                             HttpSession session) {
 		if (checkValidations(account, roles, session, model)) {
 			return new ModelAndView("redirect:/user.html");
 		} else {
 			return new ModelAndView("/user/add");
 		}
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
@@ -112,20 +107,20 @@ public class UserController {
 		setSelectedRolesAttributes(getSelectedRoles(account), session);
 		return new ModelAndView("user/edit", "command", account);
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editUser(@RequestParam(value = "roles", required = false) int[] roles,
-			@Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
-			HttpSession session, @PathVariable("id") int id) {
+	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
+	                             HttpSession session, @PathVariable("id") int id) {
 		account.setRoles(userServiceImpl.setRoles(roles));
 		account.setId(id);
 		account.setEnabled(true);
 		userServiceImpl.update(account);
 		return new ModelAndView("redirect:/user.html");
-
+		
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.GET)
 	public ModelAndView editPassword(Model model, HttpSession session, @PathVariable("id") int id) {
@@ -133,11 +128,11 @@ public class UserController {
 		model.addAttribute("account", account);
 		return new ModelAndView("user/password", "command", account);
 	}
-
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.POST)
 	public ModelAndView editPassword(@Valid @ModelAttribute("account") Account account, BindingResult binding,
-			ModelMap model, HttpSession session, @PathVariable("id") int id) {
+	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
 		Account gettingAccount = findAccountById(id);
 		if (userServiceImpl.isPasswordMatched(account)) {
 			account.setId(id);
@@ -151,12 +146,12 @@ public class UserController {
 		}
 		return new ModelAndView("redirect:/user.html");
 	}
-
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		return "user/login";
 	}
-
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -165,7 +160,7 @@ public class UserController {
 		}
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
-
+	
 	private boolean checkValidations(Account account, int[] roles, HttpSession session, ModelMap model) {
 		try {
 			if (userServiceImpl.isPasswordMatched(account) && !userServiceImpl.isUserAlreadyExist(account)) {
@@ -191,7 +186,7 @@ public class UserController {
 			return false;
 		}
 	}
-
+	
 	private int[] getSelectedRoles(Account account) {
 		int[] selectedRoles = new int[200];
 		Set<Role> getRoles = account.getRoles();
@@ -202,20 +197,20 @@ public class UserController {
 		}
 		return selectedRoles;
 	}
-
+	
 	private Account findAccountById(int id) {
 		Account account = userServiceImpl.findById(id, "id", Account.class);
 		return account;
 	}
-
+	
 	private void setPasswordNotMatchedAttribute(ModelMap model) {
 		model.addAttribute(ATTRIBUTE_PASSWORD_NOT_MATCH, MESSAGE_PASSWORD_NOT_MATCHED);
 	}
-
+	
 	private void setUniqueUserAttribute(ModelMap model) {
 		model.addAttribute(ATTRIBUTE_UNIQUE_USER, MESSAGE_DUPLICATE_USER_NAME);
 	}
-
+	
 	private void setSelectedRolesAttributes(int[] roles, HttpSession session) {
 		session.setAttribute("roles", databaseServiceImpl.findAll("Role"));
 		session.setAttribute("selectedRoles", roles);

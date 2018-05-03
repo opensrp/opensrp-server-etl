@@ -70,7 +70,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
 	}
-
+	
 	@Transactional
 	public <T> List<T> findAllFormNames(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);
@@ -79,5 +79,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Transactional
 	public List<Object[]> getQueryData(String provider, String caseId, String scheduleName, String userType, String sqlQuery) {
 		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, scheduleName, userType, sqlQuery);
+	}
+	
+	@Transactional
+	public <T> List<T> getDataFromSQLFunction(String procedureName, String params) {
+		return databaseRepositoryImpl.getDataFromSQLFunction(procedureName, params);
 	}
 }
