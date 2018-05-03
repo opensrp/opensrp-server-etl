@@ -72,4 +72,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
 	}
 	
+	@Transactional
+	public List<Object[]> getQueryData(String provider, String caseId, String scheduleName, String userType, String sqlQuery) {
+		return databaseRepositoryImpl.executeSelectQuery(provider, caseId, scheduleName, userType, sqlQuery);
+	}
 }
