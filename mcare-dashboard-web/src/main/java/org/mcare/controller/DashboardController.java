@@ -1,7 +1,8 @@
 package org.mcare.controller;
 
-import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
@@ -19,26 +20,11 @@ public class DashboardController {
 	private DatabaseServiceImpl databaseServiceImpl;
 	
 	@RequestMapping("/")
-	public String showView(Model model) {
+	public String showView(Model model, HttpSession session) {
 		List<Object> dashboardDataCountList = (List<Object>) databaseServiceImpl.getDataFromSQLFunction(
 		    "fn_dashboard_data_count", "");
-		String type = "";
-		String totalCount = "";
-		String thisMonthCount = "";
-		String lastSevenDaysCount = "";
-		String todaysCount = "";
-		Iterator<Object> formWiseAggregatedListIterator = dashboardDataCountList.iterator();
-		while (formWiseAggregatedListIterator.hasNext()) {
-			Object[] formWiseObject = (Object[]) formWiseAggregatedListIterator.next();
-			type = String.valueOf(formWiseObject[0]);
-			totalCount = String.valueOf(formWiseObject[1]);
-			thisMonthCount = String.valueOf(formWiseObject[2]);
-			lastSevenDaysCount = String.valueOf(formWiseObject[3]);
-			todaysCount = String.valueOf(formWiseObject[4]);
-		}
 		
-		logger.info("Data:" + type + ": " + totalCount + " :" + thisMonthCount + " : " + lastSevenDaysCount + ": "
-		        + todaysCount);
+		session.setAttribute("dashboardDataCount", dashboardDataCountList);
 		return "home";
 	}
 }

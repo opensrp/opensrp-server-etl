@@ -31,68 +31,67 @@ import com.ibatis.common.jdbc.ScriptRunner;
 
 @Service
 public class DefaultApplicationSettingService {
-
+	
 	private static final Logger logger = Logger.getLogger(DefaultApplicationSettingService.class);
-
+	
 	@Autowired
 	private MarkerService markerService;
-
+	
 	@Autowired
 	private MarkerEntity markerEntity;
-
+	
 	@Autowired
 	private PermissionServiceImpl permissionServiceImpl;
-
+	
 	@Autowired
 	private RoleServiceImpl roleServiceImpl;
-
+	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
-
+	
 	public DefaultApplicationSettingService() {
-
+		
 	}
-
-	public void saveDefaultAppSetting() throws ClassNotFoundException,
-	SQLException {
+	
+	public void saveDefaultAppSetting() throws ClassNotFoundException, SQLException {
 		logger.info("saving default settings ...............");
-
+		
 		//MarkerEntity Initialization
 		MarkerEntity entity = new MarkerEntity();
 		entity.setName(CommonConstant.MCARE.name());
 		entity.setTimeStamp(0);
-
+		
 		MarkerEntity markerEntity = markerService.findByName(CommonConstant.MCARE.name());
 		if (markerEntity == null) {
 			markerService.save(entity);
 		}
-
+		
 		try {
 			permissionServiceImpl.addPermission();
 		}
 		catch (Exception e) {
 			logger.error("error adding permissions" + e.getMessage());
 		}
-
+		
 		//Create default admin User
 		String userName = "admin";
 		String roleName = "ROLE_ADMIN";
 		Role role = new Role();
 		role.setName(roleName);
 		Role gettingRole = roleServiceImpl.findByKey(role.getName(), "name", Role.class);
-
+		
 		try {
 			if (gettingRole == null) {
-
+				
 				Set<Permission> permissions = new HashSet<Permission>();
 				List<Permission> allPermissions = permissionServiceImpl.findAll("Permission");
 				for (Permission permission : allPermissions) {
@@ -105,7 +104,7 @@ public class DefaultApplicationSettingService {
 		catch (Exception e) {
 			logger.error("error saving roles:" + e.getMessage());
 		}
-
+		
 		Account account = userServiceImpl.findByKey(userName, "username", Account.class);
 		Account acc = new Account();
 		acc.setUsername(userName);
@@ -126,43 +125,39 @@ public class DefaultApplicationSettingService {
 		catch (Exception e) {
 			logger.error("error saving default user:" + e.getMessage());
 		}
-
-
+		
 		//Execute some location, form and provider SQL script automatically
 		String rootPath = "";
 		try {
 			rootPath = new File(".").getCanonicalPath();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			logger.error("error getting rootPath: " + e);
 		}
-
-		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql"
-				, "src/main/resources/scripts/location_tag.sql"
-				, "src/main/resources/scripts/location_tag_map.sql"
-				, "src/main/resources/scripts/provider.sql"
-				, "src/main/resources/scripts/form.sql");
-
-		Connection con = sessionFactory.
-				getSessionFactoryOptions().getServiceRegistry().
-				getService(ConnectionProvider.class).getConnection();
-
+		
+		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql",
+		    "src/main/resources/scripts/location_tag.sql", "src/main/resources/scripts/location_tag_map.sql",
+		    "src/main/resources/scripts/provider.sql", "src/main/resources/scripts/form.sql");
+		
+		Connection con = sessionFactory.getSessionFactoryOptions().getServiceRegistry().getService(ConnectionProvider.class)
+		        .getConnection();
+		
 		try {
 			ScriptRunner sr = new ScriptRunner(con, false, false);
-
-			for(String sqlScriptPath: sqlScriptPaths) {
+			
+			for (String sqlScriptPath : sqlScriptPaths) {
 				logger.info("Executing SQL script: " + sqlScriptPath);
-				runScript(rootPath+"/"+sqlScriptPath, sr);
+				runScript(rootPath + "/" + sqlScriptPath, sr);
 			}
-		} catch (Exception e) {
-			logger.error("Failed to Execute script"
-					+ " The error is " + e.getMessage());
+		}
+		catch (Exception e) {
+			logger.error("Failed to Execute script" + " The error is " + e.getMessage());
 		}
 	}
-
-	public void runScript(String aSQLScriptFilePath, ScriptRunner sr)
-			throws FileNotFoundException, IOException, SQLException {
-		Reader reader = new BufferedReader(
-				new FileReader(aSQLScriptFilePath));
+	
+	public void runScript(String aSQLScriptFilePath, ScriptRunner sr) throws FileNotFoundException, IOException,
+	    SQLException {
+		Reader reader = new BufferedReader(new FileReader(aSQLScriptFilePath));
 		sr.runScript(reader);
 	}
 }
