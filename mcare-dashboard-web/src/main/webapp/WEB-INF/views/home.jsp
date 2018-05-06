@@ -4,6 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="org.mcare.common.util.NumberToDigit"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -39,34 +40,56 @@
 				<div class="card-header">
 					<i class="fa fa-table"></i>Welcome to mcare
 				</div>
-			</div>	
-		
+			</div>		
 		
 			<div class="row">
 				<%	
+					String registerType="";
+					int totalCount=0;
+					String thisMonthCount="";
+					String lastSevenDays="";
+					String todaysCount="";
+					int size=0;
+					int counter=0;
 					if(session.getAttribute("dashboardDataCount") != null){
 					List<Object> dashboardDataCount = (List<Object>) session.getAttribute("dashboardDataCount");
 					Iterator dashboardDataCountListIterator = dashboardDataCount.iterator();
 					while (dashboardDataCountListIterator.hasNext()) {
 						Object[] dashboardDataObject = (Object[]) dashboardDataCountListIterator.next();
-						String type = String.valueOf(dashboardDataObject[0]);
-						String totalCount = String.valueOf(dashboardDataObject[1]);
-						String thisMonthCount = String.valueOf(dashboardDataObject[2]);
-						String lastSevenDays = String.valueOf(dashboardDataObject[3]);
-						String todaysCount = String.valueOf(dashboardDataObject[4]);
-					
-				
+						registerType = String.valueOf(dashboardDataObject[0]);
+						totalCount = Integer.parseInt(String.valueOf(dashboardDataObject[1]));
+						thisMonthCount = String.valueOf(dashboardDataObject[2]);
+						lastSevenDays = String.valueOf(dashboardDataObject[3]);
+						todaysCount = String.valueOf(dashboardDataObject[4]);
+						List<Integer> digits = NumberToDigit.getDigitFromNumber(totalCount);
+						size = digits.size();
+						counter++;
+						pageContext.setAttribute("registerType", registerType);
 					%>
 			
 				<div class="col-lg-6 col-xs-6">					
-					<div class="box1">
-						<a class="imgs" alt="image" href="index.html">
-						<img src="<c:url value="/resources/img/station_icon.png"/>"></a>						
+					<div class="box<%=counter%>">
+						<a class="imgs" alt="image" href="<c:url value="/visualize/${registerType}.html"/>">
+						<img src="<c:url value="/resources/img/${registerType}.png"/>"></a>						
 							<div class="counter">
-								<div class="counter_left">1</div>
-								<div class="counter_mid">0</div>
-								<div class="counter_mid">3</div>
-								<div class="counter_right">5</div>
+							<% if(size == 0){
+								
+							}else if(size == 1){ %>
+								<div class="counter_left"><%=digits.get(0) %></div>
+								<div class="counter_right"> </div>
+								
+							<%}else { %>
+								<div class="counter_left"><%=digits.get(0) %></div>
+								<%
+								
+								for (int i = 1; i < size - 1; i++) {%>
+									<div class="counter_mid"><%=digits.get(i) %></div>
+								<%}
+								%>
+								<div class="counter_right"> <%=digits.get(size-1) %></div>
+							<%}							
+							%>
+								
 							</div>
 					</div>
 					
