@@ -27,7 +27,7 @@ public class DashboardController {
 		String thisMonthCount = "";
 		String lastSevenDaysCount = "";
 		String todaysCount = "";
-		Iterator formWiseAggregatedListIterator = dashboardDataCountList.iterator();
+		Iterator<Object> formWiseAggregatedListIterator = dashboardDataCountList.iterator();
 		while (formWiseAggregatedListIterator.hasNext()) {
 			Object[] formWiseObject = (Object[]) formWiseAggregatedListIterator.next();
 			type = String.valueOf(formWiseObject[0]);
