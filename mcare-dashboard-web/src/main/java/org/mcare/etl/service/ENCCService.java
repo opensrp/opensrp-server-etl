@@ -67,7 +67,7 @@ public class ENCCService implements RegisterService<ENCCEntity> {
 
 	@Transactional
 	public List<ENCCEntity> findByRelationalId(String caseId) {
-		return databaseRepositoryImpl.findAllByCaseId(caseId, "relationalId", ENCCEntity.class);
+		return databaseRepositoryImpl.findAllByKey(caseId, "relationalId", ENCCEntity.class);
 	}
 
 }
