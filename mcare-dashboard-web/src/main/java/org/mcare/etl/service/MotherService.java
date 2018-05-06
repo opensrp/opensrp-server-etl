@@ -1,7 +1,5 @@
 package org.mcare.etl.service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
@@ -12,14 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MotherService implements RegisterService<MotherEntity> {
-	
+
 	@Autowired
 	private DatabaseRepositoryImpl databaseRepositoryImpl;
-	
+
 	public MotherService() {
-		
+
 	}
-	
+
 	@Transactional
 	@Override
 	public void save(MotherEntity motherEntity) throws Exception {
@@ -31,35 +29,30 @@ public class MotherService implements RegisterService<MotherEntity> {
 				databaseRepositoryImpl.save(motherEntity);
 		}
 	}
-	
+
 	@Transactional
 	@Override
 	public boolean delete(MotherEntity motherEntity) {
 		return databaseRepositoryImpl.delete(motherEntity);
-		
+
 	}
-	
+
 	@Transactional
 	@Override
 	public void update(MotherEntity motherEntity) {
 		databaseRepositoryImpl.update(motherEntity);
-		
+
 	}
-	
+
 	@Transactional
 	@Override
 	public MotherEntity findById(int id) {
 		return databaseRepositoryImpl.findById(id, "id", MotherEntity.class);
 	}
-	
+
 	@Transactional
 	@Override
 	public MotherEntity findByCaseId(String caseId) {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", MotherEntity.class);
-	}
-	
-	@Transactional
-	public List<MotherEntity> findAllMother() {
-		return databaseRepositoryImpl.findAllMother("MotherEntity");
 	}
 }

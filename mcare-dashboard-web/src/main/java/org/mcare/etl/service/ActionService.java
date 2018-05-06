@@ -64,7 +64,7 @@ public class ActionService implements RegisterService<ActionEntity> {
 
 	@Transactional
 	public List<ActionEntity> findAllByCaseId(String caseId) {
-		return databaseRepositoryImpl.findAllByCaseId(caseId, "caseId", ActionEntity.class);
+		return databaseRepositoryImpl.findAllByKey(caseId, "caseId", ActionEntity.class);
 	}
 
 	@Transactional

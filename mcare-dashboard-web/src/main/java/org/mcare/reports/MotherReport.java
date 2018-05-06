@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.Columns;
@@ -12,8 +14,8 @@ import net.sf.dynamicreports.report.builder.datatype.DataTypes;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.exception.DRException;
 
+import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.MotherEntity;
-import org.mcare.etl.service.MotherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class MotherReport {
 
 	@Autowired
-	private MotherService motherService;
+	private DatabaseRepositoryImpl databaseRepositoryImpl;
 
 	public MotherReport() {
 		// TODO Auto-generated constructor stub
@@ -33,7 +35,7 @@ public class MotherReport {
 
 		Columns.column("Mother Id", "id", DataTypes.integerType());
 
-		List<MotherEntity> mothers = motherService.findAllMother();
+		List<MotherEntity> mothers = findAllMother();
 		report
 		.columns(
 				Columns.column("Mother Id", "id", DataTypes.integerType()),
@@ -59,6 +61,12 @@ public class MotherReport {
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Transactional
+	public List<MotherEntity> findAllMother() {
+		return databaseRepositoryImpl.findAll("mother");
 	}
 
 }
