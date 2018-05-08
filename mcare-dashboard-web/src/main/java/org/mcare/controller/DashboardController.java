@@ -1,5 +1,6 @@
 package org.mcare.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DashboardController {
 	
 	private static final Logger logger = Logger.getLogger(DashboardController.class);
+	
+	private Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
 	
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
@@ -47,6 +50,9 @@ public class DashboardController {
 	public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) {
 		model.addAttribute("title", "Household search criteria");
 		searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
+		if (searchBuilder.getYear() == null || searchBuilder.getYear().isEmpty()) {
+			searchBuilder.setYear(currentYear.toString());
+		}
 		searchUtil.setProviderAttribute(session);
 		searchUtil.setDivisionAttribute(session);
 		searchUtil.setSelectedfilter(request, session);
