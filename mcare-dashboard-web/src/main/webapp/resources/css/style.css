@@ -688,54 +688,64 @@ th {
 	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
+	text-align: center;
 }
 .box2 {
     background-color:#f68b51;
 	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
+	text-align: center;
 	}
 .box3 {
     background-color:#d8d87f;
 	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
+	text-align: center;
 	}
 .box4 {
-    background-color:#8cc540;
+    background-color:#0e5f3f;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
+	
 }
 .box5 {
-    background-color:#72bce8;
+    background-color:#2b420d;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
 	}
 .box6 {
-    background-color:#b37bb3;
+    background-color:#13384e;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
 	}
 .box7 {
-    background-color:#72bce8;
+    background-color:#a0279f;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
 	}
 .box8 {
-    background-color:#d8d87f;
+    background-color:#f16868;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
 	}
 .box9 {
-    background-color:#d8d87f;
+    background-color:#b9ea8d;
+	padding:10px;
 	overflow:hidden;
 	margin:0 auto;
-	height:325px;
+	text-align: center;
 	}
 .box1:hover, .active{
     cursor:pointer;
@@ -848,16 +858,16 @@ th {
  }
 .box_buttom1 {
 	font-family:impact, Arial, Helvetica, sans-serif;
-	height:90px;
+	/* height:90px; */
 	background-color:#fab58b;
-	font-size:50px;
+	font-size:30px;
 	font-weight:bold;
 	text-align:center;
 	color:#935532;
 	border:1px solid #935532
  }
  .box_top2 {
-	height:50px;
+	/* height:50px; */
 	font-size:14px;
 	text-align:center;
 	color:#fff;
@@ -868,9 +878,9 @@ th {
  }
 .box_buttom2 {
 	font-family:impact, Arial, Helvetica, sans-serif;
-	height:90px;
+	/* height:90px; */
 	background-color:#e5e4ac;
-	font-size:50px;
+	font-size:30px;
 	font-weight:bold;
 	text-align:center;
 	color:#6a6e27;
@@ -1133,6 +1143,7 @@ th {
    height:25px;
    /*width:150px;*/
    margin:0 auto;
+   text-align: center;
  }
  .counter_left {
     width:35px;

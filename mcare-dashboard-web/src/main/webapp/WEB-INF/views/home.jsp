@@ -35,12 +35,7 @@
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<!-- Example DataTables Card-->
-			<div class="card mb-3">
-				<div class="card-header">
-					<i class="fa fa-table"></i>Welcome to mcare
-				</div>
-			</div>		
+					
 		
 			<div class="row">
 				<%	
@@ -67,7 +62,7 @@
 						pageContext.setAttribute("registerType", registerType);
 					%>
 			
-				<div class="col-lg-6 col-xs-6">					
+				<div class="col-lg-4 col-xs-4">					
 					<div class="box<%=counter%>">
 						<a class="imgs" alt="image" href="<c:url value="/visualize/${registerType}.html"/>">
 						<img src="<c:url value="/resources/img/${registerType}.png"/>"></a>						
@@ -96,7 +91,7 @@
 					<div class="count_box">
 						<div class="box_inner1">
 							<div class="box_top2">  TODAY  </div>
-							<div class="box_buttom2">  <%=thisMonthCount %>  </div>
+							<div class="box_buttom2">  <%=todaysCount %>  </div>
 						</div>
 						<div class="box_inner1">
 							<div class="box_top2">   LAST 7 DAYS  </div>
@@ -117,7 +112,7 @@
 			</div> <!-- row -->
 				
 		</div>
-		
+		<br />
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 

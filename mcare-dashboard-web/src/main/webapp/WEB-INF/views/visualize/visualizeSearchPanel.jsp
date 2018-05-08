@@ -108,10 +108,16 @@
 
 			<div class="form-group">
 				<div class="row">
-					<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="year"
+					
+					
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="year"
 						name="year" required>
-						<option value="">Please Select Year</option>
+						<option value="">Select Year</option>
 						<%
 						for (Integer year : yearList) {
 							if (selectedYear.intValue() == year.intValue()) {
@@ -127,15 +133,11 @@
 						%>
 					</select>
 				</div>
-					
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="division"
+				
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="division"
 						name="division">
-						<option value="0?">Please Select Division</option>
+						<option value="0?">Select Division</option>
 						<%
 						for (Object[] objects : divisions) {
 								if (divId == ((Integer) objects[1]).intValue()) {
@@ -151,10 +153,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="district"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="district"
 						name="district">
-						<option value="0?">Please Select District</option>
+						<option value="0?">Select District</option>
 						<%
 						if (districts != null) {
 							for (Object[] objects : districts) {
@@ -172,10 +174,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="upazila"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="upazila"
 						name="upazila">
-						<option value="0?">Please Select Upazilla</option>
+						<option value="0?">Select Upazilla</option>
 						<%
 							if (upazilas != null) {
 								for (Object[] objects : upazilas) {
@@ -193,10 +195,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="union"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="union"
 						name="union">
-						<option value="0?">Please Select Union</option>
+						<option value="0?">Select Union</option>
 						<%
 							if (unions != null) {
 								for (Object[] objects : unions) {
@@ -214,10 +216,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="ward"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="ward"
 						name="ward">
-						<option value="0?">Please Select Ward</option>
+						<option value="0?">Select Ward</option>
 						<%
 							if (wards != null) {
 								for (Object[] objects : wards) {
@@ -235,10 +237,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="subunit"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="subunit"
 						name="subunit">
-						<option value="0?">Please Select Subunit</option>
+						<option value="0?">Select Subunit</option>
 						<%
 							if (subuits != null) {
 								for (Object[] objects : subuits) {
@@ -256,10 +258,10 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="mauzapara"
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" id="mauzapara"
 						name="mauzapara">
-						<option value="0?">Please Select Mauzapara</option>
+						<option value="0?">Select Mauzapara</option>
 						<%
 						if (mauzaparas != null) {
 							for (Object[] objects : mauzaparas) {
@@ -277,9 +279,9 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" name="provider">
-						<option value="">Please Select Provider</option>
+				<div class="col-2">
+					<select class="custom-select custom-select-lg mb-2" name="provider">
+						<option value="">Select Provider</option>
 						<%
 							if (providers != null) {
 								for (ProviderEntity objects : providers) {

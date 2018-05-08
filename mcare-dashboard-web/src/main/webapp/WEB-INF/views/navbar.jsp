@@ -8,187 +8,123 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 	id="mainNav">
-	<a class="navbar-brand" href="index.html"><img
+	<a class="navbar-brand" href="<c:url value="/"/>"><img
 		src="<c:url value="/resources/img/logo-total.png"/>"></a>
-	<button class="navbar-toggler navbar-toggler-right" type="button"
-		data-toggle="collapse" data-target="#navbarResponsive">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+	
 	<div class="collapse navbar-collapse" id="navbarResponsive">
-		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Dashboard"><a class="nav-link" href="<c:url value="/"/>">
-					<i class="fa fa-fw fa-dashboard"></i> <span class="nav-link-text">Dashboard</span>
-			</a></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Charts"><a class="nav-link"
-				href="<c:url value="/household.html"/>"> <i
-					class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Household
-						List</span>
-			</a> <a class="nav-link" href="<c:url value="/elco.html"/>"> <i
-					class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Elco
-						List</span>
-			</a></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Charts"><a class="nav-link"
-				href="<c:url value="/mother.html"/>"> <i
-					class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Mother
-						List</span>
-			</a></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Charts"><a class="nav-link"
-				href="<c:url value="/child.html"/>"> <i
-					class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Child
-						List</span>
-			</a></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Components"><a
-				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-				href="#collapseReport" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">Report</span>
-			</a>
-				<ul class="sidenav-second-level collapse" id="collapseReport">
-					<li><a href="<c:url value="/formWiseReport.html"/>">Form Wise Report Status</a></li>
-					<li><a href="<c:url value="/providerWiseReport.html"/>">Provider Wise Report Status</a></li>
-
-				</ul></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Components"><a
-				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-				href="#collapseExport" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">Export</span>
-			</a>
-				<ul class="sidenav-second-level collapse" id="collapseExport">
-					<li><a href="<c:url value="/export.html"/>">Export CSV</a></li>
-					<li><a href="<c:url value="/export/list.html"/>">List</a></li>
-				</ul></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Components"><a
-				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-				href="#collapseRole" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">Role</span>
-			</a>
-				<ul class="sidenav-second-level collapse" id="collapseRole">
-					<li><a href="<c:url value="/role.html"/>">List</a></li>
-					<li><a href="<c:url value="/role/add.html"/>">Add</a></li>
-
-				</ul></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Components"><a
-				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-				href="#collapseUser" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">User</span>
-			</a>
-				<ul class="sidenav-second-level collapse" id="collapseUser">
-					<li><a href="<c:url value="/user.html"/>">List</a></li>
-					<li><a href="<c:url value="/user/add.html"/>">Add</a></li>
-
-				</ul></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Components"><a
-				class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-				href="#collapseFWAMonotoring" data-parent="#exampleAccordion"> <i
-					class="fa fa-fw fa-wrench"></i> <span class="nav-link-text">FWA
-						Work Monitoring</span>
-			</a>
-				<ul class="sidenav-second-level collapse" id="collapseFWAMonotoring">
-					<li><a href="<c:url value="/fwa/anc/monitoring.html"/>">ANC</a></li>
-					<li><a href="<c:url value="/fwa/pnc/monitoring.html"/>">PNC</a></li>
-					<li><a href="<c:url value="/fwa/encc/monitoring.html"/>">ENCC</a></li>
-				</ul></li>
-
-			<li class="nav-item" data-toggle="tooltip" data-placement="right"
-				title="Link"><a class="nav-link" href="#"> <i
-					class="fa fa-fw fa-link"></i> <span class="nav-link-text">Link</span>
-			</a></li>
-		</ul>
-		<ul class="navbar-nav sidenav-toggler">
-			<li class="nav-item"><a class="nav-link text-center"
-				id="sidenavToggler"> <i class="fa fa-fw fa-angle-left"></i>
-			</a></li>
-		</ul>
+		
+		
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown"
-				href="#" data-toggle="dropdown"> <i class="fa fa-fw fa-envelope"></i>
-					<span class="d-lg-none">Messages <span
-						class="badge badge-pill badge-primary">12 New</span>
-				</span> <span class="indicator text-primary d-none d-lg-block"> <i
-						class="fa fa-fw fa-circle"></i>
-				</span>
+				href="#" data-toggle="dropdown"> Registers
 			</a>
-				<div class="dropdown-menu">
-					<h6 class="dropdown-header">New Messages:</h6>
+				<div class="dropdown-menu">					
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <strong>David
-							Miller</strong> <span class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">Hey there! This new
-							version of SB Admin is pretty awesome! These messages clip off
-							when they reach the end of the box so they don't overflow over to
-							the sides!</div>
+					<a class="dropdown-item" href="<c:url value="/household.html"/>"> <strong> Household</strong> 
+						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <strong>Jane Smith</strong>
-						<span class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">I was wondering if you
-							could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+					<a class="dropdown-item" href="<c:url value="/elco.html"/>"> <strong>Elco</strong>
+						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <strong>John Doe</strong> <span
-						class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">I've sent the final
-							files over to you for review. When you're able to sign off of
-							them let me know and we can discuss distribution.</div>
+					<a class="dropdown-item" href="<c:url value="/mother.html"/>"> <strong>Mother</strong> 
+						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item small" href="#">View all messages</a>
-				</div></li>
+					<a class="dropdown-item small" href="<c:url value="/child.html"/>"><strong>Child</strong> </a>
+				</div>
+			</li>
+			
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown"
-				href="#" data-toggle="dropdown"> <i class="fa fa-fw fa-bell"></i>
-					<span class="d-lg-none">Alerts <span
-						class="badge badge-pill badge-warning">6 New</span>
-				</span> <span class="indicator text-warning d-none d-lg-block"> <i
-						class="fa fa-fw fa-circle"></i>
-				</span>
+				class="nav-link dropdown-toggle mr-lg-2" id="reportDropdown"
+				href="#" data-toggle="dropdown"> Reports
 			</a>
-				<div class="dropdown-menu">
-					<h6 class="dropdown-header">New Alerts:</h6>
+				<div class="dropdown-menu">					
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <span class="text-success">
-							<strong> <i class="fa fa-long-arrow-up fa-fw"></i>Status
-								Update
-						</strong>
-					</span> <span class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">This is an automated
-							server response message. All systems are online.</div>
+					<a class="dropdown-item" href="<c:url value="/formWiseReport.html"/>"> <strong> Form Wise Report Status</strong> 
+						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <span class="text-danger">
-							<strong> <i class="fa fa-long-arrow-down fa-fw"></i>Status
-								Update
-						</strong>
-					</span> <span class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">This is an automated
-							server response message. All systems are online.</div>
+					<a class="dropdown-item" href="<c:url value="/providerWiseReport.html"/>"> <strong>Provider Wise Report Status</strong>
+					</a>					
+					
+				</div>
+			</li>
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle mr-lg-2" id="exportDropdown"
+				href="#" data-toggle="dropdown"> Exports
+			</a>
+				<div class="dropdown-menu">					
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/export.html"/>"> <strong> Export CSV</strong> 
+						
+					</a>
+										
+					
+				</div>
+			</li>
+			
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle mr-lg-2" id="fwaMonitoringDropdown"
+				href="#" data-toggle="dropdown"> FWA Monitoring
+			</a>
+				<div class="dropdown-menu">					
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/fwa/anc/monitoring.html"/>"> <strong> ANC</strong> 
+						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#"> <span class="text-success">
-							<strong> <i class="fa fa-long-arrow-up fa-fw"></i>Status
-								Update
-						</strong>
-					</span> <span class="small float-right text-muted">11:21 AM</span>
-						<div class="dropdown-message small">This is an automated
-							server response message. All systems are online.</div>
+					<a class="dropdown-item" href="<c:url value="/fwa/pnc/monitoring.html"/>"> <strong>PNC</strong>
 					</a>
+					
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item small" href="#">View all alerts</a>
-				</div></li>
+					<a class="dropdown-item" href="<c:url value="/fwa/encc/monitoring.html"/>"> <strong>ENCC</strong>
+					</a>					
+					
+				</div>
+			</li>
+			
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle mr-lg-2" id="roleDropdown"
+				href="#" data-toggle="dropdown"> Role
+			</a>
+				<div class="dropdown-menu">	
+				
+				<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/role/add.html"/>"> <strong>Add</strong>
+					</a>				
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/role.html"/>"> <strong> List</strong> 
+						
+					</a>
+				</div>
+			</li>
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle mr-lg-2" id="userDropdown"
+				href="#" data-toggle="dropdown"> User
+			</a>
+				<div class="dropdown-menu">	
+				
+				<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/user/add.html"/>"> <strong>Add</strong>
+					</a>				
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/user.html"/>"> <strong> List</strong> 
+						
+					</a>
+				</div>
+			</li>
+			
+			
+			
+			
+			
 			
 			<li class="nav-item"><a class="nav-link" data-toggle="modal"
 				data-target="#exampleModal"> <i class="fa fa-fw fa-sign-out"></i>Logout
