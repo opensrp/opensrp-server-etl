@@ -13,6 +13,7 @@ import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.service.impl.ProviderServiceImpl;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.location.serviceimpl.LocationServiceImpl;
+import org.mcare.params.builder.SearchBuilder;
 import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,9 @@ public class SearchUtil {
 	private static final Logger logger = Logger.getLogger(SearchUtil.class);
 	
 	private static final int DIVISION_TAG_ID = 1;
+	
+	@Autowired
+	private SearchBuilder searchBuilder;
 	
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
@@ -215,7 +219,17 @@ public class SearchUtil {
 			year = request.getParameter("year") == null ? "" : request.getParameter("year");
 			map.put("year", String.valueOf(year));
 		}
-		
 		session.setAttribute("selectedFilter", map);
+	}
+	
+	public SearchBuilder generateSearchBuilderParams(HttpServletRequest request, HttpSession session) {
+		String search = "";
+		search = (String) request.getParameter("search");
+		if (search != null) {
+			searchBuilder = paginationHelperUtil.setParams(request, session);
+		} else {
+			searchBuilder = searchBuilder.clear();
+		}
+		return searchBuilder;
 	}
 }

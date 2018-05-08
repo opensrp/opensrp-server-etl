@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.common.util.SearchUtil;
-import org.mcare.reports.service.SearchFilterBuilder;
+import org.mcare.params.builder.SearchBuilder;
+import org.mcare.visualization.DataVisualization;
+import org.mcare.visualization.utils.VisualizeDataType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,10 @@ public class DashboardController {
 	private SearchUtil searchUtil;
 	
 	@Autowired
-	private SearchFilterBuilder searchFilterBuilder;
+	private SearchBuilder searchBuilder;
+	
+	@Autowired
+	private DataVisualization dataVisualization;
 	
 	@RequestMapping("/")
 	public String showHome(Model model, HttpSession session) {
@@ -41,12 +46,17 @@ public class DashboardController {
 	@RequestMapping(value = "visualize/household.html", method = RequestMethod.GET)
 	public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) {
 		model.addAttribute("title", "Household search criteria");
-		searchFilterBuilder = searchUtil.setParamsForReport(request, session);
+		searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
 		searchUtil.setProviderAttribute(session);
 		searchUtil.setDivisionAttribute(session);
 		searchUtil.setSelectedfilter(request, session);
+		logger.info("SS:" + searchBuilder.toString());
+		List<Object[]> data = dataVisualization.getData(VisualizeDataType.household.name(), searchBuilder);
+		System.err.println("" + data.toString());
+		for (Object[] row : data) {
+			System.err.println("" + row[0] + ": " + row[1]);
+		}
 		return "visualize/household";
 		
 	}
-	
 }

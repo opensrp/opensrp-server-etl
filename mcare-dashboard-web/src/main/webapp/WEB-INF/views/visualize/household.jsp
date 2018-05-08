@@ -391,10 +391,10 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Browser market shares. January, 2018'
+	        text: 'Household data visualization'
 	    },
 	    subtitle: {
-	        text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+	        text: ''
 	    },
 	    xAxis: {
 	        type: 'category'
