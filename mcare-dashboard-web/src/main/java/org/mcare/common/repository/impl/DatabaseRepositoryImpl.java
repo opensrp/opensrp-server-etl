@@ -15,8 +15,11 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
+import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
+import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.entity.HouseholdEntity;
+import org.mcare.etl.entity.PNCEntity;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -210,22 +213,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> findAllByCaseId(String caseId, String className) {
-		Session session = sessionFactory.openSession();
-		List<T> result = null;
-		try {
-			Query query = session.createQuery("from " + className + " where relationalId = :case_id ");
-			query.setParameter("case_id", caseId);
-			result = query.list();
-			session.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@SuppressWarnings("unchecked")
 	public <T> List<T> list(int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(entityClassName);
@@ -350,8 +337,10 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<ActionEntity> result = null;
 
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-					+ "and isActionActive = :is_action_active " + "and visitCode LIKE :visit_code ");
+			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
+					+ "and provider = :provider_id "
+					+ "and isActionActive = :is_action_active "
+					+ "and visitCode LIKE :visit_code ");
 			query.setParameter("case_id", caseId);
 			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
@@ -366,18 +355,39 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ActionEntity> findAllPendingMotherVisits(String caseId, String provider) {
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId, List<ANCEntity> anclist
+			, List<PNCEntity> pnclist, List<BNFEntity> bnflist) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
 
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-					+ "and isActionActive = :is_action_active " + "and (visitCode LIKE :visit_code "
-					+ "or visitCode LIKE :visit_code_pnc " + "or visitCode = :visit_code_bnf " + ")");
-			query.setParameter("case_id", caseId);
-			query.setParameter("provider_id", provider);
-			query.setParameter("is_action_active", true);
-			query.setParameter("visit_code", "anc%");
+			String hql = "FROM ActionEntity where caseId = '" + caseId + "'"
+					+ " and isActionActive = true "
+					+ " and (visitCode LIKE :visit_code_anc "
+					+ " or visitCode LIKE :visit_code_pnc "
+					+ " or (visitCode = :visit_code_bnf ";
+
+			if(bnflist != null && !bnflist.isEmpty()) {
+				for(BNFEntity bnf : bnflist) {
+					hql = hql + " and ( visitCode = :visit_code_bnf and startDate > '" + bnf.getStart() + "') " ;
+				}
+			}
+			hql = hql + "))";
+
+			if(anclist != null && !anclist.isEmpty()) {
+				for(ANCEntity anc : anclist) {
+					hql = hql + " and not visitCode = '" + anc.getAncName() + "'";
+				}
+			}
+
+			if(pnclist != null && !pnclist.isEmpty()) {
+				for(PNCEntity pnc : pnclist) {
+					hql = hql + " and not visitCode = '" + pnc.getPncName() + "'";
+				}
+			}
+
+			Query query = session.createQuery(hql);
+			query.setParameter("visit_code_anc", "anc%");
 			query.setParameter("visit_code_pnc", "pnc%");
 			query.setParameter("visit_code_bnf", "BirthNotificationPregnancyStatusFollowUp");
 			result = query.list();

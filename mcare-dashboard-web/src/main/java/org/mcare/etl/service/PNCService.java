@@ -66,7 +66,7 @@ public class PNCService implements RegisterService<PNCEntity> {
 		return databaseRepositoryImpl.findByCaseIdAndToday(relationalId, today, PNCEntity.class);
 	}
 
-	public List<PNCEntity> findAllByCaseId(String caseId) {
-		return databaseRepositoryImpl.findAllByCaseId(caseId, "PNCEntity");
+	public List<PNCEntity> findAllByKey(String caseId) {
+		return databaseRepositoryImpl.findAllByKey(caseId, "relationalId", PNCEntity.class);
 	}
 }

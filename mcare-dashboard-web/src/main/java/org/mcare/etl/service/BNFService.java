@@ -63,8 +63,8 @@ public class BNFService implements RegisterService<BNFEntity> {
 	}
 	
 	@Transactional
-	public List<BNFEntity> findAllByCaseId(String caseId) {
-		return databaseRepositoryImpl.findAllByCaseId(caseId, "BNFEntity");
+	public List<BNFEntity> findAllByKey(String caseId) {
+		return databaseRepositoryImpl.findAllByKey(caseId, "relationalId", BNFEntity.class);
 	}
 	
 }

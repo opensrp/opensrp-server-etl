@@ -94,7 +94,14 @@ public class MotherController {
 		session.setAttribute("mother", mother);
 		session.setAttribute("title", "Pending Visits");
 
-		List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), mother.getProvider());
+		List<ANCEntity> anclist = ancService.findAllByKey(mother.getCaseId());
+		List<PNCEntity> pnclist = pncService.findAllByKey(mother.getCaseId());
+
+		List<BNFEntity> bnflist = bnfService.findAllByKey(mother.getCaseId());
+
+		List<ActionEntity> actionlist = actionService.findAllPendingMotherVisits(mother.getCaseId(), anclist
+				, pnclist, bnflist);
+
 		session.setAttribute("actionlist", actionlist);
 
 		if (actionlist != null && !actionlist.isEmpty()) {
@@ -110,9 +117,9 @@ public class MotherController {
 		MotherEntity mother = motherService.findById(id);
 		session.setAttribute("mother", mother);
 
-		List<ANCEntity> anclist = ancService.findAllByCaseId(mother.getCaseId());
-		List<BNFEntity> bnflist = bnfService.findAllByCaseId(mother.getCaseId());
-		List<PNCEntity> pnclist = pncService.findAllByCaseId(mother.getCaseId());
+		List<ANCEntity> anclist = ancService.findAllByKey(mother.getCaseId());
+		List<BNFEntity> bnflist = bnfService.findAllByKey(mother.getCaseId());
+		List<PNCEntity> pnclist = pncService.findAllByKey(mother.getCaseId());
 
 		session.setAttribute("anclist", anclist);
 		session.setAttribute("bnflist", bnflist);
