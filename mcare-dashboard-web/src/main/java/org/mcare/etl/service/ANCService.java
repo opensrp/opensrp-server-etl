@@ -28,7 +28,6 @@ public class ANCService implements RegisterService<ANCEntity> {
 		ANCEntity existingancEntity = findByCaseIdAndToday(ancEntity.getRelationalid(), ancEntity.getToday());
 
 		if (existingancEntity == null) {
-			System.err.println("new anc entry");
 			databaseRepositoryImpl.save(ancEntity);
 			databaseServiceImpl.actionCorrectionForAnachronousSubmission(ancEntity.getRelationalid()
 					, ancEntity.getAncName(), ancEntity.getAnc_current_formStatus());
@@ -64,7 +63,7 @@ public class ANCService implements RegisterService<ANCEntity> {
 	}
 
 	@Transactional
-	public List<ANCEntity> findAllByCaseId(String caseId) {
-		return databaseRepositoryImpl.findAllByCaseId(caseId, "ANCEntity");
+	public List<ANCEntity> findAllByKey(String caseId) {
+		return databaseRepositoryImpl.findAllByKey(caseId, "relationalId", ANCEntity.class);
 	}
 }

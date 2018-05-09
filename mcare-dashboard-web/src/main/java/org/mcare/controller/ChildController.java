@@ -85,7 +85,9 @@ public class ChildController {
 		session.setAttribute("child", child);
 
 		session.setAttribute("title", "Pending Visits");
-		List<ActionEntity> actionlist = actionService.findAllPendingChildVisits(child.getCaseId(), child.getProvider());
+
+		List<ENCCEntity> encclist = enccService.findByRelationalId(child.getCaseId());
+		List<ActionEntity> actionlist = actionService.findAllPendingChildVisits(child.getCaseId(), encclist);
 		session.setAttribute("actionlist", actionlist);
 
 		if (actionlist != null && !actionlist.isEmpty()) {

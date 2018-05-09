@@ -5,7 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
+import org.mcare.etl.entity.BNFEntity;
+import org.mcare.etl.entity.ENCCEntity;
+import org.mcare.etl.entity.PNCEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,13 +72,13 @@ public class ActionService implements RegisterService<ActionEntity> {
 	}
 
 	@Transactional
-	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
-		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, provider);
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, List<ENCCEntity> encclist) {
+		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, encclist);
 	}
 
 	@Transactional
-	public List<ActionEntity> findAllPendingMotherVisits(String caseId,
-			String provider) {
-		return databaseRepositoryImpl.findAllPendingMotherVisits(caseId, provider);
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId, List<ANCEntity> anclist
+			, List<PNCEntity> pnclist, List<BNFEntity> bnflist) {
+		return databaseRepositoryImpl.findAllPendingMotherVisits(caseId, anclist, pnclist, bnflist);
 	}
 }

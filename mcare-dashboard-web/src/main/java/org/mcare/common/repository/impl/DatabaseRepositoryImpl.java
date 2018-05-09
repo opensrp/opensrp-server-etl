@@ -15,28 +15,32 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.mcare.common.interfaces.DatabaseRepository;
+import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
+import org.mcare.etl.entity.BNFEntity;
+import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.entity.HouseholdEntity;
+import org.mcare.etl.entity.PNCEntity;
 import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class DatabaseRepositoryImpl implements DatabaseRepository {
-	
+
 	private static final Logger logger = Logger.getLogger(DatabaseRepositoryImpl.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public DatabaseRepositoryImpl() {
-		
+
 	}
-	
+
 	public void test() {
 		logger.debug("sessionFactory:" + sessionFactory);
 	}
-	
+
 	@Override
 	public <T> long save(T t) throws Exception {
 		Session session = sessionFactory.openSession();
@@ -60,7 +64,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-	
+
 	@Override
 	public <T> int update(T t) {
 		Session session = sessionFactory.openSession();
@@ -83,7 +87,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return returnValue;
 	}
-	
+
 	@Override
 	public <T> boolean delete(T t) {
 		Session session = sessionFactory.openSession();
@@ -103,11 +107,11 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
-			
+
 		}
 		return returnValue;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
@@ -118,7 +122,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
@@ -129,7 +133,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public boolean findByUserName(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
@@ -139,7 +143,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (result.size() > 0 ? true : false);
 	}
-	
+
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -150,7 +154,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	public <T> T findByCaseIdAndBNFDate(String relationalId, Date bnfdate, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -161,7 +165,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
-	
+
 	public ActionEntity getAction(String caseId, String visitCode, String alertStatus, Date startDate) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(ActionEntity.class);
@@ -177,7 +181,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return (ActionEntity) actions.get(0);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> findAll(String tableClass) {
@@ -195,10 +199,10 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		finally {
 			session.close();
 		}
-		
+
 		return (List<T>) result;
 	}
-	
+
 	public <T> List<T> findAllByKey(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
@@ -208,23 +212,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public <T> List<T> findAllByCaseId(String caseId, String className) {
-		Session session = sessionFactory.openSession();
-		List<T> result = null;
-		try {
-			Query query = session.createQuery("from " + className + " where relationalId = :case_id ");
-			query.setParameter("case_id", caseId);
-			result = query.list();
-			session.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> List<T> list(int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
@@ -237,30 +225,30 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			session.close();
 		}
 		catch (Exception e) {
-			
+
 		}
-		
+
 		return products;
 	}
-	
+
 	public int count() {
 		return sessionFactory.openSession().createCriteria(HouseholdEntity.class).list().size();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(entityClassName);
-		
+
 		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
 			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 		}
 		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			
+
 			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
 		}
 		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			
+
 			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
 		}
 		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
@@ -275,7 +263,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
 			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
 		}
-		
+
 		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
 			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
 		}
@@ -285,7 +273,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
 		criteria.addOrder(Order.desc("created"));
-		
+
 		List<T> products = null;
 		try {
 			products = (List<T>) criteria.list();
@@ -294,26 +282,26 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		catch (Exception e) {
 			logger.error(e);
 		}
-		
+
 		return products;
 	}
-	
+
 	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
 		Session session = sessionFactory.openSession();
 		int count = 0;
 		Criteria criteria = session.createCriteria(entityClassName);
 		try {
-			
+
 			if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
 			}
 			if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
 			}
 			if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-				
+
 				criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
 			}
 			if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
@@ -340,20 +328,28 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		catch (Exception e) {
 			session.close();
 		}
-		
+
 		return count;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, List<ENCCEntity> encclist) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
-		
+
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-			        + "and isActionActive = :is_action_active " + "and visitCode LIKE :visit_code ");
+			String hql = "from ActionEntity where caseId = :case_id "
+					+ "and isActionActive = :is_action_active "
+					+ "and visitCode LIKE :visit_code ";
+
+			if(encclist != null && !encclist.isEmpty()) {
+				for(ENCCEntity encc : encclist) {
+					hql = hql + " and not visitCode = '" + encc.getEnccName() + "'";
+				}
+			}
+
+			Query query = session.createQuery(hql);
 			query.setParameter("case_id", caseId);
-			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
 			query.setParameter("visit_code", "encc%");
 			result = query.list();
@@ -364,20 +360,41 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<ActionEntity> findAllPendingMotherVisits(String caseId, String provider) {
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId, List<ANCEntity> anclist
+			, List<PNCEntity> pnclist, List<BNFEntity> bnflist) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
-		
+
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id " + "and provider = :provider_id "
-			        + "and isActionActive = :is_action_active " + "and (visitCode LIKE :visit_code "
-			        + "or visitCode LIKE :visit_code_pnc " + "or visitCode = :visit_code_bnf " + ")");
-			query.setParameter("case_id", caseId);
-			query.setParameter("provider_id", provider);
-			query.setParameter("is_action_active", true);
-			query.setParameter("visit_code", "anc%");
+			String hql = "FROM ActionEntity where caseId = '" + caseId + "'"
+					+ " and isActionActive = true "
+					+ " and (visitCode LIKE :visit_code_anc "
+					+ " or visitCode LIKE :visit_code_pnc "
+					+ " or (visitCode = :visit_code_bnf ";
+
+			if(bnflist != null && !bnflist.isEmpty()) {
+				for(BNFEntity bnf : bnflist) {
+					hql = hql + " and ( visitCode = :visit_code_bnf and startDate > '" + bnf.getStart() + "') " ;
+				}
+			}
+			hql = hql + "))";
+
+			if(anclist != null && !anclist.isEmpty()) {
+				for(ANCEntity anc : anclist) {
+					hql = hql + " and not visitCode = '" + anc.getAncName() + "'";
+				}
+			}
+
+			if(pnclist != null && !pnclist.isEmpty()) {
+				for(PNCEntity pnc : pnclist) {
+					hql = hql + " and not visitCode = '" + pnc.getPncName() + "'";
+				}
+			}
+
+			Query query = session.createQuery(hql);
+			query.setParameter("visit_code_anc", "anc%");
 			query.setParameter("visit_code_pnc", "pnc%");
 			query.setParameter("visit_code_bnf", "BirthNotificationPregnancyStatusFollowUp");
 			result = query.list();
@@ -388,7 +405,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return result;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String sqlQuery, String paramName, int paramValue) {
 		Session session = sessionFactory.openSession();
@@ -404,13 +421,13 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return results;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String provider, String caseId, String scheduleName, String userType,
-	                                         String sqlQuery) {
-		
+			String sqlQuery) {
+
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		
+
 		if (!provider.isEmpty()) {
 			query.setParameter("provider", provider);
 		}
@@ -424,10 +441,10 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			query.setParameter("userType", userType);
 		}
 		List<Object[]> results = query.list();
-		
+
 		return results;
 	}
-	
+
 	public <T> List<T> findAllActionByCaseIdAndVisitCode(String relationalid, String ancName) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(ActionEntity.class);
@@ -438,7 +455,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		session.close();
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getDataFromSQLFunction(String procedureName, String params) {
 		Session session = sessionFactory.openSession();
@@ -448,7 +465,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			Query query = session.createSQLQuery(hql);
 			aggregatedData = query.list();
 			logger.info("data fetched successfully from " + procedureName + ", aggregated data size: "
-			        + aggregatedData.size());
+					+ aggregatedData.size());
 			session.close();
 		}
 		catch (Exception e) {
@@ -456,26 +473,26 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		return aggregatedData;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeRawQuery(SearchBuilder searchBuilder, String sqlQuery) {
 		System.err.println("sqlQuery:" + sqlQuery);
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		
+
 		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			
+
 			query.setParameter("division", searchBuilder.getDivision().toUpperCase());
 		}
 		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			
+
 			query.setParameter("district", searchBuilder.getDistrict().toUpperCase());
 		}
 		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			
+
 			query.setParameter("upazila", searchBuilder.getUpazila());
 		}
 		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
-			
+
 			query.setParameter("unions", searchBuilder.getUnion());
 		}
 		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
@@ -491,9 +508,9 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 			query.setParameter("provider", searchBuilder.getProvider());
 		}
 		//query.setParameter("years", searchBuilder.getYear());
-		
+
 		List<Object[]> results = query.list();
-		
+
 		return results;
 	}
 }
