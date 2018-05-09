@@ -75,28 +75,8 @@ BEGIN
           (select count(*) from encc where date(received_time) between 
            CURRENT_DATE -INTERVAL '7 day' and CURRENT_DATE ),
           (select count(*) from encc where date(received_time)= current_date ));
-    
-   insert into dashboard_data_count(registerType,totalCount,thisMonthCount,lastSevenDaysCount,todaysCount)
-   values('psrf',(select count(*) from psrf),
-          (select count(*) from psrf where user_type='FD' and date(received_time) between 
-           date_trunc('month', current_date) and date_trunc('month',current_date)+ INTERVAL '1 MONTH - 1 day' ),
-          (select count(*) from psrf where user_type='FD' and date(received_time) between 
-           CURRENT_DATE -INTERVAL '7 day' and CURRENT_DATE ),
-          (select count(*) from psrf where user_type='FD' and date(received_time)= current_date ));
-          
-          
-   insert into dashboard_data_count(registerType,totalCount,thisMonthCount,lastSevenDaysCount,todaysCount)
-   values('bnf',(select count(*) from bnf),
-          (select count(*) from bnf where user_type='FD' and date(received_time) between 
-           date_trunc('month', current_date) and date_trunc('month',current_date)+ INTERVAL '1 MONTH - 1 day' ),
-          (select count(*) from bnf where user_type='FD' and date(received_time) between 
-           CURRENT_DATE -INTERVAL '7 day' and CURRENT_DATE ),
-          (select count(*) from bnf where user_type='FD' and date(received_time)= current_date ));
-          
-          
-          
-          
-   /*Return whole dashboard_data_count data*/
+
+   
    RETURN QUERY SELECT ttable.registerType
        , ttable.totalCount
        , ttable.thisMonthCount
@@ -105,4 +85,3 @@ BEGIN
        from dashboard_data_count ttable;
 
 END;
-$$ LANGUAGE plpgsql;

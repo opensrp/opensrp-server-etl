@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.service.HouseholdService;
+import org.mcare.params.builder.SearchBuilder;
+import org.mcare.visualization.DataVisualization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +29,12 @@ public class HouseholdServiceTest {
 	
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
+	
+	@Autowired
+	private DataVisualization dataVisualization;
+	
+	@Autowired
+	private SearchBuilder searchBuilder;
 	
 	@Ignore
 	@Test

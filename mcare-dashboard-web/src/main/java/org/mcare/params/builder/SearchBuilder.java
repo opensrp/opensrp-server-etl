@@ -25,6 +25,8 @@ public class SearchBuilder {
 	
 	private String search;
 	
+	private String year;
+	
 	public SearchBuilder() {
 		
 	}
@@ -40,8 +42,17 @@ public class SearchBuilder {
 		this.setProvider("");
 		this.setName("");
 		this.setSearch("");
+		this.setYear("");
 		return this;
 		
+	}
+	
+	public String getYear() {
+		return year;
+	}
+	
+	public void setYear(String year) {
+		this.year = year;
 	}
 	
 	public String getDivision() {
@@ -138,6 +149,7 @@ public class SearchBuilder {
 		result = prime * result + ((union == null) ? 0 : union.hashCode());
 		result = prime * result + ((upazila == null) ? 0 : upazila.hashCode());
 		result = prime * result + ((ward == null) ? 0 : ward.hashCode());
+		result = prime * result + ((year == null) ? 0 : year.hashCode());
 		return result;
 	}
 	
@@ -200,6 +212,11 @@ public class SearchBuilder {
 				return false;
 		} else if (!ward.equals(other.ward))
 			return false;
+		if (year == null) {
+			if (other.year != null)
+				return false;
+		} else if (!year.equals(other.year))
+			return false;
 		return true;
 	}
 	
@@ -207,7 +224,7 @@ public class SearchBuilder {
 	public String toString() {
 		return "SearchBuilder [division=" + division + ", district=" + district + ", upazila=" + upazila + ", union="
 		        + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzapara=" + mauzapara + ", provider=" + provider
-		        + ", name=" + name + ", search=" + search + "]";
+		        + ", name=" + name + ", search=" + search + ", year=" + year + "]";
 	}
 	
 }

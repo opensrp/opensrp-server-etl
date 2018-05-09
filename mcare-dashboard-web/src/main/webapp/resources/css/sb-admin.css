@@ -235,7 +235,7 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
 }
  @media (min-width: 992px) {
 .content-wrapper {
-	margin-left: 250px;
+	/* margin-left: 250px; */
 }
 }
 #sidenavToggler i {
@@ -381,7 +381,7 @@ footer.sticky-footer {
 
  @media (min-width: 992px) {
 footer.sticky-footer {
-	width: calc(100% - 250px);
+	/* width: calc(100% - 250px); */
 }
 }
  @media (min-width: 992px) {
