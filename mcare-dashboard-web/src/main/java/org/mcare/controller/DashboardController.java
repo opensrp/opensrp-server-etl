@@ -57,11 +57,13 @@ public class DashboardController {
 		searchUtil.setDivisionAttribute(session);
 		searchUtil.setSelectedfilter(request, session);
 		logger.info("SS:" + searchBuilder.toString());
-		List<Object[]> data = dataVisualization.getData(VisualizeDataType.household.name(), searchBuilder);
-		System.err.println("" + data.toString());
-		for (Object[] row : data) {
+		List<Object[]> yearlyCountData = dataVisualization.getData(VisualizeDataType.household.name(), searchBuilder);
+		System.err.println("" + yearlyCountData.toString());
+		for (Object[] row : yearlyCountData) {
 			System.err.println("" + row[0] + ": " + row[1]);
 		}
+		
+		session.setAttribute("yearlyCountData", yearlyCountData);
 		return "visualize/household";
 		
 	}

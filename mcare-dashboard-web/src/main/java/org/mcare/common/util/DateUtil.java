@@ -18,6 +18,10 @@ public class DateUtil {
 	
 	public static DateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 	
+	public enum Months {
+		JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+	}
+	
 	public static Date parseDate(String date) throws ParseException {
 		try {
 			return yyyyMMdd.parse(date);
@@ -39,4 +43,8 @@ public class DateUtil {
 		
 	}
 	
+	public static String getMonthName(int position) {
+		return Months.values()[position].name();
+		
+	}
 }

@@ -1,9 +1,14 @@
+<%@page import="com.google.gson.JsonArray"%>
+<%@page import="com.google.gson.JsonObject"%>
+<%@page import="org.json.JSONObject" %>
+<%@page import="org.json.JSONArray" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="org.mcare.common.util.DateUtil"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -49,7 +54,24 @@
 			</div> <!-- row -->
 				
 		</div>
+		<% 
+		JSONArray monthlySeriesData = new JSONArray();
+		List<Object[]> yearlyCountData = (List<Object[]>) session.getAttribute("yearlyCountData");
+		for (Object[] row : yearlyCountData) {			
+			Double monthNumber = Double.parseDouble(row[0].toString());			
+			JSONObject monthWiseSeriesData = new JSONObject();
+			monthWiseSeriesData.put("name", DateUtil.getMonthName((int) Math.round(monthNumber)-1));
+			monthWiseSeriesData.put("y", row[1]);
+			monthWiseSeriesData.put("drilldown", DateUtil.getMonthName((int) Math.round(monthNumber)-1));
+			monthlySeriesData.put(monthWiseSeriesData);
+			
+		}
 		
+		
+			
+		 
+		
+		%>
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 	<script src="<c:url value='/resources/chart/highcharts.js'/>"></script>
@@ -386,7 +408,16 @@
 	</script>
 	<script type="text/javascript">
 	// Create the chart
-	Highcharts.chart('container', {
+	
+	var person = new Object();
+	person.name = "Chrome";
+	person.y = 62.74;
+	person.drilldown = "Chrome";
+	
+	   var chartData=[];
+	   chartData.push(person);
+	
+	var chart = Highcharts.chart('container', {
 	    chart: {
 	        type: 'column'
 	    },
@@ -413,7 +444,7 @@
 	            borderWidth: 0,
 	            dataLabels: {
 	                enabled: true,
-	                format: '{point.y:.1f}%'
+	                format: '{point.y:.1f}'
 	            }
 	        }
 	    },
@@ -427,43 +458,7 @@
 	        {
 	            "name": "Browsers",
 	            "colorByPoint": true,
-	            "data": [
-	                {
-	                    "name": "Chrome",
-	                    "y": 62.74,
-	                    "drilldown": "Chrome"
-	                },
-	                {
-	                    "name": "Firefox",
-	                    "y": 10.57,
-	                    "drilldown": "Firefox"
-	                },
-	                {
-	                    "name": "Internet Explorer",
-	                    "y": 7.23,
-	                    "drilldown": "Internet Explorer"
-	                },
-	                {
-	                    "name": "Safari",
-	                    "y": 5.58,
-	                    "drilldown": "Safari"
-	                },
-	                {
-	                    "name": "Edge",
-	                    "y": 4.02,
-	                    "drilldown": "Edge"
-	                },
-	                {
-	                    "name": "Opera",
-	                    "y": 1.92,
-	                    "drilldown": "Opera"
-	                },
-	                {
-	                    "name": "Other",
-	                    "y": 7.62,
-	                    "drilldown": null
-	                }
-	            ]
+	            "data": <%=monthlySeriesData%>
 	        }
 	    ],
 	    "drilldown": {

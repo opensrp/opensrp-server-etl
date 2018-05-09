@@ -297,7 +297,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 	color: white;
 }
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level,  #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level {
-	background: #343a40;
+	background: #2a649e;
 }
 }
 #mainNav.navbar-light .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
@@ -370,10 +370,12 @@ footer.sticky-footer {
 	bottom: 0;
 	width: 100%;
 	height: 56px;
-	background-color: #e9ecef;
+	background-color: #2a649e;
 	line-height: 55px;
 }
-
+.bg-dark {
+    background-color: #2a649e!important;
+}
 .bg-login{ background:url(../img/bg.jpg) no-repeat; background-size:cover;
 }
 
