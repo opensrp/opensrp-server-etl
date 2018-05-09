@@ -18,6 +18,7 @@ import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.BNFEntity;
+import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.entity.PNCEntity;
 import org.mcare.params.builder.SearchBuilder;
@@ -332,17 +333,23 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, List<ENCCEntity> encclist) {
 		Session session = sessionFactory.openSession();
 		List<ActionEntity> result = null;
 
 		try {
-			Query query = session.createQuery("from ActionEntity where caseId = :case_id "
-					+ "and provider = :provider_id "
+			String hql = "from ActionEntity where caseId = :case_id "
 					+ "and isActionActive = :is_action_active "
-					+ "and visitCode LIKE :visit_code ");
+					+ "and visitCode LIKE :visit_code ";
+
+			if(encclist != null && !encclist.isEmpty()) {
+				for(ENCCEntity encc : encclist) {
+					hql = hql + " and not visitCode = '" + encc.getEnccName() + "'";
+				}
+			}
+
+			Query query = session.createQuery(hql);
 			query.setParameter("case_id", caseId);
-			query.setParameter("provider_id", provider);
 			query.setParameter("is_action_active", true);
 			query.setParameter("visit_code", "encc%");
 			result = query.list();

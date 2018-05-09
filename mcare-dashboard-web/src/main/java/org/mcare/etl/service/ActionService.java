@@ -8,6 +8,7 @@ import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
 import org.mcare.etl.entity.BNFEntity;
+import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.entity.PNCEntity;
 import org.mcare.etl.interfaces.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +72,8 @@ public class ActionService implements RegisterService<ActionEntity> {
 	}
 
 	@Transactional
-	public List<ActionEntity> findAllPendingChildVisits(String caseId, String provider) {
-		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, provider);
+	public List<ActionEntity> findAllPendingChildVisits(String caseId, List<ENCCEntity> encclist) {
+		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, encclist);
 	}
 
 	@Transactional
