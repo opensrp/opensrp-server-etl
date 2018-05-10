@@ -37,7 +37,7 @@
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<jsp:include page="/WEB-INF/views/visualize/visualizeSearchPanel.jsp" />
+			<jsp:include page="/WEB-INF/views/visualization/visualizeSearchPanel.jsp" />
 				
 		
 		
