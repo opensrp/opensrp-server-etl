@@ -7,11 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.common.util.SearchUtil;
 import org.mcare.params.builder.SearchBuilder;
 import org.mcare.visualization.DataVisualization;
-import org.mcare.visualization.utils.VisualizeDataType;
+import org.mcare.visualization.highchart.HighChart;
+import org.mcare.visualization.service.VisualizationService;
+import org.mcare.visualization.service.impl.HouseholdDataVisualizeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +41,11 @@ public class DashboardController {
 	@Autowired
 	private DataVisualization dataVisualization;
 	
+	@Autowired
+	private HouseholdDataVisualizeServiceImpl householdDataVisualizeServiceImpl;
+	
+	public VisualizationService visualizationService;
+	
 	@RequestMapping("/")
 	public String showHome(Model model, HttpSession session) {
 		List<Object> dashboardDataCountList = (List<Object>) databaseServiceImpl.getDataFromSQLFunction(
@@ -47,8 +56,10 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "visualize/household.html", method = RequestMethod.GET)
-	public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) {
+	public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
 		model.addAttribute("title", "Household search criteria");
+		
+		visualizationService = householdDataVisualizeServiceImpl;
 		searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
 		if (searchBuilder.getYear() == null || searchBuilder.getYear().isEmpty()) {
 			searchBuilder.setYear(currentYear.toString());
@@ -56,15 +67,20 @@ public class DashboardController {
 		searchUtil.setProviderAttribute(session);
 		searchUtil.setDivisionAttribute(session);
 		searchUtil.setSelectedfilter(request, session);
-		logger.info("SS:" + searchBuilder.toString());
-		List<Object[]> yearlyCountData = dataVisualization.getData(VisualizeDataType.household.name(), searchBuilder);
-		System.err.println("" + yearlyCountData.toString());
-		for (Object[] row : yearlyCountData) {
-			System.err.println("" + row[0] + ": " + row[1]);
-		}
 		
-		session.setAttribute("yearlyCountData", yearlyCountData);
-		return "visualize/household";
+		List<Object[]> monthWiseData = dataVisualization.getMonthWiseData(searchBuilder, visualizationService);
+		JSONArray monthWiseSeriesData = HighChart.getMonthWiseSeriesData(monthWiseData);
+		
+		List<Object[]> dayWiseData = dataVisualization.getDayWiseData(searchBuilder, visualizationService);
+		JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesData(dayWiseData);
+		JSONArray lineChartData = HighChart.getLineChartData(monthWiseData, searchBuilder.getYear());
+		JSONArray lineChartCategory = HighChart.getLineChartCategory(monthWiseData);
+		session.setAttribute("dayWiseData", dataJsonArray);
+		session.setAttribute("lineChartData", lineChartData);
+		session.setAttribute("monthWiseSeriesData", monthWiseSeriesData);
+		session.setAttribute("lineChartCategory", lineChartCategory);
+		session.setAttribute("chatTitle", "Household data visualization");
+		return "visualization/visualization";
 		
 	}
 }

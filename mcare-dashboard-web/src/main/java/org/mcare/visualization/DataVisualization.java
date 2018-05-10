@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class DataVisualization {
 	
-	public VisualizationService visualizationService;
-	
 	@Autowired
 	public DataVisualizationFactory dataVisualizationFactory;
 	
-	public List<Object[]> getData(String visualizeDataType, SearchBuilder searchBuilder) {
-		visualizationService = dataVisualizationFactory.getVisualizeDataType(visualizeDataType);
-		return visualizationService.getData(searchBuilder);
+	public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder, VisualizationService visualizationService) {
+		return visualizationService.getMonthWiseData(searchBuilder);
+	}
+	
+	public List<Object[]> getDayWiseData(SearchBuilder searchBuilder, VisualizationService visualizationService) {
+		return visualizationService.getDayWiseData(searchBuilder);
 	}
 	
 }

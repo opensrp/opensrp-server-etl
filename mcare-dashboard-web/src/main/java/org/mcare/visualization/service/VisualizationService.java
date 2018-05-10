@@ -6,6 +6,8 @@ import org.mcare.params.builder.SearchBuilder;
 
 public interface VisualizationService {
 	
-	public List<Object[]> getData(SearchBuilder searchBuilder);
+	public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder);
+	
+	public List<Object[]> getDayWiseData(SearchBuilder searchBuilder);
 	
 }

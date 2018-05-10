@@ -67,7 +67,6 @@ public class HouseholdServiceTest {
 		}
 	}
 	
-	@Ignore
 	@Test
 	public void dateConverStingToDate() {
 		
