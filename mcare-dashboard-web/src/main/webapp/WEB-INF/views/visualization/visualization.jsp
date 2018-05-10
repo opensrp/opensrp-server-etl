@@ -46,12 +46,14 @@
 			</div> <!-- row -->
 			<br />
 			<div class="row">
+			<div class="col-lg-6 col-xs-6">	
 				<div id="pieDrilled" style="width: 100%; height: auto; margin: 0 auto"></div>
-			</div> <!-- row -->
-			<br />
-			<div class="row">
+				</div>
+				<div class="col-lg-6 col-xs-6">	
 				<div id="lineChart" style="width: 100%; height: auto; margin: 0 auto"></div>
+				</div>
 			</div> <!-- row -->
+			
 				
 		</div>
 		<% 
@@ -73,7 +75,7 @@
 	        type: 'line'
 	    },
 	    title: {
-	        text: '<%=chartTitle%>'
+	        text: ''
 	    },
 	    subtitle: {
 	        text: ''
@@ -109,7 +111,7 @@
 	        type: 'pie'
 	    },
 	    title: {
-	        text: '<%=chartTitle%>'
+	        text: ''
 	    },
 	    subtitle: {
 	        text: ''
