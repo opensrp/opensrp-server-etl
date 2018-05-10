@@ -42,15 +42,15 @@
 		
 		
 			<div class="row">
-				<div id="barChartDirlled" style="width: 100%; height: auto; margin: 0 auto"></div>
+				<div id="barChartDirlled" style="width: 100%; height: 250px; margin: 0 auto"></div>
 			</div> <!-- row -->
-			<br />
+			<hr />
 			<div class="row">
-			<div class="col-lg-6 col-xs-6">	
-				<div id="pieDrilled" style="width: 100%; height: auto; margin: 0 auto"></div>
+				<div class="col-lg-6 col-xs-6">	
+					<div id="pieDrilled" style="width: 100%; height: 250px; margin: 0 auto"></div>
 				</div>
 				<div class="col-lg-6 col-xs-6">	
-				<div id="lineChart" style="width: 100%; height: auto; margin: 0 auto"></div>
+					<div id="lineChart" style="width: 100%; height: 250px; margin: 0 auto"></div>
 				</div>
 			</div> <!-- row -->
 			
