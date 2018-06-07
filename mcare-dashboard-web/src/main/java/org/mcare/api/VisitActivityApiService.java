@@ -1,7 +1,7 @@
 package org.mcare.api;
 
-import org.mcare.api.service.impl.BNFVisitActivity;
-import org.mcare.api.service.impl.PSRFVisitActivity;
+import org.mcare.api.service.impl.BNFVisitActivityServiceImpl;
+import org.mcare.api.service.impl.PSRFVisitActivityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,19 +9,21 @@ import org.springframework.stereotype.Service;
 public class VisitActivityApiService {
 	
 	@Autowired
-	private PSRFVisitActivity psrfVisitActivity;
+	private PSRFVisitActivityServiceImpl psrfVisitActivity;
 	
 	@Autowired
-	private BNFVisitActivity bnfVisitActivity;
+	private BNFVisitActivityServiceImpl bnfVisitActivity;
 	
 	public void doPSRFVisitActivities(String caseId) {
-		psrfVisitActivity.inactiveMotherWithPSRFAndANCAndPNCAndBNFByCaseId(caseId);
+		psrfVisitActivity.inactiveMotherWithPSRFAndANCAndPNCAndBNFActionByCaseId(caseId);
 	}
 	
 	public void doBNFVisitActivities(String caseId, String visitCode) {
 		if ("0".equalsIgnoreCase(visitCode)) {
-			bnfVisitActivity.inactiveMotherAndChildAndRelatedActionExceptPSRFByCaseId(caseId);
+			System.err.println("visitCode::" + visitCode);
+			bnfVisitActivity.activeMotherAndInactiveChildAndRelatedActionExceptPSRFByCaseId(caseId);
 		} else {
+			System.err.println("visitCode:::" + visitCode);
 			bnfVisitActivity.inactiveMotherAndChildWithRelatedActionByCaseId(caseId);
 		}
 		

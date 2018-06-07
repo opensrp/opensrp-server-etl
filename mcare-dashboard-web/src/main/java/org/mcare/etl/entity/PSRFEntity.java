@@ -146,6 +146,28 @@ public class PSRFEntity {
 	
 	private String relationalId;//getting from elco
 	
+	@Column(name = "void_status", columnDefinition = "int default 0")
+	private int voidStatus;
+	
+	@Column(name = "void_remarks")
+	private String voidRemarks;
+	
+	public String getvoidRemarks() {
+		return voidRemarks;
+	}
+	
+	public void setvoidRemarks(String voidRemarks) {
+		this.voidRemarks = voidRemarks;
+	}
+	
+	public int getvoidStatus() {
+		return voidStatus;
+	}
+	
+	public void setvoidStatus(int voidStatus) {
+		this.voidStatus = voidStatus;
+	}
+	
 	public String getProvider() {
 		return provider;
 	}
@@ -545,23 +567,21 @@ public class PSRFEntity {
 	public void setToday(Date today) {
 		this.today = today;
 	}
-
+	
 	public Date getCreated() {
 		return created;
 	}
-
+	
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-
+	
 	public Date getUpdated() {
 		return updated;
 	}
-
+	
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-	
-	
 	
 }

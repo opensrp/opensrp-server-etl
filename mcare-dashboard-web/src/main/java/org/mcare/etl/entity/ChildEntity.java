@@ -73,10 +73,32 @@ public class ChildEntity extends CommonEntity {
 	
 	@Column(name = "birth_date_and_time")
 	private Date birthDateAndTime;//details
-
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "mother_id", referencedColumnName = "id")
 	private MotherEntity mother;
+	
+	@Column(name = "void_status", columnDefinition = "int default 0")
+	private int voidStatus;
+	
+	@Column(name = "void_remarks")
+	private String voidRemarks;
+	
+	public String getvoidRemarks() {
+		return voidRemarks;
+	}
+	
+	public void setvoidRemarks(String voidRemarks) {
+		this.voidRemarks = voidRemarks;
+	}
+	
+	public int getvoidStatus() {
+		return voidStatus;
+	}
+	
+	public void setvoidStatus(int voidStatus) {
+		this.voidStatus = voidStatus;
+	}
 	
 	public int getId() {
 		return id;

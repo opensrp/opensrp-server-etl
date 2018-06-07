@@ -2,6 +2,7 @@ package org.mcare.common.repository.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -128,6 +129,19 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		List<T> result = criteria.list();
 		session.close();
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
+	}
+	
+	public <T> List<T> findAllByKeys(Map<String, String> fielaValues, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		for (Map.Entry<String, String> entry : fielaValues.entrySet()) {
+			criteria.add(Restrictions.eq(entry.getKey(), entry.getValue()));
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
 	
 	@SuppressWarnings("unchecked")

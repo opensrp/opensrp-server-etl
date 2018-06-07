@@ -49,36 +49,37 @@ public class ActionService implements RegisterService<ActionEntity> {
 		return databaseRepositoryImpl.delete(actionEntity);
 		
 	}
-
+	
 	@Override
 	public void update(ActionEntity actionEntity) {
 		databaseRepositoryImpl.update(actionEntity);
 	}
-
+	
 	@Override
 	public ActionEntity findById(int id) {
 		return null;
 	}
-
+	
 	@Transactional
 	@Override
 	public ActionEntity findByCaseId(String caseId) {
 		return databaseRepositoryImpl.findByKey(caseId, "caseId", ActionEntity.class);
 	}
-
+	
 	@Transactional
 	public List<ActionEntity> findAllByCaseId(String caseId) {
 		return databaseRepositoryImpl.findAllByKey(caseId, "caseId", ActionEntity.class);
 	}
-
+	
 	@Transactional
 	public List<ActionEntity> findAllPendingChildVisits(String caseId, List<ENCCEntity> encclist) {
 		return databaseRepositoryImpl.findAllPendingChildVisits(caseId, encclist);
 	}
-
+	
 	@Transactional
-	public List<ActionEntity> findAllPendingMotherVisits(String caseId, List<ANCEntity> anclist
-			, List<PNCEntity> pnclist, List<BNFEntity> bnflist) {
+	public List<ActionEntity> findAllPendingMotherVisits(String caseId, List<ANCEntity> anclist, List<PNCEntity> pnclist,
+	                                                     List<BNFEntity> bnflist) {
 		return databaseRepositoryImpl.findAllPendingMotherVisits(caseId, anclist, pnclist, bnflist);
 	}
+	
 }
