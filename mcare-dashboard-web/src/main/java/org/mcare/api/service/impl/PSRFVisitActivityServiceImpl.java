@@ -1,5 +1,7 @@
 package org.mcare.api.service.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.mcare.api.services.ActionActivityService;
 import org.mcare.api.utils.VoidRemarks;
@@ -35,7 +37,6 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 				databaseServiceImpl.update(mother);
 			}
 			inactivePSRFVisitByCaseId(caseId);
-			System.err.println("visitCode:::");
 			inactiveANCVisitByCaseId(caseId);
 			inactiveBNFVisitBycaseId(caseId);
 			inactivePNCVisitByCaseId(caseId);
@@ -48,13 +49,13 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 		
 	}
 	
-	public void inactiveMotherWithANCAndPNCAndBNFActionByCaseId(String caseId) {
+	public void activeMotherWithANCAndPNCAndBNFActionByCaseId(String caseId) {
 		MotherEntity mother = (MotherEntity) databaseServiceImpl.findByKey(caseId, "caseId", MotherEntity.class);
 		
 		try {
 			if (mother != null) {
-				mother.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				mother.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+				mother.setvoidStatus(VoidStatus.NOACTION.status());
+				mother.setvoidRemarks(null);
 				databaseServiceImpl.update(mother);
 			}
 			
@@ -76,13 +77,18 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	void inactivePSRFVisitByCaseId(String caseId) {
-		PSRFEntity psrf = (PSRFEntity) databaseServiceImpl.findByKey(caseId, "relationalId", PSRFEntity.class);
-		System.err.println("psrf" + psrf);
+		@SuppressWarnings("unchecked")
+		List<PSRFEntity> psrfEntities = (List<PSRFEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		    PSRFEntity.class);
+		
 		try {
-			if (psrf != null) {
-				psrf.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				psrf.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
-				databaseServiceImpl.update(psrf);
+			if (psrfEntities.size() != 0) {
+				for (PSRFEntity psrfEntity : psrfEntities) {
+					psrfEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
+					psrfEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+					databaseServiceImpl.update(psrfEntity);
+				}
+				
 			}
 			
 		}
@@ -94,13 +100,18 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	void inactiveANCVisitByCaseId(String caseId) {
-		ANCEntity anc = (ANCEntity) databaseServiceImpl.findByKey(caseId, "relationalId", ANCEntity.class);
+		@SuppressWarnings("unchecked")
+		List<ANCEntity> ancEntities = (List<ANCEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		    ANCEntity.class);
 		
 		try {
-			if (anc != null) {
-				anc.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				anc.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
-				databaseServiceImpl.update(anc);
+			if (ancEntities.size() != 0) {
+				for (ANCEntity ancEntity : ancEntities) {
+					ancEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
+					ancEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+					databaseServiceImpl.update(ancEntity);
+				}
+				
 			}
 			
 		}
@@ -111,13 +122,18 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	void inactiveBNFVisitBycaseId(String caseId) {
-		BNFEntity bnf = (BNFEntity) databaseServiceImpl.findByKey(caseId, "relationalId", BNFEntity.class);
+		@SuppressWarnings("unchecked")
+		List<BNFEntity> bnfEntities = (List<BNFEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		    BNFEntity.class);
 		
 		try {
-			if (bnf != null) {
-				bnf.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				bnf.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
-				databaseServiceImpl.update(bnf);
+			if (bnfEntities.size() != 0) {
+				for (BNFEntity bnfEntity : bnfEntities) {
+					bnfEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
+					bnfEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+					databaseServiceImpl.update(bnfEntity);
+				}
+				
 			}
 			
 		}
@@ -127,13 +143,18 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	void inactivePNCVisitByCaseId(String caseId) {
-		PNCEntity pnc = (PNCEntity) databaseServiceImpl.findByKey(caseId, "relationalId", PNCEntity.class);
+		@SuppressWarnings("unchecked")
+		List<PNCEntity> pncEntities = (List<PNCEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		    PNCEntity.class);
 		
 		try {
-			if (pnc != null) {
-				pnc.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				pnc.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
-				databaseServiceImpl.update(pnc);
+			if (pncEntities.size() != 0) {
+				for (PNCEntity pncEntity : pncEntities) {
+					pncEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
+					pncEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+					databaseServiceImpl.update(pncEntity);
+				}
+				
 			}
 			
 		}

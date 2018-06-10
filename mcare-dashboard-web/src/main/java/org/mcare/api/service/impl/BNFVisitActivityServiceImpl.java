@@ -1,5 +1,7 @@
 package org.mcare.api.service.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.mcare.api.services.ActionActivityService;
 import org.mcare.api.utils.VoidRemarks;
@@ -36,6 +38,7 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 				child.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 				databaseServiceImpl.update(child);
 			}
+			inactiveENCCVisitByCaseId(caseId);
 			inactiveAllActionByCaseId(caseId);
 		}
 		catch (Exception e) {
@@ -53,7 +56,7 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 		ChildEntity child = (ChildEntity) databaseServiceImpl.findByKey(caseId, "caseId", ChildEntity.class);
 		
 		try {
-			psrfVisitActivityServiceImpl.inactiveMotherWithANCAndPNCAndBNFActionByCaseId(child.getRelationalId());
+			psrfVisitActivityServiceImpl.activeMotherWithANCAndPNCAndBNFActionByCaseId(child.getRelationalId());
 			if (child != null) {
 				child.setvoidStatus(VoidStatus.FALSEREPORT.status());
 				child.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
@@ -68,13 +71,18 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	void inactiveENCCVisitByCaseId(String caseId) {
-		ENCCEntity encc = (ENCCEntity) databaseServiceImpl.findByKey(caseId, "relationalId", ENCCEntity.class);
+		@SuppressWarnings("unchecked")
+		List<ENCCEntity> enccEntities = (List<ENCCEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		    ENCCEntity.class);
 		
 		try {
-			if (encc != null) {
-				encc.setvoidStatus(VoidStatus.FALSEREPORT.status());
-				encc.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
-				databaseServiceImpl.update(encc);
+			if (enccEntities.size() != 0) {
+				for (ENCCEntity enccEntity : enccEntities) {
+					enccEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
+					enccEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
+					databaseServiceImpl.update(enccEntity);
+				}
+				
 			}
 			
 		}
