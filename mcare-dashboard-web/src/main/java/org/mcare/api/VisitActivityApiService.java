@@ -19,8 +19,10 @@ public class VisitActivityApiService {
 	 * Woman Sterilized, 44: স্বামী স্থায়ী পদ্ধতি গ্রহণ করেছেন Husband Sterilized, 05:
 	 * তালাকপ্রাপ্তা/আলাদা থাকেন Divorced / Separated, 08: মহিলা মারা গেছেন Woman Died, 88: স্বামী
 	 * মারা গেছেন Husband Died, 999: DMC ONLY DMC ONLY
+	 * 
+	 * @throws Exception
 	 */
-	public void doPSRFVisitActivities(String caseId) {
+	public void doPSRFVisitActivities(String caseId) throws Exception {
 		psrfVisitActivity.inactiveMotherWithPSRFAndANCAndPNCAndBNFActionByCaseId(caseId);
 	}
 	
@@ -31,7 +33,7 @@ public class VisitActivityApiService {
 	 **/
 	public void doBNFVisitActivities(String caseId, String visitCode) {
 		if ("0".equalsIgnoreCase(visitCode)) {
-			bnfVisitActivity.activeMotherAndInactiveChildAndRelatedActionExceptPSRFByCaseId(caseId);
+			bnfVisitActivity.inactiveMotherAndChildAndRelatedActionExceptPSRFByCaseId(caseId);
 		} else {
 			bnfVisitActivity.inactiveMotherAndChildWithRelatedActionByCaseId(caseId);
 		}

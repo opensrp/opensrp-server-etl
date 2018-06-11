@@ -28,22 +28,22 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 	}
 	
 	public void inactiveMotherAndChildWithRelatedActionByCaseId(String caseId) {
-		ChildEntity child = (ChildEntity) databaseServiceImpl.findByKey(caseId, "caseId", ChildEntity.class);
+		ChildEntity child = (ChildEntity) databaseServiceImpl.findByKey(caseId, "relationalId", ChildEntity.class);
+		String childCaseId = child.caseId;
 		
-		System.err.println("child.getRelationalId()" + child.getRelationalId());
 		try {
-			psrfVisitActivityServiceImpl.inactiveMotherWithPSRFAndANCAndPNCAndBNFActionByCaseId(child.getRelationalId());
+			psrfVisitActivityServiceImpl.inactiveMotherWithPSRFAndANCAndPNCAndBNFActionByCaseId(caseId);
 			if (child != null) {
 				child.setvoidStatus(VoidStatus.FALSEREPORT.status());
 				child.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 				databaseServiceImpl.update(child);
 			}
-			inactiveENCCVisitByCaseId(caseId);
-			inactiveAllActionByCaseId(caseId);
+			inactiveENCCVisitByCaseId(childCaseId);
+			inactiveAllActionByCaseId(childCaseId);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			logger.error("does not update record at case id :" + caseId + ", message:" + e.getMessage());
+			logger.error("does not update record at case id :" + childCaseId + ", message:" + e.getMessage());
 		}
 		
 	}
@@ -52,42 +52,41 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 		
 	}
 	
-	public void activeMotherAndInactiveChildAndRelatedActionExceptPSRFByCaseId(String caseId) {
-		ChildEntity child = (ChildEntity) databaseServiceImpl.findByKey(caseId, "caseId", ChildEntity.class);
-		
+	public void inactiveMotherAndChildAndRelatedActionExceptPSRFByCaseId(String caseId) {
+		ChildEntity child = (ChildEntity) databaseServiceImpl.findByKey(caseId, "relationalId", ChildEntity.class);
+		String childCaseId = child.caseId;
 		try {
-			psrfVisitActivityServiceImpl.activeMotherWithANCAndPNCAndBNFActionByCaseId(child.getRelationalId());
+			psrfVisitActivityServiceImpl.inactiveMotherWithANCAndPNCAndBNFActionByCaseId(caseId);
 			if (child != null) {
 				child.setvoidStatus(VoidStatus.FALSEREPORT.status());
 				child.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 				databaseServiceImpl.update(child);
 			}
-			inactiveENCCVisitByCaseId(caseId);
-			inactiveAllActionByCaseId(caseId);
+			inactiveENCCVisitByCaseId(childCaseId);
+			inactiveAllActionByCaseId(childCaseId);
 		}
 		catch (Exception e) {
-			logger.error("does not update record at case id :" + caseId);
+			logger.error("does not update record at case id :" + childCaseId);
 		}
 	}
 	
-	void inactiveENCCVisitByCaseId(String caseId) {
+	void inactiveENCCVisitByCaseId(String relationalId) throws Exception {
+		
 		@SuppressWarnings("unchecked")
-		List<ENCCEntity> enccEntities = (List<ENCCEntity>) databaseServiceImpl.findAllByKey(caseId, "relationalId",
+		List<ENCCEntity> enccEntities = (List<ENCCEntity>) databaseServiceImpl.findAllByKey(relationalId, "relationalId",
 		    ENCCEntity.class);
 		
-		try {
-			if (enccEntities.size() != 0) {
-				for (ENCCEntity enccEntity : enccEntities) {
+		if (enccEntities.size() != 0) {
+			for (ENCCEntity enccEntity : enccEntities) {
+				if (enccEntity != null) {
 					enccEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
 					enccEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 					databaseServiceImpl.update(enccEntity);
+				} else {
+					logger.error("does not update encc record at case id :" + relationalId);
 				}
-				
 			}
 			
-		}
-		catch (Exception e) {
-			logger.error("does not update encc record at case id :" + caseId);
 		}
 		
 	}

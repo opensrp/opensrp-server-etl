@@ -16,8 +16,13 @@ public class VisitActivityController {
 	
 	@RequestMapping(value = "/psrf", method = RequestMethod.GET)
 	public void postRequestForPSRFVisitActivity(@RequestParam String caseid) {
-		System.err.println("aseId:" + caseid);
-		visitActivityApiService.doPSRFVisitActivities(caseid);
+		
+		try {
+			visitActivityApiService.doPSRFVisitActivities(caseid);
+		}
+		catch (Exception e) {
+			
+		}
 	}
 	
 	@RequestMapping(value = "/bnf", method = RequestMethod.GET)
