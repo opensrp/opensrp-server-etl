@@ -37,8 +37,8 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 			inactiveANCVisitByCaseId(caseId);
 			inactiveBNFVisitBycaseId(caseId);
 			inactivePNCVisitByCaseId(caseId);
-			
 			inactiveAllActionByCaseId(caseId);
+			logger.info("updated mother at case id :" + caseId);
 		} else {
 			logger.error("does not update record at case id :" + caseId);
 		}
@@ -59,6 +59,7 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 			inactiveANCActionByCaseId(caseId);
 			inactiveBNFActionByCaseId(caseId);
 			inactivePNCActionByCaseId(caseId);
+			logger.info("updated mother at case id :" + caseId);
 		} else {
 			logger.error("does not update record at case id :" + caseId);
 		}
@@ -80,6 +81,7 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 					psrfEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
 					psrfEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 					databaseServiceImpl.update(psrfEntity);
+					logger.info("updated psrf record at  id :" + caseId);
 				} else {
 					logger.error("does not update psrf record at  id :" + caseId);
 				}
@@ -100,6 +102,7 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 					ancEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
 					ancEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 					databaseServiceImpl.update(ancEntity);
+					logger.info("updated anc record at case id :" + caseId);
 				} else {
 					logger.error("does not update anc record at case id :" + caseId);
 					

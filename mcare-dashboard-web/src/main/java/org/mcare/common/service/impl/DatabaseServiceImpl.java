@@ -134,9 +134,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 			actionEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 			try {
 				databaseRepositoryImpl.update(actionEntity);
+				logger.info("updated " + actionEntity.getScheduleName() + " ,action at case id :" + actionEntity.getCaseId());
 			}
 			catch (Exception e) {
-				logger.error("does not update record at case id :" + actionEntity.getCaseId());
+				logger.error("does not update action at case id :" + actionEntity.getCaseId());
 			}
 		}
 		

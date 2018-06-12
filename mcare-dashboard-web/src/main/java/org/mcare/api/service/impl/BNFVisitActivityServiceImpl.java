@@ -40,9 +40,10 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 			}
 			inactiveENCCVisitByCaseId(childCaseId);
 			inactiveAllActionByCaseId(childCaseId);
+			logger.info("updated child at case id :" + childCaseId);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			
 			logger.error("does not update record at case id :" + childCaseId + ", message:" + e.getMessage());
 		}
 		
@@ -61,6 +62,7 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 				child.setvoidStatus(VoidStatus.FALSEREPORT.status());
 				child.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 				databaseServiceImpl.update(child);
+				logger.info("updated child at case id :" + childCaseId);
 			}
 			inactiveENCCVisitByCaseId(childCaseId);
 			inactiveAllActionByCaseId(childCaseId);
@@ -82,8 +84,9 @@ public class BNFVisitActivityServiceImpl extends ActionActivityService {
 					enccEntity.setvoidStatus(VoidStatus.FALSEREPORT.status());
 					enccEntity.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 					databaseServiceImpl.update(enccEntity);
+					logger.info("updated encc at relational id :" + relationalId);
 				} else {
-					logger.error("does not update encc record at case id :" + relationalId);
+					logger.error("does not update encc  at case id :" + relationalId);
 				}
 			}
 			
