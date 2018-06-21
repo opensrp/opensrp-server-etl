@@ -63,8 +63,12 @@ public abstract class ActionActivityService {
 		Map<String, String> fieldValues = new HashMap<String, String>();
 		fieldValues.put("caseId", caseId);
 		List<ActionEntity> action = databaseServiceImpl.findAllByKeys(fieldValues, ActionEntity.class);
-		if (action.size() != 0) {
-			databaseServiceImpl.updateListOfData(action);
+		if (action != null) {
+			if (action.size() != 0) {
+				databaseServiceImpl.updateListOfData(action);
+			}
+		} else {
+			
 		}
 	}
 	

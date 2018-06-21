@@ -28,6 +28,7 @@ public class VisitActivityController {
 			visitActivityApiService.doPSRFVisitActivities(caseid);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(new Gson().toJson(""), HttpStatus.EXPECTATION_FAILED);
 		}
 		
