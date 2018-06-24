@@ -287,9 +287,9 @@ BEGIN
 
     /*Query to update temporary table with expired percentage values*/
     UPDATE provider_temp_table
-    SET expiredPercentage=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
-    FROM (SELECT t.provider, t.scheduleCount, t.expiredCount FROM provider_temp_table t)
-    AS subquery(provider, schedule_count, expire_count)
+    SET expiredPercentage=(SELECT round(cast (subquery.expire_count as numeric)/cast ((subquery.schedule_count + subquery.complete_count + subquery.expire_count)as numeric)*100, 2))
+    FROM (SELECT t.provider, t.scheduleCount, t.completeCount, t.expiredCount FROM provider_temp_table t)
+    AS subquery(provider, schedule_count, complete_count, expire_count)
     WHERE provider_temp_table.provider = subquery.provider;
 
    /*Return whole temporary table data*/
