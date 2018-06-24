@@ -3,8 +3,8 @@ package org.opensrp.etl.transmission.listener;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.opensrp.acl.service.impl.DefaultApplicationSettingService;
 import org.opensrp.etl.util.CommonConstant;
+import org.opensrp.etl.util.DefaultApplicationSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

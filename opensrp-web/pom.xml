@@ -293,6 +293,12 @@
 				<directory>../opensrp-acl/src/test/resources</directory>
 			</resource>
 			<resource>
+				<directory>../opensrp-common/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>../opensrp-common/src/test/resources</directory>
+			</resource>
+			<resource>
 				<directory>../opensrp-web/src/main/resources</directory>
 			</resource>
 		</resources>

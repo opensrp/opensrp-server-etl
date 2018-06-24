@@ -1,4 +1,4 @@
-package org.opensrp.acl.service.impl;
+package org.opensrp.etl.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +19,10 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.opensrp.acl.entity.Account;
 import org.opensrp.acl.entity.Permission;
 import org.opensrp.acl.entity.Role;
+import org.opensrp.acl.service.impl.LocationServiceImpl;
+import org.opensrp.acl.service.impl.PermissionServiceImpl;
+import org.opensrp.acl.service.impl.RoleServiceImpl;
+import org.opensrp.acl.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
