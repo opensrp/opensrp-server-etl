@@ -2,6 +2,7 @@ package org.mcare.etl.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,6 +55,28 @@ public class MotherEntity extends CommonEntity {
 	private String relationalId;
 	
 	private String isClosed;
+	
+	@Column(name = "void_status", columnDefinition = "int default 0")
+	private int voidStatus = 0;
+	
+	@Column(name = "void_remarks")
+	private String voidRemarks;
+	
+	public String getvoidRemarks() {
+		return voidRemarks;
+	}
+	
+	public void setvoidRemarks(String voidRemarks) {
+		this.voidRemarks = voidRemarks;
+	}
+	
+	public int getvoidStatus() {
+		return voidStatus;
+	}
+	
+	public void setvoidStatus(int voidStatus) {
+		this.voidStatus = voidStatus;
+	}
 	
 	public int getId() {
 		return id;

@@ -6,6 +6,8 @@ public interface DatabaseService {
 	
 	public <T> long save(T t) throws Exception;
 	
+	public <T> long update(T t) throws Exception;
+	
 	public <T> int delete(T t);
 	
 	public <T> T findById(int id, String fieldName, Class<?> className);

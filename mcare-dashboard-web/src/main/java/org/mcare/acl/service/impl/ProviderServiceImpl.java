@@ -52,4 +52,10 @@ public class ProviderServiceImpl implements DatabaseService {
 		session.setAttribute("providers", providers);
 	}
 	
+	@Override
+	public <T> long update(T t) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 }
