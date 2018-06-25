@@ -47,6 +47,11 @@
 			<version>${version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.opensrp.dashboard</groupId>
+			<artifactId>opensrp-connector</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
@@ -301,6 +306,9 @@
 			<resource>
 				<directory>../opensrp-web/src/main/resources</directory>
 			</resource>
+			 <resource>
+                <directory>../assets/config</directory>
+            </resource>
 		</resources>
 		<plugins>
 			<plugin>

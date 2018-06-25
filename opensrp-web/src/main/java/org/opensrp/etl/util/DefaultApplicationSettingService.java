@@ -24,6 +24,8 @@ import org.opensrp.acl.service.impl.PermissionServiceImpl;
 import org.opensrp.acl.service.impl.RoleServiceImpl;
 import org.opensrp.acl.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -122,7 +124,7 @@ public class DefaultApplicationSettingService {
 		catch (IOException e) {
 			logger.error("error getting rootPath: " + e);
 		}
-		
+			
 		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql",
 		    "src/main/resources/scripts/location_tag.sql", "src/main/resources/scripts/location_tag_map.sql",
 		    "src/main/resources/scripts/provider.sql", "src/main/resources/scripts/form.sql");

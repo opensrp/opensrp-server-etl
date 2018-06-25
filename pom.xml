@@ -7,8 +7,9 @@
   <packaging>pom</packaging>
   <name>opensrp dashboard</name>
   <modules>    
-    <module>opensrp-common</module>
-    <module>opensrp-acl</module>
+    <module>opensrp-common</module> 
+    <module>opensrp-connector</module>    
+    <module>opensrp-acl</module>      
     <module>opensrp-web</module>
     
   </modules>
