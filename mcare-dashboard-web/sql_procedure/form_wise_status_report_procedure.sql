@@ -192,9 +192,9 @@ BEGIN
 
    /*Query to update temp_table with expired percentage values*/
    UPDATE temp_table
-   SET expiredPercentage=(SELECT round(cast (subquery.expire_count as float)/cast (subquery.schedule_count as float)*100))
-   FROM (SELECT t.visitCode, t.scheduleCount, t.expiredCount FROM temp_table t)
-   AS subquery(visit_code, schedule_count, expire_count)
+   SET expiredPercentage=(SELECT round(cast (subquery.expire_count as numeric)/cast ((subquery.schedule_count + subquery.complete_count + subquery.expire_count)as numeric)*100, 2))
+   FROM (SELECT t.visitCode, t.scheduleCount, t.completeCount, t.expiredCount FROM temp_table t)
+   AS subquery(visit_code, schedule_count, complete_count, expire_count)
    WHERE temp_table.visitCode = subquery.visit_code;
 
    /*Return whole temp_table data*/
