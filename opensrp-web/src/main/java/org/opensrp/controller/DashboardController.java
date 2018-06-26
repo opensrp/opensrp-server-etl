@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.opensrp.common.service.impl.DatabaseServiceImpl;
-import org.opensrp.connector.openmrs.service.impl.OpenmrsRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +20,10 @@ public class DashboardController {
 	
 	@Autowired
 	private DatabaseServiceImpl databaseServiceImpl;
-	@Autowired
-	private OpenmrsRoleService openmrsRoleService;
 	
 	@RequestMapping("/")
 	public String showHome(Model model, HttpSession session) {
-		openmrsRoleService.get();
+		
 		return "home";
 	}
 	
