@@ -35,18 +35,20 @@ public class OpenmrsRoleServiceTest {
 		String name = "Test";
 		JSONObject roleObject = new JSONObject();
 		roleObject.put("name", name);
+		String payload = "";
 		roleObject.put("description", "Test description");
-		JSONObject returnObject = openMRSAPIService.add(roleObject, ROLE_URL);
+		JSONObject returnObject = openMRSAPIService.add(payload, roleObject, ROLE_URL);
 		String uuid = (String) returnObject.get("uuid");
 		Assert.assertEquals(returnObject.get("name"), name);
-		JSONObject getRoleObject = openMRSAPIService.get(uuid, ROLE_URL);
+		JSONObject getRoleObject = openMRSAPIService.get("v=full", uuid, ROLE_URL);
 		
 		JSONObject roleObjectForUpdate = new JSONObject();
 		roleObjectForUpdate.put("description", "Test description Updated");
-		JSONObject returnObjectOfUpdated = openMRSAPIService.update(roleObjectForUpdate, uuid, ROLE_URL);
+		JSONObject returnObjectOfUpdated = openMRSAPIService.update(payload, roleObjectForUpdate, uuid, ROLE_URL);
 		Assert.assertEquals((String) returnObjectOfUpdated.get("uuid"), uuid);
 		
-		JSONObject returnObjectOfDeleted = openMRSAPIService.delete(uuid, ROLE_URL);
+		JSONObject returnObjectOfDeleted = openMRSAPIService.delete(payload, uuid, ROLE_URL);
 		Assert.assertTrue(returnObjectOfDeleted.getString("success"), true);
 	}
+	
 }
