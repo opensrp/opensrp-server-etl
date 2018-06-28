@@ -13,11 +13,9 @@
 <context:annotation-config></context:annotation-config>
 
 	
-<context:component-scan base-package="org.mcare" />	
+<context:component-scan base-package="org.opensrp" />	
 
 <context:property-placeholder location="classpath:hibernate.properties" />
-
-
 		<mvc:annotation-driven></mvc:annotation-driven>
 		<tx:annotation-driven proxy-target-class = "true" />
 		<mvc:resources location="/resources/" mapping="/static/**" />	

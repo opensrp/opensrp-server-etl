@@ -167,8 +167,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (T) (result.size() > 0 ? (T) result.get(0) : null);
 	}
 	
-	
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> findAll(String tableClass) {
@@ -217,109 +215,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		
 		return products;
 	}
-	/*
-	public int count() {
-		return sessionFactory.openSession().createCriteria(HouseholdEntity.class).list().size();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(entityClassName);
-		
-		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
-		}
-		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			
-			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
-		}
-		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			
-			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
-		}
-		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
-			criteria.add(Restrictions.eq("union", searchBuilder.getUnion()));
-		}
-		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
-			criteria.add(Restrictions.eq("ward", searchBuilder.getWard()));
-		}
-		if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
-			criteria.add(Restrictions.eq("mauzaPara", searchBuilder.getMauzapara()));
-		}
-		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
-			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
-		}
-		
-		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
-			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
-		}
-		if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
-			criteria.add(Restrictions.ilike("firstName", searchBuilder.getName().toUpperCase(), MatchMode.ANYWHERE));
-		}
-		criteria.setFirstResult(offsetreal);
-		criteria.setMaxResults(result);
-		criteria.addOrder(Order.desc("created"));
-		
-		List<T> products = null;
-		try {
-			products = (List<T>) criteria.list();
-			session.close();
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		
-		return products;
-	}
-	
-	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
-		Session session = sessionFactory.openSession();
-		int count = 0;
-		Criteria criteria = session.createCriteria(entityClassName);
-		try {
-			
-			if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-				
-				criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
-			}
-			if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-				
-				criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
-			}
-			if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-				
-				criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
-			}
-			if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
-				criteria.add(Restrictions.eq("union", searchBuilder.getUnion()));
-			}
-			if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
-				criteria.add(Restrictions.eq("ward", searchBuilder.getWard()));
-			}
-			if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
-				criteria.add(Restrictions.eq("mauzaPara", searchBuilder.getMauzapara()));
-			}
-			if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
-				criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
-			}
-			if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
-				criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
-			}
-			if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
-				criteria.add(Restrictions.ilike("firstName", searchBuilder.getName(), MatchMode.ANYWHERE));
-			}
-			count = criteria.list().size();
-			session.close();
-		}
-		catch (Exception e) {
-			session.close();
-		}
-		
-		return count;
-	}
-	*/
-	
 	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executeSelectQuery(String sqlQuery, String paramName, int paramValue) {
@@ -360,7 +255,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return results;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getDataFromSQLFunction(String procedureName, String params) {
 		Session session = sessionFactory.openSession();
@@ -379,43 +273,4 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return aggregatedData;
 	}
 	
-	/*@SuppressWarnings("unchecked")
-	public List<Object[]> executeRawQuery(SearchBuilder searchBuilder, String sqlQuery) {
-		System.err.println("sqlQuery:" + sqlQuery);
-		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
-		
-		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
-			
-			query.setParameter("division", searchBuilder.getDivision().toUpperCase());
-		}
-		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
-			
-			query.setParameter("district", searchBuilder.getDistrict().toUpperCase());
-		}
-		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
-			
-			query.setParameter("upazila", searchBuilder.getUpazila());
-		}
-		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
-			
-			query.setParameter("unions", searchBuilder.getUnion());
-		}
-		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
-			query.setParameter("ward", searchBuilder.getWard());
-		}
-		if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
-			query.setParameter("mauza_para", searchBuilder.getMauzapara());
-		}
-		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
-			query.setParameter("subunit", searchBuilder.getSubunit());
-		}
-		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
-			query.setParameter("provider", searchBuilder.getProvider());
-		}
-		//query.setParameter("years", searchBuilder.getYear());
-		
-		List<Object[]> results = query.list();
-		
-		return results;
-	}*/
 }

@@ -11,8 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.opensrp.acl.dao.AbstractHbnDao;
-import org.opensrp.acl.entity.Account;
+import org.opensrp.acl.dao.AbstractAclDao;
+import org.opensrp.acl.entity.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,19 +20,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("accountDao")
-public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao {
+public class AclAccountDao extends AbstractAclDao<User> implements UserDao {
 
-	private static final Logger logger = Logger.getLogger(HbnAccountDao.class);
+	private static final Logger logger = Logger.getLogger(AclAccountDao.class);
 
 	@Override
-	public Account getByUsername(String username) {
-		return (Account) getSession().getNamedQuery("account.byUsername").setParameter("username", username).uniqueResult();
+	public User getByUsername(String username) {
+		return (User) getSession().getNamedQuery("account.byUsername").setParameter("username", username).uniqueResult();
 	}
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		Account account = null;
+		User account = null;
 		try {
 			account = getByUsername(username);
 			logger.info("username:" + account.getAuthorities().toString());
@@ -43,30 +43,30 @@ public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao
 	}
 
 	@Override
-	public void create(Account t) {
+	public void create(User t) {
 	}
 
 	@Override
-	public Account get(Serializable id) {
+	public User get(Serializable id) {
 		return null;
 	}
 
 	@Override
-	public Account load(Serializable id) {
+	public User load(Serializable id) {
 		return null;
 	}
 
 	@Override
-	public List<Account> getAll() {
+	public List<User> getAll() {
 		return null;
 	}
 
 	@Override
-	public void update(Account t) {
+	public void update(User t) {
 	}
 
 	@Override
-	public void delete(Account t) {
+	public void delete(User t) {
 	}
 
 	@Override

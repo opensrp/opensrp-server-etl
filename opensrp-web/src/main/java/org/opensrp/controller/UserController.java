@@ -9,9 +9,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.opensrp.acl.entity.Account;
 import org.opensrp.acl.entity.Permission;
 import org.opensrp.acl.entity.Role;
+import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.impl.RoleServiceImpl;
 import org.opensrp.acl.service.impl.UserServiceImpl;
 import org.opensrp.common.service.impl.DatabaseServiceImpl;
@@ -53,7 +53,7 @@ public class UserController {
 	private DatabaseServiceImpl databaseServiceImpl;
 	
 	@Autowired
-	private Account account;
+	private User account;
 	
 	@Autowired
 	private Permission permission;
@@ -70,7 +70,7 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
 	@RequestMapping(value = "/user.html", method = RequestMethod.GET)
 	public String userList(Model model) {
-		List<Account> users = userServiceImpl.findAll("Account");
+		List<User> users = userServiceImpl.findAll("User");
 		logger.debug("users list size: " + users.size());
 		model.addAttribute("users", users);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -81,7 +81,7 @@ public class UserController {
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.GET)
 	public ModelAndView saveUser(Model model, HttpSession session) {
 		int[] selectedRoles = null;
-		model.addAttribute("account", new Account());
+		model.addAttribute("account", new User());
 		setSelectedRolesAttributes(selectedRoles, session);
 		return new ModelAndView("user/add", "command", account);
 	}
@@ -89,7 +89,7 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_USER')")
 	@RequestMapping(value = "/user/add.html", method = RequestMethod.POST)
 	public ModelAndView saveUser(@RequestParam(value = "roles", required = false) int[] roles,
-	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
+	                             @Valid @ModelAttribute("account") User account, BindingResult binding, ModelMap model,
 	                             HttpSession session) {
 		if (checkValidations(account, roles, session, model)) {
 			return new ModelAndView("redirect:/user.html");
@@ -101,7 +101,7 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.GET)
 	public ModelAndView editUser(Model model, HttpSession session, @PathVariable("id") int id) {
-		Account account = findAccountById(id);
+		User account = findAccountById(id);
 		model.addAttribute("account", account);
 		model.addAttribute("id", id);
 		setSelectedRolesAttributes(getSelectedRoles(account), session);
@@ -111,7 +111,7 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_USER')")
 	@RequestMapping(value = "/user/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editUser(@RequestParam(value = "roles", required = false) int[] roles,
-	                             @Valid @ModelAttribute("account") Account account, BindingResult binding, ModelMap model,
+	                             @Valid @ModelAttribute("account") User account, BindingResult binding, ModelMap model,
 	                             HttpSession session, @PathVariable("id") int id) {
 		account.setRoles(userServiceImpl.setRoles(roles));
 		account.setId(id);
@@ -124,20 +124,20 @@ public class UserController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.GET)
 	public ModelAndView editPassword(Model model, HttpSession session, @PathVariable("id") int id) {
-		Account account = findAccountById(id);
+		User account = findAccountById(id);
 		model.addAttribute("account", account);
 		return new ModelAndView("user/password", "command", account);
 	}
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_PASSWORD')")
 	@RequestMapping(value = "/user/{id}/password.html", method = RequestMethod.POST)
-	public ModelAndView editPassword(@Valid @ModelAttribute("account") Account account, BindingResult binding,
-	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) {
-		Account gettingAccount = findAccountById(id);
+	public ModelAndView editPassword(@Valid @ModelAttribute("account") User account, BindingResult binding, ModelMap model,
+	                                 HttpSession session, @PathVariable("id") int id) {
+		User gettingAccount = findAccountById(id);
 		if (userServiceImpl.isPasswordMatched(account)) {
 			account.setId(id);
 			account.setEnabled(true);
-			account.setPassword(passwordEncoder.encode(account.getPassword()));
+			//account.setPassword(passwordEncoder.encode(account.getPassword()));
 			account.setRoles(gettingAccount.getRoles());
 			userServiceImpl.update(account);
 		} else {
@@ -161,11 +161,11 @@ public class UserController {
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
-	private boolean checkValidations(Account account, int[] roles, HttpSession session, ModelMap model) {
+	private boolean checkValidations(User account, int[] roles, HttpSession session, ModelMap model) {
 		try {
 			if (userServiceImpl.isPasswordMatched(account) && !userServiceImpl.isUserAlreadyExist(account)) {
 				account.setEnabled(true);
-				account.setPassword(passwordEncoder.encode(account.getPassword()));
+				//account.setPassword(passwordEncoder.encode(account.getPassword()));
 				account.setRoles(userServiceImpl.setRoles(roles));
 				userServiceImpl.save(account);
 				return true;
@@ -187,7 +187,7 @@ public class UserController {
 		}
 	}
 	
-	private int[] getSelectedRoles(Account account) {
+	private int[] getSelectedRoles(User account) {
 		int[] selectedRoles = new int[200];
 		Set<Role> getRoles = account.getRoles();
 		int i = 0;
@@ -198,8 +198,8 @@ public class UserController {
 		return selectedRoles;
 	}
 	
-	private Account findAccountById(int id) {
-		Account account = userServiceImpl.findById(id, "id", Account.class);
+	private User findAccountById(int id) {
+		User account = userServiceImpl.findById(id, "id", User.class);
 		return account;
 	}
 	

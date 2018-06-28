@@ -9,9 +9,9 @@
 
 
 	
-	<context:component-scan base-package="org.mcare.etl.transmission.listener"></context:component-scan>
+	<context:component-scan base-package="org.opensrp.etl.transmission.listener"></context:component-scan>
 	<context:annotation-config></context:annotation-config>
-	 <bean id="transmissionListener" class="org.mcare.etl.transmission.listener.TransmissionListener"></bean>
+	 <bean id="transmissionListener" class="org.opensrp.etl.transmission.listener.TransmissionListener"></bean>
 	 
 	 <task:scheduled-tasks scheduler="scheduler">
         <task:scheduled ref="transmissionListener" method="dataListener" cron="0 0/1 * * * ?" />

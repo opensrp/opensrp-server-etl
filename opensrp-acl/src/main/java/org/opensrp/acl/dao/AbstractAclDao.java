@@ -26,7 +26,7 @@ import org.springframework.util.ReflectionUtils;
 /**
  * @author Willie Wheeler (willie.wheeler@gmail.com)
  */
-public abstract class AbstractHbnDao<T extends Object> implements Dao<T> {
+public abstract class AbstractAclDao<T extends Object> implements Dao<T> {
 	
 	@Inject
 	private SessionFactory sessionFactory;

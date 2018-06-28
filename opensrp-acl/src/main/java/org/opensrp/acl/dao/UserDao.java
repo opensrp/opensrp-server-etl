@@ -7,13 +7,13 @@
  */
 package org.opensrp.acl.dao;
 
-import org.opensrp.acl.entity.Account;
+import org.opensrp.acl.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author Willie Wheeler (willie.wheeler@gmail.com)
  */
-public interface AccountDao extends Dao<Account>, UserDetailsService {
+public interface UserDao extends Dao<User>, UserDetailsService {
 	
-	Account getByUsername(String username);
+	User getByUsername(String username);
 }

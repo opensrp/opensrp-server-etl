@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -30,15 +32,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "account")
-@NamedQuery(name = "account.byUsername", query = "from Account a where a.username = :username")
-public class Account implements UserDetails {
+@Table(name = "users")
+@NamedQuery(name = "account.byUsername", query = "from User a where a.username = :username")
+public class User implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_seq")
-	@SequenceGenerator(name = "account_id_seq", sequenceName = "account_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
 	private int id;
 	
 	//@NotNull
@@ -46,6 +48,9 @@ public class Account implements UserDetails {
 	@NotEmpty(message = "username can't be empty")
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
+	
+	@Column(name = "uuid")
+	private String uuid;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -80,17 +85,27 @@ public class Account implements UserDetails {
 	private Date updated = new Date();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "account_role", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<Role>();
 	
-	public Account() {
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "creator", referencedColumnName = "id")
+	private User creator;
+	
+	public String gender;
+	
+	public String mobile;
+	
+	public String idetifier;
+	
+	public User() {
 	}
 	
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public Account(String username) {
+	public User(String username) {
 		this.username = username;
 	}
 	
@@ -151,6 +166,22 @@ public class Account implements UserDetails {
 		this.retypePassword = retypePassword;
 	}
 	
+	public String getUuid() {
+		return uuid;
+	}
+	
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
+	public User getCreator() {
+		return creator;
+	}
+	
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+	
 	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
@@ -182,6 +213,30 @@ public class Account implements UserDetails {
 		this.roles = roles;
 	}
 	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public String getMobile() {
+		return mobile;
+	}
+	
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	
+	public String getIdetifier() {
+		return idetifier;
+	}
+	
+	public void setIdetifier(String idetifier) {
+		this.idetifier = idetifier;
+	}
+	
 	@Transient
 	public Set<Permission> getPermissions() {
 		Set<Permission> perms = new HashSet<Permission>();
@@ -204,16 +259,21 @@ public class Account implements UserDetails {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (enabled ? 1231 : 1237);
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((idetifier == null) ? 0 : idetifier.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((retypePassword == null) ? 0 : retypePassword.hashCode());
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		return result;
 	}
 	
@@ -225,11 +285,16 @@ public class Account implements UserDetails {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Account other = (Account) obj;
+		User other = (User) obj;
 		if (created == null) {
 			if (other.created != null)
 				return false;
 		} else if (!created.equals(other.created))
+			return false;
+		if (creator == null) {
+			if (other.creator != null)
+				return false;
+		} else if (!creator.equals(other.creator))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -243,12 +308,27 @@ public class Account implements UserDetails {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
+			return false;
 		if (id != other.id)
+			return false;
+		if (idetifier == null) {
+			if (other.idetifier != null)
+				return false;
+		} else if (!idetifier.equals(other.idetifier))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (mobile == null) {
+			if (other.mobile != null)
+				return false;
+		} else if (!mobile.equals(other.mobile))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -275,14 +355,12 @@ public class Account implements UserDetails {
 				return false;
 		} else if (!username.equals(other.username))
 			return false;
+		if (uuid == null) {
+			if (other.uuid != null)
+				return false;
+		} else if (!uuid.equals(other.uuid))
+			return false;
 		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-		        + ", email=" + email + ", password=" + password + ", retypePassword=" + retypePassword + ", enabled="
-		        + enabled + ", created=" + created + ", updated=" + updated + ", roles=" + roles + "]";
 	}
 	
 }

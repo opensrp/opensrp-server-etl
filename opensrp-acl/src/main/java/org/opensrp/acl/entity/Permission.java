@@ -16,13 +16,14 @@ import org.springframework.stereotype.Service;
 @Entity
 @Table(name = "permission")
 public class Permission implements GrantedAuthority {
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permission_id_seq")
 	@SequenceGenerator(name = "permission_id_seq", sequenceName = "permission_id_seq", allocationSize = 1)
 	private int id;
-
+	
 	@NotEmpty(message = "permission name can't be empty")
 	private String name;
 	
@@ -37,26 +38,38 @@ public class Permission implements GrantedAuthority {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	@Transient
 	public String getAuthority() {
 		return name;
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		GrantedAuthority ga = (GrantedAuthority) o;
-		return (getAuthority().equals(ga.getAuthority()));
-	}
-	
-	@Override
 	public int hashCode() {
-		return getAuthority().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 	
 	@Override
-	public String toString() {
-		return "Permission [id=" + id + ", name=" + name + "]";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Permission other = (Permission) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 	
 }

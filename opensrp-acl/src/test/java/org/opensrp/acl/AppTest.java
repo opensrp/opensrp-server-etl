@@ -1,4 +1,4 @@
-package org.opensrp.etl.acl;
+package org.opensrp.acl;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,19 +1,14 @@
 package org.opensrp.acl.entity;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,26 +24,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "role")
-public class Role implements GrantedAuthority {
+@Table(name = "location_tag")
+public class LocationTag implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_seq")
-	@SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_tag_id_seq")
+	@SequenceGenerator(name = "location_tag_id_seq", sequenceName = "location_tag_id_seq", allocationSize = 1)
 	private int id;
 	
-	@NotEmpty(message = "Role name can't be empty")
-	@Column(name = "name")
+	@NotEmpty(message = "location tag name can't be empty")
 	private String name;
-	
-	@Column(name = "uuid")
-	private String uuid;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
-	private Set<Permission> permissions = new HashSet<Permission>();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -64,9 +51,19 @@ public class Role implements GrantedAuthority {
 	@JoinColumn(name = "creator", referencedColumnName = "id")
 	private User creator;
 	
+	@Column(name = "uuid")
+	private String uuid;
+	
 	public int getId() {
 		return id;
-		
+	}
+	
+	public User getCreator() {
+		return creator;
+	}
+	
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 	
 	public String getUuid() {
@@ -77,24 +74,12 @@ public class Role implements GrantedAuthority {
 		this.uuid = uuid;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public String getName() {
 		return name;
 	}
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public Set<Permission> getPermissions() {
-		return permissions;
-	}
-	
-	public void setPermissions(Set<Permission> permissions) {
-		this.permissions = permissions;
 	}
 	
 	public Date getCreated() {
@@ -113,7 +98,6 @@ public class Role implements GrantedAuthority {
 		this.updated = new Date();
 	}
 	
-	@Override
 	@Transient
 	public String getAuthority() {
 		return name;
@@ -127,7 +111,6 @@ public class Role implements GrantedAuthority {
 		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((permissions == null) ? 0 : permissions.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		return result;
@@ -141,7 +124,7 @@ public class Role implements GrantedAuthority {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Role other = (Role) obj;
+		LocationTag other = (LocationTag) obj;
 		if (created == null) {
 			if (other.created != null)
 				return false;
@@ -158,11 +141,6 @@ public class Role implements GrantedAuthority {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (permissions == null) {
-			if (other.permissions != null)
-				return false;
-		} else if (!permissions.equals(other.permissions))
 			return false;
 		if (updated == null) {
 			if (other.updated != null)

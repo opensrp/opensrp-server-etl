@@ -16,16 +16,15 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
-import org.opensrp.acl.entity.Account;
 import org.opensrp.acl.entity.Permission;
 import org.opensrp.acl.entity.Role;
+import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.PermissionServiceImpl;
 import org.opensrp.acl.service.impl.RoleServiceImpl;
 import org.opensrp.acl.service.impl.UserServiceImpl;
+import org.opensrp.common.util.DefaultRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +34,6 @@ import com.ibatis.common.jdbc.ScriptRunner;
 public class DefaultApplicationSettingService {
 	
 	private static final Logger logger = Logger.getLogger(DefaultApplicationSettingService.class);
-	
-	
 	
 	@Autowired
 	private PermissionServiceImpl permissionServiceImpl;
@@ -63,8 +60,6 @@ public class DefaultApplicationSettingService {
 	public void saveDefaultAppSetting() throws ClassNotFoundException, SQLException {
 		logger.info("saving default settings ...............");
 		
-		
-		
 		try {
 			permissionServiceImpl.addPermission();
 		}
@@ -74,7 +69,7 @@ public class DefaultApplicationSettingService {
 		
 		//Create default admin User
 		String userName = "admin";
-		String roleName = "ROLE_ADMIN";
+		String roleName = DefaultRole.Admin.name();
 		Role role = new Role();
 		role.setName(roleName);
 		Role gettingRole = roleServiceImpl.findByKey(role.getName(), "name", Role.class);
@@ -95,8 +90,8 @@ public class DefaultApplicationSettingService {
 			logger.error("error saving roles:" + e.getMessage());
 		}
 		
-		Account account = userServiceImpl.findByKey(userName, "username", Account.class);
-		Account acc = new Account();
+		User account = userServiceImpl.findByKey(userName, "username", User.class);
+		User acc = new User();
 		acc.setUsername(userName);
 		acc.setFirstName(userName);
 		acc.setLastName(userName);
@@ -124,10 +119,9 @@ public class DefaultApplicationSettingService {
 		catch (IOException e) {
 			logger.error("error getting rootPath: " + e);
 		}
-			
+		
 		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql",
-		    "src/main/resources/scripts/location_tag.sql", "src/main/resources/scripts/location_tag_map.sql",
-		    "src/main/resources/scripts/provider.sql", "src/main/resources/scripts/form.sql");
+		    "src/main/resources/scripts/location_tag.sql", "src/main/resources/scripts/location_tag_map.sql");
 		
 		Connection con = sessionFactory.getSessionFactoryOptions().getServiceRegistry().getService(ConnectionProvider.class)
 		        .getConnection();

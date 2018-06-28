@@ -66,26 +66,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return (T) databaseRepositoryImpl.findAllByKey(value, fieldName, className);
 	}
 	
-	/*@Transactional
-	public int count() {
-		return databaseRepositoryImpl.count();
-	}*/
-	
-	/*@Transactional
-	public <T> List<T> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
-		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
-	}
-	
-	@Transactional
-	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
-		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
-	}
-	*/
 	@Transactional
 	public <T> List<T> findAllFormNames(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);
 	}
-	
 	
 	@Transactional
 	public List<Object[]> getQueryData(String provider, String caseId, String scheduleName, String userType, String sqlQuery) {
@@ -103,6 +87,5 @@ public class DatabaseServiceImpl implements DatabaseService {
 		
 		return databaseRepositoryImpl.update(t);
 	}
-	
 	
 }

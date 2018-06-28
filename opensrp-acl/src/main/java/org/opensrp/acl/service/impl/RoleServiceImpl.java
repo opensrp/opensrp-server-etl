@@ -6,9 +6,11 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
 import org.opensrp.acl.entity.Permission;
+import org.opensrp.acl.entity.Role;
 import org.opensrp.acl.service.AclService;
+import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
+import org.opensrp.common.util.DefaultRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,45 +27,41 @@ public class RoleServiceImpl implements AclService {
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {
+		
 		return repository.save(t);
 	}
 	
 	@Transactional
 	@Override
 	public <T> int update(T t) {
-		// TODO Auto-generated method stub
 		return repository.update(t);
 	}
 	
 	@Transactional
 	@Override
 	public <T> boolean delete(T t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
 	@Transactional
 	@Override
 	public <T> T findById(int id, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return repository.findById(id, fieldName, className);
 	}
 	
 	@Transactional
 	@Override
 	public <T> T findByKey(String value, String fieldName, Class<?> className) {
-		// TODO Auto-generated method stub
 		return repository.findByKey(value, fieldName, className);
 	}
 	
 	@Transactional
 	@Override
 	public <T> List<T> findAll(String tableClass) {
-		// TODO Auto-generated method stub
 		return repository.findAll(tableClass);
 	}
 	
-	public Set<Permission> serPermissions(int[] selectedPermissions) {
+	public Set<Permission> setPermissions(int[] selectedPermissions) {
 		Set<Permission> permissions = new HashSet<Permission>();
 		if (selectedPermissions != null) {
 			for (int permissionId : selectedPermissions) {
@@ -74,4 +72,13 @@ public class RoleServiceImpl implements AclService {
 		return permissions;
 	}
 	
+	public boolean isProvider(Set<Role> roles) {
+		boolean isProvider = true;
+		for (Role role : roles) {
+			if (role.getName().equalsIgnoreCase(DefaultRole.Provider.name())) {
+				return isProvider;
+			}
+		}
+		return !isProvider;
+	}
 }
