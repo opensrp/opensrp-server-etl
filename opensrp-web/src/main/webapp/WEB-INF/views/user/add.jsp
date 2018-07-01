@@ -69,6 +69,21 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-3">
+									<label>Mobile Number</label>
+									<form:input path="mobile" class="form-control"
+										placeholder="Enter mobile number" />
+								</div>
+								<div class="col-3">
+									<label>Last name</label>
+									<form:input path="idetifier" class="form-control"
+										placeholder="Enter idetifier" />
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-3">

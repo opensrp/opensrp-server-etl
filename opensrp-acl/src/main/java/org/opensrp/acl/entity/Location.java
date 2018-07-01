@@ -43,6 +43,9 @@ public class Location implements GrantedAuthority {
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "description")
+	private String description;
+	
 	@Column(name = "uuid")
 	private String uuid;
 	
@@ -131,6 +134,14 @@ public class Location implements GrantedAuthority {
 	
 	public void setUpdated() {
 		this.updated = new Date();
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	@Override

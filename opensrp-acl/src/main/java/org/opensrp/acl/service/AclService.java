@@ -6,7 +6,7 @@ public interface AclService {
 	
 	public <T> long save(T t) throws Exception;
 	
-	public <T> int update(T t);
+	public <T> int update(T t) throws Exception;
 	
 	public <T> boolean delete(T t);
 	

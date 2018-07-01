@@ -27,6 +27,10 @@ import org.springframework.stereotype.Service;
 @Table(name = "location_tag")
 public class LocationTag implements GrantedAuthority {
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -36,6 +40,8 @@ public class LocationTag implements GrantedAuthority {
 	
 	@NotEmpty(message = "location tag name can't be empty")
 	private String name;
+	
+	private String description;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", updatable = false)
@@ -103,6 +109,14 @@ public class LocationTag implements GrantedAuthority {
 		return name;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -153,6 +167,12 @@ public class LocationTag implements GrantedAuthority {
 		} else if (!uuid.equals(other.uuid))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "LocationTag [id=" + id + ", name=" + name + ", description=" + description + ", created=" + created
+		        + ", updated=" + updated + ", creator=" + creator + ", uuid=" + uuid + "]";
 	}
 	
 }

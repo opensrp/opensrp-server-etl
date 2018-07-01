@@ -1,5 +1,6 @@
 package org.opensrp.acl.openmrs.service.impl;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OpenMRSUserAPIService implements OpenMRSConnector {
+public class OpenMRSUserAPIService implements OpenMRSConnector<User> {
+	
+	private static final Logger logger = Logger.getLogger(OpenMRSUserAPIService.class);
 	
 	final String PERSON_URL = "ws/rest/v1/person";
 	
@@ -27,7 +30,7 @@ public class OpenMRSUserAPIService implements OpenMRSConnector {
 	
 	private static String PAYLOAD = "";
 	
-	public String female = "F";
+	public String female = "M";
 	
 	final static String usernameKey = "username";
 	
@@ -45,9 +48,9 @@ public class OpenMRSUserAPIService implements OpenMRSConnector {
 	public JSONObject generatePersonObject(User user) throws JSONException {
 		JSONArray personArray = new JSONArray();
 		JSONObject personObject = new JSONObject();
-		personObject.put("givenName", user.getUsername());
+		personObject.put("givenName", user.getFirstName());
 		personObject.put("middleName", "");
-		personObject.put("familyName", user.getUsername());
+		personObject.put("familyName", user.getLastName());
 		personArray.put(personObject);
 		
 		person.put(genderKey, female);
@@ -57,16 +60,18 @@ public class OpenMRSUserAPIService implements OpenMRSConnector {
 		return person;
 	}
 	
-	public JSONObject generateUserJsonObject(User user) throws JSONException {
+	public JSONObject generateUserJsonObject(User user, boolean isUpdate) throws JSONException {
 		JSONArray roleArray = new JSONArray();
 		JSONObject roleObject = new JSONObject();
-		roleObject.put("role", DefaultRole.Provider);
+		JSONObject userJsonObject = new JSONObject();
+		if (!isUpdate) {
+			roleObject.put("role", DefaultRole.Provider);
+			userJsonObject.put(rolesKey, roleArray);
+		}
 		roleArray.put(roleObject);
 		
-		JSONObject userJsonObject = new JSONObject();
 		userJsonObject.put(usernameKey, user.getUsername());
 		userJsonObject.put(passwordKey, user.getPassword());
-		userJsonObject.put(rolesKey, roleArray);
 		
 		userJsonObject.put(personKey, generatePersonObject(user));
 		return userJsonObject;
@@ -74,23 +79,35 @@ public class OpenMRSUserAPIService implements OpenMRSConnector {
 	}
 	
 	@Override
-	public String add(JSONObject jsonObject) throws JSONException {
+	public String add(User user) throws JSONException {
 		String userUuid = "";
-		JSONObject createdPerson = openMRSAPIServiceImpl.add(PAYLOAD, jsonObject, PERSON_URL);
-		String personUuid = (String) createdPerson.get("uuid");
-		if (personUuid != null) {
-			JSONObject createdROle = openMRSAPIServiceImpl.add(PAYLOAD, jsonObject, USER_URL);
-			userUuid = (String) createdROle.get("uuid");
+		boolean isUpdate = false;
+		JSONObject createdPerson = openMRSAPIServiceImpl.add(PAYLOAD, generatePersonObject(user), PERSON_URL);
+		logger.info("createdPerson::" + createdPerson);
+		if (createdPerson.has("uuid")) {
+			JSONObject createdUole = openMRSAPIServiceImpl.add(PAYLOAD, generateUserJsonObject(user, isUpdate), USER_URL);
+			logger.info("createdUole:" + createdUole);
+			userUuid = (String) createdUole.get("uuid");
 		} else {
-			
+			// need to handle exception....
 		}
+		
 		return userUuid;
 	}
 	
 	@Override
-	public String update(JSONObject jsonObject, String uuid) throws JSONException {
-		// TODO Auto-generated method stub
-		return null;
+	public String update(User user, String uuid) throws JSONException {
+		String userUuid = "";
+		boolean isUpdate = true;
+		JSONObject updatedRole = openMRSAPIServiceImpl.update(PAYLOAD, generateUserJsonObject(user, isUpdate), uuid,
+		    USER_URL);
+		logger.info("updatedRole:" + updatedRole);
+		if (updatedRole.has("uuid")) {
+			userUuid = (String) updatedRole.get("uuid");
+		} else {
+			// need to handle exception....
+		}
+		return userUuid;
 	}
 	
 	@Override

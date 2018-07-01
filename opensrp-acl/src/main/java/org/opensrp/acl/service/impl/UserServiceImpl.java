@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class UserServiceImpl implements AclService {
@@ -33,6 +35,14 @@ public class UserServiceImpl implements AclService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	private static final String ATTRIBUTE_PASSWORD_NOT_MATCH = "passwordNotMatch";
+	
+	private static final String ATTRIBUTE_UNIQUE_USER = "unique";
+	
+	private static final String MESSAGE_PASSWORD_NOT_MATCHED = "Password Does not match";
+	
+	private static final String MESSAGE_DUPLICATE_USER_NAME = "User name alreday taken";
+	
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {
@@ -41,8 +51,9 @@ public class UserServiceImpl implements AclService {
 		Set<Role> roles = user.getRoles();
 		boolean isProvider = roleServiceImpl.isProvider(roles);
 		if (isProvider) {
-			String uuid = openMRSUserAPIService.add(openMRSUserAPIService.generateUserJsonObject(user));
-			if (uuid != null) {
+			String uuid = openMRSUserAPIService.add(user);
+			logger.info("uuid:" + uuid);
+			if (!uuid.isEmpty()) {
 				user.setUuid(uuid);
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				createdUser = repository.save(user);
@@ -59,7 +70,8 @@ public class UserServiceImpl implements AclService {
 	
 	@Transactional
 	@Override
-	public <T> int update(T t) {
+	public <T> int update(T t) throws Exception {
+		
 		return repository.update(t);
 	}
 	
@@ -109,4 +121,70 @@ public class UserServiceImpl implements AclService {
 		return repository.findByUserName(account.getUsername(), "username", User.class);
 	}
 	
+	public boolean checkValidationsAndSave(User account, int[] roles, HttpSession session, ModelMap model) {
+		try {
+			if (isPasswordMatched(account) && !isUserAlreadyExist(account)) {
+				account.setEnabled(true);
+				account.setRoles(setRoles(roles));
+				save(account);
+				return true;
+			} else {
+				setSelectedRolesAttributes(roles, session);
+				if (!isPasswordMatched(account) && isUserAlreadyExist(account)) {
+					setPasswordNotMatchedAttribute(model);
+					setUniqueUserAttribute(model);
+				} else if (isUserAlreadyExist(account)) {
+					setUniqueUserAttribute(model);
+				} else {
+					setPasswordNotMatchedAttribute(model);
+				}
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public void setSelectedRolesAttributes(int[] roles, HttpSession session) {
+		session.setAttribute("roles", repository.findAll("Role"));
+		session.setAttribute("selectedRoles", roles);
+	}
+	
+	public void setPasswordNotMatchedAttribute(ModelMap model) {
+		model.addAttribute(ATTRIBUTE_PASSWORD_NOT_MATCH, MESSAGE_PASSWORD_NOT_MATCHED);
+	}
+	
+	private void setUniqueUserAttribute(ModelMap model) {
+		model.addAttribute(ATTRIBUTE_UNIQUE_USER, MESSAGE_DUPLICATE_USER_NAME);
+	}
+	
+	public int[] getSelectedRoles(User account) {
+		int[] selectedRoles = new int[200];
+		Set<Role> getRoles = account.getRoles();
+		int i = 0;
+		for (Role role : getRoles) {
+			selectedRoles[i] = role.getId();
+			i++;
+		}
+		return selectedRoles;
+	}
+	
+	@Transactional
+	public <T> int updatePassword(T t) throws Exception {
+		int updatedUser = 0;
+		User user = (User) t;
+		Set<Role> roles = user.getRoles();
+		logger.info("User:" + user.toString());
+		boolean isProvider = roleServiceImpl.isProvider(roles);
+		if (isProvider) {
+			String uuid = openMRSUserAPIService.update(user, user.getUuid());
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			updatedUser = repository.update(user);
+		} else {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			updatedUser = repository.update(user);
+		}
+		return updatedUser;
+	}
 }

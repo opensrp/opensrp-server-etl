@@ -246,7 +246,7 @@ public class OpenmrsUserServiceTest {
 		/**
 		 * update user information
 		 */
-		//JSONObject returnUpdatedUser = updateUser(getUserObjectUuid);
+		JSONObject returnUpdatedUser = updateUser(getUserObjectUuid);
 		
 		/**
 		 * delete person information

@@ -15,7 +15,7 @@
 		
 		
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item dropdown"><a
+			<%-- <li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown"
 				href="#" data-toggle="dropdown"> Registers
 			</a>
@@ -35,25 +35,25 @@
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item small" href="<c:url value="/child.html"/>"><strong>Child</strong> </a>
 				</div>
-			</li>
+			</li> --%>
 			
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="reportDropdown"
-				href="#" data-toggle="dropdown"> Reports
+				href="#" data-toggle="dropdown">Locations
 			</a>
 				<div class="dropdown-menu">					
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/formWiseReport.html"/>"> <strong> Form Wise Report Status</strong> 
+					<a class="dropdown-item" href="<c:url value="/location/tag/list.html"/>"> <strong> Manage Tags</strong> 
 						
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/providerWiseReport.html"/>"> <strong>Provider Wise Report Status</strong>
+					<a class="dropdown-item" href="<c:url value="/location.html"/>"> <strong>Manage Locations</strong>
 					</a>					
 					
 				</div>
 			</li>
 			
-			<li class="nav-item dropdown"><a
+			<%-- <li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="exportDropdown"
 				href="#" data-toggle="dropdown"> Exports
 			</a>
@@ -86,7 +86,7 @@
 					</a>					
 					
 				</div>
-			</li>
+			</li> --%>
 			
 			
 			<li class="nav-item dropdown"><a
