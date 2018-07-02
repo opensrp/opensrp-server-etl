@@ -468,7 +468,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		Session session = sessionFactory.openSession();
 		List<T> aggregatedData = null;
 		try {
-			String hql = "select * from " + procedureName + "(" + params + ")";
+			String hql = "select * from " + procedureName + "()";
 			Query query = session.createSQLQuery(hql);
 			aggregatedData = query.list();
 			logger.info("data fetched successfully from " + procedureName + ", aggregated data size: "

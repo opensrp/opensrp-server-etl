@@ -34,15 +34,16 @@ public class PSRFVisitActivityServiceImpl extends ActionActivityService {
 			mother.setvoidStatus(VoidStatus.FALSEREPORT.status());
 			mother.setvoidRemarks(VoidRemarks.FALSEREPORTREMARKS.remarks());
 			databaseServiceImpl.update(mother);
-			inactiveANCVisitByCaseId(caseId);
-			inactiveBNFVisitBycaseId(caseId);
-			inactivePNCVisitByCaseId(caseId);
-			inactiveAllActionByCaseId(caseId);
+			
 			logger.info("updated mother at case id :" + caseId);
 		} else {
 			logger.error("does not update record at case id :" + caseId);
 		}
 		
+		inactiveANCVisitByCaseId(caseId);
+		inactiveBNFVisitBycaseId(caseId);
+		inactivePNCVisitByCaseId(caseId);
+		inactiveAllActionByCaseId(caseId);
 	}
 	
 	public void inactiveMotherWithANCAndPNCAndBNFActionByCaseId(String caseId) throws Exception {
