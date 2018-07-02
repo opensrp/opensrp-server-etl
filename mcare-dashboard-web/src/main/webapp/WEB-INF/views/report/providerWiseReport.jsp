@@ -50,7 +50,7 @@
 								<thead>
 									<tr>
 										<th>Form</th>
-										<th>Scheduled</th>
+										<th>Scheduled (Pending)</th>
 										<th>Completed</th>
 										<th>Expired</th>
 										<th>% of Expired</th>
