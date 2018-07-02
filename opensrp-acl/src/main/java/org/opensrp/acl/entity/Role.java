@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "core")
 public class Role implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;

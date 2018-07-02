@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "location_tag")
+@Table(name = "location_tag", schema = "core")
 public class LocationTag implements GrantedAuthority {
 	
 	public void setId(int id) {

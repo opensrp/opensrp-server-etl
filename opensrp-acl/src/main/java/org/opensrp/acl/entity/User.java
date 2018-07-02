@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "core")
 @NamedQuery(name = "account.byUsername", query = "from User a where a.username = :username")
 public class User implements UserDetails {
 	

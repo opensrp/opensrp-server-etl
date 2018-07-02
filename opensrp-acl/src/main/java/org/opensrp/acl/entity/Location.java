@@ -1,19 +1,14 @@
 package org.opensrp.acl.entity;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "location")
+@Table(name = "location", schema = "core")
 public class Location implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;
@@ -64,12 +59,12 @@ public class Location implements GrantedAuthority {
 	private User creator;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "parent_location", referencedColumnName = "id")
+	@JoinColumn(name = "parent_location_id", referencedColumnName = "id")
 	private Location parentLocation;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "location_tag_map", joinColumns = { @JoinColumn(name = "location_id") }, inverseJoinColumns = { @JoinColumn(name = "location_tag_id") })
-	private Set<LocationTag> LocationTagMap = new HashSet<LocationTag>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "location_tag_id", referencedColumnName = "id")
+	private LocationTag locationTag;
 	
 	public int getId() {
 		return id;
@@ -112,12 +107,12 @@ public class Location implements GrantedAuthority {
 		this.parentLocation = parentLocation;
 	}
 	
-	public Set<LocationTag> getLocationTagMap() {
-		return LocationTagMap;
+	public LocationTag getLocationTag() {
+		return locationTag;
 	}
 	
-	public void setLocationTagMap(Set<LocationTag> locationTagMap) {
-		LocationTagMap = locationTagMap;
+	public void setLocationTag(LocationTag locationTag) {
+		this.locationTag = locationTag;
 	}
 	
 	public Date getCreated() {

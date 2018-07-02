@@ -40,7 +40,7 @@
 					<form:form method="POST" action="${saveUrl}" modelAttribute="location">
 						<div class="form-group">
 							<div class="row">
-								<div class="col-3">
+								<div class="col-5">
 									<label for="exampleInputName">Location Name</label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
@@ -49,36 +49,40 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="form-check">
-								<div class="row">
-									<%
-										List<LocationTag> locationTagMaps = (List<LocationTag>) session
-													.getAttribute("LocationTags");
-											int[] selectedPermissions = (int[]) session
-													.getAttribute("selectedLocationTags");
-											for (LocationTag locationTagMap : locationTagMaps) {
-									%>
-									<div class="col-5">
-										<form:checkbox class="checkBoxClass form-check-input"
-											path="locationTagMap" value="<%=locationTagMap.getId()%>"
-											checked="<%=CheckboxHelperUtil.checkCheckedBox(
-							selectedPermissions, locationTagMap.getId())%>" />
-										<label class="form-check-label" for="defaultCheck1"> <%=locationTagMap.getName()%>
-										</label>
-									</div>
-									<%
-										}
-									%>
-								</div>
-
-							</div>
 							<div class="row">
-								<div class="col-3">
-									<label class="form-check-label"> Check All <input
-										type="checkbox" id="ckbCheckAll" /></label>
-									<p>${errorPermission}</p>
+								<div class="col-5">
+									<label for="exampleInputName">Description</label>
+									<form:input path="description" class="form-control"
+										required="required" aria-describedby="nameHelp"
+										placeholder="Description" />
 								</div>
 							</div>
+						</div>
+						
+						<div class="form-group">							
+								<div class="row">									
+									<div class="col-5">
+									<label for="exampleInputName">Parent Location </label>
+										<form:select path="parentLocation" class="custom-select custom-select-lg mb-3">
+										    <form:option value="Please Select" />
+   									        <form:options items="${parentLocation}" />
+										</form:select>
+									</div>									
+								</div>
+							
+						</div>
+						
+						<div class="form-group">							
+								<div class="row">									
+									<div class="col-5">
+									<label for="exampleInputName"> Location Tag</label>
+										<form:select path="locationTag" class="custom-select custom-select-lg mb-3">
+										    <form:option value="Please Select" />
+   									        <form:options items="${locationsTag}" />
+										</form:select>
+									</div>									
+								</div>
+							
 						</div>
 							
 						</div>

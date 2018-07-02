@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-@Table(name = "permission")
+@Table(name = "permission", schema = "core")
 public class Permission implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;

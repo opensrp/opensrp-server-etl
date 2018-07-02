@@ -1,6 +1,8 @@
 package org.opensrp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -35,7 +37,7 @@ public class LocationController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "location.html", method = RequestMethod.GET)
 	public String locationList(Model model) {
-		List<LocationTag> locations = locationTagServiceImpl.findAll("LocationTag");
+		List<Location> locations = locationTagServiceImpl.findAll("Location");
 		model.addAttribute("locations", locations);
 		
 		return "location/index";
@@ -46,9 +48,22 @@ public class LocationController {
 	public ModelAndView saveLocation(ModelMap model, HttpSession session) {
 		
 		model.addAttribute("location", new Location());
-		int[] locationTags = null;
-		session.setAttribute("LocationTagMap", locationTagServiceImpl.findAll("LocationTag"));
-		session.setAttribute("selectedLocationTags", locationTags);
+		
+		List<Location> locations = locationTagServiceImpl.findAll("Location");
+		Map<Integer, String> parentLocationMap = new HashMap<Integer, String>();
+		for (Location location : locations) {
+			parentLocationMap.put(location.getId(), location.getName());
+			
+		}
+		
+		List<LocationTag> locationTags = locationTagServiceImpl.findAll("LocationTag");
+		Map<Integer, String> locationsTagMap = new HashMap<Integer, String>();
+		for (LocationTag locationTag : locationTags) {
+			locationsTagMap.put(locationTag.getId(), locationTag.getName());
+			
+		}
+		model.addAttribute("locationsTag", locationsTagMap);
+		model.addAttribute("parentLocation", parentLocationMap);
 		return new ModelAndView("location/add", "command", location);
 		
 	}

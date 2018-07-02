@@ -5,9 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
+import org.opensrp.acl.entity.Location;
+import org.opensrp.acl.entity.LocationTag;
+import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.AclService;
 import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,6 +45,19 @@ public class LocationServiceImpl implements AclService {
 	@Transactional
 	@Override
 	public <T> long save(T t) throws Exception {
+		Location location = (Location) t;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User creator = (User) databaseRepositoryImpl.findByKey(auth.getName(), "username", User.class);
+		
+		Location parentLocation = (Location) databaseRepositoryImpl.findById(location.getParentLocation().getId(), "id",
+		    Location.class);
+		
+		LocationTag locationTag = (LocationTag) databaseRepositoryImpl.findById(location.getLocationTag().getId(), "id",
+		    LocationTag.class);
+		
+		location.setCreator(creator);
+		location.setParentLocation(parentLocation);
+		location.setLocationTag(locationTag);
 		return databaseRepositoryImpl.save(t);
 	}
 	

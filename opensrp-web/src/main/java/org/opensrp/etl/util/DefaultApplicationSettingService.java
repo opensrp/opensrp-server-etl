@@ -97,7 +97,7 @@ public class DefaultApplicationSettingService {
 		acc.setLastName(userName);
 		acc.setEnabled(true);
 		acc.setEmail("admin@yahoo.com");
-		acc.setPassword(passwordEncoder.encode("admin"));
+		acc.setPassword("admin");
 		Role existingRole = roleServiceImpl.findByKey(role.getName(), "name", Role.class);
 		Set<Role> roles = new HashSet<Role>();
 		roles.add(existingRole);
