@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
+import org.opensrp.common.util.TreeNode;
+import org.opensrp.etl.util.LocationTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class LocationController {
@@ -39,7 +43,10 @@ public class LocationController {
 	public String locationList(Model model) {
 		List<Location> locations = locationTagServiceImpl.findAll("Location");
 		model.addAttribute("locations", locations);
-		
+		LocationTree locationTree = new LocationTree();
+		locationTree.buildTreeFromList(locations);
+		Map<String, TreeNode<String, Location>> lotree = locationTree.getLocationsHierarchy();
+		System.err.println("lotree" + new Gson().toJson(lotree));
 		return "location/index";
 	}
 	
