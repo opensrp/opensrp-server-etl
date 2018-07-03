@@ -2,7 +2,6 @@ package org.opensrp.acl.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +52,7 @@ public class LocationTag implements GrantedAuthority {
 	@UpdateTimestamp
 	private Date updated = new Date();
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "creator", referencedColumnName = "id")
 	private User creator;
 	

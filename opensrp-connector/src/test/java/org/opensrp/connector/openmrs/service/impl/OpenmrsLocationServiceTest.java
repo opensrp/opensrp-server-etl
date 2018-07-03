@@ -48,7 +48,7 @@ public class OpenmrsLocationServiceTest {
 		
 		JSONArray tagsArray = new JSONArray();
 		JSONObject tagsObject = new JSONObject();
-		//roleObject.put("role", Authenticated);
+		
 		tagsObject.put("tag", tags);
 		tagsArray.put(tagsObject);
 		

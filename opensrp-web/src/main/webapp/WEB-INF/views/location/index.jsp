@@ -42,24 +42,23 @@
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Role List
+					<i class="fa fa-table"></i> Location List
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-bordered" id="dataTable">
 							<thead>
 								<tr>
-									<th>Location Name</th>
-									<th>Location Tag</th>									
-									<th>Location Tag</th>
-									<th>Actions</th>
+									<th>Name</th>
+									<th>Description</th>									
+									<th> Tag</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Location Name</th>									
-									<th>Location Tag</th>
-									<th>Actions</th>
+									<th>Name</th>
+									<th>Description</th>									
+									<th> Tag</th>
 								</tr>
 							</tfoot>
 							<tbody>
@@ -67,8 +66,8 @@
 									<tr>
 										<td><a href="<c:url value="/location/${location.id}/edit.html"/>">${location.getName()}</a></td>
 										
-										<td><a href="<c:url value="/location/${location.id}/edit.html"/>">Edit</a>
-										</td>
+										<td>${location.getDescription()}</td>
+										<td>${location.getLocationTag().getName()}</td>
 
 									</tr>
 								</c:forEach>

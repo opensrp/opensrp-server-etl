@@ -85,7 +85,7 @@
 							
 						</div>
 							
-						</div>
+						
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">

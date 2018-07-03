@@ -41,7 +41,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
-	private int id;
+	private Integer id;
 	
 	//@NotNull
 	
@@ -264,7 +264,7 @@ public class User implements UserDetails {
 		result = prime * result + (enabled ? 1231 : 1237);
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idetifier == null) ? 0 : idetifier.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
@@ -313,7 +313,10 @@ public class User implements UserDetails {
 				return false;
 		} else if (!gender.equals(other.gender))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (idetifier == null) {
 			if (other.idetifier != null)

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONException;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.entity.LocationTag;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
@@ -68,7 +69,7 @@ public class LocationTagController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_UPDATE_ROLE')")
 	@RequestMapping(value = "/location/tag/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editRole(@ModelAttribute("locationTag") @Valid LocationTag locationTag, BindingResult binding,
-	                             ModelMap model, HttpSession session, @PathVariable("id") int id) {
+	                             ModelMap model, HttpSession session, @PathVariable("id") int id) throws JSONException {
 		locationTag.setId(id);
 		locationTagServiceImpl.update(locationTag);
 		return new ModelAndView("redirect:/location/tag/list.html");
