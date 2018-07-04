@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class LocationTagServiceImpl implements AclService {
@@ -109,5 +110,29 @@ public class LocationTagServiceImpl implements AclService {
 		}
 		
 		return locationsTagMap;
+	}
+	
+	public boolean locationTagExists(LocationTag locationTag) {
+		boolean exists = false;
+		if (locationTag != null) {
+			exists = databaseRepositoryImpl.entityExists(locationTag.getName(), "name", LocationTag.class);
+		}
+		return exists;
+	}
+	
+	public void setModelAttribute(ModelMap model, LocationTag locationTag) {
+		model.addAttribute("name", locationTag.getName());
+		model.addAttribute("uniqueErrorMessage", "Specified LocationTag name already exists, please specify another");
+		
+	}
+	
+	public boolean sameEditedNameAndActualName(int id, String editedName) {
+		boolean sameName = false;
+		LocationTag location = databaseRepositoryImpl.findById(id, "id", LocationTag.class);
+		String actualName = location.getName();
+		if (actualName.equalsIgnoreCase(editedName)) {
+			sameName = true;
+		}
+		return sameName;
 	}
 }

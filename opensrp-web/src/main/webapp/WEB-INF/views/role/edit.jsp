@@ -27,9 +27,14 @@
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
+			<div class="form-group">				
+					   <a  href="<c:url value="/user.html"/>"> <strong> Manage User</strong> 
+						</a>  |   <a  href="<c:url value="/role.html"/>"> <strong>Manage Role</strong>
+						</a>			
+			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Add Role
+					<i class="fa fa-table"></i> Edit Role
 				</div>
 				<div class="card-body">
 					<form:form method="POST" action="${saveUrl}" modelAttribute="role">

@@ -50,8 +50,14 @@ public class LocationTagController {
 	@RequestMapping(value = "/location/tag/add.html", method = RequestMethod.POST)
 	public ModelAndView saveLocation(@ModelAttribute("locationTag") @Valid LocationTag locationTag, BindingResult binding,
 	                                 ModelMap model, HttpSession session) throws Exception {
+		locationTag.setName(locationTag.getName().trim());
+		if (!locationTagServiceImpl.locationTagExists(locationTag)) {
+			locationTagServiceImpl.save(locationTag);
+		} else {
+			locationTagServiceImpl.setModelAttribute(model, locationTag);
+			return new ModelAndView("/location-tag/add");
+		}
 		
-		locationTagServiceImpl.save(locationTag);
 		return new ModelAndView("redirect:/location/tag/list.html");
 		
 	}
@@ -71,7 +77,18 @@ public class LocationTagController {
 	public ModelAndView editRole(@ModelAttribute("locationTag") @Valid LocationTag locationTag, BindingResult binding,
 	                             ModelMap model, HttpSession session, @PathVariable("id") int id) throws JSONException {
 		locationTag.setId(id);
-		locationTagServiceImpl.update(locationTag);
+		locationTag.setName(locationTag.getName().trim());
+		if (locationTagServiceImpl.sameEditedNameAndActualName(id, locationTag.getName())) {
+			locationTagServiceImpl.update(locationTag);
+		} else {
+			if (!locationTagServiceImpl.locationTagExists(locationTag)) {
+				locationTagServiceImpl.update(locationTag);
+			} else {
+				locationTagServiceImpl.setModelAttribute(model, locationTag);
+				return new ModelAndView("/location-tag/edit");
+			}
+		}
+		
 		return new ModelAndView("redirect:/location/tag/list.html");
 		
 	}

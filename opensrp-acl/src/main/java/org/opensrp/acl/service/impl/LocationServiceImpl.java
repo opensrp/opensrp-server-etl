@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class LocationServiceImpl implements AclService {
@@ -37,6 +39,9 @@ public class LocationServiceImpl implements AclService {
 	
 	@Autowired
 	private OpenMRSLocationAPIService openMRSLocationAPIService;
+	
+	@Autowired
+	private LocationTagServiceImpl locationTagServiceImpl;
 	
 	public LocationServiceImpl() {
 		
@@ -134,5 +139,49 @@ public class LocationServiceImpl implements AclService {
 			
 		}
 		return locationTreeAsMap;
+	}
+	
+	public boolean locationExists(Location location) {
+		boolean exists = false;
+		if (location != null) {
+			exists = databaseRepositoryImpl.entityExists(location.getName(), "name", Location.class);
+		}
+		return exists;
+	}
+	
+	public void setSessionAttribute(HttpSession session, Location location) {
+		
+		Map<Integer, String> parentLocationMap = getLocationTreeAsMap();
+		Map<Integer, String> tags = locationTagServiceImpl.getLocationTagListAsMap();
+		
+		session.setAttribute("parentLocation", parentLocationMap);
+		if (location.getParentLocation() != null) {
+			session.setAttribute("selectedParentLocation", location.getParentLocation().getId());
+		} else {
+			session.setAttribute("selectedParentLocation", 0);
+		}
+		session.setAttribute("tags", tags);
+		if (location.getLocationTag() != null) {
+			session.setAttribute("selectedTtag", location.getLocationTag().getId());
+		} else {
+			session.setAttribute("selectedTtag", 0);
+		}
+		
+	}
+	
+	public void setModelAttribute(ModelMap model, Location location) {
+		model.addAttribute("name", location.getName());
+		model.addAttribute("uniqueErrorMessage", "Specified Location name already exists, please specify another");
+		
+	}
+	
+	public boolean sameEditedNameAndActualName(int id, String editedName) {
+		boolean sameName = false;
+		Location location = databaseRepositoryImpl.findById(id, "id", Location.class);
+		String actualName = location.getName();
+		if (actualName.equalsIgnoreCase(editedName)) {
+			sameName = true;
+		}
+		return sameName;
 	}
 }

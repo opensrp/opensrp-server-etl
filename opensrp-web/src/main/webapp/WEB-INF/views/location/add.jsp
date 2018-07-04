@@ -7,7 +7,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="org.opensrp.common.util.CheckboxHelperUtil"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@page import="org.opensrp.acl.entity.LocationTag"%>
+
+<%
+Map<Integer, String> parentLocations =  (Map<Integer, String>)session.getAttribute("parentLocation");
+Integer selectedParentLocation = (Integer)session.getAttribute("selectedParentLocation");
+
+Map<Integer, String> tags =  (Map<Integer, String>)session.getAttribute("tags");
+Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
+	%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,14 +46,16 @@
 					<i class="fa fa-table"></i> Add Location
 				</div>
 				<div class="card-body">
+				<span> ${uniqueErrorMessage}</span>
 					<form:form method="POST" action="${saveUrl}" modelAttribute="location">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-5">
-									<label for="exampleInputName">Location Name</label>
+									<label for="exampleInputName">Location Name  </label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
-										placeholder="Location Name" />
+										placeholder="Location Name" value="${name}" />
+										
 								</div>
 							</div>
 						</div>
@@ -63,10 +74,22 @@
 								<div class="row">									
 									<div class="col-5">
 									<label for="exampleInputName">Parent Location </label>
-										<form:select path="parentLocation" class="custom-select custom-select-lg mb-3">
-										    <option value="0" selected>Please Select</option>
-   									        <form:options items="${parentLocation}" />
-										</form:select>
+										<select class="custom-select custom-select-lg mb-3" id="parentLocation" name="parentLocation">
+										 	<option value="0" selected>Please Select</option>
+											<%
+											for (Map.Entry<Integer, String> entry : parentLocations.entrySet())
+											{
+												if(selectedParentLocation==entry.getKey()){ %>
+													<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
+												<% }else{
+													%>
+														<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
+													<%
+												}
+												
+											}
+											%>
+										</select>
 									</div>									
 								</div>
 							
@@ -76,10 +99,22 @@
 								<div class="row">									
 									<div class="col-5">
 									<label for="exampleInputName"> Location Tag</label>
-										<form:select path="locationTag" class="custom-select custom-select-lg mb-3">
-										    <option value="0" selected>Please Select</option>
-   									        <form:options items="${locationsTag}" />
-										</form:select>
+										<select class="custom-select custom-select-lg mb-3" id="locationTag" name="locationTag">
+									 		<option value="0" selected>Please Select</option>
+												<%
+												for (Map.Entry<Integer, String> entry : tags.entrySet())
+												{
+													if(selectedTtag==entry.getKey()){ %>
+														<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
+													<% }else{
+														%>
+															<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
+														<%
+													}
+													
+												}
+												%>
+											</select>
 									</div>									
 								</div>
 							

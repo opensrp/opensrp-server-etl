@@ -88,7 +88,7 @@
 				</div>
 			</li> --%>
 			
-			
+			<%-- 
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="roleDropdown"
 				href="#" data-toggle="dropdown"> Role
@@ -103,20 +103,22 @@
 						
 					</a>
 				</div>
-			</li>
+			</li> --%>
 			
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="userDropdown"
-				href="#" data-toggle="dropdown"> User
+				href="#" data-toggle="dropdown"> Users
 			</a>
 				<div class="dropdown-menu">	
 				
 				<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/user/add.html"/>"> <strong>Add</strong>
-					</a>				
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/user.html"/>"> <strong> List</strong> 
+				
+					<a class="dropdown-item" href="<c:url value="/user.html"/>"> <strong> Manage User</strong> 
 						
+					</a>
+									
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/role.html"/>"> <strong>Manage Role</strong>
 					</a>
 				</div>
 			</li>
