@@ -1,4 +1,4 @@
-package org.opensrp.etl.transmission.listener;
+package org.opensrp.web.listener;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Configuration;

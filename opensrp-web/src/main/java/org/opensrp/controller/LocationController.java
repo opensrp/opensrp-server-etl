@@ -1,6 +1,9 @@
+/**
+ * @author proshanto
+ * */
+
 package org.opensrp.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +11,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.opensrp.acl.entity.Location;
-import org.opensrp.acl.entity.LocationTag;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
+import org.opensrp.common.util.TreeNode;
+import org.opensrp.web.util.LocationTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,9 +22,13 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class LocationController {
@@ -39,7 +47,10 @@ public class LocationController {
 	public String locationList(Model model) {
 		List<Location> locations = locationTagServiceImpl.findAll("Location");
 		model.addAttribute("locations", locations);
-		
+		LocationTree locationTree = new LocationTree();
+		locationTree.buildTreeFromList(locations);
+		Map<String, TreeNode<String, Location>> lotree = locationTree.getLocationsHierarchy();
+		System.err.println("lotree" + new Gson().toJson(lotree));
 		return "location/index";
 	}
 	
@@ -49,19 +60,9 @@ public class LocationController {
 		
 		model.addAttribute("location", new Location());
 		
-		List<Location> locations = locationTagServiceImpl.findAll("Location");
-		Map<Integer, String> parentLocationMap = new HashMap<Integer, String>();
-		for (Location location : locations) {
-			parentLocationMap.put(location.getId(), location.getName());
-			
-		}
+		Map<Integer, String> parentLocationMap = locationServiceImpl.getLocationTreeAsMap();
 		
-		List<LocationTag> locationTags = locationTagServiceImpl.findAll("LocationTag");
-		Map<Integer, String> locationsTagMap = new HashMap<Integer, String>();
-		for (LocationTag locationTag : locationTags) {
-			locationsTagMap.put(locationTag.getId(), locationTag.getName());
-			
-		}
+		Map<Integer, String> locationsTagMap = locationTagServiceImpl.getLocationTagListAsMap();
 		model.addAttribute("locationsTag", locationsTagMap);
 		model.addAttribute("parentLocation", parentLocationMap);
 		return new ModelAndView("location/add", "command", location);
@@ -70,12 +71,54 @@ public class LocationController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/location/add.html", method = RequestMethod.POST)
-	public ModelAndView saveLocation(@ModelAttribute("location") @Valid Location location, BindingResult binding,
+	public ModelAndView saveLocation(@RequestParam(value = "parentLocation", required = false) int parentLocationId,
+	                                 @RequestParam(value = "locationTag") int tagId,
+	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session) throws Exception {
 		
-		locationServiceImpl.save(location);
+		locationServiceImpl.save(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
+		    parentLocationId, tagId));
 		return new ModelAndView("redirect:/location.html");
 		
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
+	@RequestMapping(value = "location/{id}/edit.html", method = RequestMethod.GET)
+	public ModelAndView editLocation(ModelMap model, HttpSession session, @PathVariable("id") int id) {
+		Location location = locationServiceImpl.findById(id, "id", Location.class);
+		model.addAttribute("id", id);
+		model.addAttribute("location", location);
+		Map<Integer, String> parentLocationMap = locationServiceImpl.getLocationTreeAsMap();
+		Map<Integer, String> tags = locationTagServiceImpl.getLocationTagListAsMap();
+		
+		session.setAttribute("parentLocation", parentLocationMap);
+		if (location.getParentLocation() != null) {
+			session.setAttribute("selectedParentLocation", location.getParentLocation().getId());
+		} else {
+			session.setAttribute("selectedParentLocation", 0);
+		}
+		session.setAttribute("tags", tags);
+		if (location.getLocationTag() != null) {
+			session.setAttribute("selectedTtag", location.getLocationTag().getId());
+		} else {
+			session.setAttribute("selectedTtag", 0);
+		}
+		
+		return new ModelAndView("location/edit", "command", location);
+		
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
+	@RequestMapping(value = "/location/{id}/edit.html", method = RequestMethod.POST)
+	public ModelAndView editLocation(@RequestParam(value = "parentLocation") int parentLocationId,
+	                                 @RequestParam(value = "locationTag") int tagId,
+	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
+	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
+		location.setId(id);
+		
+		locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
+		    parentLocationId, tagId));
+		return new ModelAndView("redirect:/location.html");
+		
+	}
 }

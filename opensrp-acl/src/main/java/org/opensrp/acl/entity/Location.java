@@ -1,8 +1,11 @@
+/**
+ * @author proshanto (proshanto123@gmail.com)
+ */
+
 package org.opensrp.acl.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,15 +57,15 @@ public class Location implements GrantedAuthority {
 	@UpdateTimestamp
 	private Date updated = new Date();
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "creator", referencedColumnName = "id")
 	private User creator;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "parent_location_id", referencedColumnName = "id")
 	private Location parentLocation;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "location_tag_id", referencedColumnName = "id")
 	private LocationTag locationTag;
 	

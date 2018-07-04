@@ -1,3 +1,7 @@
+/**
+ * @author proshanto (proshanto123@gmail.com)
+ * 
+ */
 package org.opensrp.acl.openmrs.service.impl;
 
 import org.apache.log4j.Logger;
@@ -85,9 +89,9 @@ public class OpenMRSUserAPIService implements OpenMRSConnector<User> {
 		JSONObject createdPerson = openMRSAPIServiceImpl.add(PAYLOAD, generatePersonObject(user), PERSON_URL);
 		logger.info("createdPerson::" + createdPerson);
 		if (createdPerson.has("uuid")) {
-			JSONObject createdUole = openMRSAPIServiceImpl.add(PAYLOAD, generateUserJsonObject(user, isUpdate), USER_URL);
-			logger.info("createdUole:" + createdUole);
-			userUuid = (String) createdUole.get("uuid");
+			JSONObject createdUser = openMRSAPIServiceImpl.add(PAYLOAD, generateUserJsonObject(user, isUpdate), USER_URL);
+			logger.info("createdUole:" + createdUser);
+			userUuid = (String) createdUser.get("uuid");
 		} else {
 			// need to handle exception....
 		}

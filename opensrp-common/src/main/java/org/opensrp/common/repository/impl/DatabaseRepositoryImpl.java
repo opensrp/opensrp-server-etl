@@ -36,7 +36,8 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		long returnValue = -1;
 		try {
 			tx = session.beginTransaction();
-			session.save(t);
+			session.saveOrUpdate(t);
+			
 			logger.info("saved successfully: " + t.getClass().getName());
 			returnValue = 1;
 			if (!tx.wasCommitted())
@@ -49,6 +50,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		}
 		finally {
 			session.close();
+			
 		}
 		return returnValue;
 	}
@@ -60,7 +62,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		int returnValue = -1;
 		try {
 			tx = session.beginTransaction();
-			session.update(t);
+			session.saveOrUpdate(t);
 			logger.info("updated successfully");
 			if (!tx.wasCommitted())
 				tx.commit();
@@ -69,6 +71,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		catch (HibernateException e) {
 			returnValue = -1;
 			tx.rollback();
+			e.printStackTrace();
 		}
 		finally {
 			session.close();

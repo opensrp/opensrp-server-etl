@@ -1,4 +1,4 @@
-package org.opensrp.params.builder;
+package org.opensrp.common.util;
 
 import org.springframework.stereotype.Component;
 

@@ -42,13 +42,14 @@
 							<div class="row">
 								<div class="col-3">
 									<label for="exampleInputName">Name</label>
-									<form:input path="name" readonly="true" class="form-control"
+									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
 										placeholder="Location Name" />
 								</div>
 							</div>
 						</div>
 						<form:hidden path="id" />
+						<form:hidden path="uuid" />
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">
