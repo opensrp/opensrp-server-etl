@@ -1,3 +1,7 @@
+/**
+ * @author proshanto
+ * */
+
 package org.opensrp.controller;
 
 import java.util.List;
@@ -10,7 +14,7 @@ import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
 import org.opensrp.common.util.TreeNode;
-import org.opensrp.etl.util.LocationTree;
+import org.opensrp.web.util.LocationTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -71,7 +75,7 @@ public class LocationController {
 	                                 @RequestParam(value = "locationTag") int tagId,
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session) throws Exception {
-		System.err.println("parentLocationId" + parentLocationId);
+		
 		locationServiceImpl.save(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
 		    parentLocationId, tagId));
 		return new ModelAndView("redirect:/location.html");
@@ -88,9 +92,17 @@ public class LocationController {
 		Map<Integer, String> tags = locationTagServiceImpl.getLocationTagListAsMap();
 		
 		session.setAttribute("parentLocation", parentLocationMap);
-		session.setAttribute("selectedParentLocation", location.getParentLocation().getId());
+		if (location.getParentLocation() != null) {
+			session.setAttribute("selectedParentLocation", location.getParentLocation().getId());
+		} else {
+			session.setAttribute("selectedParentLocation", 0);
+		}
 		session.setAttribute("tags", tags);
-		session.setAttribute("selectedTtag", location.getLocationTag().getId());
+		if (location.getLocationTag() != null) {
+			session.setAttribute("selectedTtag", location.getLocationTag().getId());
+		} else {
+			session.setAttribute("selectedTtag", 0);
+		}
 		
 		return new ModelAndView("location/edit", "command", location);
 		
@@ -103,7 +115,7 @@ public class LocationController {
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
 		location.setId(id);
-		System.err.println("parentLocationId" + parentLocationId);
+		
 		locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
 		    parentLocationId, tagId));
 		return new ModelAndView("redirect:/location.html");

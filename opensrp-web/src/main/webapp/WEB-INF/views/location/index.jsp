@@ -17,7 +17,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>User List</title>
+<title>Location List</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
@@ -52,6 +52,8 @@
 									<th>Name</th>
 									<th>Description</th>									
 									<th> Tag</th>
+									<th> Created Date</th>
+									<th> Creator</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -59,6 +61,8 @@
 									<th>Name</th>
 									<th>Description</th>									
 									<th> Tag</th>
+									<th> Created Date</th>
+									<th> Creator</th>
 								</tr>
 							</tfoot>
 							<tbody>
@@ -68,6 +72,8 @@
 										
 										<td>${location.getDescription()}</td>
 										<td>${location.getLocationTag().getName()}</td>
+										<td>${location.getCreated()}</td>
+										<td>${location.getCreator().getUsername()}</td>
 
 									</tr>
 								</c:forEach>

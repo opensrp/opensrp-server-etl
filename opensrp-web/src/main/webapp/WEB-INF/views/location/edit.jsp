@@ -68,24 +68,22 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 								<div class="row">									
 									<div class="col-5">
 									<label for="exampleInputName">Parent Location </label>
-										
-										
 									<select class="custom-select custom-select-lg mb-3" id="parentLocation" name="parentLocation">
-									<option>Please Select Parent Location</option>
-										<%
-										for (Map.Entry<Integer, String> entry : parentLocations.entrySet())
-										{
-											if(selectedParentLocation==entry.getKey()){ %>
-												<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
-											<% }else{
-												%>
-													<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
-												<%
+										 	<option value="0" selected>Please Select</option>
+											<%
+											for (Map.Entry<Integer, String> entry : parentLocations.entrySet())
+											{
+												if(selectedParentLocation==entry.getKey()){ %>
+													<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
+												<% }else{
+													%>
+														<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
+													<%
+												}
+												
 											}
-											
-										}
-										%>
-								</select>
+											%>
+									</select>
 									</div>									
 								</div>
 							
@@ -96,27 +94,28 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 									<div class="col-5">
 									<label for="exampleInputName"> Location Tag</label>
 										<select class="custom-select custom-select-lg mb-3" id="locationTag" name="locationTag">
-									<option>Please Select Tag</option>
-										<%
-										for (Map.Entry<Integer, String> entry : tags.entrySet())
-										{
-											if(selectedTtag==entry.getKey()){ %>
-												<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
-											<% }else{
-												%>
-													<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
+									 		<option value="0" selected>Please Select</option>
 												<%
-											}
-											
-										}
-										%>
-								</select>
+												for (Map.Entry<Integer, String> entry : tags.entrySet())
+												{
+													if(selectedTtag==entry.getKey()){ %>
+														<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
+													<% }else{
+														%>
+															<option value="<%=entry.getKey()%>"><%=entry.getValue() %></option>
+														<%
+													}
+													
+												}
+												%>
+										</select>
 									</div>									
 								</div>
 							
 						</div>
 						<form:hidden path="id" />
 						<form:hidden path="uuid" />
+						<form:label path="uuid"> uuid:${location.getUuid()}</form:label>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">

@@ -1,3 +1,7 @@
+/**
+ * @author proshanto
+ * */
+
 package org.opensrp.acl.service.impl;
 
 import java.util.HashMap;
@@ -60,7 +64,7 @@ public class LocationServiceImpl implements AclService {
 		long createdLocation = 0;
 		if (!uuid.isEmpty()) {
 			location.setUuid(uuid);
-			createdLocation = databaseRepositoryImpl.save(t);
+			createdLocation = databaseRepositoryImpl.save(location);
 		} else {
 			logger.error("No uuid found for user:" + location.getName());
 			// TODO
@@ -110,11 +114,12 @@ public class LocationServiceImpl implements AclService {
 	public Location setCreatorParentLocationTagAttributeInLocation(Location location, int parentLocationId, int tagId) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User whoCreate = (User) databaseRepositoryImpl.findByKey(auth.getName(), "username", User.class);
+		User creator = (User) databaseRepositoryImpl.findByKey(auth.getName(), "username", User.class);
 		
 		Location parentLocation = (Location) databaseRepositoryImpl.findById(parentLocationId, "id", Location.class);
 		LocationTag locationTag = (LocationTag) databaseRepositoryImpl.findById(tagId, "id", LocationTag.class);
 		
+		location.setCreator(creator);
 		location.setParentLocation(parentLocation);
 		location.setLocationTag(locationTag);
 		

@@ -1,10 +1,3 @@
-/* 
- * Copyright (c) 2013 Manning Publications Co.
- * 
- * Book: http://manning.com/wheeler/
- * Blog: http://springinpractice.com/
- * Code: https://github.com/springinpractice
- */
 package org.opensrp.acl.dao;
 
 import java.io.Serializable;
@@ -24,8 +17,9 @@ import org.springframework.util.ReflectionUtils;
 // it has direct access to the DAOs. I don't think we're doing direct DAO injects into controllers anywhere. [WLW]
 
 /**
- * @author Willie Wheeler (willie.wheeler@gmail.com)
+ * @author proshanto (proshanto123@gmail.com)
  */
+
 public abstract class AbstractAclDao<T extends Object> implements Dao<T> {
 	
 	@Inject
@@ -36,7 +30,7 @@ public abstract class AbstractAclDao<T extends Object> implements Dao<T> {
 	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private Class<T> getDomainClass() {
 		if (domainClass == null) {
@@ -49,7 +43,7 @@ public abstract class AbstractAclDao<T extends Object> implements Dao<T> {
 	private String getDomainClassName() {
 		return getDomainClass().getName();
 	}
-
+	
 	@Override
 	public void create(T t) {
 		
@@ -66,49 +60,49 @@ public abstract class AbstractAclDao<T extends Object> implements Dao<T> {
 		
 		getSession().save(t);
 	}
-
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public T get(Serializable id) {
 		return (T) getSession().get(getDomainClass(), id);
 	}
-
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public T load(Serializable id) {
 		return (T) getSession().load(getDomainClass(), id);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
 		return getSession().createQuery("from " + getDomainClassName()).list();
 	}
-
+	
 	@Override
 	public void update(T t) {
 		getSession().update(t);
 	}
-
+	
 	@Override
 	public void delete(T t) {
 		getSession().delete(t);
 	}
-
+	
 	@Override
 	public void deleteById(Serializable id) {
 		delete(load(id));
 	}
-
+	
 	@Override
 	public void deleteAll() {
 		getSession().createQuery("delete " + getDomainClassName()).executeUpdate();
 	}
-
+	
 	@Override
 	public long count() {
 		return (Long) getSession().createQuery("select count(*) from " + getDomainClassName()).uniqueResult();
 	}
-
+	
 	@Override
 	public boolean exists(Serializable id) {
 		return (get(id) != null);

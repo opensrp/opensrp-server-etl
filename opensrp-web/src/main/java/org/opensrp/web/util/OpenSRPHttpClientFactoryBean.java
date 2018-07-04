@@ -1,4 +1,4 @@
-package org.opensrp.etl.util;
+package org.opensrp.web.util;
 
 import java.util.Properties;
 

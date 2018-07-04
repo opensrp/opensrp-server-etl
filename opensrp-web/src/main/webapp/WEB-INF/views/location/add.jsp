@@ -64,7 +64,7 @@
 									<div class="col-5">
 									<label for="exampleInputName">Parent Location </label>
 										<form:select path="parentLocation" class="custom-select custom-select-lg mb-3">
-										    <form:option value="Please Select" />
+										    <option value="0" selected>Please Select</option>
    									        <form:options items="${parentLocation}" />
 										</form:select>
 									</div>									
@@ -77,7 +77,7 @@
 									<div class="col-5">
 									<label for="exampleInputName"> Location Tag</label>
 										<form:select path="locationTag" class="custom-select custom-select-lg mb-3">
-										    <form:option value="Please Select" />
+										    <option value="0" selected>Please Select</option>
    									        <form:options items="${locationsTag}" />
 										</form:select>
 									</div>									

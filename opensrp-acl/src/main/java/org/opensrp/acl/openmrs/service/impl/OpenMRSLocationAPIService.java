@@ -1,3 +1,7 @@
+/**
+ * @author proshanto (proshanto123@gmail.com)
+ */
+
 package org.opensrp.acl.openmrs.service.impl;
 
 import org.json.JSONArray;
@@ -28,15 +32,11 @@ public class OpenMRSLocationAPIService implements OpenMRSConnector<Location> {
 	@Override
 	public String add(Location location) throws JSONException {
 		String locationUuid = "";
-		JSONObject createdLocation = openMRSAPIServiceImpl.add(
-		    PAYLOAD,
-		    makeLocationObject(location.getName(), location.getLocationTag().getName(), location.getParentLocation()
-		            .getUuid()), LOCATION_URL);
-		System.err.println(createdLocation);
+		JSONObject createdLocation = openMRSAPIServiceImpl.add(PAYLOAD, makeLocationObject(location), LOCATION_URL);
 		if (createdLocation.has("uuid")) {
 			locationUuid = (String) createdLocation.get("uuid");
 		} else {
-			
+			//TODO
 		}
 		return locationUuid;
 	}
@@ -44,12 +44,11 @@ public class OpenMRSLocationAPIService implements OpenMRSConnector<Location> {
 	@Override
 	public String update(Location location, String uuid) throws JSONException {
 		String locationUuid = "";
-		JSONObject updatedLocation = openMRSAPIServiceImpl.update(
-		    PAYLOAD,
-		    makeLocationObject(location.getName(), location.getLocationTag().getName(), location.getParentLocation()
-		            .getUuid()), uuid, LOCATION_URL);
+		JSONObject updatedLocation = openMRSAPIServiceImpl.update(PAYLOAD, makeLocationObject(location), uuid, LOCATION_URL);
 		if (updatedLocation.has("uuid")) {
 			locationUuid = (String) updatedLocation.get("uuid");
+		} else {
+			//TODO
 		}
 		return locationUuid;
 	}
@@ -66,19 +65,27 @@ public class OpenMRSLocationAPIService implements OpenMRSConnector<Location> {
 		return null;
 	}
 	
-	public JSONObject makeLocationObject(String name, String tags, String parentLocation) throws JSONException {
-		JSONObject location = new JSONObject();
+	public JSONObject makeLocationObject(Location location) throws JSONException {
+		JSONObject locationObject = new JSONObject();
 		JSONArray tagsArray = new JSONArray();
-		
 		JSONObject tagsObject = new JSONObject();
-		tagsObject.put("tag", tags);
-		tagsArray.put(tagsObject);
-		location.put(tagsKey, tagsArray);
+		String parentLocationUuid = "";
 		
-		location.put(nameKey, name);
-		location.put(parentLocationKey, parentLocation);
+		if (location.getParentLocation() != null) {
+			parentLocationUuid = location.getParentLocation().getUuid();
+		} else {
+			parentLocationUuid = "";
+		}
 		
-		return location;
+		if (location.getLocationTag() != null) {
+			tagsObject.put("tag", location.getLocationTag().getName());
+			tagsArray.put(tagsObject);
+			locationObject.put(tagsKey, tagsArray);
+		}
+		
+		locationObject.put(nameKey, location.getName());
+		locationObject.put(parentLocationKey, parentLocationUuid);
+		
+		return locationObject;
 	}
-	
 }
