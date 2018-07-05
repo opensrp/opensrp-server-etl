@@ -29,7 +29,8 @@
 		<div class="container-fluid">
 		<div class="form-group">				
 				   <a  href="<c:url value="/location/tag/list.html"/>"> <strong> Manage Tags</strong> 
-					</a>  |   <a  href="<c:url value="/location.html"/>"> <strong>Manage Locations</strong>
+					</a>  |  <a  href="<c:url value="/location.html"/>"> <strong>Manage Locations</strong>
+					</a>|  <a  href="<c:url value="/location/hierarchy.html"/>"> <strong>View Hierarchy</strong>
 					</a>			
 		</div>
 			<div class="card mb-3">

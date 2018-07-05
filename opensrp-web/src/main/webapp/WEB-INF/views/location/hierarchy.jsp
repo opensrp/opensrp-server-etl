@@ -16,14 +16,15 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link type="text/css" href="<c:url value="/resources/css/jtree.min.css"/>" rel="stylesheet">
 <title>Location List</title>
-
+<%@page import="org.json.JSONObject" %>
+<%@page import="org.json.JSONArray" %>
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
-
-<c:url var="saveUrl" value="/role/add" />
-
+<% 
+JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeData");	
+%>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 
@@ -36,50 +37,14 @@
 					</a>|  <a  href="<c:url value="/location/hierarchy.html"/>"> <strong>View Hierarchy</strong>
 					</a>		
 		</div>
-		<div class="form-group">
-			<h1>Location Management</h1>
-			<a  href="<c:url value="/location/add.html"/>"> <strong>Add Location</strong>
-					</a>
-			</div>
+		
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Location List
+					<i class="fa fa-table"></i> Location Hierarchy 
 				</div>
 				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-bordered" id="dataTable">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>									
-									<th> Tag</th>
-									<th> Created Date</th>
-									<th> Creator</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>									
-									<th> Tag</th>
-									<th> Created Date</th>
-									<th> Creator</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								<c:forEach var="location" items="${locations}" varStatus="loop">
-									<tr>
-										<td><a href="<c:url value="/location/${location.id}/edit.html"/>">${location.getName()}</a></td>
-										
-										<td>${location.getDescription()}</td>
-										<td>${location.getLocationTag().getName()}</td>
-										<td>${location.getCreated()}</td>
-										<td>${location.getCreator().getUsername()}</td>
-
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+					<div id="locationTreee">
+  
 					</div>
 				</div>
 				<div class="card-footer small text-muted"></div>
@@ -89,7 +54,18 @@
 		<!-- /.content-wrapper-->
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
-
+ 	<script src="<c:url value='/resources/js/jstree.min.js'/>"></script>
+    
 </body>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+$('#locationTreee').jstree({ 'core' : {
+    'data' : <%=locatationTreeData %>
+} });
+
+});
+</script>
 </html>
 

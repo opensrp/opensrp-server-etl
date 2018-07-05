@@ -4,12 +4,15 @@
 
 package org.opensrp.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
@@ -28,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-
 @Controller
 public class LocationController {
+	
+	Map<Integer, String> loctrese = new HashMap<Integer, String>();
 	
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
@@ -44,22 +47,82 @@ public class LocationController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "location.html", method = RequestMethod.GET)
-	public String locationList(Model model) {
-		List<Location> locations = locationTagServiceImpl.findAll("Location");
+	public String locationList(Model model, HttpSession session) {
+		List<Location> locations = locationServiceImpl.findAll("Location");
+		session.setAttribute("locations", locations);
 		model.addAttribute("locations", locations);
 		LocationTree locationTree = new LocationTree();
 		locationTree.buildTreeFromList(locations);
 		Map<String, TreeNode<String, Location>> lotree = locationTree.getLocationsHierarchy();
-		System.err.println("lotree" + new Gson().toJson(lotree));
+		/*System.err.println("Size:" + lotree.size());
+		for (Map.Entry<String, TreeNode<String, Location>> entry : lotree.entrySet()) {
+			TreeNode<String, Location> treeNode = entry.getValue();
+			
+			Map<String, TreeNode<String, Location>> children = treeNode.getChildren();
+			System.err.println("Parent: " + treeNode.getNode().getName());
+			if (children != null) {
+				System.err.println("Child size:" + children.size());
+			}
+			
+		}
+		System.err.println("...............");*/
+		Map<Integer, String> loctree = new HashMap<Integer, String>();
+		treeTraverse(lotree, loctree);
+		
+		//		/System.err.println("OK");
+		//System.err.println("lotree" + new Gson().toJson(lotree));
+		//System.err.println("OK");
+		model.addAttribute("lotree", lotree);
 		return "location/index";
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
+	@RequestMapping(value = "location/hierarchy.html", method = RequestMethod.GET)
+	public String locationHierarchy(Model model, HttpSession session) throws JSONException {
+		String parentIndication = "#";
+		String parentKey = "parent";
+		JSONArray data = locationServiceImpl.getLocationDataAsJson(parentIndication, parentKey);
+		System.err.println("Data:" + data);
+		session.setAttribute("locatationTreeData", data);
+		return "location/hierarchy";
+	}
+	
+	public Map<Integer, String> treeTraverse(Map<String, TreeNode<String, Location>> lotree, Map<Integer, String> loctree) {
+		TreeNode<String, Location> treeNode = null;
+		
+		int i = 0;
+		String div = "";
+		for (Map.Entry<String, TreeNode<String, Location>> entry : lotree.entrySet()) {
+			i++;
+			treeNode = entry.getValue();
+			Map<String, TreeNode<String, Location>> children = treeNode.getChildren();
+			
+			//System.err.println("Parent" + treeNode.getParent() + "child: " + i + "->" + treeNode.getNode().getName());
+			loctrese.put(treeNode.getNode().getId(), treeNode.getNode().getName());
+			if (children != null) {
+				
+				treeTraverse(children, loctree);
+				
+			} else {
+				i = 0;
+				
+				//System.err.println("-----------------------");
+			}
+			
+		}
+		return loctrese;
 	}
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "location/add.html", method = RequestMethod.GET)
-	public ModelAndView saveLocation(ModelMap model, HttpSession session) {
+	public ModelAndView saveLocation(ModelMap model, HttpSession session) throws JSONException {
 		
 		model.addAttribute("location", new Location());
 		locationServiceImpl.setSessionAttribute(session, location);
+		String parentIndication = "-1";
+		String parentKey = "parentid";
+		JSONArray data = locationServiceImpl.getLocationDataAsJson(parentIndication, parentKey);
+		session.setAttribute("locatationTreeData", data);
 		return new ModelAndView("location/add", "command", location);
 		
 	}
@@ -121,5 +184,15 @@ public class LocationController {
 		}
 		return new ModelAndView("redirect:/location.html");
 		
+	}
+	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
+	@RequestMapping(value = "location/search.html", method = RequestMethod.GET)
+	public String locationSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
+		System.err.println("name:" + name);
+		List<Location> locations = locationServiceImpl.findByKey(name, "name", Location.class);
+		
+		session.setAttribute("searchedLocation", locations);
+		return "location/search";
 	}
 }

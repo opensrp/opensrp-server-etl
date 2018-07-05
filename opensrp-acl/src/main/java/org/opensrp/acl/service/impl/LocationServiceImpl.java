@@ -13,13 +13,16 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.entity.LocationTag;
 import org.opensrp.acl.entity.User;
 import org.opensrp.acl.openmrs.service.impl.OpenMRSLocationAPIService;
 import org.opensrp.acl.service.AclService;
 import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
+import org.opensrp.common.util.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -184,4 +187,47 @@ public class LocationServiceImpl implements AclService {
 		}
 		return sameName;
 	}
+	
+	public static void treeTraverse(Map<String, TreeNode<String, Location>> lotree) {
+		TreeNode<String, Location> treeNode = null;
+		int i = 0;
+		String div = "";
+		for (Map.Entry<String, TreeNode<String, Location>> entry : lotree.entrySet()) {
+			i++;
+			treeNode = entry.getValue();
+			Map<String, TreeNode<String, Location>> children = treeNode.getChildren();
+			div = "</div>" + treeNode.getNode().getName() + "</div>";
+			//System.err.println("Parent" + treeNode.getParent() + "child: " + i + "->" + treeNode.getNode().getName());
+			System.err.println("I;" + div);
+			if (children != null) {
+				treeTraverse(children);
+			} else {
+				i = 0;
+				System.err.println("-----------------------");
+			}
+		}
+		
+	}
+	
+	public JSONArray getLocationDataAsJson(String parentIndication, String parentKey) throws JSONException {
+		JSONArray dataArray = new JSONArray();
+		
+		List<Location> locations = findAll("Location");
+		for (Location location : locations) {
+			JSONObject dataObject = new JSONObject();
+			dataObject.put("id", location.getId());
+			Location parentLocation = location.getParentLocation();
+			if (parentLocation != null) {
+				dataObject.put(parentKey, parentLocation.getId());
+			} else {
+				dataObject.put(parentKey, parentIndication);
+			}
+			dataObject.put("text", location.getName());
+			dataArray.put(dataObject);
+		}
+		
+		return dataArray;
+		
+	}
+	
 }
