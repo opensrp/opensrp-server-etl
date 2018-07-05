@@ -59,12 +59,7 @@ public class LocationController {
 	public ModelAndView saveLocation(ModelMap model, HttpSession session) {
 		
 		model.addAttribute("location", new Location());
-		
-		Map<Integer, String> parentLocationMap = locationServiceImpl.getLocationTreeAsMap();
-		
-		Map<Integer, String> locationsTagMap = locationTagServiceImpl.getLocationTagListAsMap();
-		model.addAttribute("locationsTag", locationsTagMap);
-		model.addAttribute("parentLocation", parentLocationMap);
+		locationServiceImpl.setSessionAttribute(session, location);
 		return new ModelAndView("location/add", "command", location);
 		
 	}
@@ -75,9 +70,17 @@ public class LocationController {
 	                                 @RequestParam(value = "locationTag") int tagId,
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session) throws Exception {
+		location.setName(location.getName().trim());
+		if (!locationServiceImpl.locationExists(location)) {
+			locationServiceImpl.save(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
+			    parentLocationId, tagId));
+		} else {
+			location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId, tagId);
+			locationServiceImpl.setSessionAttribute(session, location);
+			locationServiceImpl.setModelAttribute(model, location);
+			return new ModelAndView("/location/add");
+		}
 		
-		locationServiceImpl.save(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
-		    parentLocationId, tagId));
 		return new ModelAndView("redirect:/location.html");
 		
 	}
@@ -88,22 +91,7 @@ public class LocationController {
 		Location location = locationServiceImpl.findById(id, "id", Location.class);
 		model.addAttribute("id", id);
 		model.addAttribute("location", location);
-		Map<Integer, String> parentLocationMap = locationServiceImpl.getLocationTreeAsMap();
-		Map<Integer, String> tags = locationTagServiceImpl.getLocationTagListAsMap();
-		
-		session.setAttribute("parentLocation", parentLocationMap);
-		if (location.getParentLocation() != null) {
-			session.setAttribute("selectedParentLocation", location.getParentLocation().getId());
-		} else {
-			session.setAttribute("selectedParentLocation", 0);
-		}
-		session.setAttribute("tags", tags);
-		if (location.getLocationTag() != null) {
-			session.setAttribute("selectedTtag", location.getLocationTag().getId());
-		} else {
-			session.setAttribute("selectedTtag", 0);
-		}
-		
+		locationServiceImpl.setSessionAttribute(session, location);
 		return new ModelAndView("location/edit", "command", location);
 		
 	}
@@ -115,9 +103,22 @@ public class LocationController {
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
 		location.setId(id);
-		
-		locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
-		    parentLocationId, tagId));
+		location.setName(location.getName().trim());
+		if (locationServiceImpl.sameEditedNameAndActualName(id, location.getName())) {
+			locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
+			    parentLocationId, tagId));
+		} else {
+			if (!locationServiceImpl.locationExists(location)) {
+				locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
+				    parentLocationId, tagId));
+			} else {
+				location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId,
+				    tagId);
+				locationServiceImpl.setSessionAttribute(session, location);
+				locationServiceImpl.setModelAttribute(model, location);
+				return new ModelAndView("/location/edit");
+			}
+		}
 		return new ModelAndView("redirect:/location.html");
 		
 	}

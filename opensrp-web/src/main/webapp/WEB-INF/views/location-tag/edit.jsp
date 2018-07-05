@@ -37,6 +37,7 @@
 					<i class="fa fa-table"></i> Edit Location Tag
 				</div>
 				<div class="card-body">
+				<span> ${uniqueErrorMessage}</span>
 					<form:form method="POST" action="${saveUrl}" modelAttribute="locationTag">
 						<div class="form-group">
 							<div class="row">
@@ -61,7 +62,7 @@
 							</div>
 						</div>
 						
-						
+						<form:label path="uuid"> uuid:${locationTag.getUuid()}</form:label>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">

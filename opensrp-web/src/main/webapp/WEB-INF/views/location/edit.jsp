@@ -42,11 +42,12 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 					<i class="fa fa-table"></i> Edit Location
 				</div>
 				<div class="card-body">
+				<span> ${uniqueErrorMessage}</span>
 					<form:form method="POST" action="${saveUrl}" modelAttribute="location">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-5">
-									<label for="exampleInputName">Location Name</label>
+									<label for="exampleInputName">Location Name   </label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
 										placeholder="Location Name" />
@@ -83,7 +84,7 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 												
 											}
 											%>
-									</select>
+										</select>
 									</div>									
 								</div>
 							
@@ -108,7 +109,7 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 													
 												}
 												%>
-										</select>
+											</select>
 									</div>									
 								</div>
 							

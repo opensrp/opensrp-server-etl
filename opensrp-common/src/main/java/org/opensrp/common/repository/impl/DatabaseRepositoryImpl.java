@@ -148,6 +148,15 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (result.size() > 0 ? true : false);
 	}
 	
+	public boolean entityExists(String value, String fieldName, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		criteria.add(Restrictions.eq(fieldName, value));
+		List<Object> result = criteria.list();
+		session.close();
+		return (result.size() > 0 ? true : false);
+	}
+	
 	public <T> T findByCaseIdAndToday(String relationalId, Date today, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);

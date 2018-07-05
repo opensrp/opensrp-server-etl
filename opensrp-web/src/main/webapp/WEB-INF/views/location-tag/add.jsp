@@ -39,6 +39,7 @@
 					<i class="fa fa-table"></i> Add  New Location Tag
 				</div>
 				<div class="card-body">
+				<span> ${uniqueErrorMessage}</span>
 					<form:form method="POST" action="${saveUrl}" modelAttribute="locationTag">
 						<div class="form-group">
 							<div class="row">
@@ -46,7 +47,7 @@
 									<label for="exampleInputName">Name</label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
-										placeholder="Tag Name" />
+										placeholder="Tag Name" value="${name}" />
 								</div>
 							</div>
 						</div>
