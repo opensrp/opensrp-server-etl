@@ -22,17 +22,17 @@ public class Tree<K, T> {
 	
 	public Tree() {
 		map = new HashMap<K, TreeNode<K, T>>();
-		parentChildren = new HashMap<>();
+		parentChildren = new HashMap<K, Set<K>>();
 	}
 	
 	private void addToParentChildRelation(K parent, K id) {
 		if (parentChildren == null) {
-			parentChildren = new HashMap<>();
+			parentChildren = new HashMap<K, Set<K>>();
 		}
 		
 		Set<K> kids = parentChildren.get(parent);
 		if (kids == null) {
-			kids = new HashSet<>();
+			kids = new HashSet<K>();
 		}
 		
 		kids.add(id);

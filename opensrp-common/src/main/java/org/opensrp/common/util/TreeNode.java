@@ -32,7 +32,7 @@ public class TreeNode<K, T> {
 	
 	public void addChild(TreeNode<K, T> node) {
 		if (children == null) {
-			children = new HashMap<>();
+			children = new HashMap<K, TreeNode<K, T>>();
 		}
 		children.put(node.getId(), node);
 	}
