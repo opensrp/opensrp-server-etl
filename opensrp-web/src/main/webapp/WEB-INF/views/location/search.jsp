@@ -18,8 +18,16 @@
 <% 
 List<Location> locatationTreeData = (List<Location>)session.getAttribute("searchedLocation");	
 
-for (Location location : locatationTreeData) { 
-String name = location.getParentLocation().getName()+ " -> "+location.getName();
+for (Location location : locatationTreeData) {
+	String parentLocationName = "";
+	if(location.getParentLocation() !=null){
+		parentLocationName = location.getParentLocation().getName() + " -> ";
+	}
+	String tagNme= "";
+	if(location.getLocationTag()!=null){
+		tagNme = "  ("+ location.getLocationTag().getName() + ")";
+	}
+	String name = parentLocationName +location.getName() + tagNme;
 %>
 	 <option value="<%=location.getId()%>"><%=name%></option>
 <%}

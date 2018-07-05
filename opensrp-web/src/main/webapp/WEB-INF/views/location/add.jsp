@@ -76,7 +76,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
 							</div>
 						</div>
 						
-						<div class="form-group">							
+						<%-- <div class="form-group">							
 								<div class="row">									
 									<div class="col-5">
 									<label for="exampleInputName">Parent Location </label>
@@ -98,7 +98,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
 										</select>
 									</div>									
 								</div>
-							</div>
+							</div> --%>
 								<div class="form-group">							
 								<div class="row">									
 									<div class="col-5">
@@ -195,7 +195,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
           .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
           .autocomplete({
             delay: 0,
-            minLength: 4,
+            minLength: 3,
             source: $.proxy( this, "_source" )
           })
           .tooltip({

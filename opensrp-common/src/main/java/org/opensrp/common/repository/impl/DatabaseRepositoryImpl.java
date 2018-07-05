@@ -138,6 +138,19 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
 	
+	public <T> List<T> findAllByKeysWithALlMatches(Map<String, String> fielaValues, Class<?> className) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(className);
+		for (Map.Entry<String, String> entry : fielaValues.entrySet()) {
+			criteria.add(Restrictions.ilike(entry.getKey(), "%" + entry.getValue() + "%"));
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<T> result = criteria.list();
+		session.close();
+		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public boolean findByUserName(String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();

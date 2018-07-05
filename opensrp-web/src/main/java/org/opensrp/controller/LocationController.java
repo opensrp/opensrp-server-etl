@@ -190,7 +190,7 @@ public class LocationController {
 	@RequestMapping(value = "location/search.html", method = RequestMethod.GET)
 	public String locationSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
 		System.err.println("name:" + name);
-		List<Location> locations = locationServiceImpl.findByKey(name, "name", Location.class);
+		List<Location> locations = locationServiceImpl.getAllByKeysWithALlMatches(name);
 		
 		session.setAttribute("searchedLocation", locations);
 		return "location/search";

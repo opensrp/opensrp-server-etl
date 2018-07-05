@@ -230,4 +230,10 @@ public class LocationServiceImpl implements AclService {
 		
 	}
 	
+	@Transactional
+	public List<Location> getAllByKeysWithALlMatches(String name) {
+		Map<String, String> fielaValues = new HashMap<String, String>();
+		fielaValues.put("name", name);
+		return databaseRepositoryImpl.findAllByKeysWithALlMatches(fielaValues, Location.class);
+	}
 }
