@@ -16,6 +16,9 @@ Map<Integer, String> parentLocations =  (Map<Integer, String>)session.getAttribu
 Integer selectedParentLocation = (Integer)session.getAttribute("selectedParentLocation");
 
 Map<Integer, String> tags =  (Map<Integer, String>)session.getAttribute("tags");
+
+String selectedParentLocationName = (String)session.getAttribute("parentLocationName");
+
 Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 
 JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeData");	
@@ -75,7 +78,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
 								</div>
 							</div>
 						</div>
-						
+						<form:hidden path="parentLocation" id="parentLocation" value="<%=selectedParentLocation %>" />
 						<%-- <div class="form-group">							
 								<div class="row">									
 									<div class="col-5">
@@ -103,7 +106,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
 								<div class="row">									
 									<div class="col-5">
 										<div id="cm" class="ui-widget">
-											  <label>Your preferred programming language: </label>
+											  <label>Search Parent Location </label>
 											  <select id="combobox" class="form-control">
 											  
 											    </select>
@@ -176,7 +179,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
     $.widget( "custom.combobox", {
       _create: function() {
         this.wrapper = $( "<div>" )
-          .addClass( "form-control" )          
+          .addClass( "custom-combobox" )          
           .insertAfter( this.element );
  
         this.element.hide();
@@ -185,14 +188,15 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
       },
  
       _createAutocomplete: function() {
-        var selected = this.element.children( ":selected" ),
+        var selected = this.element.children( ":selected" ),        
           value = selected.val() ? selected.text() : "";
- 
+         value = "<%=selectedParentLocationName%>";
         this.input = $( "<input>" )
           .appendTo( this.wrapper )
           .val( value )
-          .attr( "title", "" )
-          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .attr( "title", "" )          
+           .attr( "name", "parentLocationName" )
+          .addClass( "form-control custom-combobox-input ui-widget ui-widget-content  ui-corner-left" )
           .autocomplete({
             delay: 0,
             minLength: 3,
@@ -207,7 +211,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
         this._on( this.input, {
           autocompleteselect: function( event, ui ) {
             ui.item.option.selected = true;
-//alert(ui.item.option.value);
+ 			$("#parentLocation").val(ui.item.option.value);
             this._trigger( "select", event, {
               item: ui.item.option
             });
@@ -244,7 +248,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
       },
  
       _removeIfInvalid: function( event, ui ) {
- 
+    	  
         // Selected an item, nothing to do
         if ( ui.item ) {
           return;
@@ -271,6 +275,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
           .val( "" )
           .attr( "title", value + " didn't match any item" )
           .tooltip( "open" );
+        $("#parentLocation").val(0);
         this.element.val( "" );
         this._delay(function() {
           this.input.tooltip( "close" ).attr( "title", "" );

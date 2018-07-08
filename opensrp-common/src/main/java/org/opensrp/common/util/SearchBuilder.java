@@ -23,6 +23,8 @@ public class SearchBuilder {
 	
 	private String name;
 	
+	private String userName;
+	
 	private String search;
 	
 	private String year;
@@ -43,6 +45,7 @@ public class SearchBuilder {
 		this.setName("");
 		this.setSearch("");
 		this.setYear("");
+		this.setUserName("");
 		return this;
 		
 	}
@@ -51,88 +54,108 @@ public class SearchBuilder {
 		return year;
 	}
 	
-	public void setYear(String year) {
+	public SearchBuilder setYear(String year) {
 		this.year = year;
+		return this;
 	}
 	
 	public String getDivision() {
 		return division;
 	}
 	
-	public void setDivision(String division) {
+	public SearchBuilder setDivision(String division) {
 		this.division = division;
+		return this;
 	}
 	
 	public String getDistrict() {
 		return district;
 	}
 	
-	public void setDistrict(String district) {
+	public SearchBuilder setDistrict(String district) {
 		this.district = district;
+		return this;
 	}
 	
 	public String getUpazila() {
 		return upazila;
 	}
 	
-	public void setUpazila(String upazila) {
+	public SearchBuilder setUpazila(String upazila) {
 		this.upazila = upazila;
+		return this;
 	}
 	
 	public String getUnion() {
 		return union;
 	}
 	
-	public void setUnion(String union) {
+	public SearchBuilder setUnion(String union) {
 		this.union = union;
+		return this;
 	}
 	
 	public String getWard() {
 		return ward;
 	}
 	
-	public void setWard(String ward) {
+	public SearchBuilder setWard(String ward) {
 		this.ward = ward;
+		return this;
 	}
 	
 	public String getSubunit() {
 		return subunit;
 	}
 	
-	public void setSubunit(String subunit) {
+	public SearchBuilder setSubunit(String subunit) {
 		this.subunit = subunit;
+		return this;
 	}
 	
 	public String getMauzapara() {
 		return mauzapara;
 	}
 	
-	public void setMauzapara(String mauzapara) {
+	public SearchBuilder setMauzapara(String mauzapara) {
 		this.mauzapara = mauzapara;
+		return this;
 	}
 	
 	public String getProvider() {
 		return provider;
 	}
 	
-	public void setProvider(String provider) {
+	public SearchBuilder setProvider(String provider) {
 		this.provider = provider;
+		return this;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public void setName(String name) {
+	public SearchBuilder setName(String name) {
 		this.name = name;
+		return this;
 	}
 	
 	public String getSearch() {
 		return search;
 	}
 	
-	public void setSearch(String search) {
+	public SearchBuilder setSearch(String search) {
 		this.search = search;
+		return this;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public SearchBuilder setUserName(String userName) {
+		this.userName = userName;
+		return this;
 	}
 	
 	@Override
@@ -148,6 +171,7 @@ public class SearchBuilder {
 		result = prime * result + ((subunit == null) ? 0 : subunit.hashCode());
 		result = prime * result + ((union == null) ? 0 : union.hashCode());
 		result = prime * result + ((upazila == null) ? 0 : upazila.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((ward == null) ? 0 : ward.hashCode());
 		result = prime * result + ((year == null) ? 0 : year.hashCode());
 		return result;
@@ -207,6 +231,11 @@ public class SearchBuilder {
 				return false;
 		} else if (!upazila.equals(other.upazila))
 			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
 		if (ward == null) {
 			if (other.ward != null)
 				return false;
@@ -224,7 +253,7 @@ public class SearchBuilder {
 	public String toString() {
 		return "SearchBuilder [division=" + division + ", district=" + district + ", upazila=" + upazila + ", union="
 		        + union + ", ward=" + ward + ", subunit=" + subunit + ", mauzapara=" + mauzapara + ", provider=" + provider
-		        + ", name=" + name + ", search=" + search + ", year=" + year + "]";
+		        + ", name=" + name + ", userName=" + userName + ", search=" + search + ", year=" + year + "]";
 	}
 	
 }

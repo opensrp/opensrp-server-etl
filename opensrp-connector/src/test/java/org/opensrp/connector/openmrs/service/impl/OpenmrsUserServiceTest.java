@@ -172,6 +172,7 @@ public class OpenmrsUserServiceTest {
 		 */
 		
 		JSONObject returnPerson = createPerson(fn, mn, ln);
+		
 		String personUuid = (String) returnPerson.get("uuid");
 		String crratedPersonName = (String) returnPerson.get("display");
 		Assert.assertEquals(fn + " " + mn + " " + ln, crratedPersonName);
@@ -186,6 +187,7 @@ public class OpenmrsUserServiceTest {
 		 * get person information
 		 */
 		JSONObject getPersonObject = openMRSAPIService.get("v=full", personUuid, PERSON_URL);
+		System.err.println("getPersonObject:" + getPersonObject);
 		String getPersonObjectUuid = (String) getPersonObject.get("uuid");
 		Assert.assertEquals(personUuid, getPersonObjectUuid);
 		
@@ -229,6 +231,7 @@ public class OpenmrsUserServiceTest {
 		 */
 		
 		JSONObject returnUser = createUser(userName, password);
+		
 		System.err.println("returnUser" + returnUser);
 		String userUuid = (String) returnUser.get("uuid");
 		String returnUserName = (String) returnUser.get("username");

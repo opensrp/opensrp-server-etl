@@ -6,8 +6,12 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.opensrp.common.interfaces.DatabaseService;
 import org.opensrp.common.repository.impl.DatabaseRepositoryImpl;
+import org.opensrp.common.util.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,4 +92,50 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return databaseRepositoryImpl.update(t);
 	}
 	
+	@Transactional
+	public <T> List<T> search(SearchBuilder searchBuilder, Integer offset, Integer maxResults, Class<?> entityClassName) {
+		return databaseRepositoryImpl.search(searchBuilder, offset, maxResults, entityClassName);
+	}
+	
+	@Transactional
+	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
+		return databaseRepositoryImpl.countBySearch(searchBuilder, entityClassName);
+	}
+	
+	public static Criteria createCriteriaCondition(SearchBuilder searchBuilder, Criteria criteria) {
+		if (searchBuilder.getDivision() != null && !searchBuilder.getDivision().isEmpty()) {
+			
+			criteria.add(Restrictions.eq("division", searchBuilder.getDivision().toUpperCase()));
+		}
+		if (searchBuilder.getDistrict() != null && !searchBuilder.getDistrict().isEmpty()) {
+			
+			criteria.add(Restrictions.eq("district", searchBuilder.getDistrict().toUpperCase()));
+		}
+		if (searchBuilder.getUpazila() != null && !searchBuilder.getUpazila().isEmpty()) {
+			
+			criteria.add(Restrictions.eq("upazila", searchBuilder.getUpazila()));
+		}
+		if (searchBuilder.getUnion() != null && !searchBuilder.getUnion().isEmpty()) {
+			criteria.add(Restrictions.eq("union", searchBuilder.getUnion()));
+		}
+		if (searchBuilder.getWard() != null && !searchBuilder.getWard().isEmpty()) {
+			criteria.add(Restrictions.eq("ward", searchBuilder.getWard()));
+		}
+		if (searchBuilder.getMauzapara() != null && !searchBuilder.getMauzapara().isEmpty()) {
+			criteria.add(Restrictions.eq("mauzaPara", searchBuilder.getMauzapara()));
+		}
+		if (searchBuilder.getSubunit() != null && !searchBuilder.getSubunit().isEmpty()) {
+			criteria.add(Restrictions.eq("subunit", searchBuilder.getSubunit()));
+		}
+		if (searchBuilder.getProvider() != null && !searchBuilder.getProvider().isEmpty()) {
+			criteria.add(Restrictions.eq("provider", searchBuilder.getProvider()));
+		}
+		if (searchBuilder.getName() != null && !searchBuilder.getName().isEmpty()) {
+			criteria.add(Restrictions.ilike("name", searchBuilder.getName(), MatchMode.ANYWHERE));
+		}
+		if (searchBuilder.getUserName() != null && !searchBuilder.getUserName().isEmpty()) {
+			criteria.add(Restrictions.ilike("username", searchBuilder.getUserName(), MatchMode.ANYWHERE));
+		}
+		return criteria;
+	}
 }

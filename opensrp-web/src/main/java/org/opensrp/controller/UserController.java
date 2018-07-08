@@ -1,7 +1,5 @@
 package org.opensrp.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +11,7 @@ import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.impl.RoleServiceImpl;
 import org.opensrp.acl.service.impl.UserServiceImpl;
 import org.opensrp.common.service.impl.DatabaseServiceImpl;
+import org.opensrp.web.util.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.Authentication;
@@ -57,12 +56,15 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private PaginationUtil paginationUtil;
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
 	@RequestMapping(value = "/user.html", method = RequestMethod.GET)
-	public String userList(Model model) {
-		List<User> users = userServiceImpl.findAll("User");
-		logger.debug("users list size: " + users.size());
-		model.addAttribute("users", users);
+	public String userList(HttpServletRequest request, HttpSession session, Model model) {
+		
+		Class<User> entityClassName = User.class;
+		paginationUtil.createPagination(request, session, entityClassName);
 		return "user/index";
 	}
 	

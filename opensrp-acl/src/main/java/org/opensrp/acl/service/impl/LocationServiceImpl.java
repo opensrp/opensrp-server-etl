@@ -87,6 +87,7 @@ public class LocationServiceImpl implements AclService {
 		int updatedLocation = 0;
 		String uuid = openMRSLocationAPIService.update(location, location.getUuid());
 		if (!uuid.isEmpty()) {
+			location.setUuid(uuid);
 			updatedLocation = databaseRepositoryImpl.update(location);
 		} else {
 			logger.error("No uuid found for user:" + location.getName());
@@ -123,10 +124,8 @@ public class LocationServiceImpl implements AclService {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User creator = (User) databaseRepositoryImpl.findByKey(auth.getName(), "username", User.class);
-		
 		Location parentLocation = (Location) databaseRepositoryImpl.findById(parentLocationId, "id", Location.class);
 		LocationTag locationTag = (LocationTag) databaseRepositoryImpl.findById(tagId, "id", LocationTag.class);
-		
 		location.setCreator(creator);
 		location.setParentLocation(parentLocation);
 		location.setLocationTag(locationTag);
@@ -152,7 +151,7 @@ public class LocationServiceImpl implements AclService {
 		return exists;
 	}
 	
-	public void setSessionAttribute(HttpSession session, Location location) {
+	public void setSessionAttribute(HttpSession session, Location location, String parentLocationName) {
 		
 		Map<Integer, String> parentLocationMap = getLocationTreeAsMap();
 		Map<Integer, String> tags = locationTagServiceImpl.getLocationTagListAsMap();
@@ -169,6 +168,8 @@ public class LocationServiceImpl implements AclService {
 		} else {
 			session.setAttribute("selectedTtag", 0);
 		}
+		
+		session.setAttribute("parentLocationName", parentLocationName);
 		
 	}
 	
@@ -235,5 +236,23 @@ public class LocationServiceImpl implements AclService {
 		Map<String, String> fielaValues = new HashMap<String, String>();
 		fielaValues.put("name", name);
 		return databaseRepositoryImpl.findAllByKeysWithALlMatches(fielaValues, Location.class);
+	}
+	
+	public String makeParentLocationName(Location location) {
+		String parentLocationName = "";
+		String tagNme = "";
+		String locationName = "";
+		if (location.getParentLocation() != null) {
+			location = databaseRepositoryImpl.findById(location.getParentLocation().getId(), "id", Location.class);
+			if (location.getParentLocation() != null) {
+				parentLocationName = location.getParentLocation().getName() + " -> ";
+			}
+			
+			if (location.getLocationTag() != null) {
+				tagNme = "  (" + location.getLocationTag().getName() + ")";
+			}
+			locationName = location.getName();
+		}
+		return parentLocationName + locationName + tagNme;
 	}
 }

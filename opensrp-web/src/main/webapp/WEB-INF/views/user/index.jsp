@@ -7,7 +7,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<%@page import="org.opensrp.acl.entity.User"%>
+<%@page import="org.opensrp.acl.entity.Role"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 
+<%
+Map<String, String> paginationAtributes = (Map<String, String>) session
+.getAttribute("paginationAtributes");
+String name = "";
+if (paginationAtributes.containsKey("name")) {
+	name = paginationAtributes.get("name");
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +54,24 @@
 				<a  href="<c:url value="/user/add.html"/>"> <strong>Add User</strong>
 						</a>
 			</div>
+			<div class="card mb-3">
+				
+				<div class="card-body">
+					<form id="search-form">
+						<div class="row">
+							<div class="col-3">					
+							<input name="userName" type="search" class="form-control"
+							value="<%=name%>" placeholder="">					
+							</div>
+							<div class="col-6">
+								<button name="search" type="submit" id="bth-search"
+									class="btn btn-primary" value="search">Search</button>
+							</div>
+						</div>			
+					</form>
+				</div>
+				<div class="card-footer small text-muted"></div>
+			</div>
 			<!-- Example DataTables Card-->
 			<div class="card mb-3">
 				<div class="card-header">
@@ -68,25 +99,43 @@
 								</tr>
 							</tfoot>
 							<tbody>
-								<c:forEach var="user" items="${users}" varStatus="loop">
+							<%
+								List<User> users = (List<User>) session
+														.getAttribute("dataList");
+								
+								String creator = "";
+								for (User user : users) 
+									{
+									pageContext.setAttribute("id", user.getId());
+									
+									if(user.getCreator()!= null){
+										creator = user.getCreator().getUsername();
+									}
+							%>
+								
 									<tr>
-										<td><a href="<c:url value="/user/${user.id}/edit.html"/>">${user.getFullName()}</a></td>
-										<td>${user.getUsername()}</td>
-										<td>${user.getEmail()}</td>
-										<td><c:forEach var="role" items="${user.getRoles()}"
-												varStatus="loop">
-												<b> ${role.getName()} </b>
-											</c:forEach></td>
-										<td><a href="<c:url value="/user/${user.id}/edit.html"/>">Edit</a>
-											| <a href="<c:url value="/user/${user.id}/password.html"/>">Reset
+										<td><a href="<c:url value="/user/${id}/edit.html"/>"><%=user.getFullName() %></a></td>
+										<td><%=user.getUsername()%></td>
+										<td><%=user.getEmail()%></td>
+										<td>
+										<% 
+										for (Role role : user.getRoles()){  %>
+										<b> <%=role.getName()%> </b>
+										<% } %> 
+										</td>
+										<td><a href="<c:url value="/user/${id}/edit.html"/>">Edit</a>
+											| <a href="<c:url value="/user/${id}/password.html"/>">Reset
 												Pasword</a></td>
 
 									</tr>
-								</c:forEach>
+									<%
+									}
+									%>
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<jsp:include page="/WEB-INF/views/pager.jsp" />
 				<div class="card-footer small text-muted"></div>
 			</div>
 		</div>

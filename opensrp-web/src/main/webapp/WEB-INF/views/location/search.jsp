@@ -17,18 +17,19 @@
 
 <% 
 List<Location> locatationTreeData = (List<Location>)session.getAttribute("searchedLocation");	
-
-for (Location location : locatationTreeData) {
-	String parentLocationName = "";
-	if(location.getParentLocation() !=null){
-		parentLocationName = location.getParentLocation().getName() + " -> ";
+	if(locatationTreeData!=null){
+		for (Location location : locatationTreeData) {
+			String parentLocationName = "";
+			if(location.getParentLocation() !=null){
+				parentLocationName = location.getParentLocation().getName() + " -> ";
+			}
+			String tagNme= "";
+			if(location.getLocationTag()!=null){
+				tagNme = "  ("+ location.getLocationTag().getName() + ")";
+			}
+			String name = parentLocationName +location.getName() + tagNme;
+		%>
+			 <option value="<%=location.getId()%>"><%=name%></option>
+		<%}
 	}
-	String tagNme= "";
-	if(location.getLocationTag()!=null){
-		tagNme = "  ("+ location.getLocationTag().getName() + ")";
-	}
-	String name = parentLocationName +location.getName() + tagNme;
-%>
-	 <option value="<%=location.getId()%>"><%=name%></option>
-<%}
 %>

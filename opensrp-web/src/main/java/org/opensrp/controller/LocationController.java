@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,8 +17,7 @@ import org.json.JSONException;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.LocationTagServiceImpl;
-import org.opensrp.common.util.TreeNode;
-import org.opensrp.web.util.LocationTree;
+import org.opensrp.web.util.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
@@ -45,34 +45,15 @@ public class LocationController {
 	@Autowired
 	private Location location;
 	
+	@Autowired
+	private PaginationUtil paginationUtil;
+	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "location.html", method = RequestMethod.GET)
-	public String locationList(Model model, HttpSession session) {
-		List<Location> locations = locationServiceImpl.findAll("Location");
-		session.setAttribute("locations", locations);
-		model.addAttribute("locations", locations);
-		LocationTree locationTree = new LocationTree();
-		locationTree.buildTreeFromList(locations);
-		Map<String, TreeNode<String, Location>> lotree = locationTree.getLocationsHierarchy();
-		/*System.err.println("Size:" + lotree.size());
-		for (Map.Entry<String, TreeNode<String, Location>> entry : lotree.entrySet()) {
-			TreeNode<String, Location> treeNode = entry.getValue();
-			
-			Map<String, TreeNode<String, Location>> children = treeNode.getChildren();
-			System.err.println("Parent: " + treeNode.getNode().getName());
-			if (children != null) {
-				System.err.println("Child size:" + children.size());
-			}
-			
-		}
-		System.err.println("...............");*/
-		Map<Integer, String> loctree = new HashMap<Integer, String>();
-		treeTraverse(lotree, loctree);
+	public String locationList(HttpServletRequest request, HttpSession session, Model model) {
 		
-		//		/System.err.println("OK");
-		//System.err.println("lotree" + new Gson().toJson(lotree));
-		//System.err.println("OK");
-		model.addAttribute("lotree", lotree);
+		Class<Location> entityClassName = Location.class;
+		paginationUtil.createPagination(request, session, entityClassName);
 		return "location/index";
 	}
 	
@@ -87,38 +68,13 @@ public class LocationController {
 		return "location/hierarchy";
 	}
 	
-	public Map<Integer, String> treeTraverse(Map<String, TreeNode<String, Location>> lotree, Map<Integer, String> loctree) {
-		TreeNode<String, Location> treeNode = null;
-		
-		int i = 0;
-		String div = "";
-		for (Map.Entry<String, TreeNode<String, Location>> entry : lotree.entrySet()) {
-			i++;
-			treeNode = entry.getValue();
-			Map<String, TreeNode<String, Location>> children = treeNode.getChildren();
-			
-			//System.err.println("Parent" + treeNode.getParent() + "child: " + i + "->" + treeNode.getNode().getName());
-			loctrese.put(treeNode.getNode().getId(), treeNode.getNode().getName());
-			if (children != null) {
-				
-				treeTraverse(children, loctree);
-				
-			} else {
-				i = 0;
-				
-				//System.err.println("-----------------------");
-			}
-			
-		}
-		return loctrese;
-	}
-	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "location/add.html", method = RequestMethod.GET)
 	public ModelAndView saveLocation(ModelMap model, HttpSession session) throws JSONException {
 		
 		model.addAttribute("location", new Location());
-		locationServiceImpl.setSessionAttribute(session, location);
+		String parentLocationName = "";
+		locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
 		String parentIndication = "-1";
 		String parentKey = "parentid";
 		JSONArray data = locationServiceImpl.getLocationDataAsJson(parentIndication, parentKey);
@@ -131,6 +87,7 @@ public class LocationController {
 	@RequestMapping(value = "/location/add.html", method = RequestMethod.POST)
 	public ModelAndView saveLocation(@RequestParam(value = "parentLocation", required = false) int parentLocationId,
 	                                 @RequestParam(value = "locationTag") int tagId,
+	                                 @RequestParam(value = "parentLocationName") String parentLocationName,
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session) throws Exception {
 		location.setName(location.getName().trim());
@@ -139,7 +96,7 @@ public class LocationController {
 			    parentLocationId, tagId));
 		} else {
 			location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId, tagId);
-			locationServiceImpl.setSessionAttribute(session, location);
+			locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
 			locationServiceImpl.setModelAttribute(model, location);
 			return new ModelAndView("/location/add");
 		}
@@ -154,7 +111,8 @@ public class LocationController {
 		Location location = locationServiceImpl.findById(id, "id", Location.class);
 		model.addAttribute("id", id);
 		model.addAttribute("location", location);
-		locationServiceImpl.setSessionAttribute(session, location);
+		String parentLocationName = locationServiceImpl.makeParentLocationName(location);
+		locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
 		return new ModelAndView("location/edit", "command", location);
 		
 	}
@@ -163,6 +121,7 @@ public class LocationController {
 	@RequestMapping(value = "/location/{id}/edit.html", method = RequestMethod.POST)
 	public ModelAndView editLocation(@RequestParam(value = "parentLocation") int parentLocationId,
 	                                 @RequestParam(value = "locationTag") int tagId,
+	                                 @RequestParam(value = "parentLocationName") String parentLocationName,
 	                                 @ModelAttribute("location") @Valid Location location, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
 		location.setId(id);
@@ -177,7 +136,7 @@ public class LocationController {
 			} else {
 				location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId,
 				    tagId);
-				locationServiceImpl.setSessionAttribute(session, location);
+				locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
 				locationServiceImpl.setModelAttribute(model, location);
 				return new ModelAndView("/location/edit");
 			}
@@ -189,9 +148,7 @@ public class LocationController {
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "location/search.html", method = RequestMethod.GET)
 	public String locationSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
-		System.err.println("name:" + name);
 		List<Location> locations = locationServiceImpl.getAllByKeysWithALlMatches(name);
-		
 		session.setAttribute("searchedLocation", locations);
 		return "location/search";
 	}

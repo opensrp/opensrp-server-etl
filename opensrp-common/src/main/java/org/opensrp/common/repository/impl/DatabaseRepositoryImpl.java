@@ -1,5 +1,6 @@
 package org.opensrp.common.repository.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,12 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.opensrp.common.interfaces.DatabaseRepository;
+import org.opensrp.common.service.impl.DatabaseServiceImpl;
+import org.opensrp.common.util.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -142,7 +147,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		for (Map.Entry<String, String> entry : fielaValues.entrySet()) {
-			criteria.add(Restrictions.ilike(entry.getKey(), "%" + entry.getValue() + "%"));
+			criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue(), MatchMode.ANYWHERE));
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -298,4 +303,41 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return aggregatedData;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> search(SearchBuilder searchBuilder, int result, int offsetreal, Class<?> entityClassName) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(entityClassName);
+		
+		criteria = DatabaseServiceImpl.createCriteriaCondition(searchBuilder, criteria);
+		criteria.setFirstResult(offsetreal);
+		criteria.setMaxResults(result);
+		criteria.addOrder(Order.desc("created"));
+		
+		List<T> data = new ArrayList<T>();
+		try {
+			data = (List<T>) criteria.list();
+			session.close();
+		}
+		catch (Exception e) {
+			logger.error(e);
+		}
+		
+		return data;
+	}
+	
+	public int countBySearch(SearchBuilder searchBuilder, Class<?> entityClassName) {
+		Session session = sessionFactory.openSession();
+		int count = 0;
+		Criteria criteria = session.createCriteria(entityClassName);
+		criteria = DatabaseServiceImpl.createCriteriaCondition(searchBuilder, criteria);
+		try {
+			count = criteria.list().size();
+			session.close();
+		}
+		catch (Exception e) {
+			session.close();
+		}
+		
+		return count;
+	}
 }
