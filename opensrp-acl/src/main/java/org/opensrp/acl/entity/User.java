@@ -101,7 +101,18 @@ public class User implements UserDetails {
 	
 	public String idetifier;
 	
+	@Column(name = "person_uuid")
+	public String personUUid;
+	
 	public User() {
+	}
+	
+	public String getPersonUUid() {
+		return personUUid;
+	}
+	
+	public void setPersonUUid(String personUUid) {
+		this.personUUid = personUUid;
 	}
 	
 	public void setId(int id) {

@@ -65,12 +65,12 @@
 								<div class="col-3">
 									<label>First name</label>
 									<form:input path="firstName" class="form-control"
-										placeholder="Enter first name" />
+										required="required" placeholder="Enter first name" />
 								</div>
 								<div class="col-3">
 									<label>Last name</label>
 									<form:input path="lastName" class="form-control"
-										placeholder="Enter last name" />
+										required="required" placeholder="Enter last name" />
 								</div>
 							</div>
 						</div>

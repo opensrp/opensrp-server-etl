@@ -68,10 +68,9 @@ public class LocationServiceImpl implements AclService {
 	@Override
 	public <T> long save(T t) throws Exception {
 		Location location = (Location) t;
-		String uuid = openMRSLocationAPIService.add(location);
+		location = openMRSLocationAPIService.add(location);
 		long createdLocation = 0;
-		if (!uuid.isEmpty()) {
-			location.setUuid(uuid);
+		if (!location.getUuid().isEmpty()) {
 			createdLocation = databaseRepositoryImpl.save(location);
 		} else {
 			logger.error("No uuid found for user:" + location.getName());

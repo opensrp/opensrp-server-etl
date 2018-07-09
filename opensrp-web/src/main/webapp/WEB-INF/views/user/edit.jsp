@@ -74,12 +74,12 @@
 								<div class="col-3">
 									<label for="exampleInputName">First name</label>
 									<form:input path="firstName" class="form-control"
-										aria-describedby="nameHelp" placeholder="Enter first name" />
+										required="required" aria-describedby="nameHelp" placeholder="Enter first name" />
 								</div>
 								<div class="col-3">
 									<label for="exampleInputLastName">Last name</label>
 									<form:input path="lastName" class="form-control"
-										aria-describedby="nameHelp" placeholder="Enter last name" />
+										required="required" aria-describedby="nameHelp" placeholder="Enter last name" />
 								</div>
 							</div>
 						</div>

@@ -30,15 +30,16 @@ public class OpenMRSLocationAPIService implements OpenMRSConnector<Location> {
 	private OpenMRSAPIServiceImpl openMRSAPIServiceImpl;
 	
 	@Override
-	public String add(Location location) throws JSONException {
+	public Location add(Location location) throws JSONException {
 		String locationUuid = "";
 		JSONObject createdLocation = openMRSAPIServiceImpl.add(PAYLOAD, makeLocationObject(location), LOCATION_URL);
 		if (createdLocation.has("uuid")) {
 			locationUuid = (String) createdLocation.get("uuid");
+			location.setUuid(locationUuid);
 		} else {
 			//TODO
 		}
-		return locationUuid;
+		return location;
 	}
 	
 	@Override

@@ -46,13 +46,12 @@ public class LocationTagServiceImpl implements AclService {
 	@Override
 	public <T> long save(T t) throws Exception {
 		LocationTag locationTag = (LocationTag) t;
-		String uuid = openMRSTagAPIService.add(locationTag);
+		locationTag = openMRSTagAPIService.add(locationTag);
 		long createdTag = 0;
-		if (!uuid.isEmpty()) {
+		if (!locationTag.getUuid().isEmpty()) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User creator = (User) databaseRepositoryImpl.findByKey(auth.getName(), "username", User.class);
 			locationTag.setCreator(creator);
-			locationTag.setUuid(uuid);
 			createdTag = databaseRepositoryImpl.save(t);
 		} else {
 			logger.error("No uuid found for user:" + locationTag.getName());

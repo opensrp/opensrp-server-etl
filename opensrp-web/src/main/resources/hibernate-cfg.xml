@@ -24,7 +24,9 @@
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
-			<list>						
+			<list>
+				<value>org.opensrp.acl.entity.Team</value>
+				<value>org.opensrp.acl.entity.TeamMember</value>							
 				<value>org.opensrp.acl.entity.User</value>
 				<value>org.opensrp.acl.entity.Role</value>
 				<value>org.opensrp.acl.entity.Permission</value>

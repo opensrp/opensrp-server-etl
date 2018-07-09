@@ -8,7 +8,7 @@ import org.json.JSONException;
 
 public interface OpenMRSConnector<T> {
 	
-	public String add(T jsonObject) throws JSONException;
+	public T add(T jsonObject) throws JSONException;
 	
 	public String update(T jsonObject, String uuid) throws JSONException;
 	

@@ -27,15 +27,16 @@ public class OpenMRSTagAPIService implements OpenMRSConnector<LocationTag> {
 	private OpenMRSAPIServiceImpl openMRSAPIServiceImpl;
 	
 	@Override
-	public String add(LocationTag tag) throws JSONException {
+	public LocationTag add(LocationTag tag) throws JSONException {
 		String tagUuid = "";
 		JSONObject createdTag = openMRSAPIServiceImpl.add(PAYLOAD, makeTagObject(tag.getName()), LOCATION_TAG_URL);
 		if (createdTag.has("uuid")) {
 			tagUuid = (String) createdTag.get("uuid");
+			tag.setUuid(tagUuid);
 		} else {
 			
 		}
-		return tagUuid;
+		return tag;
 	}
 	
 	@Override

@@ -55,10 +55,9 @@ public class UserServiceImpl implements AclService {
 		Set<Role> roles = user.getRoles();
 		boolean isProvider = roleServiceImpl.isProvider(roles);
 		if (isProvider) {
-			String uuid = openMRSUserAPIService.add(user);
-			logger.info("uuid:" + uuid);
-			if (!uuid.isEmpty()) {
-				user.setUuid(uuid);
+			user = openMRSUserAPIService.add(user);
+			logger.info("uuid:" + user.getUuid());
+			if (!user.getUuid().isEmpty()) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				createdUser = repository.save(user);
 			} else {

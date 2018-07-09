@@ -21,7 +21,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>mCare2 Dashboard Home</title>
+<title>OPENSRP Dashboard Home</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 <link type="text/css"

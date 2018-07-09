@@ -83,20 +83,22 @@ public class OpenMRSUserAPIService implements OpenMRSConnector<User> {
 	}
 	
 	@Override
-	public String add(User user) throws JSONException {
+	public User add(User user) throws JSONException {
 		String userUuid = "";
 		boolean isUpdate = false;
 		JSONObject createdPerson = openMRSAPIServiceImpl.add(PAYLOAD, generatePersonObject(user), PERSON_URL);
 		logger.info("createdPerson::" + createdPerson);
 		if (createdPerson.has("uuid")) {
+			user.setPersonUUid(createdPerson.getString("uuid"));
 			JSONObject createdUser = openMRSAPIServiceImpl.add(PAYLOAD, generateUserJsonObject(user, isUpdate), USER_URL);
 			logger.info("createdUole:" + createdUser);
 			userUuid = (String) createdUser.get("uuid");
+			user.setUuid(userUuid);
 		} else {
 			// need to handle exception....
 		}
 		
-		return userUuid;
+		return user;
 	}
 	
 	@Override
