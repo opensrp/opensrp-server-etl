@@ -3,6 +3,7 @@
  */
 package org.opensrp.acl.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Entity
 @Table(name = "team", schema = "core")
-public class Team {
+public class Team implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,8 +43,8 @@ public class Team {
 	private String uuid;
 	
 	@ManyToOne()
-	@JoinColumn(name = "loction_id", referencedColumnName = "id")
-	private Location loction;
+	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	private Location location;
 	
 	@ManyToOne()
 	@JoinColumn(name = "supervisor_id", referencedColumnName = "id")
@@ -65,5 +66,154 @@ public class Team {
 	@ManyToOne()
 	@JoinColumn(name = "creator_id", referencedColumnName = "id")
 	private User creator;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getUuid() {
+		return uuid;
+	}
+	
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public void setLocation(Location loction) {
+		this.location = loction;
+	}
+	
+	public User getSuperVisor() {
+		return superVisor;
+	}
+	
+	public void setSuperVisor(User superVisor) {
+		this.superVisor = superVisor;
+	}
+	
+	public String getIdentifier() {
+		return identifier;
+	}
+	
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+	
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	
+	public Date getUpdated() {
+		return updated;
+	}
+	
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	
+	public User getCreator() {
+		return creator;
+	}
+	
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((superVisor == null) ? 0 : superVisor.hashCode());
+		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
+		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Team other = (Team) obj;
+		if (created == null) {
+			if (other.created != null)
+				return false;
+		} else if (!created.equals(other.created))
+			return false;
+		if (creator == null) {
+			if (other.creator != null)
+				return false;
+		} else if (!creator.equals(other.creator))
+			return false;
+		if (id != other.id)
+			return false;
+		if (identifier == null) {
+			if (other.identifier != null)
+				return false;
+		} else if (!identifier.equals(other.identifier))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (superVisor == null) {
+			if (other.superVisor != null)
+				return false;
+		} else if (!superVisor.equals(other.superVisor))
+			return false;
+		if (updated == null) {
+			if (other.updated != null)
+				return false;
+		} else if (!updated.equals(other.updated))
+			return false;
+		if (uuid == null) {
+			if (other.uuid != null)
+				return false;
+		} else if (!uuid.equals(other.uuid))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Team [id=" + id + ", name=" + name + ", uuid=" + uuid + ", location=" + location + ", superVisor="
+		        + superVisor + ", identifier=" + identifier + ", created=" + created + ", updated=" + updated + ", creator="
+		        + creator + "]";
+	}
 	
 }

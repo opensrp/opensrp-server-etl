@@ -4,6 +4,7 @@
 
 package org.opensrp.acl.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,18 +18,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 @Service
 @Entity
 @Table(name = "location", schema = "core")
-public class Location implements GrantedAuthority {
+public class Location implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -140,12 +139,6 @@ public class Location implements GrantedAuthority {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	
-	@Override
-	@Transient
-	public String getAuthority() {
-		return name;
 	}
 	
 }

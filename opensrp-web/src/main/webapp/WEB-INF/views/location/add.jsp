@@ -34,7 +34,7 @@ JSONArray locatationTreeData = (JSONArray)session.getAttribute("locatationTreeDa
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" href="<c:url value="/resources/css/jqx.base.css"/>" rel="stylesheet">
 
-<title>Add permissions</title>
+<title>Add Location</title>
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
 

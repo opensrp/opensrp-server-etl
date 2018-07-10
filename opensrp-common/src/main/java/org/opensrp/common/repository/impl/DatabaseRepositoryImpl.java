@@ -166,10 +166,11 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (result.size() > 0 ? true : false);
 	}
 	
-	public boolean entityExists(String value, String fieldName, Class<?> className) {
+	public boolean entityExists(int id, String value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, value));
+		criteria.add(Restrictions.ne("id", id));
 		List<Object> result = criteria.list();
 		session.close();
 		return (result.size() > 0 ? true : false);

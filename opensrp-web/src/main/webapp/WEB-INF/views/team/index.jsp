@@ -8,7 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 	
-<%@page import="org.opensrp.acl.entity.Location"%>
+<%@page import="org.opensrp.acl.entity.Team"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<title>Location List</title>
+<title>Team List</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
@@ -39,14 +39,13 @@ if (paginationAtributes.containsKey("name")) {
 		<div class="container-fluid">
 			<!-- Example DataTables Card-->
 		<div class="form-group">				
-				   <a  href="<c:url value="/location/tag/list.html"/>"> <strong> Manage Tags</strong> 
-					</a>  |  <a  href="<c:url value="/location.html"/>"> <strong>Manage Locations</strong>
-					</a>|  <a  href="<c:url value="/location/hierarchy.html"/>"> <strong>View Hierarchy</strong>
+				   <a  href="<c:url value="team/list.html"/>"> <strong> Manage Team</strong> 
+					</a>  |  <a  href="<c:url value="/team/teammember/list.html"/>"> <strong>Manage Team Member</strong>
 					</a>		
 		</div>
 		<div class="form-group">
-			<h1>Location Management</h1>
-			<a  href="<c:url value="/location/add.html"/>"> <strong>Add New Location</strong>
+			<h1>Team Management</h1>
+			<a  href="<c:url value="/team/add.html"/>"> <strong>Add New Team</strong>
 					</a>
 		</div>
 		<div class="card mb-3">
@@ -69,7 +68,7 @@ if (paginationAtributes.containsKey("name")) {
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Location List
+					<i class="fa fa-table"></i> Team List
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -77,47 +76,49 @@ if (paginationAtributes.containsKey("name")) {
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>Description</th>									
-									<th> Tag</th>
-									<th> Created Date</th>
-									<th> Creator</th>
+									<th>Identifier</th>									
+									<th>Location</th>
+									<th>Current Supervisor</th>
+									<th># Members</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th>Name</th>
-									<th>Description</th>									
-									<th> Tag</th>
-									<th> Created Date</th>
-									<th> Creator</th>
+									<th>Identifier</th>									
+									<th>Location</th>
+									<th>Current Supervisor</th>
+									<th># Members</th>
 								</tr>
 							</tfoot>
 							<tbody>
 							
 							<%
-								List<Location> locations = (List<Location>) session
+								List<Team> teams = (List<Team>) session
 														.getAttribute("dataList");
-								String tagName = "";
-								String creator = "";
-								for (Location location : locations) 
+								String location = "";
+								String superVisor = "";
+							
+								for (Team team : teams) 
 									{
-									pageContext.setAttribute("id", location.getId());
+									pageContext.setAttribute("id", team.getId());
 									
-									if(location.getLocationTag() != null){
-										tagName = location.getLocationTag().getName();
+									
+									if(team.getLocation() != null){
+										location = team.getLocation().getName();
 									}
-									if(location.getCreator()!= null){
-										creator = location.getCreator().getUsername();
+									if(team.getSuperVisor()!= null){
+										superVisor = team.getSuperVisor().getUsername();
 									}
 							%>
 								
 									<tr>
-										<td><a href="<c:url value="/location/${id}/edit.html"/>"><%=location.getName() %></a></td>
+										<td><a href="<c:url value="/team/${id}/edit.html"/>"><%=team.getName() %></a></td>
 										
-										<td><%=location.getDescription() %></td>
-										<td><%=location.getLocationTag().getName()%></td>
-										<td><%=tagName%></td>
-										<td><%=creator %></td>
+										<td><%=team.getIdentifier() %></td>
+										<td><%=location%></td>
+										<td><%=superVisor%></td>
+										<td><%=superVisor %></td>
 
 									</tr>
 									<%

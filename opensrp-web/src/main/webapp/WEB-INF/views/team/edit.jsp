@@ -16,80 +16,86 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Edit Location</title>
+<title>Edit Team</title>
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
 <%
-Map<Integer, String> parentLocations =  (Map<Integer, String>)session.getAttribute("parentLocation");
-Integer selectedParentLocation = (Integer)session.getAttribute("selectedParentLocation");
-String selectedParentLocationName = (String)session.getAttribute("parentLocationName");
+Integer selectedLocationId = (Integer)session.getAttribute("selectedLocation");
 
-Map<Integer, String> tags =  (Map<Integer, String>)session.getAttribute("tags");
-Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
+Map<Integer, String> supervisors =  (Map<Integer, String>)session.getAttribute("supervisors");
+
+String selectedLocationName = (String)session.getAttribute("locationName");
+
+Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr");
+
+
 	%>
-<c:url var="saveUrl" value="/location/${id}/edit.html" />
+<c:url var="saveUrl" value="/team/${id}/edit.html" />
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
 			<div class="form-group">				
-				   <a  href="<c:url value="/location/tag/list.html"/>"> <strong> Manage Tags</strong> 
-					</a>  |  <a  href="<c:url value="/location.html"/>"> <strong>Manage Locations</strong>
-					</a>|  <a  href="<c:url value="/location/hierarchy.html"/>"> <strong>View Hierarchy</strong>
-					</a>			
+				   <a  href="<c:url value="/team/list.html"/>"> <strong> Manage Team</strong> 
+					</a>  |  <a  href="<c:url value="/team/teammember/list.html"/>"> <strong>Manage Team Member</strong>
+					</a>		
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Edit Location
+					<i class="fa fa-table"></i> Add Team
 				</div>
 				<div class="card-body">
-				<span> ${uniqueErrorMessage}</span>
-					<form:form method="POST" action="${saveUrl}" modelAttribute="location">
+				<span> ${uniqueNameErrorMessage}</span><br />
+				<span> ${supervisorUuidErrorMessage}</span><br />
+				<span> ${uniqueIdetifierErrorMessage}</span><br />
+				<span> ${locationUuidErrorMessage}</span>
+					<form:form method="POST" action="${saveUrl}" modelAttribute="team">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-5">
-									<label for="exampleInputName">Location Name   </label>
+									<label for="exampleInputName">Name  </label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
-										placeholder="Location Name" />
+										placeholder="Name" value="${name}" />
+										
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-5">
-									<label for="exampleInputName">Description</label>
-									<form:input path="description" class="form-control"
+									<label for="exampleInputName">Identifier</label>
+									<form:input path="identifier" class="form-control"
 										required="required" aria-describedby="nameHelp"
-										placeholder="Description" />
+										placeholder="identifier" />
 								</div>
 							</div>
 						</div>
-						<form:hidden path="parentLocation" id="parentLocation" value="<%=selectedParentLocation %>" />
-						<div class="form-group">							
-								<div class="row">									
-									<div class="col-5">
-										<div id="cm">
-											  <label>Search Parent Location </label>
-											  <select id="combobox" class="form-control">
-											  
-											    </select>
-											</div>
-									</div>									
-								</div>
-							</div>	
+						<form:hidden path="location" id="location" value="<%=selectedLocationId %>" />
 						
 						<div class="form-group">							
+							<div class="row">									
+								<div class="col-5">
+									<div id="cm" class="ui-widget">
+										<label>Search Parent Location </label>
+										<select id="combobox" class="form-control">
+											  
+										</select>
+									</div>
+								</div>									
+							</div>
+						</div>
+						<div class="form-group">							
 								<div class="row">									
 									<div class="col-5">
-									<label for="exampleInputName"> Location Tag</label>
-										<select class="custom-select custom-select-lg mb-3" id="locationTag" name="locationTag">
+									<label for="exampleInputName">Supervisor</label>
+										<select class="custom-select custom-select-lg mb-3" id="superVisor" name="superVisor">
 									 		<option value="0" selected>Please Select</option>
 												<%
-												for (Map.Entry<Integer, String> entry : tags.entrySet())
+												for (Map.Entry<Integer, String> entry : supervisors.entrySet())
 												{
-													if(selectedTtag==entry.getKey()){ %>
+													if(selectedSupervisor==entry.getKey()){ %>
 														<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
 													<% }else{
 														%>
@@ -104,9 +110,10 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 								</div>
 							
 						</div>
+							
 						<form:hidden path="id" />
 						<form:hidden path="uuid" />
-						<form:label path="uuid"> uuid:${location.getUuid()}</form:label>
+						<form:label path="uuid"> uuid:${team.getUuid()}</form:label>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">
@@ -124,6 +131,7 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
 	</div>
 	
+	
 	<script>
   $( function() {
     $.widget( "custom.combobox", {
@@ -140,13 +148,13 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
       _createAutocomplete: function() {
         var selected = this.element.children( ":selected" ),        
           value = selected.val() ? selected.text() : "";
-         value = "<%=selectedParentLocationName%>";
+         value = "<%=selectedLocationName%>";
         this.input = $( "<input>" )
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )          
-           .attr( "name", "parentLocationName" )
-          .addClass( "form-control custom-combobox-input ui-widget ui-widget-content ui-corner-left" )
+           .attr( "name", "locationName" )
+          .addClass( "form-control custom-combobox-input ui-widget ui-widget-content  ui-corner-left" )
           .autocomplete({
             delay: 0,
             minLength: 3,
@@ -161,8 +169,7 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
         this._on( this.input, {
           autocompleteselect: function( event, ui ) {
             ui.item.option.selected = true;
-           
- 			$("#parentLocation").val(ui.item.option.value);
+ 			$("#location").val(ui.item.option.value);
             this._trigger( "select", event, {
               item: ui.item.option
             });
@@ -199,9 +206,8 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
       },
  
       _removeIfInvalid: function( event, ui ) {
- 
+    	  
         // Selected an item, nothing to do
-       
         if ( ui.item ) {
           return;
         }
@@ -227,7 +233,7 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
           .val( "" )
           .attr( "title", value + " didn't match any item" )
           .tooltip( "open" );
-        $("#parentLocation").val(-0);
+        $("#location").val(0);
         this.element.val( "" );
         this._delay(function() {
           this.input.tooltip( "close" ).attr( "title", "" );
@@ -251,5 +257,6 @@ Integer selectedTtag = (Integer)session.getAttribute("selectedTtag");
   } );
   </script>
   <script src="<c:url value='/resources/js/jquery-ui.js'/>"></script>
+        
 </body>
 </html>

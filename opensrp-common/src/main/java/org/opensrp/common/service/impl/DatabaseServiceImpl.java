@@ -136,6 +136,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		if (searchBuilder.getUserName() != null && !searchBuilder.getUserName().isEmpty()) {
 			criteria.add(Restrictions.ilike("username", searchBuilder.getUserName(), MatchMode.ANYWHERE));
 		}
+		
 		return criteria;
 	}
 }

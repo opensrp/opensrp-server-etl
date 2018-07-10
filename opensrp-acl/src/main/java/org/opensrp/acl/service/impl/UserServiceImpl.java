@@ -4,8 +4,10 @@
 
 package org.opensrp.acl.service.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -189,5 +191,15 @@ public class UserServiceImpl implements AclService {
 			updatedUser = repository.update(user);
 		}
 		return updatedUser;
+	}
+	
+	public Map<Integer, String> getUserListAsMap() {
+		List<User> users = findAll("User");
+		Map<Integer, String> usersMap = new HashMap<Integer, String>();
+		for (User user : users) {
+			usersMap.put(user.getId(), user.getUsername());
+			
+		}
+		return usersMap;
 	}
 }

@@ -17,7 +17,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" href="<c:url value="/resources/css/jtree.min.css"/>" rel="stylesheet">
-<title>Location List</title>
+<title>Location Hierarchy</title>
 <%@page import="org.json.JSONObject" %>
 <%@page import="org.json.JSONArray" %>
 <jsp:include page="/WEB-INF/views/css.jsp" />

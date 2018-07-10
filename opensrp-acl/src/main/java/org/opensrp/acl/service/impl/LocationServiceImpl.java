@@ -145,7 +145,7 @@ public class LocationServiceImpl implements AclService {
 	public boolean locationExists(Location location) {
 		boolean exists = false;
 		if (location != null) {
-			exists = databaseRepositoryImpl.entityExists(location.getName(), "name", Location.class);
+			exists = databaseRepositoryImpl.entityExists(location.getId(), location.getName(), "name", Location.class);
 		}
 		return exists;
 	}
@@ -243,6 +243,23 @@ public class LocationServiceImpl implements AclService {
 		String locationName = "";
 		if (location.getParentLocation() != null) {
 			location = databaseRepositoryImpl.findById(location.getParentLocation().getId(), "id", Location.class);
+			if (location.getParentLocation() != null) {
+				parentLocationName = location.getParentLocation().getName() + " -> ";
+			}
+			
+			if (location.getLocationTag() != null) {
+				tagNme = "  (" + location.getLocationTag().getName() + ")";
+			}
+			locationName = location.getName();
+		}
+		return parentLocationName + locationName + tagNme;
+	}
+	
+	public String makeLocationName(Location location) {
+		String parentLocationName = "";
+		String tagNme = "";
+		String locationName = "";
+		if (location.getParentLocation() != null) {
 			if (location.getParentLocation() != null) {
 				parentLocationName = location.getParentLocation().getName() + " -> ";
 			}

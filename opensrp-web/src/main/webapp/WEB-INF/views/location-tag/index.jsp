@@ -39,7 +39,7 @@
 			</div>
 			<div class="form-group">
 			<h1>Manage Location Tags</h1>
-			<a  href="<c:url value="/location/tag/add.html"/>"> <strong>Add Location Tag</strong>
+			<a  href="<c:url value="/location/tag/add.html"/>"> <strong>Add New Location Tag</strong>
 					</a>
 			</div>
 			<div class="card mb-3">

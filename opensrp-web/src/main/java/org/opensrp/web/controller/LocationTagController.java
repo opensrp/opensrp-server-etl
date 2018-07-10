@@ -1,4 +1,4 @@
-package org.opensrp.controller;
+package org.opensrp.web.controller;
 
 import java.util.List;
 
@@ -78,15 +78,12 @@ public class LocationTagController {
 	                             ModelMap model, HttpSession session, @PathVariable("id") int id) throws JSONException {
 		locationTag.setId(id);
 		locationTag.setName(locationTag.getName().trim());
-		if (locationTagServiceImpl.sameEditedNameAndActualName(id, locationTag.getName())) {
+		
+		if (!locationTagServiceImpl.locationTagExists(locationTag)) {
 			locationTagServiceImpl.update(locationTag);
 		} else {
-			if (!locationTagServiceImpl.locationTagExists(locationTag)) {
-				locationTagServiceImpl.update(locationTag);
-			} else {
-				locationTagServiceImpl.setModelAttribute(model, locationTag);
-				return new ModelAndView("/location-tag/edit");
-			}
+			locationTagServiceImpl.setModelAttribute(model, locationTag);
+			return new ModelAndView("/location-tag/edit");
 		}
 		
 		return new ModelAndView("redirect:/location/tag/list.html");

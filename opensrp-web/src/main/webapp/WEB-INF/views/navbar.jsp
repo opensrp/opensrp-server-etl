@@ -53,6 +53,22 @@
 				</div>
 			</li>
 			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle mr-lg-2" id="teamDropdown"
+				href="#" data-toggle="dropdown">Team 
+			</a>
+				<div class="dropdown-menu">					
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/team/list.html"/>"> <strong> Manage Team</strong> 
+						
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/team/teammember/list.html"/>"> <strong>Manage Team Member</strong>
+					</a>					
+					
+				</div>
+			</li>
+			
 			<%-- <li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="exportDropdown"
 				href="#" data-toggle="dropdown"> Exports

@@ -1,4 +1,4 @@
-package org.opensrp.controller;
+package org.opensrp.web.controller;
 
 import java.util.List;
 import java.util.Set;

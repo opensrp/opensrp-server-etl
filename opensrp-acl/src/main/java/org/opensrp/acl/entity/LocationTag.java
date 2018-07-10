@@ -3,6 +3,7 @@
  */
 package org.opensrp.acl.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,13 +22,12 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 @Service
 @Entity
 @Table(name = "location_tag", schema = "core")
-public class LocationTag implements GrantedAuthority {
+public class LocationTag implements Serializable {
 	
 	public void setId(int id) {
 		this.id = id;

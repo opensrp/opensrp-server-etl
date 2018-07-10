@@ -114,7 +114,8 @@ public class LocationTagServiceImpl implements AclService {
 	public boolean locationTagExists(LocationTag locationTag) {
 		boolean exists = false;
 		if (locationTag != null) {
-			exists = databaseRepositoryImpl.entityExists(locationTag.getName(), "name", LocationTag.class);
+			exists = databaseRepositoryImpl.entityExists(locationTag.getId(), locationTag.getName(), "name",
+			    LocationTag.class);
 		}
 		return exists;
 	}

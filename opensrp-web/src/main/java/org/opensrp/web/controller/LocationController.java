@@ -2,11 +2,9 @@
  * @author proshanto
  * */
 
-package org.opensrp.controller;
+package org.opensrp.web.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,8 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LocationController {
-	
-	Map<Integer, String> loctrese = new HashMap<Integer, String>();
 	
 	@Autowired
 	private LocationServiceImpl locationServiceImpl;
@@ -63,7 +59,6 @@ public class LocationController {
 		String parentIndication = "#";
 		String parentKey = "parent";
 		JSONArray data = locationServiceImpl.getLocationDataAsJson(parentIndication, parentKey);
-		System.err.println("Data:" + data);
 		session.setAttribute("locatationTreeData", data);
 		return "location/hierarchy";
 	}
@@ -126,21 +121,17 @@ public class LocationController {
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
 		location.setId(id);
 		location.setName(location.getName().trim());
-		if (locationServiceImpl.sameEditedNameAndActualName(id, location.getName())) {
+		
+		if (!locationServiceImpl.locationExists(location)) {
 			locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
 			    parentLocationId, tagId));
 		} else {
-			if (!locationServiceImpl.locationExists(location)) {
-				locationServiceImpl.update(locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location,
-				    parentLocationId, tagId));
-			} else {
-				location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId,
-				    tagId);
-				locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
-				locationServiceImpl.setModelAttribute(model, location);
-				return new ModelAndView("/location/edit");
-			}
+			location = locationServiceImpl.setCreatorParentLocationTagAttributeInLocation(location, parentLocationId, tagId);
+			locationServiceImpl.setSessionAttribute(session, location, parentLocationName);
+			locationServiceImpl.setModelAttribute(model, location);
+			return new ModelAndView("/location/edit");
 		}
+		
 		return new ModelAndView("redirect:/location.html");
 		
 	}
