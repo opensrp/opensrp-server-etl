@@ -1,11 +1,14 @@
 package org.opensrp.web.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.opensrp.acl.entity.Permission;
 import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.impl.RoleServiceImpl;
@@ -153,4 +156,11 @@ public class UserController {
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
+	@RequestMapping(value = "user/search.html", method = RequestMethod.GET)
+	public String locationSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
+		List<User> users = userServiceImpl.getAllByKeysWithALlMatches(name);
+		session.setAttribute("searchedUsers", users);
+		return "user/search";
+	}
 }

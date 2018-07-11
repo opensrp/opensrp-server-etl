@@ -202,4 +202,11 @@ public class UserServiceImpl implements AclService {
 		}
 		return usersMap;
 	}
+	
+	@Transactional
+	public List<User> getAllByKeysWithALlMatches(String name) {
+		Map<String, String> fielaValues = new HashMap<String, String>();
+		fielaValues.put("username", name);
+		return repository.findAllByKeysWithALlMatches(fielaValues, User.class);
+	}
 }

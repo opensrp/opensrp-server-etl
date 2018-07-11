@@ -271,4 +271,50 @@ public class LocationServiceImpl implements AclService {
 		}
 		return parentLocationName + locationName + tagNme;
 	}
+	
+	public JSONArray search(String name) throws JSONException {
+		JSONArray locationJsonArray = new JSONArray();
+		String locationName = "";
+		String parentLocationName = "";
+		List<Location> locations = getAllByKeysWithALlMatches(name);
+		if (locations != null) {
+			for (Location location : locations) {
+				
+				JSONObject locationJsonObject = new JSONObject();
+				if (location.getParentLocation() != null) {
+					parentLocationName = location.getParentLocation().getName() + " > ";
+				} else {
+					parentLocationName = "";
+				}
+				locationName = parentLocationName + location.getName();
+				locationJsonObject.put("label", locationName);
+				locationJsonObject.put("id", location.getId());
+				locationJsonArray.put(locationJsonObject);
+			}
+		}
+		return locationJsonArray;
+	}
+	
+	public JSONArray list() throws JSONException {
+		JSONArray locationJsonArray = new JSONArray();
+		String locationName = "";
+		String parentLocationName = "";
+		List<Location> locations = findAll("Location");
+		if (locations != null) {
+			for (Location location : locations) {
+				
+				JSONObject locationJsonObject = new JSONObject();
+				if (location.getParentLocation() != null) {
+					parentLocationName = location.getParentLocation().getName() + " > ";
+				} else {
+					parentLocationName = "";
+				}
+				locationName = parentLocationName + location.getName();
+				locationJsonObject.put("value", locationName);
+				locationJsonObject.put("id", location.getId());
+				locationJsonArray.put(locationJsonObject);
+			}
+		}
+		return locationJsonArray;
+	}
 }

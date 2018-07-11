@@ -78,7 +78,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 							<div class="row">									
 								<div class="col-5">
 									<div id="cm" class="ui-widget">
-										<label>Search Parent Location </label>
+										<label>Search Location </label>
 										<select id="combobox" class="form-control">
 											  
 										</select>

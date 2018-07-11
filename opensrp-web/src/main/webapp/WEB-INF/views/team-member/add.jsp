@@ -12,13 +12,13 @@
 <%@page import="org.json.JSONObject" %>
 <%@page import="org.json.JSONArray" %>
 <%
-Integer selectedLocationId = (Integer)session.getAttribute("selectedLocation");
+Integer selectedPersonId = (Integer)session.getAttribute("selectedPersonId");
+String locationList = (String)session.getAttribute("locationList"); 
+Map<Integer, String> teams =  (Map<Integer, String>)session.getAttribute("teams");
 
-Map<Integer, String> supervisors =  (Map<Integer, String>)session.getAttribute("supervisors");
+String selectedPersonName = (String)session.getAttribute("personName");
 
-String selectedLocationName = (String)session.getAttribute("locationName");
-
-Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr");
+Integer selectetTeamId = (Integer)session.getAttribute("selectetTeamId");
 
 
 	%>
@@ -31,12 +31,12 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" href="<c:url value="/resources/css/jqx.base.css"/>" rel="stylesheet">
-
-<title>Add Team</title>
+<link type="text/css" href="<c:url value="/resources/css/magicsuggest-min.css"/>" rel="stylesheet">
+<title>Add Team Member</title>
 <jsp:include page="/WEB-INF/views/css.jsp" />
 </head>
 
-<c:url var="saveUrl" value="/team/add.html" />
+<c:url var="saveUrl" value="/team/teammember/add.html" />
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
@@ -49,23 +49,42 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 		</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Add Team
+					<i class="fa fa-table"></i> Add Team member
 				</div>
 				<div class="card-body">
 				<span> ${uniqueNameErrorMessage}</span><br />
 				<span> ${supervisorUuidErrorMessage}</span><br />
 				<span> ${uniqueIdetifierErrorMessage}</span><br />
 				<span> ${locationUuidErrorMessage}</span>
-					<form:form method="POST" action="${saveUrl}" modelAttribute="team">
-						<div class="form-group">
-							<div class="row">
+					<form:form method="POST" action="${saveUrl}" modelAttribute="teamMember">
+					
+					<form:hidden path="person" id="person" value="<%=selectedPersonId %>" />					
+					<input type="hidden"  id="locationIds" name="locationIds"/>
+						
+						<div class="form-group">							
+							<div class="row">									
 								<div class="col-5">
-									<label for="exampleInputName">Name  </label>
-									<form:input path="name" class="form-control"
-										required="required" aria-describedby="nameHelp"
-										placeholder="Name" value="${name}" /> 
+									<div id="cm" class="ui-widget">
+										<label>Person </label>
+										<select id="combobox" class="form-control">
+											  
+										</select>
+									</div>
+								</div>									
+							</div>
+						</div>
+						
+						<div class="form-group">							
+							<div class="row">									
+								<div class="col-5">
+									<div id="cm" class="ui-widget">
+										<label>Location </label>
+										<div id="locationsTag">
+                          					<input type="text" class="" placeholder="Type Locations">
+                          				</div>
 										
-								</div>
+									</div>
+								</div>									
 							</div>
 						</div>
 						<div class="form-group">
@@ -78,30 +97,18 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 								</div>
 							</div>
 						</div>
-						<form:hidden path="location" id="location" value="<%=selectedLocationId %>" />
 						
-						<div class="form-group">							
-							<div class="row">									
-								<div class="col-5">
-									<div id="cm" class="ui-widget">
-										<label>Search Location </label>
-										<select id="combobox" class="form-control">
-											  
-										</select>
-									</div>
-								</div>									
-							</div>
-						</div>
+						
 						<div class="form-group">							
 								<div class="row">									
 									<div class="col-5">
-									<label for="exampleInputName">Supervisor</label>
-										<select class="custom-select custom-select-lg mb-3" id="superVisor" name="superVisor">
+									<label for="exampleInputName">Team</label>
+										<select class="custom-select custom-select-lg mb-3" id="team" name="team">
 									 		<option value="0" selected>Please Select</option>
 												<%
-												for (Map.Entry<Integer, String> entry : supervisors.entrySet())
+												for (Map.Entry<Integer, String> entry : teams.entrySet())
 												{
-													if(selectedSupervisor==entry.getKey()){ %>
+													if(selectetTeamId==entry.getKey()){ %>
 														<option value="<%=entry.getKey()%>" selected><%=entry.getValue() %></option>
 													<% }else{
 														%>
@@ -133,6 +140,8 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 		<!-- /.container-fluid-->
 		<!-- /.content-wrapper-->
 		<jsp:include page="/WEB-INF/views/footer.jsp" />
+		 <script src="<c:url value='/resources/js/magicsuggest-min.js'/>"></script>
+		
 	</div>
 	
 	
@@ -152,12 +161,12 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
       _createAutocomplete: function() {
         var selected = this.element.children( ":selected" ),        
           value = selected.val() ? selected.text() : "";
-         value = "<%=selectedLocationName%>";
+         value = "<%=selectedPersonName%>";
         this.input = $( "<input required='required'>" )
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )          
-           .attr( "name", "locationName" )
+           .attr( "name", "personName" )
           .addClass( "form-control custom-combobox-input ui-widget ui-widget-content  ui-corner-left" )
           .autocomplete({
             delay: 0,
@@ -173,7 +182,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
         this._on( this.input, {
           autocompleteselect: function( event, ui ) {
             ui.item.option.selected = true;
- 			$("#location").val(ui.item.option.value);
+ 			$("#person").val(ui.item.option.value);
             this._trigger( "select", event, {
               item: ui.item.option
             });
@@ -190,7 +199,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
     	  $.ajax({
               type: "GET",
               dataType: 'html',
-              url: "/opensrp-dashboard/location/search.html?name="+request.term,            
+              url: "/opensrp-dashboard/user/search.html?name="+request.term,            
               success: function(res)
               {
               
@@ -237,7 +246,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
           .val( "" )
           .attr( "title", value + " didn't match any item" )
           .tooltip( "open" );
-        $("#location").val(0);
+        $("#person").val(0);
         this.element.val( "" );
         this._delay(function() {
           this.input.tooltip( "close" ).attr( "title", "" );
@@ -260,6 +269,86 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
     
   } );
   </script>
+  <script type="text/javascript">
+  
+  
+	 $('#locationsTag').magicSuggest({ 
+			placeholder: 'Type Locations',
+     	data: <%=locationList%>,
+	        valueField: 'id',
+	        displayField: 'value',
+	        name: 'locationList',
+	        inputCfg: {"class":"magicInput"},
+	        value: [{"value":"Pangsha > Patta:Ward-2","id":46},{"value":"Pangsha > Patta:Ward-1","id":45}],
+	        useCommaKey: true,
+	        maxEntryLength: 70,
+	 		maxEntryRenderer: function(v) {
+	 			return '<div style="color:red">Typed Word TOO LONG </div>';
+	 		}
+	       
+	  });
+  </script>
+  
+ <!--  <script>
+  $( function() {
+ var availableTags = [{ label: 'nina', id: '5' }, {label: 'sylvie' , id: '9'}];
+    
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#locations" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+        	
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 3,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term;
+          
+           var inputs = split(request.term);
+           var searchName = inputs[inputs.length-1];
+           console.log(searchName);
+        	$.getJSON( "/opensrp-dashboard/rest/api/v1/location/search?name="+extractLast( request.term ), response );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+         
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          var ids = $('#locationIds').val();
+          // remove the current input
+          terms.pop();          
+          // add the selected item		 
+          terms.push( ui.item.label );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          if(ids==""){
+        	  ids = ui.item.id;
+          }else{
+          	  ids = ids+","+ui.item.id;
+          }
+          $("#locationIds").val(ids);
+          this.value = terms.join( ", " );
+          return false;
+        },
+        change: function(event, ui) {
+           
+        }
+      });
+  } );
+  </script> -->
+ 
   <script src="<c:url value='/resources/js/jquery-ui.js'/>"></script>
         
 </body>

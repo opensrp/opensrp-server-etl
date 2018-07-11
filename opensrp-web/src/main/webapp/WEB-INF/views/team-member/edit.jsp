@@ -5,12 +5,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="org.opensrp.common.util.CheckboxHelperUtil"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="org.opensrp.acl.entity.Location"%>
-<%@page import="org.json.JSONObject" %>
-<%@page import="org.json.JSONArray" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Edit Team</title>
+<jsp:include page="/WEB-INF/views/css.jsp" />
+</head>
 <%
 Integer selectedLocationId = (Integer)session.getAttribute("selectedLocation");
 
@@ -22,31 +30,17 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 
 
 	%>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="utf-8">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link type="text/css" href="<c:url value="/resources/css/jqx.base.css"/>" rel="stylesheet">
-
-<title>Add Team</title>
-<jsp:include page="/WEB-INF/views/css.jsp" />
-</head>
-
-<c:url var="saveUrl" value="/team/add.html" />
+<c:url var="saveUrl" value="/team/${id}/edit.html" />
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<jsp:include page="/WEB-INF/views/navbar.jsp" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
-		<div class="form-group">				
+			<div class="form-group">				
 				   <a  href="<c:url value="/team/list.html"/>"> <strong> Manage Team</strong> 
 					</a>  |  <a  href="<c:url value="/team/teammember/list.html"/>"> <strong>Manage Team Member</strong>
 					</a>		
-		</div>
+			</div>
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-table"></i> Add Team
@@ -63,7 +57,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 									<label for="exampleInputName">Name  </label>
 									<form:input path="name" class="form-control"
 										required="required" aria-describedby="nameHelp"
-										placeholder="Name" value="${name}" /> 
+										placeholder="Name" value="${name}" />
 										
 								</div>
 							</div>
@@ -84,7 +78,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 							<div class="row">									
 								<div class="col-5">
 									<div id="cm" class="ui-widget">
-										<label>Search Location </label>
+										<label>Search Parent Location </label>
 										<select id="combobox" class="form-control">
 											  
 										</select>
@@ -117,7 +111,9 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
 							
 						</div>
 							
-						
+						<form:hidden path="id" />
+						<form:hidden path="uuid" />
+						<form:label path="uuid"> uuid:${team.getUuid()}</form:label>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-3">
@@ -153,7 +149,7 @@ Integer selectedSupervisor = (Integer)session.getAttribute("selectedSuperviosr")
         var selected = this.element.children( ":selected" ),        
           value = selected.val() ? selected.text() : "";
          value = "<%=selectedLocationName%>";
-        this.input = $( "<input required='required'>" )
+        this.input = $( "<input>" )
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )          

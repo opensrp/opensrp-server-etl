@@ -91,9 +91,9 @@
 										placeholder="Enter mobile number" />
 								</div>
 								<div class="col-3">
-									<label>Last name</label>
+									<label>Identifier</label>
 									<form:input path="idetifier" class="form-control"
-										placeholder="Enter idetifier" />
+										placeholder="Enter identifier" />
 								</div>
 							</div>
 						</div>

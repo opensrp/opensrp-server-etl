@@ -8,7 +8,8 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 	
-<%@page import="org.opensrp.acl.entity.Team"%>
+<%@page import="org.opensrp.acl.entity.TeamMember"%>
+<%@page import="org.opensrp.acl.entity.Location"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +21,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="java.util.Set"%>
+
 <title>Team List</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
@@ -44,8 +47,8 @@ if (paginationAtributes.containsKey("name")) {
 					</a>		
 		</div>
 		<div class="form-group">
-			<h1>Team Management</h1>
-			<a  href="<c:url value="/team/add.html"/>"> <strong>Add New Team</strong>
+			<h1>Team Member Management</h1>
+			<a  href="<c:url value="/team/teammember/add.html"/>"> <strong>Add New Team Member</strong>
 					</a>
 		</div>
 		<div class="card mb-3">
@@ -68,7 +71,7 @@ if (paginationAtributes.containsKey("name")) {
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> Team List
+					<i class="fa fa-table"></i> Team Member List
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -78,8 +81,7 @@ if (paginationAtributes.containsKey("name")) {
 									<th>Name</th>
 									<th>Identifier</th>									
 									<th>Location</th>
-									<th>Current Supervisor</th>
-									<th># Members</th>
+									<th>Team</th>									
 								</tr>
 							</thead>
 							<tfoot>
@@ -87,38 +89,40 @@ if (paginationAtributes.containsKey("name")) {
 									<th>Name</th>
 									<th>Identifier</th>									
 									<th>Location</th>
-									<th>Current Supervisor</th>
-									<th># Members</th>
+									<th>Team</th>	
 								</tr>
 							</tfoot>
 							<tbody>
 							
 							<%
-								List<Team> teams = (List<Team>) session
+								List<TeamMember> teamMembers = (List<TeamMember>) session
 														.getAttribute("dataList");
-								String location = "";
-								String superVisor = "";
+								
+								String team = "";
 							
-								for (Team team : teams) 
+								for (TeamMember teamMember : teamMembers) 
 									{
-									pageContext.setAttribute("id", team.getId());
+									pageContext.setAttribute("id", teamMember.getId());
 									
-									
-									if(team.getLocation() != null){
-										location = team.getLocation().getName();
+									Set<Location> locations = teamMember.getLocations();
+									String locationNames = "";
+									if(locations.size()!=0){
+										for (Location location : locations) {
+											locationNames +=location.getName();
+										}
+										
 									}
-									if(team.getSuperVisor()!= null){
-										superVisor = team.getSuperVisor().getUsername();
+									if(teamMember.getTeam()!= null){
+										team = teamMember.getTeam().getName();
 									}
 							%>
 								
 									<tr>
-										<td><a href="<c:url value="/team/${id}/edit.html"/>"><%=team.getName() %></a></td>
+										<td><a href="<c:url value="/team/${id}/edit.html"/>"><%=teamMember.getPerson().getUsername() %></a></td>
+										<td><%=teamMember.getIdentifier() %></td>
+										<td><%=locationNames%></td>
+										<td><%=team%></td>
 										
-										<td><%=team.getIdentifier() %></td>
-										<td><%=location%></td>
-										<td><%=superVisor%></td>
-										<td><%=superVisor %></td>
 
 									</tr>
 									<%

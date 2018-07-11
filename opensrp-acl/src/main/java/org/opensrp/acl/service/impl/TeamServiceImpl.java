@@ -55,7 +55,7 @@ public class TeamServiceImpl implements AclService {
 		team = openMRSTeamAPIService.add(team);
 		long createdTeam = 0;
 		if (!team.getUuid().isEmpty()) {
-			createdTeam = databaseRepositoryImpl.save(t);
+			createdTeam = databaseRepositoryImpl.save(team);
 		} else {
 			logger.error("No uuid found for user:" + team.getName());
 			// TODO
@@ -73,7 +73,7 @@ public class TeamServiceImpl implements AclService {
 		if (!uuid.isEmpty()) {
 			updatedTag = databaseRepositoryImpl.update(team);
 		} else {
-			logger.error("No uuid found for user:" + team.getName());
+			logger.error("No uuid found for team:" + team.getName());
 			// TODO
 		}
 		return updatedTag;
@@ -229,5 +229,15 @@ public class TeamServiceImpl implements AclService {
 		}
 		
 		return isValid;
+	}
+	
+	public Map<Integer, String> getTeamListAsMap() {
+		List<Team> teams = findAll("Team");
+		Map<Integer, String> teamsMap = new HashMap<Integer, String>();
+		for (Team team : teams) {
+			teamsMap.put(team.getId(), team.getName());
+			
+		}
+		return teamsMap;
 	}
 }
