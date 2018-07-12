@@ -75,7 +75,7 @@ public class OpenMRSTeamMemberAPIService implements OpenMRSConnector<TeamMember>
 	
 	public JSONObject makeTeamMemebrObject(TeamMember teamMember) throws JSONException {
 		
-		List<String> locationList = new ArrayList<>();
+		List<String> locationList = new ArrayList<String>();
 		Set<Location> locations = teamMember.getLocations();
 		
 		if (locations.size() != 0) {

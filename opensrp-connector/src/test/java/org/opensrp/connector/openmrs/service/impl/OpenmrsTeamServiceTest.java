@@ -37,7 +37,7 @@ public class OpenmrsTeamServiceTest {
 	public void createUpdateGetAndDeleteRole() throws JSONException {
 		String name = "Test";
 		String payload = "";
-		List<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<String>();
 		list.add("4c8cb044-7b15-40b7-8ca2-6eceaa6c4e9a");
 		
 		JSONObject roleObject = new JSONObject();
