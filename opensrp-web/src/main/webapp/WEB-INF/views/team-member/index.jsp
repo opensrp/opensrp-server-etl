@@ -108,7 +108,7 @@ if (paginationAtributes.containsKey("name")) {
 									String locationNames = "";
 									if(locations.size()!=0){
 										for (Location location : locations) {
-											locationNames +=location.getName();
+											locationNames +=location.getName()+" <br /> ";
 										}
 										
 									}
@@ -118,7 +118,7 @@ if (paginationAtributes.containsKey("name")) {
 							%>
 								
 									<tr>
-										<td><a href="<c:url value="/team/${id}/edit.html"/>"><%=teamMember.getPerson().getUsername() %></a></td>
+										<td><a href="<c:url value="/team/teammember/${id}/edit.html"/>"><%=teamMember.getPerson().getUsername() %></a></td>
 										<td><%=teamMember.getIdentifier() %></td>
 										<td><%=locationNames%></td>
 										<td><%=team%></td>

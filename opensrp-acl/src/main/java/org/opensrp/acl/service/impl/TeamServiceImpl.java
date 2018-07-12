@@ -147,14 +147,14 @@ public class TeamServiceImpl implements AclService {
 	
 	public void setSessionAttribute(HttpSession session, Team team, String locationName) {
 		
-		Map<Integer, String> users = userServiceImpl.getUserListAsMap();
+		Map<Integer, String> supervisors = userServiceImpl.getProviderListAsMap();
 		
 		if (team.getLocation() != null) {
 			session.setAttribute("selectedLocation", team.getLocation().getId());
 		} else {
 			session.setAttribute("selectedLocation", 0);
 		}
-		session.setAttribute("supervisors", users);
+		session.setAttribute("supervisors", supervisors);
 		if (team.getSuperVisor() != null) {
 			session.setAttribute("selectedSuperviosr", team.getSuperVisor().getId());
 		} else {

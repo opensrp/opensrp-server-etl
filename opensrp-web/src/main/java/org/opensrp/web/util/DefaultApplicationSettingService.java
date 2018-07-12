@@ -6,16 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.opensrp.acl.entity.Permission;
 import org.opensrp.acl.entity.Role;
 import org.opensrp.acl.entity.User;
@@ -120,23 +117,6 @@ public class DefaultApplicationSettingService {
 			logger.error("error getting rootPath: " + e);
 		}
 		
-		List<String> sqlScriptPaths = Arrays.asList("src/main/resources/scripts/location.sql",
-		    "src/main/resources/scripts/location_tag.sql", "src/main/resources/scripts/location_tag_map.sql");
-		
-		Connection con = sessionFactory.getSessionFactoryOptions().getServiceRegistry().getService(ConnectionProvider.class)
-		        .getConnection();
-		
-		try {
-			ScriptRunner sr = new ScriptRunner(con, false, false);
-			
-			for (String sqlScriptPath : sqlScriptPaths) {
-				logger.info("Executing SQL script: " + sqlScriptPath);
-				runScript(rootPath + "/" + sqlScriptPath, sr);
-			}
-		}
-		catch (Exception e) {
-			logger.error("Failed to Execute script" + " The error is " + e.getMessage());
-		}
 	}
 	
 	public void runScript(String aSQLScriptFilePath, ScriptRunner sr) throws FileNotFoundException, IOException,

@@ -39,6 +39,10 @@ import org.springframework.stereotype.Service;
 @NamedQuery(name = "account.byUsername", query = "from User a where a.username = :username")
 public class User implements UserDetails {
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -95,16 +99,27 @@ public class User implements UserDetails {
 	@JoinColumn(name = "creator", referencedColumnName = "id")
 	private User creator;
 	
-	public String gender;
+	private String gender;
 	
-	public String mobile;
+	private String mobile;
 	
-	public String idetifier;
+	private String idetifier;
+	
+	@Column(name = "provider", columnDefinition = "boolean default false")
+	private boolean provider;
 	
 	@Column(name = "person_uuid")
 	public String personUUid;
 	
 	public User() {
+	}
+	
+	public boolean isProvider() {
+		return provider;
+	}
+	
+	public void setProvider(boolean provider) {
+		this.provider = provider;
 	}
 	
 	public String getPersonUUid() {
@@ -113,10 +128,6 @@ public class User implements UserDetails {
 	
 	public void setPersonUUid(String personUUid) {
 		this.personUUid = personUUid;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public User(String username) {

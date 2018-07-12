@@ -158,8 +158,9 @@ public class UserController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "user/search.html", method = RequestMethod.GET)
-	public String locationSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
-		List<User> users = userServiceImpl.getAllByKeysWithALlMatches(name);
+	public String providerSearch(Model model, HttpSession session, @RequestParam String name) throws JSONException {
+		
+		List<User> users = userServiceImpl.getAllProviderByKeysWithALlMatches(name);
 		session.setAttribute("searchedUsers", users);
 		return "user/search";
 	}

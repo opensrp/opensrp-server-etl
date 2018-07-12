@@ -41,6 +41,7 @@ public class OpenMRSTeamMemberAPIService implements OpenMRSConnector<TeamMember>
 	public TeamMember add(TeamMember teamMember) throws JSONException {
 		String teamMemberUuid = "";
 		JSONObject createdTeamMember = openMRSAPIServiceImpl.add(PAYLOAD, makeTeamMemebrObject(teamMember), TEAM_MEMBER_URL);
+		System.err.println(createdTeamMember);
 		if (createdTeamMember.has("uuid")) {
 			teamMemberUuid = (String) createdTeamMember.get("uuid");
 			teamMember.setUuid(teamMemberUuid);

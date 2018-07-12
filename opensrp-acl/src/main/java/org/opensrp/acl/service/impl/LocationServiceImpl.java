@@ -234,7 +234,8 @@ public class LocationServiceImpl implements AclService {
 	public List<Location> getAllByKeysWithALlMatches(String name) {
 		Map<String, String> fielaValues = new HashMap<String, String>();
 		fielaValues.put("name", name);
-		return databaseRepositoryImpl.findAllByKeysWithALlMatches(fielaValues, Location.class);
+		boolean isProvider = false;
+		return databaseRepositoryImpl.findAllByKeysWithALlMatches(isProvider, fielaValues, Location.class);
 	}
 	
 	public String makeParentLocationName(Location location) {

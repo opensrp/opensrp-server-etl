@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="org.opensrp.common.util.CheckboxHelperUtil"%>
+
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="org.opensrp.acl.entity.Location"%>
@@ -14,6 +14,8 @@
 <%
 Integer selectedPersonId = (Integer)session.getAttribute("selectedPersonId");
 String locationList = (String)session.getAttribute("locationList"); 
+String selectedLocationList = (String)session.getAttribute("selectedLocationList"); 
+
 Map<Integer, String> teams =  (Map<Integer, String>)session.getAttribute("teams");
 
 String selectedPersonName = (String)session.getAttribute("personName");
@@ -55,11 +57,10 @@ Integer selectetTeamId = (Integer)session.getAttribute("selectetTeamId");
 				<span> ${uniqueNameErrorMessage}</span><br />
 				<span> ${supervisorUuidErrorMessage}</span><br />
 				<span> ${uniqueIdetifierErrorMessage}</span><br />
-				<span> ${locationUuidErrorMessage}</span>
+				<span> ${locationSelectErrorMessage}</span>
 					<form:form method="POST" action="${saveUrl}" modelAttribute="teamMember">
 					
 					<form:hidden path="person" id="person" value="<%=selectedPersonId %>" />					
-					<input type="hidden"  id="locationIds" name="locationIds"/>
 						
 						<div class="form-group">							
 							<div class="row">									
@@ -80,7 +81,7 @@ Integer selectetTeamId = (Integer)session.getAttribute("selectetTeamId");
 									<div id="cm" class="ui-widget">
 										<label>Location </label>
 										<div id="locationsTag">
-                          					<input type="text" class="" placeholder="Type Locations">
+                          					
                           				</div>
 										
 									</div>
@@ -273,14 +274,17 @@ Integer selectetTeamId = (Integer)session.getAttribute("selectetTeamId");
   
   
 	 $('#locationsTag').magicSuggest({ 
-			placeholder: 'Type Locations',
-     	data: <%=locationList%>,
+		 	required: true,
+			//placeholder: 'Type Locations',
+     		data: <%=locationList%>,
 	        valueField: 'id',
 	        displayField: 'value',
 	        name: 'locationList',
 	        inputCfg: {"class":"magicInput"},
-	        value: [{"value":"Pangsha > Patta:Ward-2","id":46},{"value":"Pangsha > Patta:Ward-1","id":45}],
+	        value: <%=selectedLocationList%>,
 	        useCommaKey: true,
+	        allowFreeEntries: false,
+	        maxSelection: 3,
 	        maxEntryLength: 70,
 	 		maxEntryRenderer: function(v) {
 	 			return '<div style="color:red">Typed Word TOO LONG </div>';

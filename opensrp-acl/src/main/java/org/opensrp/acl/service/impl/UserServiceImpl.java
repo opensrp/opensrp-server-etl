@@ -58,14 +58,15 @@ public class UserServiceImpl implements AclService {
 		boolean isProvider = roleServiceImpl.isProvider(roles);
 		if (isProvider) {
 			user = openMRSUserAPIService.add(user);
-			logger.info("uuid:" + user.getUuid());
 			if (!user.getUuid().isEmpty()) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				user.setProvider(true);
 				createdUser = repository.save(user);
 			} else {
 				logger.error("No uuid found for user:" + user.getUsername());
 			}
 		} else {
+			user.setProvider(false);
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			createdUser = repository.save(user);
 		}
@@ -76,8 +77,14 @@ public class UserServiceImpl implements AclService {
 	@Transactional
 	@Override
 	public <T> int update(T t) throws Exception {
-		
-		return repository.update(t);
+		User user = (User) t;
+		boolean isProvider = roleServiceImpl.isProvider(user.getRoles());
+		if (isProvider) {
+			user.setProvider(true);
+		} else {
+			user.setProvider(false);
+		}
+		return repository.update(user);
 	}
 	
 	@Transactional
@@ -110,7 +117,6 @@ public class UserServiceImpl implements AclService {
 		Set<Role> roles = new HashSet<Role>();
 		if (selectedRoles != null) {
 			for (int roleId : selectedRoles) {
-				logger.debug("adding roleId: " + roleId);
 				Role role = repository.findById(roleId, "id", Role.class);
 				roles.add(role);
 			}
@@ -180,15 +186,17 @@ public class UserServiceImpl implements AclService {
 		int updatedUser = 0;
 		User user = (User) t;
 		Set<Role> roles = user.getRoles();
-		logger.info("User:" + user.toString());
+		
 		boolean isProvider = roleServiceImpl.isProvider(roles);
 		if (isProvider) {
 			String uuid = openMRSUserAPIService.update(user, user.getUuid());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setProvider(true);
 			updatedUser = repository.update(user);
 		} else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			updatedUser = repository.update(user);
+			user.setProvider(false);
 		}
 		return updatedUser;
 	}
@@ -204,9 +212,23 @@ public class UserServiceImpl implements AclService {
 	}
 	
 	@Transactional
-	public List<User> getAllByKeysWithALlMatches(String name) {
+	public List<User> getAllProviderByKeysWithALlMatches(String name) {
 		Map<String, String> fielaValues = new HashMap<String, String>();
 		fielaValues.put("username", name);
-		return repository.findAllByKeysWithALlMatches(fielaValues, User.class);
+		boolean isProvider = true;
+		return repository.findAllByKeysWithALlMatches(isProvider, fielaValues, User.class);
+	}
+	
+	@Transactional
+	public Map<Integer, String> getProviderListAsMap() {
+		Map<String, String> fielaValues = new HashMap<String, String>();
+		boolean isProvider = true;
+		List<User> users = repository.findAllByKeysWithALlMatches(isProvider, fielaValues, User.class);
+		Map<Integer, String> usersMap = new HashMap<Integer, String>();
+		for (User user : users) {
+			usersMap.put(user.getId(), user.getUsername());
+			
+		}
+		return usersMap;
 	}
 }

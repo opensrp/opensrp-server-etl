@@ -143,11 +143,14 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (List<T>) (result.size() > 0 ? (List<T>) result : null);
 	}
 	
-	public <T> List<T> findAllByKeysWithALlMatches(Map<String, String> fielaValues, Class<?> className) {
+	public <T> List<T> findAllByKeysWithALlMatches(boolean isProvider, Map<String, String> fielaValues, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		for (Map.Entry<String, String> entry : fielaValues.entrySet()) {
 			criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue(), MatchMode.ANYWHERE));
+		}
+		if (isProvider) {
+			criteria.add(Restrictions.eq("provider", true));
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -166,17 +169,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		return (result.size() > 0 ? true : false);
 	}
 	
-	public boolean entityExists(int id, String value, String fieldName, Class<?> className) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(className);
-		criteria.add(Restrictions.eq(fieldName, value));
-		criteria.add(Restrictions.ne("id", id));
-		List<Object> result = criteria.list();
-		session.close();
-		return (result.size() > 0 ? true : false);
-	}
-	
-	public boolean entityExists(int id, int value, String fieldName, Class<?> className) {
+	public <T> boolean entityExists(int id, T value, String fieldName, Class<?> className) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(className);
 		criteria.add(Restrictions.eq(fieldName, value));
@@ -323,6 +316,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 		criteria.setFirstResult(offsetreal);
 		criteria.setMaxResults(result);
 		criteria.addOrder(Order.desc("created"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
 		List<T> data = new ArrayList<T>();
 		try {

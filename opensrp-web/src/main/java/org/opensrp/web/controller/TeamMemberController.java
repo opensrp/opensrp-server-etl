@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.opensrp.acl.entity.TeamMember;
+import org.opensrp.acl.entity.User;
 import org.opensrp.acl.service.impl.LocationServiceImpl;
 import org.opensrp.acl.service.impl.TeamMemberServiceImpl;
 import org.opensrp.web.util.PaginationUtil;
@@ -54,10 +55,11 @@ public class TeamMemberController {
 	@RequestMapping(value = "/add.html", method = RequestMethod.GET)
 	public ModelAndView saveLocation(ModelMap model, HttpSession session) throws JSONException {
 		model.addAttribute("teamMember", new TeamMember());
-		String locationName = "";
+		String personName = "";
 		
 		session.setAttribute("locationList", locationServiceImpl.list().toString());
-		teamMemberServiceImpl.setSessionAttribute(session, teamMember, locationName);
+		int[] locations = new int[0];
+		teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName, locations);
 		return new ModelAndView("team-member/add", "command", teamMember);
 		
 	}
@@ -73,12 +75,10 @@ public class TeamMemberController {
 		teamMember = teamMemberServiceImpl.setCreatorLocationAndPersonAndTeamAttributeInLocation(teamMember, personId,
 		    teamId, locations);
 		
-		if (!teamMemberServiceImpl.isPersonAndIdentifierExists(model, teamMember)) {
-			//teamMemberServiceImpl.save(teamMember);
-			System.err.println("okk");
-			
+		if (!teamMemberServiceImpl.isPersonAndIdentifierExists(model, teamMember, locations)) {
+			teamMemberServiceImpl.save(teamMember);
 		} else {
-			teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName);
+			teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName, locations);
 			return new ModelAndView("/team-member/add");
 		}
 		
@@ -88,13 +88,14 @@ public class TeamMemberController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/{id}/edit.html", method = RequestMethod.GET)
-	public ModelAndView editLocation(ModelMap model, HttpSession session, @PathVariable("id") int id) {
+	public ModelAndView editLocation(ModelMap model, HttpSession session, @PathVariable("id") int id) throws JSONException {
 		TeamMember teamMember = teamMemberServiceImpl.findById(id, "id", TeamMember.class);
 		model.addAttribute("id", id);
 		model.addAttribute("teamMember", teamMember);
-		//String locationName = locationServiceImpl.makeLocationName(team.getLocation());
-		String personName = teamMember.getPerson().getUsername();
-		teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName);
+		int[] locations = teamMemberServiceImpl.getLocationIds(teamMember.getLocations());
+		User person = teamMember.getPerson();
+		String personName = person.getUsername() + " (" + person.getFullName() + ")";
+		teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName, locations);
 		return new ModelAndView("team-member/edit", "command", teamMember);
 		
 	}
@@ -105,18 +106,16 @@ public class TeamMemberController {
 	                                 @RequestParam(value = "personName") String personName,
 	                                 @RequestParam(value = "team") int teamId,
 	                                 @RequestParam(value = "locationList[]", required = false) int[] locations,
-	                                 @ModelAttribute("team") @Valid TeamMember teamMember, BindingResult binding,
+	                                 @ModelAttribute("teamMember") @Valid TeamMember teamMember, BindingResult binding,
 	                                 ModelMap model, HttpSession session, @PathVariable("id") int id) throws Exception {
 		teamMember.setId(id);
 		teamMember = teamMemberServiceImpl.setCreatorLocationAndPersonAndTeamAttributeInLocation(teamMember, personId,
 		    teamId, locations);
-		if (!teamMemberServiceImpl.isPersonAndIdentifierExists(model, teamMember)) {
-			
+		if (!teamMemberServiceImpl.isPersonAndIdentifierExists(model, teamMember, locations)) {
 			teamMemberServiceImpl.update(teamMember);
 			
 		} else {
-			
-			teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName);
+			teamMemberServiceImpl.setSessionAttribute(session, teamMember, personName, locations);
 			return new ModelAndView("/team-member/edit");
 		}
 		

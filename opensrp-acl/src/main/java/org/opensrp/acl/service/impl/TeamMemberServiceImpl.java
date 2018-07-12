@@ -15,7 +15,9 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.opensrp.acl.entity.Location;
 import org.opensrp.acl.entity.LocationTag;
 import org.opensrp.acl.entity.Team;
@@ -50,6 +52,9 @@ public class TeamMemberServiceImpl implements AclService {
 	@Autowired
 	private TeamServiceImpl teamServiceImpl;
 	
+	@Autowired
+	private LocationServiceImpl locationServiceImpl;
+	
 	public TeamMemberServiceImpl() {
 		
 	}
@@ -59,16 +64,14 @@ public class TeamMemberServiceImpl implements AclService {
 	public <T> long save(T t) throws Exception {
 		TeamMember teamMember = (TeamMember) t;
 		long createdTeamMember = 0;
-		createdTeamMember = databaseRepositoryImpl.save(teamMember);
-		/*teamMember = openMRSTeamMemberAPIService.add(teamMember);
-		
+		teamMember = openMRSTeamMemberAPIService.add(teamMember);
 		if (!teamMember.getUuid().isEmpty()) {
 			createdTeamMember = databaseRepositoryImpl.save(teamMember);
 		} else {
 			logger.error("No uuid found for team member:" + teamMember.getIdentifier());
 			// TODO
 		}
-		*/
+		
 		return createdTeamMember;
 	}
 	
@@ -77,6 +80,7 @@ public class TeamMemberServiceImpl implements AclService {
 	public <T> int update(T t) throws JSONException {
 		TeamMember teamMember = (TeamMember) t;
 		int updatedTag = 0;
+		
 		String uuid = openMRSTeamMemberAPIService.update(teamMember, teamMember.getUuid());
 		if (!uuid.isEmpty()) {
 			updatedTag = databaseRepositoryImpl.update(teamMember);
@@ -128,14 +132,15 @@ public class TeamMemberServiceImpl implements AclService {
 		
 	}
 	
-	public boolean isPersonAndIdentifierExists(ModelMap model, TeamMember teamMember) {
+	@SuppressWarnings("null")
+	public boolean isPersonAndIdentifierExists(ModelMap model, TeamMember teamMember, int[] locations) {
 		boolean isExists = false;
 		boolean isPersonExists = false;
 		boolean isIdentifierExists = false;
+		boolean isLocationsExists = false;
 		if (teamMember != null) {
-			isPersonExists = databaseRepositoryImpl.entityExists(teamMember.getId(), teamMember.getPerson().getId(), "id",
+			isPersonExists = databaseRepositoryImpl.entityExists(teamMember.getId(), teamMember.getPerson(), "person",
 			    TeamMember.class);
-			System.err.println("isPersonExists:" + isPersonExists);
 		}
 		if (teamMember != null) {
 			isIdentifierExists = databaseRepositoryImpl.entityExists(teamMember.getId(), teamMember.getIdentifier(),
@@ -148,14 +153,21 @@ public class TeamMemberServiceImpl implements AclService {
 			model.addAttribute("uniqueIdetifierErrorMessage", "Specified Identifier already exists, please specify another");
 		}
 		
-		if (isPersonExists || isIdentifierExists) {
+		if (locations == null) {
+			model.addAttribute("locationSelectErrorMessage", "Please Select Location");
+			isLocationsExists = true;
+		}
+		
+		if (isPersonExists || isIdentifierExists || isLocationsExists) {
+			System.err.println("okkk");
 			isExists = true;
 		}
 		
 		return isExists;
 	}
 	
-	public void setSessionAttribute(HttpSession session, TeamMember teamMember, String personName) {
+	public void setSessionAttribute(HttpSession session, TeamMember teamMember, String personName, int[] locations)
+	    throws JSONException {
 		
 		Map<Integer, String> teams = teamServiceImpl.getTeamListAsMap();
 		
@@ -172,7 +184,37 @@ public class TeamMemberServiceImpl implements AclService {
 			session.setAttribute("selectedPersonId", 0);
 		}
 		
+		session.setAttribute("selectedLocationList", setExistingLocation(locations));
 		session.setAttribute("personName", personName);
+	}
+	
+	public String setExistingLocation(int[] locations) throws JSONException {
+		JSONArray locationJsonArray = new JSONArray();
+		if (locations != null && locations.length != 0) {
+			
+			for (int locationId : locations) {
+				Location location = (Location) databaseRepositoryImpl.findById(locationId, "id", Location.class);
+				String locationName = locationServiceImpl.makeLocationName(location);
+				JSONObject locationJsonObject = new JSONObject();
+				locationJsonObject.put("value", locationName);
+				locationJsonObject.put("id", location.getId());
+				locationJsonArray.put(locationJsonObject);
+			}
+		}
+		return locationJsonArray.toString();
+	}
+	
+	public int[] getLocationIds(Set<Location> locations) {
+		System.err.println("TT:" + locations.size());
+		int[] locationIds = new int[locations.size()];
+		if (locations != null) {
+			int i = 0;
+			for (Location location : locations) {
+				locationIds[i] = location.getId();
+				i++;
+			}
+		}
+		return locationIds;
 	}
 	
 	public void setModelAttribute(ModelMap model, Location location) {
@@ -188,17 +230,21 @@ public class TeamMemberServiceImpl implements AclService {
 		User person = (User) databaseRepositoryImpl.findById(personId, "id", User.class);
 		Team team = (Team) databaseRepositoryImpl.findById(teamId, "id", Team.class);
 		Set<Location> locationSet = new HashSet<Location>();
-		for (int locationId : locations) {
-			Location location = (Location) databaseRepositoryImpl.findById(locationId, "id", Location.class);
-			if (location != null) {
-				locationSet.add(location);
-				
+		if (locations != null && locations.length != 0) {
+			for (int locationId : locations) {
+				Location location = (Location) databaseRepositoryImpl.findById(locationId, "id", Location.class);
+				if (location != null) {
+					locationSet.add(location);
+					
+				}
 			}
+			teamMember.setLocations(locationSet);
 		}
-		teamMember.setLocations(locationSet);
+		
 		teamMember.setCreator(creator);
 		teamMember.setPerson(person);
 		teamMember.setTeam(team);
 		return teamMember;
 	}
+	
 }

@@ -44,7 +44,7 @@ public class TeamController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_ROLE')")
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
-	public String locationList(HttpServletRequest request, HttpSession session, Model model) {
+	public String listTeam(HttpServletRequest request, HttpSession session, Model model) {
 		Class<Team> entityClassName = Team.class;
 		paginationUtil.createPagination(request, session, entityClassName);
 		return "team/index";
@@ -52,7 +52,7 @@ public class TeamController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/add.html", method = RequestMethod.GET)
-	public ModelAndView saveLocation(ModelMap model, HttpSession session) throws JSONException {
+	public ModelAndView saveTeam(ModelMap model, HttpSession session) throws JSONException {
 		model.addAttribute("team", new Team());
 		String locationName = "";
 		teamServiceImpl.setSessionAttribute(session, team, locationName);
@@ -62,11 +62,11 @@ public class TeamController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/add.html", method = RequestMethod.POST)
-	public ModelAndView saveLocation(@RequestParam(value = "location", required = false) int locationId,
-	                                 @RequestParam(value = "superVisor") int supervisorId,
-	                                 @RequestParam(value = "locationName") String locationName,
-	                                 @ModelAttribute("team") @Valid Team team, BindingResult binding, ModelMap model,
-	                                 HttpSession session) throws Exception {
+	public ModelAndView saveTeam(@RequestParam(value = "location", required = false) int locationId,
+	                             @RequestParam(value = "superVisor") int supervisorId,
+	                             @RequestParam(value = "locationName") String locationName,
+	                             @ModelAttribute("team") @Valid Team team, BindingResult binding, ModelMap model,
+	                             HttpSession session) throws Exception {
 		team.setName(team.getName().trim());
 		
 		if (!teamServiceImpl.isTeamNameAndIdentifierExists(model, team)) {
@@ -92,7 +92,7 @@ public class TeamController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/{id}/edit.html", method = RequestMethod.GET)
-	public ModelAndView editLocation(ModelMap model, HttpSession session, @PathVariable("id") int id) {
+	public ModelAndView editTeam(ModelMap model, HttpSession session, @PathVariable("id") int id) {
 		Team team = teamServiceImpl.findById(id, "id", Team.class);
 		model.addAttribute("id", id);
 		model.addAttribute("team", team);
@@ -104,11 +104,11 @@ public class TeamController {
 	
 	@PostAuthorize("hasPermission(returnObject, 'PERM_WRITE_ROLE')")
 	@RequestMapping(value = "/{id}/edit.html", method = RequestMethod.POST)
-	public ModelAndView editLocation(@RequestParam(value = "location", required = false) int locationId,
-	                                 @RequestParam(value = "superVisor") int supervisorId,
-	                                 @RequestParam(value = "locationName") String locationName,
-	                                 @ModelAttribute("team") @Valid Team team, BindingResult binding, ModelMap model,
-	                                 HttpSession session, @PathVariable("id") int id) throws Exception {
+	public ModelAndView editTeam(@RequestParam(value = "location", required = false) int locationId,
+	                             @RequestParam(value = "superVisor") int supervisorId,
+	                             @RequestParam(value = "locationName") String locationName,
+	                             @ModelAttribute("team") @Valid Team team, BindingResult binding, ModelMap model,
+	                             HttpSession session, @PathVariable("id") int id) throws Exception {
 		team.setId(id);
 		team.setName(team.getName().trim());
 		
