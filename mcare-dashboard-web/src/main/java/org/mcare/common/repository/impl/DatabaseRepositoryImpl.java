@@ -578,7 +578,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
         } else {
             query.setParameter("year", "");
         }
-        //query.setParameter("years", searchBuilder.getYear());
 
         List<Object[]> results = query.list();
 

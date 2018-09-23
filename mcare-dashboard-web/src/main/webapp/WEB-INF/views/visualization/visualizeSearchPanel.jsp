@@ -216,7 +216,7 @@
 						%>
 					</select>
 				</div>
-				<div class="col-2">
+				<!-- <div class="col-2">
 					<select class="custom-select custom-select-lg mb-2" id="ward"
 						name="ward">
 						<option value="0?">Select Ward</option>
@@ -278,7 +278,7 @@
 						}
 						%>
 					</select>
-				</div>
+				</div> -->
 				<div class="col-2">
 					<select class="custom-select custom-select-lg mb-2" name="provider">
 						<option value="">Select Provider</option>

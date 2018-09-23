@@ -17,10 +17,14 @@ import org.mcare.visualization.DataVisualization;
 import org.mcare.visualization.highchart.HighChart;
 import org.mcare.visualization.service.VisualizationService;
 import org.mcare.visualization.service.impl.ANCDataVisualizeServiceImpl;
+import org.mcare.visualization.service.impl.BNFDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.ChildDataVisualizeServiceImpl;
+import org.mcare.visualization.service.impl.ENCCDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.ElcoDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.HouseholdDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.MotherDataVisualizeServiceImpl;
+import org.mcare.visualization.service.impl.PNCDataVisualizeServiceImpl;
+import org.mcare.visualization.service.impl.PSRFDataVisualizeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +64,18 @@ public class DashboardController {
 
     @Autowired
     private ANCDataVisualizeServiceImpl ancDataVisualizeServiceImpl;
+
+    @Autowired
+    private PNCDataVisualizeServiceImpl pncDataVisualizeServiceImpl;
+
+    @Autowired
+    private ENCCDataVisualizeServiceImpl enccDataVisualizeServiceImpl;
+
+    @Autowired
+    private PSRFDataVisualizeServiceImpl psrfDataVisualizeServiceImpl;
+
+    @Autowired
+    private BNFDataVisualizeServiceImpl bnfDataVisualizeServiceImpl;
 
     public VisualizationService visualizationService;
 
@@ -114,7 +130,7 @@ public class DashboardController {
 
     @RequestMapping(value = "visualize/pnc.html", method = RequestMethod.GET)
     public String visualizePNC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        visualizationService = ancDataVisualizeServiceImpl;
+        visualizationService = pncDataVisualizeServiceImpl;
         setHighChartDataForAnc(request, session);
         setTitles(model, session, "PNC");
         return "visualization/visualizationForANC";
@@ -122,7 +138,7 @@ public class DashboardController {
 
     @RequestMapping(value = "visualize/encc.html", method = RequestMethod.GET)
     public String visualizeENCC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        visualizationService = ancDataVisualizeServiceImpl;
+        visualizationService = enccDataVisualizeServiceImpl;
         setHighChartDataForAnc(request, session);
         setTitles(model, session, "ENCC");
         return "visualization/visualizationForANC";
@@ -130,7 +146,7 @@ public class DashboardController {
 
     @RequestMapping(value = "visualize/psrf.html", method = RequestMethod.GET)
     public String visualizePSRF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        visualizationService = ancDataVisualizeServiceImpl;
+        visualizationService = psrfDataVisualizeServiceImpl;
         setHighChartDataForAnc(request, session);
         setTitles(model, session, "PSRF");
         return "visualization/visualizationForANC";
@@ -138,7 +154,7 @@ public class DashboardController {
 
     @RequestMapping(value = "visualize/bnf.html", method = RequestMethod.GET)
     public String visualizeBNF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        visualizationService = ancDataVisualizeServiceImpl;
+        visualizationService = bnfDataVisualizeServiceImpl;
         setHighChartDataForAnc(request, session);
         setTitles(model, session, "BNF");
         return "visualization/visualizationForANC";
@@ -171,6 +187,7 @@ public class DashboardController {
             throws JSONException {
         searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
         if (searchBuilder.getYear() == null || searchBuilder.getYear().isEmpty()) {
+            System.out.println("current empty");
             searchBuilder.setYear(currentYear.toString());
         }
         searchUtil.setProviderAttribute(session);

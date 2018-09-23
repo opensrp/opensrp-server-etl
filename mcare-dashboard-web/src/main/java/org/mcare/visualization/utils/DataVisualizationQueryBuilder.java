@@ -45,8 +45,8 @@ public class DataVisualizationQueryBuilder {
         return query;
     }
 
-    public static String getMonthWiseDataFromProcedure(SearchBuilder searchBuilder, String table, String joinTable) {
-        String query = "select * from anc_data" + "(array[:division,:district,:upazila"
+    public static String getMonthWiseDataFromProcedure(SearchBuilder searchBuilder, String procedureName) {
+        String query = "select * from " + procedureName + "(array[:division,:district,:upazila"
                 + ",:union,:ward,:subunit,:mauzapara,:provider,:year])";
         return query;
     }

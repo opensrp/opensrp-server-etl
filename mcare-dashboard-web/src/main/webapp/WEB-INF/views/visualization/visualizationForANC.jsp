@@ -106,10 +106,10 @@
 
         },
         credits: {
-            enabled: false
+            enabled: true
         },
         legend: {
-            enabled: false
+            enabled: true
         },
         plotOptions: {
             series: {
