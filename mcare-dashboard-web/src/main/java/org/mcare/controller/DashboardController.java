@@ -112,6 +112,38 @@ public class DashboardController {
         return "visualization/visualizationForANC";
     }
 
+    @RequestMapping(value = "visualize/pnc.html", method = RequestMethod.GET)
+    public String visualizePNC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
+        visualizationService = ancDataVisualizeServiceImpl;
+        setHighChartDataForAnc(request, session);
+        setTitles(model, session, "PNC");
+        return "visualization/visualizationForANC";
+    }
+
+    @RequestMapping(value = "visualize/encc.html", method = RequestMethod.GET)
+    public String visualizeENCC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
+        visualizationService = ancDataVisualizeServiceImpl;
+        setHighChartDataForAnc(request, session);
+        setTitles(model, session, "ENCC");
+        return "visualization/visualizationForANC";
+    }
+
+    @RequestMapping(value = "visualize/psrf.html", method = RequestMethod.GET)
+    public String visualizePSRF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
+        visualizationService = ancDataVisualizeServiceImpl;
+        setHighChartDataForAnc(request, session);
+        setTitles(model, session, "PSRF");
+        return "visualization/visualizationForANC";
+    }
+
+    @RequestMapping(value = "visualize/bnf.html", method = RequestMethod.GET)
+    public String visualizeBNF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
+        visualizationService = ancDataVisualizeServiceImpl;
+        setHighChartDataForAnc(request, session);
+        setTitles(model, session, "BNF");
+        return "visualization/visualizationForANC";
+    }
+
     private void setHighChartData(HttpServletRequest request, HttpSession session)
             throws JSONException {
         searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
