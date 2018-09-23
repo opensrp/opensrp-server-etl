@@ -25,6 +25,36 @@ public class HighChart {
 		return monthWiseSeriesData;
 	}
 	
+	public static JSONArray getMultiBarChartData(List<Object[]> monthWiseCountData) throws JSONException {
+        JSONArray lineChartSeriesData = new JSONArray();
+        String prevYear = "";
+        JSONArray array = new JSONArray();
+        JSONObject dataJsonObject = new JSONObject();
+
+        if (monthWiseCountData != null) {
+            for (Object[] row : monthWiseCountData) {
+                if (prevYear.equalsIgnoreCase("")
+                        || String.valueOf(row[0]).equalsIgnoreCase(prevYear)) {
+                    array.put(row[2]);
+                    prevYear = String.valueOf(row[0]);
+                } else {
+                    dataJsonObject.put("name", prevYear);
+                    dataJsonObject.put("data", array);
+                    lineChartSeriesData.put(dataJsonObject);
+
+                    array = new JSONArray();
+                    dataJsonObject = new JSONObject();
+                    array.put(row[2]);
+                    prevYear = String.valueOf(row[0]);
+                }
+            }
+            dataJsonObject.put("name", prevYear);
+            dataJsonObject.put("data", array);
+            lineChartSeriesData.put(dataJsonObject);
+        }
+        return lineChartSeriesData;
+    }
+
 	public static JSONArray getDayWiseDrilldownSeriesData(List<Object[]> dayWiseCountData) {
 		
 		JSONArray dataJsonArray = new JSONArray();

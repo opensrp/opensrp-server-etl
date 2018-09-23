@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MotherDataVisualizeServiceImpl implements VisualizationService {
+public class ANCDataVisualizeServiceImpl implements VisualizationService{
 
     @Autowired
     private DatabaseRepositoryImpl databaseRepositoryImpl;
@@ -20,14 +20,14 @@ public class MotherDataVisualizeServiceImpl implements VisualizationService {
     @Transactional
     @Override
     public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataQuery(searchBuilder, "mother");
-        return databaseRepositoryImpl.executeRawQuery(searchBuilder, sqlQuery);
+        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "anc", "mother");
+        return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
     }
 
     @Transactional
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "mother");
+        String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "anc", "mother");
         return databaseRepositoryImpl.executeRawQuery(searchBuilder, sqlQuery);
     }
 

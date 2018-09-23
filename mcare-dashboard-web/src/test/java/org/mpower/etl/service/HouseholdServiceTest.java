@@ -66,7 +66,8 @@ public class HouseholdServiceTest {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Ignore
 	@Test
 	public void dateConverStingToDate() {
 		

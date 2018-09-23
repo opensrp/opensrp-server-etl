@@ -12,9 +12,11 @@ import org.json.JSONException;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.common.util.SearchUtil;
 import org.mcare.params.builder.SearchBuilder;
+import org.mcare.reports.service.SearchFilterBuilder;
 import org.mcare.visualization.DataVisualization;
 import org.mcare.visualization.highchart.HighChart;
 import org.mcare.visualization.service.VisualizationService;
+import org.mcare.visualization.service.impl.ANCDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.ChildDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.ElcoDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.HouseholdDataVisualizeServiceImpl;
@@ -49,12 +51,15 @@ public class DashboardController {
 
     @Autowired
     private ElcoDataVisualizeServiceImpl elcoDataVisualizeServiceImpl;
-    
+
     @Autowired
     private MotherDataVisualizeServiceImpl motherDataVisualizeServiceImpl;
-    
+
     @Autowired
     private ChildDataVisualizeServiceImpl childDataVisualizeServiceImpl;
+
+    @Autowired
+    private ANCDataVisualizeServiceImpl ancDataVisualizeServiceImpl;
 
     public VisualizationService visualizationService;
 
@@ -69,57 +74,42 @@ public class DashboardController {
 
     @RequestMapping(value = "visualize/household.html", method = RequestMethod.GET)
     public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        model.addAttribute("title", "Household search criteria");
-
         visualizationService = householdDataVisualizeServiceImpl;
         setHighChartData(request, session);
-        session.setAttribute("chatTitle", "Household data visualization");
+        setTitles(model, session, "Household");
         return "visualization/visualization";
-
     }
 
     @RequestMapping(value = "visualize/elco.html", method = RequestMethod.GET)
     public String visualizeElco(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        model.addAttribute("title", "Eligible Couple search criteria");
-
         visualizationService = elcoDataVisualizeServiceImpl;
         setHighChartData(request, session);
-        session.setAttribute("chatTitle", "Eligible Couple data visualization");
+        setTitles(model, session, "Eligible Couple");
         return "visualization/visualization";
-
     }
 
     @RequestMapping(value = "visualize/mother.html", method = RequestMethod.GET)
     public String visualizeMother(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        model.addAttribute("title", "Mother search criteria");
-
         visualizationService = motherDataVisualizeServiceImpl;
         setHighChartData(request, session);
-        session.setAttribute("chatTitle", "Mother data visualization");
+        setTitles(model, session, "Mother");
         return "visualization/visualization";
-
     }
 
     @RequestMapping(value = "visualize/child.html", method = RequestMethod.GET)
     public String visualizeChild(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        model.addAttribute("title", "Child search criteria");
-
         visualizationService = childDataVisualizeServiceImpl;
         setHighChartData(request, session);
-        session.setAttribute("chatTitle", "Child data visualization");
+        setTitles(model, session, "Child");
         return "visualization/visualization";
-
     }
 
     @RequestMapping(value = "visualize/anc.html", method = RequestMethod.GET)
     public String visualizeANC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
-        model.addAttribute("title", "Child search criteria");
-
-        visualizationService = childDataVisualizeServiceImpl;
-        setHighChartData(request, session);
-        session.setAttribute("chatTitle", "Child data visualization");
-        return "visualization/visualization";
-
+        visualizationService = ancDataVisualizeServiceImpl;
+        setHighChartDataForAnc(request, session);
+        setTitles(model, session, "ANC");
+        return "visualization/visualizationForANC";
     }
 
     private void setHighChartData(HttpServletRequest request, HttpSession session)
@@ -143,5 +133,30 @@ public class DashboardController {
         session.setAttribute("lineChartData", lineChartData);
         session.setAttribute("monthWiseSeriesData", monthWiseSeriesData);
         session.setAttribute("lineChartCategory", lineChartCategory);
+    }
+
+    private void setHighChartDataForAnc(HttpServletRequest request, HttpSession session)
+            throws JSONException {
+        searchBuilder = searchUtil.generateSearchBuilderParams(request, session);
+        if (searchBuilder.getYear() == null || searchBuilder.getYear().isEmpty()) {
+            searchBuilder.setYear(currentYear.toString());
+        }
+        searchUtil.setProviderAttribute(session);
+        searchUtil.setDivisionAttribute(session);
+        searchUtil.setSelectedfilter(request, session);
+
+        List<Object[]> monthWiseData = dataVisualization.getMonthWiseData(searchBuilder, visualizationService);
+        JSONArray monthWiseSeriesData = HighChart.getMultiBarChartData(monthWiseData);
+
+        List<Object[]> dayWiseData = dataVisualization.getDayWiseData(searchBuilder, visualizationService);
+        JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesData(dayWiseData);
+
+        session.setAttribute("dayWiseData", dataJsonArray);
+        session.setAttribute("monthWiseSeriesData", monthWiseSeriesData);
+    }
+
+    private void setTitles(Model model, HttpSession session, String title) {
+        model.addAttribute("title", title + " Search Criteria");
+        session.setAttribute("chatTitle", title + " Data Visualization");
     }
 }
