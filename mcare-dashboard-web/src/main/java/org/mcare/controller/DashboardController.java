@@ -26,6 +26,7 @@ import org.mcare.visualization.service.impl.MotherDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.PNCDataVisualizeServiceImpl;
 import org.mcare.visualization.service.impl.PSRFDataVisualizeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +80,7 @@ public class DashboardController {
 
     public VisualizationService visualizationService;
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_HOME')")
     @RequestMapping("/")
     public String showHome(Model model, HttpSession session) {
         List<Object> dashboardDataCountList = (List<Object>) databaseServiceImpl.getDataFromSQLFunction(
@@ -88,6 +90,7 @@ public class DashboardController {
         return "home";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/household.html", method = RequestMethod.GET)
     public String visualizeHousehold(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = householdDataVisualizeServiceImpl;
@@ -96,6 +99,7 @@ public class DashboardController {
         return "visualization/visualization";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/elco.html", method = RequestMethod.GET)
     public String visualizeElco(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = elcoDataVisualizeServiceImpl;
@@ -104,6 +108,7 @@ public class DashboardController {
         return "visualization/visualization";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/mother.html", method = RequestMethod.GET)
     public String visualizeMother(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = motherDataVisualizeServiceImpl;
@@ -112,6 +117,7 @@ public class DashboardController {
         return "visualization/visualization";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/child.html", method = RequestMethod.GET)
     public String visualizeChild(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = childDataVisualizeServiceImpl;
@@ -120,6 +126,7 @@ public class DashboardController {
         return "visualization/visualization";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/anc.html", method = RequestMethod.GET)
     public String visualizeANC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = ancDataVisualizeServiceImpl;
@@ -128,6 +135,7 @@ public class DashboardController {
         return "visualization/visualizationForANC";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/pnc.html", method = RequestMethod.GET)
     public String visualizePNC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = pncDataVisualizeServiceImpl;
@@ -136,6 +144,7 @@ public class DashboardController {
         return "visualization/visualizationForANC";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/encc.html", method = RequestMethod.GET)
     public String visualizeENCC(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = enccDataVisualizeServiceImpl;
@@ -144,6 +153,7 @@ public class DashboardController {
         return "visualization/visualizationForANC";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/psrf.html", method = RequestMethod.GET)
     public String visualizePSRF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = psrfDataVisualizeServiceImpl;
@@ -152,6 +162,7 @@ public class DashboardController {
         return "visualization/visualizationForANC";
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_VISUALIZATION_DETAILS')")
     @RequestMapping(value = "visualize/bnf.html", method = RequestMethod.GET)
     public String visualizeBNF(HttpServletRequest request, Model model, HttpSession session) throws JSONException {
         visualizationService = bnfDataVisualizeServiceImpl;
@@ -195,7 +206,7 @@ public class DashboardController {
         searchUtil.setSelectedfilter(request, session);
 
         List<Object[]> monthWiseData = dataVisualization.getMonthWiseData(searchBuilder, visualizationService);
-        JSONArray monthWiseSeriesData = HighChart.getMultiBarChartData(monthWiseData);
+        JSONArray monthWiseSeriesData = HighChart.getMonthWiseSeriesDataForMultiBarWithDrillDown(monthWiseData);
 
         List<Object[]> dayWiseData = dataVisualization.getDayWiseData(searchBuilder, visualizationService);
         JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesData(dayWiseData);
