@@ -1,9 +1,9 @@
 CREATE OR REPLACE FUNCTION encc_data(filterArray text[])
 RETURNS TABLE(
-	ancScheduleType text
-	, month float
-	, schedulePercentage float
-			 )
+    ancScheduleType text
+    , month float
+    , schedulePercentage float
+             )
 AS $$
 DECLARE
 i text; 
@@ -78,14 +78,14 @@ BEGIN
    IF (pro != '') THEN
            filterString := filterString || E' and provider=\'' || pro || E'\'';
    END IF;
-						   
+
    completeCountFilterString := filterString;
 
    IF (years != '') THEN
            filterString := filterString || E' and date_part(\'year\', date(a.start_date))=\'' || years || E'\'';
-		   completeCountFilterString := completeCountFilterString 
-						   || E' and date_part(\'year\', date(a.received_time))=\'' 
-						   || years || E'\'';
+           completeCountFilterString := completeCountFilterString
+                           || E' and date_part(\'year\', date(a.received_time))=\''
+                           || years || E'\'';
    END IF;
 
    FOREACH i IN ARRAY ancScheduleTypes
@@ -99,24 +99,23 @@ BEGIN
    set schedulePercentage = anc2.schedulePercentage 
    from
    (select date_part(\'month\', date(a.start_date)),count(date_part(\'month\', date(a.start_date)))
-     from "viewANCPNCNotSubmitted" a
+     from "viewENCCNotSubmitted" a
      where visit_code like \'%enccrv_%\' '
-	 || filterString
+     || filterString
      || E' group by  date_part(\'month\', date(a.start_date))
      order by date_part(\'month\', date(a.start_date)) asc) 
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'pending\'
    and helper_table.month = anc2.month';
 
-						
    /*completed scheudule counts*/
    EXECUTE E'update helper_table
    set schedulePercentage = anc2.schedulePercentage 
    from
    (select date_part(\'month\', date(a.received_time)),count(date_part(\'month\', date(a.received_time)))
      from "viewENCCSubmitted" a
-	 where enccname like \'%enccrv_%\''
-	 || completeCountFilterString
+     where enccname like \'%enccrv_%\''
+     || completeCountFilterString
      || E' group by  date_part(\'month\', date(a.received_time))
      order by date_part(\'month\', date(a.received_time)) asc) 
    as anc2(month, schedulePercentage)
@@ -128,36 +127,35 @@ BEGIN
    set schedulePercentage = anc2.schedulePercentage 
    from
    (select date_part(\'month\', date(a.start_date)),count(date_part(\'month\', date(a.start_date)))
-     from "viewANCPNCNotSubmitted" a
+     from "viewENCCNotSubmitted" a
      where alert_status = \'urgent\' and expiry_date < current_date '
-	 || filterString
-	 || E' and visit_code like \'%enccrv_%\'
+     || filterString
+     || E' and visit_code like \'%enccrv_%\'
      group by  date_part(\'month\', date(a.start_date))
      order by date_part(\'month\', date(a.start_date)) asc) 
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'expired\'
    and helper_table.month = anc2.month';
-						
  
    insert into table_anc_schedule_type_percentage(ancScheduleType, month, schedulePercentage)
    select ht.ancScheduleType, ht.month, ht.schedulePercentage
    from helper_table ht;
-	
+
    UPDATE table_anc_schedule_type_percentage tt
    SET schedulePercentage=(SELECT round(cast (tt.schedulePercentage as numeric)
-										/cast (subquery.sum_schedulepercentage as numeric)*100, 2))
+                                        /cast (subquery.sum_schedulepercentage as numeric)*100, 2))
    FROM (select ht.month, sum(ht.schedulepercentage)
-							 from helper_table ht
-							 group by ht.month)
+                             from helper_table ht
+                             group by ht.month)
    AS subquery(month, sum_schedulepercentage)
    WHERE tt.month = subquery.month;
 
    /*Return whole dashboard_data_count data*/
    RETURN QUERY SELECT ttable.ancScheduleType
-	   , ttable.month
+       , ttable.month
        , coalesce(ttable.schedulePercentage, 0) as schedulePercentage
        from table_anc_schedule_type_percentage ttable
-		order by ancScheduleType, month;
+        order by ancScheduleType, month;
 END;
 $$ LANGUAGE plpgsql;
 
