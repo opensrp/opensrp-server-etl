@@ -75,7 +75,15 @@ public class HighChart {
                 scheduleType = String.valueOf(row[0]);
             } else {
                 typeWiseData.put("name", scheduleType);
-                typeWiseData.put("colorByPoint", false);
+                if (scheduleType.equalsIgnoreCase("completed")) {
+                    typeWiseData.put("color", "#008000");
+                }
+                if (scheduleType.equalsIgnoreCase("pending")) {
+                    typeWiseData.put("color", "#FFFF00");
+                }
+                if (scheduleType.equalsIgnoreCase("expired")) {
+                    typeWiseData.put("color", "#FF0000");
+                }
                 typeWiseData.put("data", monthWiseArrayData);
 
                 monthWiseSeriesData.put(typeWiseData);
@@ -93,6 +101,15 @@ public class HighChart {
 
         }
         typeWiseData.put("name", scheduleType);
+        if (scheduleType.equalsIgnoreCase("completed")) {
+            typeWiseData.put("color", "#008000");
+        }
+        if (scheduleType.equalsIgnoreCase("pending")) {
+            typeWiseData.put("color", "#FFFF00");
+        }
+        if (scheduleType.equalsIgnoreCase("expired")) {
+            typeWiseData.put("color", "#FF0000");
+        }
         typeWiseData.put("data", monthWiseArrayData);
         typeWiseData.put("colorByPoint", false);
         monthWiseSeriesData.put(typeWiseData);
