@@ -27,7 +27,7 @@ public class PSRFDataVisualizeServiceImpl implements VisualizationService{
     @Transactional
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "anc", "mother");
+        String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "psrf", "mother");
         return databaseRepositoryImpl.executeRawQuery(searchBuilder, sqlQuery);
     }
 
