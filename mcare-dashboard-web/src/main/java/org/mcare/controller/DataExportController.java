@@ -95,6 +95,7 @@ public class DataExportController {
 	}
 	 */
 
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_EXPORT')")
 	@RequestMapping(value = "/export/list.html", method = RequestMethod.GET)
 	public String dataExportGetList(Model model) {
 		List<DataExportEntity> exports = providerServiceImpl.findAll("DataExportEntity");

@@ -10,6 +10,7 @@ import org.mcare.common.util.SearchUtil;
 import org.mcare.reports.service.ReportService;
 import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class ReportController {
 	public ReportController() {
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_REPORT')")
 	@RequestMapping(value = "/formWiseReport.html", method = RequestMethod.GET)
 	public String showFormWiseReport(HttpServletRequest request, HttpSession session, Model model) {
 		logger.info("In showFormWiseReport");
@@ -45,6 +47,7 @@ public class ReportController {
 		return "report/formWiseReport";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_REPORT')")
 	@RequestMapping(value = "/providerWiseReport.html", method = RequestMethod.GET)
 	public String showProviderWiseReport(HttpServletRequest request, HttpSession session, Model model) {
 		logger.info("In showProviderWiseReport");

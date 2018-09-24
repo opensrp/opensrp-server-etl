@@ -13,6 +13,7 @@ import org.mcare.schedule.monitoring.service.impl.ANCScheduleMonitoringServiceIm
 import org.mcare.schedule.monitoring.service.impl.ENCCScheduleMonitoringServiceImpl;
 import org.mcare.schedule.monitoring.service.impl.PNCScheduleMonitoringServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class ScheduleMonitoringController {
 	
 	private ScheduleMonitoringService scheduleMonitoringService;
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_FWA_MONITORING')")
 	@RequestMapping(value = "/fwa/anc/monitoring.html", method = RequestMethod.GET)
 	public String anc(HttpServletRequest request, HttpSession session, Model model) {
 		scheduleMonitoringService = ancScheduleMonitoringServiceImpl;
@@ -59,6 +61,7 @@ public class ScheduleMonitoringController {
 		return "schedule-monitoring/anc";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_FWA_MONITORING')")
 	@RequestMapping(value = "/fwa/pnc/monitoring.html", method = RequestMethod.GET)
 	public String pnc(HttpServletRequest request, HttpSession session, Model model) {
 		scheduleMonitoringService = pncScheduleMonitoringServiceImpl;
@@ -80,6 +83,7 @@ public class ScheduleMonitoringController {
 		return "schedule-monitoring/pnc";
 	}
 	
+	@PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_FWA_MONITORING')")
 	@RequestMapping(value = "/fwa/encc/monitoring.html", method = RequestMethod.GET)
 	public String encc(HttpServletRequest request, HttpSession session, Model model) {
 		scheduleMonitoringService = enccScheduleMonitoringServiceImpl;
