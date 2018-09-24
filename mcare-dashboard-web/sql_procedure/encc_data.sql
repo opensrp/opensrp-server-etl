@@ -137,7 +137,7 @@ BEGIN
    where helper_table.ancScheduleType = \'expired\'
    and helper_table.month = anc2.month';
  
-   insert into table_anc_schedule_type_percentage(ancScheduleType, month, schedulePercentage)
+   /*insert into table_anc_schedule_type_percentage(ancScheduleType, month, schedulePercentage)
    select ht.ancScheduleType, ht.month, ht.schedulePercentage
    from helper_table ht;
 
@@ -148,13 +148,13 @@ BEGIN
                              from helper_table ht
                              group by ht.month)
    AS subquery(month, sum_schedulepercentage)
-   WHERE tt.month = subquery.month;
+   WHERE tt.month = subquery.month;*/
 
    /*Return whole dashboard_data_count data*/
    RETURN QUERY SELECT ttable.ancScheduleType
        , ttable.month
        , coalesce(ttable.schedulePercentage, 0) as schedulePercentage
-       from table_anc_schedule_type_percentage ttable
+       from helper_table ttable
         order by ancScheduleType, month;
 END;
 $$ LANGUAGE plpgsql;
