@@ -6,7 +6,7 @@ RETURNS TABLE(
              )
 AS $$
 DECLARE
-i text; 
+i text;
 ancScheduleTypes  text[] := '{"pending", "completed", "expired"}';
   filterString text := '';
   completeCountFilterString text := '';
@@ -39,11 +39,10 @@ BEGIN
    , schedulePercentage float
   );
 
-  DROP TABLE IF EXISTS table_anc_schedule_type_percentage;
-  CREATE TEMPORARY TABLE IF NOT EXISTS table_anc_schedule_type_percentage(
-   ancScheduleType text
-   , month float
-   , schedulePercentage float
+  DROP TABLE IF EXISTS temp_table;
+  CREATE TEMPORARY TABLE IF NOT EXISTS temp_table (
+   month float
+   , scheduleCount float
   );
 
    /*Creating conditional query string*/
@@ -78,54 +77,60 @@ BEGIN
    IF (pro != '') THEN
            filterString := filterString || E' and provider=\'' || pro || E'\'';
    END IF;
-                           
+
    completeCountFilterString := filterString;
 
    IF (years != '') THEN
            filterString := filterString || E' and date_part(\'year\', date(a.start_date))=\'' || years || E'\'';
-           completeCountFilterString := completeCountFilterString 
-                           || E' and date_part(\'year\', date(a.received_time))=\'' 
+           completeCountFilterString := completeCountFilterString
+                           || E' and date_part(\'year\', date(a.received_time))=\''
                            || years || E'\'';
    END IF;
 
    FOREACH i IN ARRAY ancScheduleTypes
-   LOOP 
+   LOOP
    RAISE NOTICE '%', i;
    INSERT INTO helper_table (ancScheduleType , month)
    VALUES  (i, 1), (i, 2), (i, 3), (i, 4), (i, 5), (i, 6), (i, 7), (i, 8), (i, 9), (i, 10), (i, 11), (i, 12);
    END LOOP;
 
+    EXECUTE E'insert into temp_table(month, scheduleCount)
+    select date_part(\'month\', date(a.start_date)), count(date_part(\'month\', date(a.start_date)))
+    from "viewANCPNCNotSubmitted" a
+    where visit_code like \'%ancrv_%\' '
+    || filterString
+    || E' group by date_part(\'month\', date(a.start_date))
+    order by date_part(\'month\', date(a.start_date)) asc';
+
    EXECUTE E'update helper_table
-   set schedulePercentage = anc2.schedulePercentage 
+   set schedulePercentage = anc2.schedulePercentage
    from
-   (select date_part(\'month\', date(a.start_date)),count(date_part(\'month\', date(a.start_date)))
-     from "viewANCPNCNotSubmitted" a
-     where visit_code like \'%ancrv_%\' '
-     || filterString
-     || E' group by  date_part(\'month\', date(a.start_date))
-     order by date_part(\'month\', date(a.start_date)) asc) 
+   (select t1.month, SUM(t2.scheduleCount) as sum
+    from temp_table t1
+    inner join temp_table t2 on t1.month >= t2.month
+    group by t1.month
+    order by t1.month asc)
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'pending\'
    and helper_table.month = anc2.month';
 
-                        
    /*completed scheudule counts*/
    EXECUTE E'update helper_table
-   set schedulePercentage = anc2.schedulePercentage 
+   set schedulePercentage = anc2.schedulePercentage
    from
    (select date_part(\'month\', date(a.received_time)),count(date_part(\'month\', date(a.received_time)))
      from "viewANCSubmitted" a
      where ancname like \'%ancrv_%\''
      || completeCountFilterString
      || E' group by  date_part(\'month\', date(a.received_time))
-     order by date_part(\'month\', date(a.received_time)) asc) 
+     order by date_part(\'month\', date(a.received_time)) asc)
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'completed\'
    and helper_table.month = anc2.month';
 
    /* expired schedules*/
    EXECUTE E'update helper_table
-   set schedulePercentage = anc2.schedulePercentage 
+   set schedulePercentage = anc2.schedulePercentage
    from
    (select date_part(\'month\', date(a.start_date)),count(date_part(\'month\', date(a.start_date)))
      from "viewANCPNCNotSubmitted" a
@@ -133,16 +138,15 @@ BEGIN
      || filterString
      || E' and visit_code like \'%ancrv_%\'
      group by  date_part(\'month\', date(a.start_date))
-     order by date_part(\'month\', date(a.start_date)) asc) 
+     order by date_part(\'month\', date(a.start_date)) asc)
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'expired\'
    and helper_table.month = anc2.month';
-                        
- 
+
    /*insert into table_anc_schedule_type_percentage(ancScheduleType, month, schedulePercentage)
    select ht.ancScheduleType, ht.month, ht.schedulePercentage
    from helper_table ht;
-    
+
    UPDATE table_anc_schedule_type_percentage tt
    SET schedulePercentage=(SELECT round(cast (tt.schedulePercentage as numeric)
                                         /cast (subquery.sum_schedulepercentage as numeric)*100, 2))

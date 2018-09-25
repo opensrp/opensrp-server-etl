@@ -39,11 +39,10 @@ BEGIN
    , schedulePercentage float
   );
 
-  DROP TABLE IF EXISTS table_anc_schedule_type_percentage;
-  CREATE TEMPORARY TABLE IF NOT EXISTS table_anc_schedule_type_percentage(
-   ancScheduleType text
-   , month float
-   , schedulePercentage float
+  DROP TABLE IF EXISTS temp_table;
+  CREATE TEMPORARY TABLE IF NOT EXISTS temp_table (
+   month float
+   , scheduleCount float
   );
 
    /*Creating conditional query string*/
@@ -95,15 +94,22 @@ BEGIN
    VALUES  (i, 1), (i, 2), (i, 3), (i, 4), (i, 5), (i, 6), (i, 7), (i, 8), (i, 9), (i, 10), (i, 11), (i, 12);
    END LOOP;
 
+    EXECUTE E'insert into temp_table(month, scheduleCount)
+    select date_part(\'month\', date(a.start_date)), count(date_part(\'month\', date(a.start_date)))
+    from "viewENCCNotSubmitted" a
+    where visit_code like \'%enccrv_%\' '
+    || filterString
+    || E' group by date_part(\'month\', date(a.start_date))
+    order by date_part(\'month\', date(a.start_date)) asc';
+
    EXECUTE E'update helper_table
    set schedulePercentage = anc2.schedulePercentage 
    from
-   (select date_part(\'month\', date(a.start_date)),count(date_part(\'month\', date(a.start_date)))
-     from "viewENCCNotSubmitted" a
-     where visit_code like \'%enccrv_%\' '
-     || filterString
-     || E' group by  date_part(\'month\', date(a.start_date))
-     order by date_part(\'month\', date(a.start_date)) asc) 
+   (select t1.month, SUM(t2.scheduleCount) as sum
+    from temp_table t1
+    inner join temp_table t2 on t1.month >= t2.month
+    group by t1.month
+    order by t1.month asc)
    as anc2(month, schedulePercentage)
    where helper_table.ancScheduleType = \'pending\'
    and helper_table.month = anc2.month';
