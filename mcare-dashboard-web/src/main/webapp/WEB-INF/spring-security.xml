@@ -19,9 +19,9 @@
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login login-page="/login"
-			username-parameter="username" password-parameter="password"
-			authentication-failure-url="/Access_Denied" />
-		<security:csrf />
+            username-parameter="username" password-parameter="password"
+            authentication-failure-url="/login?error" />
+        <security:csrf />
 	</security:http>
 
 	<security:authentication-manager>
