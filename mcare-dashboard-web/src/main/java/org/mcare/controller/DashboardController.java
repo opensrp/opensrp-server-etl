@@ -211,6 +211,11 @@ public class DashboardController {
         List<Object[]> dayWiseData = dataVisualization.getDayWiseData(searchBuilder, visualizationService);
         JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesData(dayWiseData);
 
+        JSONArray lineChartData = HighChart.getMultiLineChartData(monthWiseData, searchBuilder.getYear());
+        JSONArray lineChartCategory = HighChart.getMultiLineChartCategory(monthWiseData);
+        session.setAttribute("lineChartData", lineChartData);
+        session.setAttribute("lineChartCategory", lineChartCategory);
+
         session.setAttribute("dayWiseData", dataJsonArray);
         session.setAttribute("monthWiseSeriesData", monthWiseSeriesData);
     }

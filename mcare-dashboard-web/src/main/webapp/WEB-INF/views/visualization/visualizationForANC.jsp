@@ -46,12 +46,7 @@
             </div> <!-- row -->
             <hr />
             <div class="row">
-                <div class="col-lg-6 col-xs-6"> 
-                    <div id="pieDrilled" style="width: 100%; height: 250px; margin: 0 auto"></div>
-                </div>
-                <div class="col-lg-6 col-xs-6"> 
-                    <div id="lineChart" style="width: 100%; height: 250px; margin: 0 auto"></div>
-                </div>
+                <div id="lineChart" style="width: 100%; height: 250px; margin: 0 auto"></div>
             </div> <!-- row -->
             
                 
@@ -61,6 +56,15 @@
         JSONArray dayWiseData = (JSONArray)session.getAttribute("dayWiseData");
 
         String chartTitle = (String)session.getAttribute("chatTitle");
+
+        JSONArray lineChartData = null;
+        JSONArray lineChartCategory = null;
+        if (session.getAttribute("lineChartData") != null) {
+            lineChartData = (JSONArray)session.getAttribute("lineChartData");
+        }
+        if (session.getAttribute("lineChartCategory") != null) {
+            lineChartCategory = (JSONArray)session.getAttribute("lineChartCategory");
+        }
         
         %>
         <jsp:include page="/WEB-INF/views/footer.jsp" />
@@ -124,5 +128,61 @@
     
     </script>
     
+    <script type="text/javascript">
+        Highcharts.chart('lineChart', {
+            chart : {
+                type : 'line'
+            },
+            title : {
+                text : 'ANC Data Line Chart'
+            },
+            subtitle : {
+                text : ''
+            },
+            credits : {
+                enabled : false
+            },
+            xAxis : {
+                categories : <%=lineChartCategory%>
+        },
+            yAxis : {
+                title : {
+                    text : 'Schedule Counts'
+                }
+            },
+
+            legend : {
+                layout : 'vertical',
+                align : 'right',
+                verticalAlign : 'middle'
+            },
+
+            plotOptions : {
+                line : {
+                    dataLabels : {
+                        enabled : true
+                    },
+                    enableMouseTracking : true
+                }
+            },
+
+            responsive : {
+                rules : [ {
+                    condition : {
+                        maxWidth : 500
+                    },
+                    chartOptions : {
+                        legend : {
+                            layout : 'horizontal',
+                            align : 'center',
+                            verticalAlign : 'bottom'
+                        }
+                    }
+                } ]
+            },
+
+            series : <%=lineChartData%>
+        });
+    </script>
 </body>
 </html>

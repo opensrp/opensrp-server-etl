@@ -1,12 +1,14 @@
 package org.mcare.visualization.highchart;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcare.common.util.DateUtil;
+import org.mcare.common.util.DateUtil.Months;
 
 public class HighChart {
 
@@ -220,5 +222,46 @@ public class HighChart {
             }
         }
         return dataGroupArray;
+    }
+
+    public static JSONArray getMultiLineChartData(List<Object[]> monthWiseCountData, String years) throws JSONException {
+        JSONArray lineChartSeriesData = new JSONArray();
+        String prevYear = "";
+        JSONArray array = new JSONArray();
+        JSONObject dataJsonObject = new JSONObject();
+
+        if (monthWiseCountData != null) {
+            for (Object[] row : monthWiseCountData) {
+                if (prevYear.equalsIgnoreCase("")
+                        || String.valueOf(row[0]).equalsIgnoreCase(prevYear)) {
+                    array.put(row[2]);
+                    prevYear = String.valueOf(row[0]);
+                } else {
+                    dataJsonObject.put("name", prevYear);
+                    dataJsonObject.put("data", array);
+                    lineChartSeriesData.put(dataJsonObject);
+
+                    array = new JSONArray();
+                    dataJsonObject = new JSONObject();
+                    array.put(row[2]);
+                    prevYear = String.valueOf(row[0]);
+                }
+            }
+            dataJsonObject.put("name", prevYear);
+            dataJsonObject.put("data", array);
+            lineChartSeriesData.put(dataJsonObject);
+        }
+        return lineChartSeriesData;
+    }
+
+    public static JSONArray getMultiLineChartCategory(List<Object[]> monthWiseCountData) throws JSONException {
+        JSONArray lineChartCategory = new JSONArray();
+        List<Months> monthList = Arrays.asList(Months.values());
+
+        for (Months month : monthList) {
+            lineChartCategory.put(month);
+        }
+
+        return lineChartCategory;
     }
 }
