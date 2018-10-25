@@ -1,5 +1,8 @@
 package org.mcare.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -10,9 +13,13 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.mcare.acl.entity.Account;
+import org.mcare.acl.entity.ActiveUser;
+import org.mcare.acl.entity.ActiveUserStore;
 import org.mcare.acl.entity.Permission;
 import org.mcare.acl.entity.Role;
+import org.mcare.acl.entity.UsageHistory;
 import org.mcare.acl.service.impl.RoleServiceImpl;
+import org.mcare.acl.service.impl.UsageHistoryServiceImpl;
 import org.mcare.acl.service.impl.UserServiceImpl;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +73,13 @@ public class UserController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+    private UsageHistoryServiceImpl usageHistoryServiceImpl;
 	
+	@Autowired
+    private ActiveUserStore activeUserStore;
+
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
 	@RequestMapping(value = "/user.html", method = RequestMethod.GET)
 	public String userList(Model model) {
@@ -149,15 +162,52 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
+	    System.out.println("login");
+	    
 		return "user/login";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+        logger.info("log out time:" + dateFormat.format(date) + ", auth: " + auth.hashCode());
+        
+        //UsageHistory usageHistory = usageHistoryServiceImpl.findByKey(auth.getName(), "userName", UsageHistory.class);
+        UsageHistory usageHistory = new UsageHistory();
+        ActiveUser activeUser = activeUserStore.getActiveUserByUsername(auth.getName());
+        
+        usageHistory.setUserName(activeUser.getUserName());
+        usageHistory.setLoginTime(activeUser.getLoginTime());
+        usageHistory.setLoginDate(activeUser.getLoginDate());
+        
+        logger.info("activeUser.getUserName():" + activeUser.getUserName());
+        
+        long difference = date.getTime() - activeUser.getLoginTime().getTime();
+        difference = difference/(1000 * 60);
+        
+        System.out.println("duration: " + difference);
+        
+        usageHistory.setDuration((int)difference);
+        usageHistory.setDay(activeUser.getDay());
+        usageHistory.setLogoutTime(date);
+        
+        
+        try {
+            usageHistoryServiceImpl.save(usageHistory);
+            activeUserStore.getUsers().remove(activeUser);
+            System.out.println("active users: " + activeUserStore.getUsers().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	

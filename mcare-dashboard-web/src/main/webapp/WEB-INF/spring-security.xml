@@ -9,7 +9,11 @@
 
 <security:http pattern="/favicon.ico" security="none" />
 
-	<security:http auto-config="true">
+	<security:http auto-config="true" create-session="ifRequired">
+	    <security:session-management invalid-session-url="/login">
+            <security:concurrency-control
+               max-sessions="1" expired-url="/logout" />
+        </security:session-management>
 		<security:intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/login*"

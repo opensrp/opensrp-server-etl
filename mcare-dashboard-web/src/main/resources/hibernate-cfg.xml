@@ -32,6 +32,9 @@
 				<value>org.mcare.acl.entity.Account</value>
 				<value>org.mcare.acl.entity.Role</value>
 				<value>org.mcare.acl.entity.Permission</value>
+				<value>org.mcare.acl.entity.UsageHistory</value>
+				<value>org.mcare.acl.entity.ActiveUser</value>
+				<value>org.mcare.acl.entity.ActiveUserStore</value>
 				<value>org.mcare.etl.entity.HouseholdEntity</value>
 				<value>org.mcare.etl.entity.ElcoEntity</value>
 				<value>org.mcare.etl.entity.ActionEntity</value>

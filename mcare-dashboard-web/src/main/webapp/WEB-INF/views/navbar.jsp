@@ -43,13 +43,16 @@
 			</a>
 				<div class="dropdown-menu">					
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/formWiseReport.html"/>"> <strong> Form Wise Report Status</strong> 
-						
+					<a class="dropdown-item" href="<c:url value="/formWiseReport.html"/>"> <strong> Form Wise Report Status</strong>	
 					</a>
+
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="<c:url value="/providerWiseReport.html"/>"> <strong>Provider Wise Report Status</strong>
 					</a>					
 					
+					<div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<c:url value="/usageHistoryReport.html"/>"> <strong>Usage History Report</strong>
+                    </a>
 				</div>
 			</li>
 			
