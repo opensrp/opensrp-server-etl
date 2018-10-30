@@ -76,9 +76,6 @@ public class UserController {
 
 	@Autowired
     private UsageHistoryServiceImpl usageHistoryServiceImpl;
-	
-	@Autowired
-    private ActiveUserStore activeUserStore;
 
 	@PostAuthorize("hasPermission(returnObject, 'PERM_READ_USER')")
 	@RequestMapping(value = "/user.html", method = RequestMethod.GET)
@@ -175,43 +172,12 @@ public class UserController {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-
-        logger.info("log out time:" + dateFormat.format(date) + ", auth: " + auth.hashCode());
-        
-        //UsageHistory usageHistory = usageHistoryServiceImpl.findByKey(auth.getName(), "userName", UsageHistory.class);
-        UsageHistory usageHistory = new UsageHistory();
-        ActiveUser activeUser = activeUserStore.getActiveUserByUsername(auth.getName());
-        
-        usageHistory.setUserName(activeUser.getUserName());
-        usageHistory.setLoginTime(activeUser.getLoginTime());
-        usageHistory.setLoginDate(activeUser.getLoginDate());
-        
-        logger.info("activeUser.getUserName():" + activeUser.getUserName());
-        
-        long difference = date.getTime() - activeUser.getLoginTime().getTime();
-        difference = difference/(1000 * 60);
-        
-        System.out.println("duration: " + difference);
-        
-        usageHistory.setDuration((int)difference);
-        usageHistory.setDay(activeUser.getDay());
-        usageHistory.setLogoutTime(date);
-        
-        
-        try {
-            usageHistoryServiceImpl.save(usageHistory);
-            activeUserStore.getUsers().remove(activeUser);
-            System.out.println("active users: " + activeUserStore.getUsers().size());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		usageHistoryServiceImpl.recordUsageHistory(auth.getName());
 
 		return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
-	
-	private boolean checkValidations(Account account, int[] roles, HttpSession session, ModelMap model) {
+
+    private boolean checkValidations(Account account, int[] roles, HttpSession session, ModelMap model) {
 		try {
 			if (userServiceImpl.isPasswordMatched(account) && !userServiceImpl.isUserAlreadyExist(account)) {
 				account.setEnabled(true);

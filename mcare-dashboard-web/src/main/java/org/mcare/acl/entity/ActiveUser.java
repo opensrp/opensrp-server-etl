@@ -37,6 +37,8 @@ public class ActiveUser {
 
     private int duration;
 
+    private Date lastActiveTime;
+
     public ActiveUser() {
         // TODO Auto-generated constructor stub
     }
@@ -87,6 +89,14 @@ public class ActiveUser {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public Date getLastActiveTime() {
+        return lastActiveTime;
+    }
+
+    public void setLastActiveTime(Date lastActiveTime) {
+        this.lastActiveTime = lastActiveTime;
     }
 
 }

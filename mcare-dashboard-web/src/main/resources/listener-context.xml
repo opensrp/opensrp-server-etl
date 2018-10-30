@@ -10,13 +10,19 @@
 
 	
 	<context:component-scan base-package="org.mcare.etl.transmission.listener"></context:component-scan>
+	<context:component-scan base-package="org.mcare.acl.listener"></context:component-scan>
 	<context:annotation-config></context:annotation-config>
 	 <bean id="transmissionListener" class="org.mcare.etl.transmission.listener.TransmissionListener"></bean>
-	 
+	 <bean id="expireSessionListener" class="org.mcare.acl.listener.ExpireSessionListener"></bean>
+
 	 <task:scheduled-tasks scheduler="scheduler">
         <task:scheduled ref="transmissionListener" method="dataListener" cron="0 0/1 * * * ?" />
     </task:scheduled-tasks>
-    
+
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="expireSessionListener" method="sessionListener" cron="0 0/1 * * * ?" />
+    </task:scheduled-tasks>
+
    <task:scheduler pool-size="1" id="scheduler"/>
 	<task:annotation-driven />
 </beans>

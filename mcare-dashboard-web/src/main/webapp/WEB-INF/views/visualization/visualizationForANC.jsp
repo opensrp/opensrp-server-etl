@@ -25,6 +25,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta http-equiv="refresh" content="<%=session.getMaxInactiveInterval()%>;url=/login"/>
+
 <title>mCare2 Dashboard Home</title>
 
 <jsp:include page="/WEB-INF/views/css.jsp" />
@@ -56,6 +58,7 @@
         JSONArray dayWiseData = (JSONArray)session.getAttribute("dayWiseData");
 
         String chartTitle = (String)session.getAttribute("chatTitle");
+        String linechartTitle = (String)session.getAttribute("linechartTitle");
 
         JSONArray lineChartData = null;
         JSONArray lineChartCategory = null;
@@ -134,7 +137,7 @@
                 type : 'line'
             },
             title : {
-                text : 'ANC Data Line Chart'
+                text : '<%=linechartTitle%>'
             },
             subtitle : {
                 text : ''

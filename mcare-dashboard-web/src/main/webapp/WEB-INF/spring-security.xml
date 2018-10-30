@@ -1,19 +1,22 @@
 <b:beans xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:b="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="
 	     http://www.springframework.org/schema/beans
 	     http://www.springframework.org/schema/beans/spring-beans.xsd
 		 http://www.springframework.org/schema/security
-		 http://www.springframework.org/schema/security/spring-security.xsd">
+		 http://www.springframework.org/schema/security/spring-security.xsd
+		 http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-<security:http pattern="/favicon.ico" security="none" />
+	<security:http pattern="/favicon.ico" security="none" />
 
 	<security:http auto-config="true" create-session="ifRequired">
-	    <security:session-management invalid-session-url="/login">
-            <security:concurrency-control
-               max-sessions="1" expired-url="/logout" />
-        </security:session-management>
+		<security:session-management
+			invalid-session-url="/login">
+			<security:concurrency-control
+				max-sessions="1" expired-url="/logout" />
+		</security:session-management>
 		<security:intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/login*"
@@ -23,9 +26,9 @@
 		<security:intercept-url pattern="/**"
 			access="isAuthenticated()" />
 		<security:form-login login-page="/login"
-            username-parameter="username" password-parameter="password"
-            authentication-failure-url="/login?error" />
-        <security:csrf />
+			username-parameter="username" password-parameter="password"
+			authentication-failure-url="/login?error" />
+		<security:csrf />
 	</security:http>
 
 	<security:authentication-manager>
@@ -47,4 +50,8 @@
 		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
 		<b:property name="permissionEvaluator" ref="customPermissionEvaluator" />
 	</b:bean>
+
+	<mvc:interceptors>
+		<b:bean id="sessionTimerInterceptor" class="org.mcare.acl.listener.SessionTimerInterceptor" />
+	</mvc:interceptors>
 </b:beans>

@@ -223,5 +223,6 @@ public class DashboardController {
     private void setTitles(Model model, HttpSession session, String title) {
         model.addAttribute("title", title + " Search Criteria");
         session.setAttribute("chatTitle", title + " Data Visualization");
+        session.setAttribute("linechartTitle", title + " Data Line Chart");
     }
 }

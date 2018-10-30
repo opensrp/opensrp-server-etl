@@ -63,6 +63,7 @@ public class HbnAccountDao extends AbstractHbnDao<Account> implements AccountDao
             activeUser.setLoginTime(date);
             activeUser.setLoginDate(date);
             activeUser.setDay(getDayOfWeek());
+            activeUser.setLastActiveTime(date);
 
             usageHistoryServiceImpl.save(activeUser);
             List<ActiveUser> users = activeUserStore.getUsers();
