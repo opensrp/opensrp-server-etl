@@ -55,7 +55,11 @@
         </div>
         <% 
         JSONArray monthWiseSeriesData = (JSONArray)session.getAttribute("monthWiseSeriesData");     
-        JSONArray dayWiseData = (JSONArray)session.getAttribute("dayWiseData");
+
+        JSONArray dayWiseData = null;
+        if (session.getAttribute("dayWiseData") != null) {
+            dayWiseData = (JSONArray)session.getAttribute("dayWiseData");
+        }
 
         String chartTitle = (String)session.getAttribute("chatTitle");
         String linechartTitle = (String)session.getAttribute("linechartTitle");

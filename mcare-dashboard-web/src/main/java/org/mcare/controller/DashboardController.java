@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.common.util.SearchUtil;
 import org.mcare.params.builder.SearchBuilder;
-import org.mcare.reports.service.SearchFilterBuilder;
 import org.mcare.visualization.DataVisualization;
 import org.mcare.visualization.highchart.HighChart;
 import org.mcare.visualization.service.VisualizationService;

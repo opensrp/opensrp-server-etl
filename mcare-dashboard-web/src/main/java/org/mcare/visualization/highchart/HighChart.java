@@ -68,13 +68,14 @@ public class HighChart {
             if (scheduleType.equalsIgnoreCase("")
                     || String.valueOf(row[0]).equalsIgnoreCase(scheduleType)) {
 
+                scheduleType = String.valueOf(row[0]);
                 Double monthNumber = Double.parseDouble(row[1].toString());
                 monthWiseData = new JSONObject();
                 monthWiseData.put("name", DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
                 monthWiseData.put("y", row[2]);
-                monthWiseData.put("drilldown", DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
+                monthWiseData.put("drilldown", scheduleType + "_" + DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
                 monthWiseArrayData.put(monthWiseData);
-                scheduleType = String.valueOf(row[0]);
+
             } else {
                 typeWiseData.put("name", scheduleType);
                 if (scheduleType.equalsIgnoreCase("completed")) {
@@ -90,15 +91,16 @@ public class HighChart {
 
                 monthWiseSeriesData.put(typeWiseData);
 
+                scheduleType = String.valueOf(row[0]);
                 monthWiseArrayData = new JSONArray();
                 typeWiseData = new JSONObject();
                 Double monthNumber = Double.parseDouble(row[1].toString());
                 monthWiseData = new JSONObject();
                 monthWiseData.put("name", DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
                 monthWiseData.put("y", row[2]);
-                monthWiseData.put("drilldown", DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
+                monthWiseData.put("drilldown", scheduleType + "_" + DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
                 monthWiseArrayData.put(monthWiseData);
-                scheduleType = String.valueOf(row[0]);
+
             }
 
         }
@@ -124,10 +126,10 @@ public class HighChart {
         JSONArray dataJsonArray = new JSONArray();
         try {
             JSONArray DataAsArray = getDayWiseDataAsGroup(dayWiseCountData);
-
             JSONObject dataObject = new JSONObject();
             int monthNumber = 0;
             dataJsonArray = new JSONArray();
+
             for (int i = 0; i < DataAsArray.length(); i++) {
                 JSONArray DayWiseDataAsArray = (JSONArray) DataAsArray.get(i);
                 /*
@@ -138,9 +140,19 @@ public class HighChart {
                 String splitData[] = firstData.get(0).toString().split("-");
                 monthNumber = Integer.parseInt(splitData[1]);
 
+                String scheduleType = firstData.get(2).toString();
+
                 dataObject = new JSONObject();
                 dataObject.put("name", DateUtil.getMonthName(monthNumber - 1));
-                dataObject.put("id", DateUtil.getMonthName(monthNumber - 1));
+
+                if (scheduleType.equalsIgnoreCase("completed")) {
+                    dataObject.put("id", scheduleType + "_" + DateUtil.getMonthName(monthNumber - 1));
+                } else if (scheduleType.equalsIgnoreCase("pending")) {
+                    dataObject.put("id", scheduleType + "_" + DateUtil.getMonthName(monthNumber - 1));
+                } else {
+                    dataObject.put("id", scheduleType + "_" + DateUtil.getMonthName(monthNumber - 1));
+                }
+
                 JSONArray array = new JSONArray();
                 for (int j = 0; j < DayWiseDataAsArray.length(); j++) {
                     array.put(DayWiseDataAsArray.get(j));
@@ -158,6 +170,7 @@ public class HighChart {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         return dataJsonArray;
 
     }
@@ -203,6 +216,7 @@ public class HighChart {
             if (monthNumber.equalsIgnoreCase(tempMonthNumber) || tempMonthNumber.isEmpty()) {
                 dayWiseData.add(row[0]);
                 dayWiseData.add(row[1]);
+                dayWiseData.add(row[2]);
                 monthGroupArray.put(dayWiseData);
                 if (counter == size) {
                     dataGroupArray.put(monthGroupArray);
@@ -218,6 +232,7 @@ public class HighChart {
 
                 dayWiseData.add(row[0]);
                 dayWiseData.add(row[1]);
+                dayWiseData.add(row[2]);
                 monthGroupArray.put(dayWiseData);
             }
         }
