@@ -39,7 +39,7 @@
     <div class="content-wrapper">
         <div class="container-fluid">
 
-            <!--<jsp:include page="formWiseReportSearchPanel.jsp" />-->
+            <jsp:include page="usageHistorySearchPanel.jsp" />
 
             <div class="card mb-3">
                 <div class="card-header">

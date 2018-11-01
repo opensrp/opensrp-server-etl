@@ -1,5 +1,8 @@
 package org.mcare.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,11 +81,34 @@ public class ReportController {
         searchFilterBuilder = searchUtil.setParamsForReport(request, session);
         searchUtil.setFormAttribute(session);
         searchUtil.setDivisionAttribute(session);
-        List<UsageHistory> usageHistoryList = usageHistoryServiceImpl.findAll("UsageHistory");
+
+        List<UsageHistory> usageHistoryList = getUsageHistoryList();
         session.setAttribute("usageHistoryList", usageHistoryList);
         searchUtil.setSelectedfilter(request, session);
 
         return "report/usageHistoryReport";
+    }
+
+    private List<UsageHistory> getUsageHistoryList() {
+        List<UsageHistory> usageHistoryList = null;
+        if (searchFilterBuilder.getStart() != null && !searchFilterBuilder.getStart().isEmpty()
+                && searchFilterBuilder.getEnd() != null && !searchFilterBuilder.getEnd().isEmpty()) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = formatter.parse(searchFilterBuilder.getStart());
+                endDate = formatter.parse(searchFilterBuilder.getEnd());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            usageHistoryList = usageHistoryServiceImpl.findAllBetweenStartAndEndDate(startDate
+                    , endDate, UsageHistory.class);
+        } else {
+            usageHistoryList = usageHistoryServiceImpl.findAll("UsageHistory");
+        }
+        return usageHistoryList;
     }
 
 }

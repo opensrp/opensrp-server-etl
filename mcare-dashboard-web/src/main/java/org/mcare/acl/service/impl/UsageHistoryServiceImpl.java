@@ -95,4 +95,14 @@ public class UsageHistoryServiceImpl implements AclService {
         }
     }
 
+    /**
+     * @param startDate
+     * @param endDate
+     * @param class1
+     * @return
+     */
+    public List<UsageHistory> findAllBetweenStartAndEndDate(Date startDate,
+            Date endDate, Class<UsageHistory> class1) {
+        return repository.findAllBetweenStartAndEndDate(startDate, endDate, class1);
+    }
 }

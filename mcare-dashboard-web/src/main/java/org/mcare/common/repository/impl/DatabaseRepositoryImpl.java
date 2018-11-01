@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.mcare.acl.entity.UsageHistory;
 import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
@@ -582,5 +583,22 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
         List<Object[]> results = query.list();
 
         return results;
+    }
+
+    /**
+     * @param startDate
+     * @param endDate
+     * @param class1
+     * @return
+     */
+    public <T> List<T> findAllBetweenStartAndEndDate(Date startDate,
+            Date endDate, Class<UsageHistory> className) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(className);
+        criteria.add(Restrictions.between("loginDate", startDate, endDate));
+        @SuppressWarnings("unchecked")
+        List<T> result = criteria.list();
+        session.close();
+        return (List<T>) (result.size() > 0 ? (List<T>) result : null);
     }
 }
