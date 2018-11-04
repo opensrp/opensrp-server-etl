@@ -27,7 +27,8 @@ public class ENCCDataVisualizeServiceImpl implements VisualizationService{
     @Transactional
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "encc", "child");
+        //String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "encc", "child");
+        String sqlQuery = "select * from daywise_data(array['','','','','','','','',''])";
         return databaseRepositoryImpl.executeRawQuery(searchBuilder, sqlQuery);
     }
 
