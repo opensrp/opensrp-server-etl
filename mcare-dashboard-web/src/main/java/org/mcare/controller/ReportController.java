@@ -74,7 +74,7 @@ public class ReportController {
         return "report/providerWiseReport";
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'PERM_READ_REPORT')")
+    @PostAuthorize("hasPermission(returnObject, 'PERM_READ_USAGE_HISTORY')")
     @RequestMapping(value = "/usageHistoryReport.html", method = RequestMethod.GET)
     public String showUsageHistoryReport(HttpServletRequest request, HttpSession session, Model model) {
         logger.info("In usageHistoryReport");

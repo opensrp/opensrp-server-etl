@@ -5,7 +5,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@page import="org.mcare.acl.util.AuthenticationManagerUtil"%>
+<%
+boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_READ_USAGE_HISTORY");
+%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 	id="mainNav">
 	<a class="navbar-brand" href="<c:url value="/"/>"><img
@@ -50,9 +53,11 @@
 					<a class="dropdown-item" href="<c:url value="/providerWiseReport.html"/>"> <strong>Provider Wise Report Status</strong>
 					</a>					
 					
+					<% if(PERM_READ_USAGE_HISTORY){ %> 
 					<div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<c:url value="/usageHistoryReport.html"/>"> <strong>Usage History Report</strong>
                     </a>
+                    <% } %>
 				</div>
 			</li>
 			
