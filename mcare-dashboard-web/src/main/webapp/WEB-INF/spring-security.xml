@@ -15,7 +15,7 @@
 		<security:session-management
 			invalid-session-url="/login">
 			<security:concurrency-control
-				max-sessions="1" expired-url="/logout" />
+				max-sessions="2" expired-url="/logout" />
 		</security:session-management>
 		<security:intercept-url pattern="/resources/**"
 			access="permitAll" />
