@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Configuration
 @EnableAsync
 public class ExpireSessionListener {
-    private static final int EXPIRE_MINUTES = 2;
+    private static final int EXPIRE_MINUTES = 30;
 
     private static final Logger logger = Logger.getLogger(ExpireSessionListener.class);
 
