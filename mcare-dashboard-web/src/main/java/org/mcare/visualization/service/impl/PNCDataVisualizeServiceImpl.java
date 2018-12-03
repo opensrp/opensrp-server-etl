@@ -28,8 +28,9 @@ public class PNCDataVisualizeServiceImpl implements VisualizationService{
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
         //String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "pnc", "mother");
-        String sqlQuery = "select * from daywise_data(array['','','','','','','','',''])";
-        return databaseRepositoryImpl.executeRawQuery(searchBuilder, sqlQuery);
+        String sqlQuery = "select * from daywise_data(array[:division,:district,:upazila"
+                + ",:union,:ward,:subunit,:mauzapara,:provider,:year])";
+        return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
     }
 
 }
