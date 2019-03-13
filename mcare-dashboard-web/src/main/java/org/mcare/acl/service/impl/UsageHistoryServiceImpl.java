@@ -68,16 +68,21 @@ public class UsageHistoryServiceImpl implements AclService {
     public void recordUsageHistory(String username) {
         UsageHistory usageHistory = new UsageHistory();
         ActiveUser activeUser = activeUserStore.getActiveUserByUsername(username);
-
+        
+        //logger.info("activeUser.getLoginTime(): " + activeUser.getLoginTime());
+        
         usageHistory.setUserName(activeUser.getUserName());
         usageHistory.setLoginTime(activeUser.getLoginTime());
         usageHistory.setLoginDate(activeUser.getLoginDate());
 
-        logger.info("activeUser.getUserName():" + activeUser.getUserName());
+        logger.info("activeUser.getUserName():" + username);
 
         Date date = new Date();
-        long difference = date.getTime() - activeUser.getLoginTime().getTime();
-        difference = difference/(1000 * 60);
+        /* commented out due to nullpointer exception during logout
+         * long difference = date.getTime() - activeUser.getLoginTime().getTime();
+        difference = difference/(1000 * 60);*/
+        
+        long difference = 0;
 
         System.out.println("duration: " + difference);
 

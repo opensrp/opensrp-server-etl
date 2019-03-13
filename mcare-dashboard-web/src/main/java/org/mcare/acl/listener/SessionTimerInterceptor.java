@@ -42,7 +42,7 @@ public class SessionTimerInterceptor extends HandlerInterceptorAdapter {
         String userName = "";
         if (auth != null) {
             userName = auth.getName();
-            logger.info("Prehandle: " + auth.getName());
+            //logger.info("Prehandle: " + auth.getName());
         }
 
         for (ActiveUser ac : activeUserStore.getUsers()) {

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION daywise_data(filterArray text[])
+CREATE OR REPLACE FUNCTION daywise_data_anc(filterArray text[])
 RETURNS TABLE(
     days date
     , scheduleCounts int
@@ -31,6 +31,10 @@ BEGIN
   mau := filterArray[7];
   pro := filterArray[8];
   years := filterArray[9];
+  IF (years = '') THEN
+      years = date_part('year', current_date);
+  END IF;
+						   
   /*Generating Temporary Table to populate aggregated values TEMPORARY*/
   DROP TABLE IF EXISTS helper_table;
   CREATE TEMPORARY TABLE IF NOT EXISTS helper_table (
@@ -82,10 +86,10 @@ BEGIN
    END IF;
 
    EXECUTE E'insert into helper_table(days, scheduleCounts)
-    select date(a.received_time) ,count(date(a.received_time)) 
-	from anc a 
-	join mother m on (a.relationalid = m.case_id)
-	where date_part(\'year\', date(a.received_time)) = 2018 '
+    select date(a.received_time), count(date(a.received_time)) 
+	from "viewANCSubmitted" a
+	where date_part(\'year\', date(a.received_time)) = '
+	|| years
     || completeCountFilterString
     || E' group by date(a.received_time)
 	order by date(a.received_time) asc';
@@ -95,13 +99,16 @@ BEGIN
    set scheduleType = \'completed\'';
 
    EXECUTE E'insert into helper_table(days, scheduleCounts)
-    select date(a.received_time) ,count(date(a.received_time)) 
-	from pnc a 
-	join mother m on (a.relationalid = m.case_id)
-	where date_part(\'year\', date(a.received_time)) = 2018 '
-    || completeCountFilterString
-    || E' group by date(a.received_time)
-	order by date(a.received_time) asc';
+	select date(a.expiry_date - 1) , count(date(a.expiry_date)) 
+	from "viewANCPNCNotSubmitted" a
+	where a.expiry_date - 1 < a.expiry_date
+	and is_action_active = \'true\'
+	and visit_code like \'%ancrv_%\'
+	and date_part(\'year\', date(a.expiry_date - 1)) = '
+    || years
+	|| filterString
+	|| E' group by date(a.expiry_date - 1)
+	order by date(a.expiry_date - 1) asc';
 						   
    /*pending scheudule counts*/
    EXECUTE E'update helper_table
@@ -109,13 +116,17 @@ BEGIN
    where scheduleType is null';
 						   
    EXECUTE E'insert into helper_table(days, scheduleCounts)
-    select date(a.received_time) ,count(date(a.received_time)) 
-	from encc a 
-	join child m on (a.relationalid = m.case_id)
-	where date_part(\'year\', date(a.received_time)) = 2018 '
-    || completeCountFilterString
-    || E' group by date(a.received_time)
-	order by date(a.received_time) asc';
+	select date(a.expiry_date + 1) , count(date(a.expiry_date)) 
+	from "viewANCPNCNotSubmitted" a
+	where a.expiry_date < a.expiry_date + 1
+	and is_action_active = \'true\'
+	and visit_code like \'%ancrv_%\'
+	and date_part(\'year\', date(a.expiry_date + 1)) = '
+    || years
+	|| E' and a.expiry_date < current_date '
+	|| filterString
+	|| E' group by date(a.expiry_date + 1)
+	order by date(a.expiry_date + 1) asc';
 						   
    /*pending scheudule counts*/
    EXECUTE E'update helper_table
@@ -132,4 +143,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-select * from daywise_data(array['','','','','','','','','']);
+select * from daywise_data_anc(array['','','','','','','','','']);

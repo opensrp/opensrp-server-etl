@@ -28,7 +28,7 @@ public class ANCDataVisualizeServiceImpl implements VisualizationService{
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
         //String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "anc", "mother");
-        String sqlQuery = "select * from daywise_data(array[:division,:district,:upazila"
+        String sqlQuery = "select * from daywise_data_anc(array[:division,:district,:upazila"
                 + ",:union,:ward,:subunit,:mauzapara,:provider,:year])";
         return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
     }
