@@ -54,63 +54,112 @@ boolean PERM_VISIT_VISUALIZATION_DETAILS_BNF = AuthenticationManagerUtil.isPermi
 					String todaysCount="";
 					int size=0;
 					int counter=0;
+					if (AuthenticationManagerUtil.isFPI())counter = 4;
 					if(session.getAttribute("dashboardDataCount") != null){
 					List<Object> dashboardDataCount = (List<Object>) session.getAttribute("dashboardDataCount");
 					Iterator dashboardDataCountListIterator = dashboardDataCount.iterator();
 					while (dashboardDataCountListIterator.hasNext()) {
 						Object[] dashboardDataObject = (Object[]) dashboardDataCountListIterator.next();
 						registerType = String.valueOf(dashboardDataObject[0]);
-						totalCount = Integer.parseInt(String.valueOf(dashboardDataObject[1]));
-						thisMonthCount = String.valueOf(dashboardDataObject[2]);
-						lastSevenDays = String.valueOf(dashboardDataObject[3]);
-						todaysCount = String.valueOf(dashboardDataObject[4]);
+						totalCount = dashboardDataObject[1]==null?0:Integer.parseInt(String.valueOf(dashboardDataObject[1]));
+						thisMonthCount = dashboardDataObject[2]==null?"0":String.valueOf(dashboardDataObject[2]);
+						lastSevenDays = dashboardDataObject[3]==null?"0":String.valueOf(dashboardDataObject[3]);
+						todaysCount = dashboardDataObject[4]==null?"0":String.valueOf(dashboardDataObject[4]);
 						List<Integer> digits = NumberToDigit.getDigitFromNumber(totalCount);
 						size = digits.size();
 						counter++;
 						pageContext.setAttribute("registerType", registerType);
 						if (!registerType.equalsIgnoreCase("bnf") && !registerType.equalsIgnoreCase("psrf")) {
 					    %> 
-							<div class="col-lg-4 col-xs-4">					
-								<div class="box<%=counter%>">
-									<a class="imgs" alt="image" href="<c:url value="/visualize/${registerType}.html"/>">
-									<img src="<c:url value="/resources/img/${registerType}.png"/>"></a>						
-										<div class="counter">
-										<% if(size == 0){
-											
-										}else if(size == 1){ %>
-											<div class="counter_left"><%=digits.get(0) %></div>
-											<div class="counter_right"> </div>
-											
-										<%}else { %>
-											<div class="counter_left"><%=digits.get(0) %></div>
-											<%
-											
-											for (int i = 1; i < size - 1; i++) {%>
-												<div class="counter_mid"><%=digits.get(i) %></div>
-											<%}
-											%>
-											<div class="counter_right"> <%=digits.get(size-1) %></div>
-										<%}							
-										%>
-											
-										</div>
-								</div>
-								
-								<div class="count_box">
-									<div class="box_inner1">
-										<div class="box_top2">  TODAY  </div>
-										<div class="box_buttom2">  <%=todaysCount %>  </div>
-									</div>
-									<div class="box_inner1">
-										<div class="box_top2">   LAST 7 DAYS  </div>
-										<div class="box_buttom2">  <%=lastSevenDays %>  </div>
-									</div>
-									<div class="box_inner1">
-										<div class="box_top2">  THIS MONTH  </div>
-											<div class="box_buttom2"> <%=thisMonthCount %> </div>
-									</div>
-								</div>					
-							</div>	
+							<%
+								if (AuthenticationManagerUtil.isAdmin() &&
+										(registerType.equals("household") || registerType.equals("elco") ||
+												registerType.equals("mother") || registerType.equals("child"))) {
+							%>
+				<div class="col-lg-4 col-xs-4">
+					<div class="box<%=counter%>">
+						<a class="imgs" alt="image" href="<c:url value="/visualize/${registerType}.html"/>">
+							<img src="<c:url value="/resources/img/${registerType}.png"/>"></a>
+						<div class="counter">
+							<% if(size == 0){
+
+							}else if(size == 1){ %>
+							<div class="counter_left"><%=digits.get(0) %></div>
+							<div class="counter_right"> </div>
+
+							<%}else { %>
+							<div class="counter_left"><%=digits.get(0) %></div>
+							<%
+
+								for (int i = 1; i < size - 1; i++) {%>
+							<div class="counter_mid"><%=digits.get(i) %></div>
+							<%}
+							%>
+							<div class="counter_right"> <%=digits.get(size-1) %></div>
+							<%}
+							%>
+
+						</div>
+					</div>
+
+					<div class="count_box">
+						<div class="box_inner1">
+							<div class="box_top2">  LAST DAY  </div>
+							<div class="box_buttom2">  <%=todaysCount %>  </div>
+						</div>
+						<div class="box_inner1">
+							<div class="box_top2">   LAST 7 DAYS  </div>
+							<div class="box_buttom2">  <%=lastSevenDays %>  </div>
+						</div>
+						<div class="box_inner1">
+							<div class="box_top2">  THIS MONTH  </div>
+							<div class="box_buttom2"> <%=thisMonthCount %> </div>
+						</div>
+					</div>
+				</div>
+				<%} else if (registerType.equals("anc") || registerType.equals("pnc") || registerType.equals("encc")) {%>
+				<div class="col-lg-4 col-xs-4">
+					<div class="box<%=counter%>">
+						<a class="imgs" alt="image" href="<c:url value="/visualize/${registerType}.html"/>">
+							<img src="<c:url value="/resources/img/${registerType}.png"/>"></a>
+						<div class="counter">
+							<% if(size == 0){
+
+							}else if(size == 1){ %>
+							<div class="counter_left"><%=digits.get(0) %></div>
+							<div class="counter_right"> </div>
+
+							<%}else { %>
+							<div class="counter_left"><%=digits.get(0) %></div>
+							<%
+
+								for (int i = 1; i < size - 1; i++) {%>
+							<div class="counter_mid"><%=digits.get(i) %></div>
+							<%}
+							%>
+							<div class="counter_right"> <%=digits.get(size-1) %></div>
+							<%}
+							%>
+
+						</div>
+					</div>
+
+					<div class="count_box">
+						<div class="box_inner1">
+							<div class="box_top2">  LAST DAY  </div>
+							<div class="box_buttom2">  <%=todaysCount %>  </div>
+						</div>
+						<div class="box_inner1">
+							<div class="box_top2">   LAST 7 DAYS  </div>
+							<div class="box_buttom2">  <%=lastSevenDays %>  </div>
+						</div>
+						<div class="box_inner1">
+							<div class="box_top2">  THIS MONTH  </div>
+							<div class="box_buttom2"> <%=thisMonthCount %> </div>
+						</div>
+					</div>
+				</div>
+				<%}%>
 			
 						<%
 						} else if (PERM_VISIT_VISUALIZATION_DETAILS_BNF && registerType.equalsIgnoreCase("bnf")) { %>
@@ -142,7 +191,7 @@ boolean PERM_VISIT_VISUALIZATION_DETAILS_BNF = AuthenticationManagerUtil.isPermi
 								
 								<div class="count_box">
 									<div class="box_inner1">
-										<div class="box_top2">  TODAY  </div>
+										<div class="box_top2">  LAST DAY  </div>
 										<div class="box_buttom2">  <%=todaysCount %>  </div>
 									</div>
 									<div class="box_inner1">
@@ -153,7 +202,7 @@ boolean PERM_VISIT_VISUALIZATION_DETAILS_BNF = AuthenticationManagerUtil.isPermi
 										<div class="box_top2">  THIS MONTH  </div>
 											<div class="box_buttom2"> <%=thisMonthCount %> </div>
 									</div>
-								</div>					
+								</div>
 							</div>
 						<%
 						} else if (PERM_VISIT_VISUALIZATION_DETAILS_PSRF && registerType.equalsIgnoreCase("psrf")) { %>
@@ -185,7 +234,7 @@ boolean PERM_VISIT_VISUALIZATION_DETAILS_BNF = AuthenticationManagerUtil.isPermi
 								
 								<div class="count_box">
 									<div class="box_inner1">
-										<div class="box_top2">  TODAY  </div>
+										<div class="box_top2">  LAST DAY  </div>
 										<div class="box_buttom2">  <%=todaysCount %>  </div>
 									</div>
 									<div class="box_inner1">

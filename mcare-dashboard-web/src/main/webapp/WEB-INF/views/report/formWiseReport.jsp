@@ -65,7 +65,7 @@
 										Iterator formWiseAggregatedListIterator = formWiseAggregatedList.iterator();
 										while (formWiseAggregatedListIterator.hasNext()) {
 											Object[] formWiseObject = (Object[]) formWiseAggregatedListIterator.next();
-											String formName = String.valueOf(formWiseObject[0]);
+											String formName = String.valueOf(formWiseObject[0]).replaceAll("rv_", " ").toUpperCase();
 											String scheduled = String.valueOf(formWiseObject[1]);
 											String completed = String.valueOf(formWiseObject[2]);
 											String expired = String.valueOf(formWiseObject[3]);

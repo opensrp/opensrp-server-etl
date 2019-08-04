@@ -203,63 +203,63 @@
 						%>
 					</select>
 				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="ward"
-						name="ward">
-						<option value="0?">Please Select Ward</option>
-						<%
-							if (wards != null) {
-								for (Object[] objects : wards) {
-									if (wardId == ((Integer) objects[1]).intValue()) {
-						%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-							} else {
-						%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-						<%
-							}
-								}
-							}
-						%>
-					</select>
-				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="subunit"
-						name="subunit">
-						<option value="0?">Please Select Subunit</option>
-						<%
-							if (subuits != null) {
-								for (Object[] objects : subuits) {
-									if (subunitId == ((Integer) objects[1]).intValue()) {
-						%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>
-						<%
-							} else {
-						%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-						<%
-							}
-								}
-							}
-						%>
-					</select>
-				</div>
-				<div class="col-3">
-					<select class="custom-select custom-select-lg mb-3" id="mauzapara"
-						name="mauzapara">
-						<option value="0?">Please Select Mauzapara</option>
-						<%
-							if (mauzaparas != null) {
-								for (Object[] objects : mauzaparas) {
-						%>
-						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>
-						<%
-							}
-							}
-						%>
-					</select>
-				</div>
+<%--				<div class="col-3">--%>
+<%--					<select class="custom-select custom-select-lg mb-3" id="ward"--%>
+<%--						name="ward">--%>
+<%--						<option value="0?">Please Select Ward</option>--%>
+<%--						<%--%>
+<%--							if (wards != null) {--%>
+<%--								for (Object[] objects : wards) {--%>
+<%--									if (wardId == ((Integer) objects[1]).intValue()) {--%>
+<%--						%>--%>
+<%--						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>--%>
+<%--						<%--%>
+<%--							} else {--%>
+<%--						%>--%>
+<%--						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>--%>
+<%--						<%--%>
+<%--							}--%>
+<%--								}--%>
+<%--							}--%>
+<%--						%>--%>
+<%--					</select>--%>
+<%--				</div>--%>
+<%--				<div class="col-3">--%>
+<%--					<select class="custom-select custom-select-lg mb-3" id="subunit"--%>
+<%--						name="subunit">--%>
+<%--						<option value="0?">Please Select Subunit</option>--%>
+<%--						<%--%>
+<%--							if (subuits != null) {--%>
+<%--								for (Object[] objects : subuits) {--%>
+<%--									if (subunitId == ((Integer) objects[1]).intValue()) {--%>
+<%--						%>--%>
+<%--						<option value="<%=objects[1]%>?<%=objects[0]%>" selected><%=objects[0]%></option>--%>
+<%--						<%--%>
+<%--							} else {--%>
+<%--						%>--%>
+<%--						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>--%>
+<%--						<%--%>
+<%--							}--%>
+<%--								}--%>
+<%--							}--%>
+<%--						%>--%>
+<%--					</select>--%>
+<%--				</div>--%>
+<%--				<div class="col-3">--%>
+<%--					<select class="custom-select custom-select-lg mb-3" id="mauzapara"--%>
+<%--						name="mauzapara">--%>
+<%--						<option value="0?">Please Select Mauzapara</option>--%>
+<%--						<%--%>
+<%--							if (mauzaparas != null) {--%>
+<%--								for (Object[] objects : mauzaparas) {--%>
+<%--						%>--%>
+<%--						<option value="<%=objects[1]%>?<%=objects[0]%>"><%=objects[0]%></option>--%>
+<%--						<%--%>
+<%--							}--%>
+<%--							}--%>
+<%--						%>--%>
+<%--					</select>--%>
+<%--				</div>--%>
 				<div class="col-3">
 					<select class="custom-select custom-select-lg mb-3" name="provider">
 						<option value="">Please Select Provider</option>

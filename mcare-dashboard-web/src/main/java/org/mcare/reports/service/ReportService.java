@@ -28,6 +28,6 @@ public class ReportService {
 
 	@Transactional
 	public List<Object> findProviderWiseReport(SearchFilterBuilder reportSearchBuilder) {
-		return reportRepository.findReportDataList(reportSearchBuilder, "generate_provider_wise_report");
+		return reportRepository.findReportDataListByProvider(reportSearchBuilder);
 	}
 }

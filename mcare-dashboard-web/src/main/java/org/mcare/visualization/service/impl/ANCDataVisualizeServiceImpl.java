@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.mcare.visualization.service.VisualizationService;
 import org.mcare.visualization.utils.DataVisualizationQueryBuilder;
@@ -16,21 +17,25 @@ public class ANCDataVisualizeServiceImpl implements VisualizationService{
 
     @Autowired
     private DatabaseRepositoryImpl databaseRepositoryImpl;
+    @Autowired
+    private LocationServiceImpl locationService;
 
     @Transactional
     @Override
     public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "anc_data");
-        return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
+        String filterString = locationService.getFilterString(searchBuilder);
+        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, filterString, "anc");
+        return databaseRepositoryImpl.executeQueryForMonth(searchBuilder, sqlQuery);
     }
 
     @Transactional
     @Override
     public List<Object[]> getDayWiseData(SearchBuilder searchBuilder) {
-        //String sqlQuery = DataVisualizationQueryBuilder.getDayWiseDataQuery(searchBuilder, "anc", "mother");
-        String sqlQuery = "select * from daywise_data_anc(array[:division,:district,:upazila"
-                + ",:union,:ward,:subunit,:mauzapara,:provider,:year])";
-        return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
+        String year = searchBuilder.getYear();
+        String filterString = locationService.getFilterString(searchBuilder);
+        String sqlQuery = "select day, sum(submitted) as submitted, sum(expired) as expired, sum(due) as due" +
+                " from schedule_summary where date_part('year', day) = '"+year+"' and visit_type like 'anc%' "+filterString+" group by day order by day;";
+        return databaseRepositoryImpl.executeQueryForDay(searchBuilder, sqlQuery);
     }
 
 }

@@ -1,7 +1,6 @@
 package org.mcare.controller;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.mcare.acl.entity.ProviderEntity;
+import org.mcare.acl.util.AuthenticationManagerUtil;
 import org.mcare.common.service.impl.DatabaseServiceImpl;
 import org.mcare.common.util.SearchUtil;
 import org.mcare.params.builder.SearchBuilder;
@@ -82,9 +83,11 @@ public class DashboardController {
     @PostAuthorize("hasPermission(returnObject, 'PERM_VISIT_HOME')")
     @RequestMapping("/")
     public String showHome(Model model, HttpSession session) {
-        List<Object> dashboardDataCountList = (List<Object>) databaseServiceImpl.getDataFromSQLFunction(
-                "fn_dashboard_data_count", "");
-
+        String fpiUsername = AuthenticationManagerUtil.getFPIUsername();
+        System.out.println("FPI: "+fpiUsername);
+        List<Object> dashboardDataCountList =
+                AuthenticationManagerUtil.isFPI()?databaseServiceImpl.getDataFromSQLFunction("fn_dashboard_data_count_v3(:fpiUsername)", fpiUsername)
+                        :databaseServiceImpl.getDataFromSQLFunction("fn_dashboard_data_count_v2()", "");
         session.setAttribute("dashboardDataCount", dashboardDataCountList);
         return "home";
     }
@@ -176,7 +179,7 @@ public class DashboardController {
         if (searchBuilder.getYear() == null || searchBuilder.getYear().isEmpty()) {
             searchBuilder.setYear(currentYear.toString());
         }
-        searchUtil.setProviderAttribute(session);
+        searchUtil.setProviderAttribute(session, searchBuilder);
         searchUtil.setDivisionAttribute(session);
         searchUtil.setSelectedfilter(request, session);
 
@@ -200,18 +203,21 @@ public class DashboardController {
             System.out.println("current empty");
             searchBuilder.setYear(currentYear.toString());
         }
-        searchUtil.setProviderAttribute(session);
+        searchUtil.setProviderAttribute(session, searchBuilder);
         searchUtil.setDivisionAttribute(session);
         searchUtil.setSelectedfilter(request, session);
 
+        List<ProviderEntity> providers = (List<ProviderEntity>) session.getAttribute("providers");
+
         List<Object[]> monthWiseData = dataVisualization.getMonthWiseData(searchBuilder, visualizationService);
-        JSONArray monthWiseSeriesData = HighChart.getMonthWiseSeriesDataForMultiBarWithDrillDown(monthWiseData);
+        JSONArray monthWiseSeriesData = HighChart.getMonthWiseSeriesDataForMultiBarWithDrillDownNew(monthWiseData);
 
         List<Object[]> dayWiseData = dataVisualization.getDayWiseData(searchBuilder, visualizationService);
-        JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesDataForMultiGraphs(dayWiseData);
+        JSONArray dataJsonArray = HighChart.getDayWiseDrilldownSeriesDataForMultiGraphsNew(dayWiseData);
 
-        JSONArray lineChartData = HighChart.getMultiLineChartData(monthWiseData, searchBuilder.getYear());
+        JSONArray lineChartData = HighChart.getMultiLineChartDataNew(monthWiseData);
         JSONArray lineChartCategory = HighChart.getMultiLineChartCategory(monthWiseData);
+
         session.setAttribute("lineChartData", lineChartData);
         session.setAttribute("lineChartCategory", lineChartCategory);
 

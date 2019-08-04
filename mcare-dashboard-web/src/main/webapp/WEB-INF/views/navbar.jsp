@@ -18,6 +18,7 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
 		
 		
 		<ul class="navbar-nav ml-auto">
+			<% if (AuthenticationManagerUtil.isAdmin()) {%>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown"
 				href="#" data-toggle="dropdown"> Registers
@@ -39,6 +40,7 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
 					<a class="dropdown-item small" href="<c:url value="/child.html"/>"><strong>Child</strong> </a>
 				</div>
 			</li>
+			<%}%>
 			
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="reportDropdown"
@@ -60,7 +62,8 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
                     <% } %>
 				</div>
 			</li>
-			
+
+			<% if (AuthenticationManagerUtil.isAdmin()) {%>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="exportDropdown"
 				href="#" data-toggle="dropdown"> Exports
@@ -74,6 +77,7 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
 					
 				</div>
 			</li>
+			<%}%>
 			
 			
 			<li class="nav-item dropdown"><a
@@ -97,22 +101,24 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
 			</li>
 			
 			
+			<% if (AuthenticationManagerUtil.isAdmin()) {%>
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle mr-lg-2" id="roleDropdown"
-				href="#" data-toggle="dropdown"> Role
+					class="nav-link dropdown-toggle mr-lg-2" id="roleDropdown"
+					href="#" data-toggle="dropdown"> Role
 			</a>
-				<div class="dropdown-menu">	
-				
-				<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/role/add.html"/>"> <strong>Add</strong>
-					</a>				
+				<div class="dropdown-menu">
+
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<c:url value="/role.html"/>"> <strong> List</strong> 
-						
+					<a class="dropdown-item" href="<c:url value="/role/add.html"/>"> <strong>Add</strong>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<c:url value="/role.html"/>"> <strong> List</strong>
+
 					</a>
 				</div>
 			</li>
-			
+			<%}%>
+			<% if (AuthenticationManagerUtil.isAdmin()) {%>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle mr-lg-2" id="userDropdown"
 				href="#" data-toggle="dropdown"> User
@@ -128,11 +134,7 @@ boolean PERM_READ_USAGE_HISTORY = AuthenticationManagerUtil.isPermitted("PERM_RE
 					</a>
 				</div>
 			</li>
-			
-			
-			
-			
-			
+			<%}%>
 			
 			<li class="nav-item"><a class="nav-link" data-toggle="modal"
 				data-target="#exampleModal"> <i class="fa fa-fw fa-sign-out"></i>Logout

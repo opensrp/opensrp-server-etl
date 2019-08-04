@@ -72,4 +72,9 @@ public class HouseholdController {
 		session.setAttribute("title", "Household Details");
 		return "household/view";
 	}
+
+//	@RequestMapping(value = "location/provider", method = RequestMethod.GET)
+//	public String getProviderByLocation() {
+//		return
+//	}
 }

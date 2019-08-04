@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.mcare.acl.entity.ActiveUser;
 import org.mcare.acl.entity.ActiveUserStore;
+import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.entity.UsageHistory;
 import org.mcare.acl.service.AclService;
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;

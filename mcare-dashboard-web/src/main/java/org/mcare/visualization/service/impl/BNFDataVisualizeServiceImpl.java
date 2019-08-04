@@ -20,7 +20,7 @@ public class BNFDataVisualizeServiceImpl implements VisualizationService{
     @Transactional
     @Override
     public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "bnf_data");
+        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "bnf_data", "");
         return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
     }
 

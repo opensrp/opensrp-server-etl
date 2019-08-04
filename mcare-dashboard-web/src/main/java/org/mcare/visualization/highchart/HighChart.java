@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +56,36 @@ public class HighChart {
             lineChartSeriesData.put(dataJsonObject);
         }
         return lineChartSeriesData;
+    }
+
+    public static JSONObject getTypeWiseData(List<Object[]> monthWiseCountData, String scheduleType, String color) throws JSONException {
+        JSONObject typeWiseData = new JSONObject();
+        JSONArray monthWiseArrayData = new JSONArray();
+        for (Object[] row: monthWiseCountData) {
+            if (String.valueOf(row[0]).equalsIgnoreCase(scheduleType)) {
+                JSONObject monthWiseData = new JSONObject();
+                Double monthNumber = Double.parseDouble(row[1].toString());
+                monthWiseData.put("name", DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
+                monthWiseData.put("y", row[2]);
+                monthWiseData.put("drilldown", scheduleType + "_" + DateUtil.getMonthName((int) Math.round(monthNumber) - 1));
+                monthWiseArrayData.put(monthWiseData);
+            }
+        }
+
+        typeWiseData.put("name", scheduleType);
+        typeWiseData.put("color", color);
+        typeWiseData.put("data", monthWiseArrayData);
+        if (scheduleType.equalsIgnoreCase("pending")) typeWiseData.put("colorByPoint", false);
+        return typeWiseData;
+    }
+
+    public static JSONArray getMonthWiseSeriesDataForMultiBarWithDrillDownNew(List<Object[]> monthWiseCountData) throws JSONException {
+        JSONArray monthWiseSeriesData = new JSONArray();
+        monthWiseSeriesData.put(getTypeWiseData(monthWiseCountData, "completed", "#008000"));
+        monthWiseSeriesData.put(getTypeWiseData(monthWiseCountData, "expired", "#FF0000"));
+        monthWiseSeriesData.put(getTypeWiseData(monthWiseCountData, "pending", "#FFFF00"));
+
+        return monthWiseSeriesData;
     }
 
     public static JSONArray getMonthWiseSeriesDataForMultiBarWithDrillDown(List<Object[]> monthWiseCountData) throws JSONException {
@@ -119,6 +150,64 @@ public class HighChart {
         monthWiseSeriesData.put(typeWiseData);
 
         return monthWiseSeriesData;
+    }
+
+    public static JSONArray getDayWiseDataObject(List<Object[]> dayWiseCountData, String scheduleType) throws JSONException {
+        JSONArray monthWiseDataArray = new JSONArray();
+        JSONObject scheduleTypeWiseMonthData = new JSONObject();
+        JSONArray monthData = new JSONArray();
+
+        int month = 1;
+
+        for (Object[] row: dayWiseCountData) {
+            String date = String.valueOf(row[0]);
+            String[] split = date.split("-");
+            int monthNumber = Integer.parseInt(split[1]);
+            if (monthNumber != month) {
+                scheduleTypeWiseMonthData.put("data", monthData);
+                scheduleTypeWiseMonthData.put("name", DateUtil.getMonthName(month - 1));
+                scheduleTypeWiseMonthData.put("id", scheduleType + "_" + DateUtil.getMonthName(month - 1));
+                monthWiseDataArray.put(scheduleTypeWiseMonthData);
+                month = monthNumber;
+                monthData = new JSONArray();
+                scheduleTypeWiseMonthData = new JSONObject();
+            }
+            if (String.valueOf(row[2]).equalsIgnoreCase(scheduleType)) {
+                JSONArray array = new JSONArray();
+                array.put(row[0]);
+                array.put(row[1]);
+                array.put(row[2]);
+                monthData.put(array);
+            }
+        }
+        scheduleTypeWiseMonthData.put("data", monthData);
+        scheduleTypeWiseMonthData.put("name", DateUtil.getMonthName(month - 1));
+        scheduleTypeWiseMonthData.put("id", scheduleType + "_" + DateUtil.getMonthName(month - 1));
+        monthWiseDataArray.put(scheduleTypeWiseMonthData);
+
+        return monthWiseDataArray;
+    }
+
+    public static JSONArray getDayWiseDrilldownSeriesDataForMultiGraphsNew(List<Object[]> dayWiseCountData) throws JSONException {
+        JSONArray dataJsonArray = new JSONArray();
+        JSONArray completed = getDayWiseDataObject(dayWiseCountData, "completed");
+        JSONArray expired = getDayWiseDataObject(dayWiseCountData, "expired");
+        JSONArray pending = getDayWiseDataObject(dayWiseCountData, "pending");
+
+        for (int i = 0; i < completed.length(); i++) {
+            JSONObject jsonObject = completed.getJSONObject(i);
+            dataJsonArray.put(jsonObject);
+        }
+        for (int i = 0; i < expired.length(); i++) {
+            JSONObject jsonObject = expired.getJSONObject(i);
+            dataJsonArray.put(jsonObject);
+        }
+        for (int i = 0; i < pending.length(); i++) {
+            JSONObject jsonObject = pending.getJSONObject(i);
+            dataJsonArray.put(jsonObject);
+        }
+
+        return dataJsonArray;
     }
 
     public static JSONArray getDayWiseDrilldownSeriesDataForMultiGraphs(List<Object[]> dayWiseCountData) {
@@ -319,6 +408,28 @@ public class HighChart {
             }
         }
         return dataGroupArray;
+    }
+
+    public static JSONObject getLineChartObject(List<Object[]> monthWiseCountData, String scheduleType, String color) throws JSONException {
+        JSONObject dataJsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+
+        for (Object[] row: monthWiseCountData) {
+            if (String.valueOf(row[0]).equalsIgnoreCase(scheduleType)) array.put(row[2]);
+        }
+
+        dataJsonObject.put("data", array);
+        dataJsonObject.put("color", color);
+        dataJsonObject.put("name", scheduleType);
+        return dataJsonObject;
+    }
+
+    public static JSONArray getMultiLineChartDataNew(List<Object[]> monthWiseCountData) throws JSONException {
+        JSONArray lineChartSeriesData = new JSONArray();
+        lineChartSeriesData.put(getLineChartObject(monthWiseCountData, "completed", "#008000"));
+        lineChartSeriesData.put(getLineChartObject(monthWiseCountData, "expired", "#FF0000"));
+        lineChartSeriesData.put(getLineChartObject(monthWiseCountData, "pending", "#FFFF00"));
+        return lineChartSeriesData;
     }
 
     public static JSONArray getMultiLineChartData(List<Object[]> monthWiseCountData, String years) throws JSONException {

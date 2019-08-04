@@ -1,8 +1,6 @@
 package org.mcare.common.repository.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -15,7 +13,10 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
+import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.acl.entity.UsageHistory;
+import org.mcare.acl.util.AuthenticationManagerUtil;
 import org.mcare.common.interfaces.DatabaseRepository;
 import org.mcare.etl.entity.ANCEntity;
 import org.mcare.etl.entity.ActionEntity;
@@ -23,6 +24,7 @@ import org.mcare.etl.entity.BNFEntity;
 import org.mcare.etl.entity.ENCCEntity;
 import org.mcare.etl.entity.HouseholdEntity;
 import org.mcare.etl.entity.PNCEntity;
+import org.mcare.location.serviceimpl.LocationServiceImpl;
 import org.mcare.params.builder.SearchBuilder;
 import org.mcare.reports.service.SearchFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private LocationServiceImpl locationService;
 
     public DatabaseRepositoryImpl() {
 
@@ -204,6 +209,33 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
             //query.setFirstResult(0);
             //query.setMaxResults(10);
             result = (List<T>) query.list();
+        }
+        catch (Exception e) {
+            logger.error("error:" + e.getMessage());
+        }
+        finally {
+            session.close();
+        }
+
+        return (List<T>) result;
+    }
+
+    @Override
+    public <T> List<T> getProviderByFPI(SearchBuilder searchBuilder) {
+        Session session = sessionFactory.openSession();
+        List<T> result = null;
+        try {
+            String filterString = locationService.getFilterString(searchBuilder);
+            if (AuthenticationManagerUtil.isFPI()){
+                String fpiUsername = AuthenticationManagerUtil.getFPIUsername();
+                Query query = session.createSQLQuery("select id, provider from provider_location where fpi_username = :fpiUsername");
+                query.setParameter("fpiUsername", fpiUsername);
+                result = (List<T>) query.list();
+            }
+            else {
+                Query query = session.createSQLQuery("select id, provider from provider_location;");
+                result = (List<T>) query.list();
+            }
         }
         catch (Exception e) {
             logger.error("error:" + e.getMessage());
@@ -470,8 +502,9 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
         Session session = sessionFactory.openSession();
         List<T> aggregatedData = null;
         try {
-            String hql = "select * from " + procedureName + "()";
+            String hql = "select * from " + procedureName;
             Query query = session.createSQLQuery(hql);
+            if (AuthenticationManagerUtil.isFPI())query.setParameter("fpiUsername", params);
             aggregatedData = query.list();
             logger.info("data fetched successfully from " + procedureName + ", aggregated data size: "
                     + aggregatedData.size());
@@ -584,6 +617,61 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
         return results;
     }
+
+    public List<Object[]> executeQueryForMonth(SearchBuilder searchBuilder, String sqlQuery) {
+        SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
+        List<Object[]> results = query.list();
+        List<Object[]> results1 = new ArrayList<>();
+
+        for (int i = 0; i < results.size(); i++) {
+            Object[] ob1 = new Object[5];
+            ob1[0] = "completed";
+            ob1[1] = results.get(i)[1];
+            ob1[2] = results.get(i)[2];
+            results1.add(ob1);
+            Object[] ob2 = new Object[5];
+            ob2[0] = "expired";
+            ob2[1] = results.get(i)[1];
+            ob2[2] = results.get(i)[3];
+            results1.add(ob2);
+            Object[] ob3 = new Object[5];
+            ob3[0] = "pending";
+            ob3[1] = results.get(i)[1];
+            if (results.get(i)[4] != null)ob3[2] = results.get(i)[4];
+            else ob3[2] = 0;
+            results1.add(ob3);
+        }
+
+        return results1;
+    }
+
+
+    public List<Object[]> executeQueryForDay(SearchBuilder searchBuilder, String sqlQuery) {
+        SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sqlQuery);
+        List<Object[]> results = query.list();
+        List<Object[]> results1 = new ArrayList<>();
+
+        for (int i = 0; i < results.size(); i++) {
+            Object[] ob1 = new Object[5];
+            ob1[2] = "completed";
+            ob1[0] = results.get(i)[0];
+            ob1[1] = results.get(i)[1];
+            results1.add(ob1);
+            Object[] ob2 = new Object[5];
+            ob2[2] = "expired";
+            ob2[0] = results.get(i)[0];
+            ob2[1] = results.get(i)[2];
+            results1.add(ob2);
+            Object[] ob3 = new Object[5];
+            ob3[2] = "pending";
+            ob3[0] = results.get(i)[0];
+            ob3[1] = results.get(i)[3];
+            results1.add(ob3);
+        }
+
+        return results1;
+    }
+
 
     /**
      * @param startDate

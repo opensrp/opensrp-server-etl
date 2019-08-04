@@ -26,6 +26,8 @@ public class SearchBuilder {
 	private String search;
 	
 	private String year;
+
+	private String formName;
 	
 	public SearchBuilder() {
 		
@@ -43,10 +45,19 @@ public class SearchBuilder {
 		this.setName("");
 		this.setSearch("");
 		this.setYear("");
+		this.setFormName("");
 		return this;
 		
 	}
-	
+
+	public String getFormName() {
+		return formName;
+	}
+
+	public void setFormName(String formName) {
+		this.formName = formName;
+	}
+
 	public String getYear() {
 		return year;
 	}

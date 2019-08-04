@@ -51,7 +51,7 @@ public class ReportController {
     public String showFormWiseReport(HttpServletRequest request, HttpSession session, Model model) {
         logger.info("In showFormWiseReport");
         searchFilterBuilder = searchUtil.setParamsForReport(request, session);
-        searchUtil.setProviderAttribute(session);
+        searchUtil.setProviderAttribute(session, searchFilterBuilder);
         searchUtil.setDivisionAttribute(session);
         List<Object> formWiseAggregatedList = (List<Object>) reportService.findFormWiseReport(searchFilterBuilder);
         session.setAttribute("formWiseAggregatedList", formWiseAggregatedList);

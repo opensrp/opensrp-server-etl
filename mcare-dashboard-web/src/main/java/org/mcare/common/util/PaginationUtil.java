@@ -50,7 +50,7 @@ public class PaginationUtil {
 			Class<?> entityClassName) {
 
 		searchUtil.setDivisionAttribute(session);
-		searchUtil.setProviderAttribute(session);
+		searchUtil.setProviderAttribute(session, searchBuilder);
 
 		String offset = (String) request.getParameter("offSet");
 		int size = 0;

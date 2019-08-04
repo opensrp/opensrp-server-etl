@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
+import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.api.utils.VoidRemarks;
 import org.mcare.api.utils.VoidStatus;
 import org.mcare.common.interfaces.DatabaseService;
@@ -141,5 +142,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 			}
 		}
 		
+	}
+
+	@Transactional
+	@Override
+	public <T> List<T> getProviderByFPI(SearchBuilder searchBuilder) {
+		return databaseRepositoryImpl.getProviderByFPI(searchBuilder);
 	}
 }

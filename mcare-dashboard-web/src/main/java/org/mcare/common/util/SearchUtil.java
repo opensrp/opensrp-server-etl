@@ -1,5 +1,6 @@
 package org.mcare.common.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,10 +47,18 @@ public class SearchUtil {
 	public SearchUtil() {
 	}
 	
-	public void setProviderAttribute(HttpSession session) {
-		List<ProviderEntity> providers = providerServiceImpl.findAll("ProviderEntity");
+	public void setProviderAttribute(HttpSession session, SearchBuilder searchBuilder) {
+		List<Object[]> providers = databaseServiceImpl.getProviderByFPI(searchBuilder);
+		List<ProviderEntity> providerEntities = new ArrayList<>();
+
+		for (Object[] provider: providers) {
+			ProviderEntity providerEntity = new ProviderEntity();
+			providerEntity.setProvider(String.valueOf(provider[1]));
+			providerEntities.add(providerEntity);
+		}
+
 		logger.debug("set session attribute providers: " + providers.size());
-		session.setAttribute("providers", providers);
+		session.setAttribute("providers", providerEntities);
 	}
 	
 	public void setDivisionAttribute(HttpSession session) {
@@ -77,6 +86,7 @@ public class SearchUtil {
 		String name = "";
 		String start = "";
 		String end = "";
+		String formName = "";
 		
 		if (request.getParameterMap().containsKey("division")) {
 			division = (String) request.getParameter("division");
@@ -109,7 +119,7 @@ public class SearchUtil {
 			provider = (String) request.getParameter("provider");
 		}
 		if (request.getParameterMap().containsKey("formName")) {
-			provider = (String) request.getParameter("formName");
+			formName = (String) request.getParameter("formName");
 		}
 		if (request.getParameterMap().containsKey("name")) {
 			name = (String) request.getParameter("name");
@@ -130,6 +140,7 @@ public class SearchUtil {
 		searchFilterBuilder.setProvider(provider);
 		searchFilterBuilder.setName(name);
 		searchFilterBuilder.setStart(start);
+		searchFilterBuilder.setFormName(formName);
 		searchFilterBuilder.setEnd(end);
 		logger.info("successfully set report filters: " + searchFilterBuilder.toString());
 		return searchFilterBuilder;

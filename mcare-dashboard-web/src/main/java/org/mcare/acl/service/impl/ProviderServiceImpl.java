@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.mcare.acl.entity.ProviderEntity;
 import org.mcare.common.interfaces.DatabaseService;
 import org.mcare.common.repository.impl.DatabaseRepositoryImpl;
+import org.mcare.params.builder.SearchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,12 @@ public class ProviderServiceImpl implements DatabaseService {
 	public <T> List<T> findAll(String tableClass) {
 		return databaseRepositoryImpl.findAll(tableClass);
 	}
-	
+
+	@Override
+	public <T> List<T> getProviderByFPI(SearchBuilder searchBuilder) {
+		return null;
+	}
+
 	public void setProviderAttribute(HttpSession session) {
 		List<ProviderEntity> providers = findAll("ProviderEntity");
 		session.setAttribute("providers", providers);

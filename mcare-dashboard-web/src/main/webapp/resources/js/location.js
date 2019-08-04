@@ -63,7 +63,6 @@ jQuery(document).ready(function($) {
 	});
   	$("#subunit").change(function(event) {
 		getLocationHierarchy("/mcare2/location?id="+$("#subunit").val().split("?")[0],"mauzapara") ;
-		
 	});
 
  });

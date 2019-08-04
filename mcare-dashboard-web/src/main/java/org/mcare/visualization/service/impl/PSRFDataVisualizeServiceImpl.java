@@ -20,7 +20,7 @@ public class PSRFDataVisualizeServiceImpl implements VisualizationService{
     @Transactional
     @Override
     public List<Object[]> getMonthWiseData(SearchBuilder searchBuilder) {
-        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "psrf_data");
+        String sqlQuery = DataVisualizationQueryBuilder.getMonthWiseDataFromProcedure(searchBuilder, "psrf_data", "");
         return databaseRepositoryImpl.executeRawQueryForProcedure(searchBuilder, sqlQuery);
     }
 
