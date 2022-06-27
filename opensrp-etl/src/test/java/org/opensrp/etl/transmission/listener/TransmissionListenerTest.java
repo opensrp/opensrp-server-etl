@@ -1,7 +1,5 @@
 package org.opensrp.etl.transmission.listener;
 
-import java.util.List;
-
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 import org.json.JSONException;
@@ -12,30 +10,32 @@ import org.opensrp.etl.transmission.service.TransmissionServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 //@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml" })
+@ContextConfiguration({"classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml"})
 public class TransmissionListenerTest {
-	
-	@Autowired
-	private TransmissionServiceFactory transmissionServiceFactory;
-	
-	@Autowired
-	private SourceDBRepository sourceDBRepository;
-	
-	@Autowired
-	private MarkerService markerService;
-	
-	@Autowired
-	private MarkerEntity markerEntity;
-	
-	//@Test
-	@SuppressWarnings("unchecked")
-	public void dataListenerTest() throws JSONException {
-		try {
-			System.out.println("ETL process started transmission from source couchDB!!!");
-			markerEntity = markerService.findById(1);
-			ViewResult vr = sourceDBRepository.allData(0);
-			List<Row> rows = vr.getRows();
+
+    @Autowired
+    private TransmissionServiceFactory transmissionServiceFactory;
+
+    @Autowired
+    private SourceDBRepository sourceDBRepository;
+
+    @Autowired
+    private MarkerService markerService;
+
+    @Autowired
+    private MarkerEntity markerEntity;
+
+    //@Test
+    @SuppressWarnings("unchecked")
+    public void dataListenerTest() throws JSONException {
+        try {
+            System.out.println("ETL process started transmission from source couchDB!!!");
+            markerEntity = markerService.findById(1);
+            ViewResult vr = sourceDBRepository.allData(0);
+            List<Row> rows = vr.getRows();
 			/*		Collections.sort(rows);
 					sort(rows);*/
 			/*
@@ -53,11 +53,10 @@ public class TransmissionListenerTest {
 				}
 				
 			}*/
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 }

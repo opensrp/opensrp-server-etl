@@ -7,18 +7,18 @@ import org.opensrp.etl.interfaces.TransmissionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ActionTransmissionService implements TransmissionServices {
-	
-	@Autowired
-	private ActionDataConverterService actionDataConverterService;
-	
-	public ActionTransmissionService() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		actionDataConverterService.convertToEntityAndSave(doc);
-		
-	}
-	
+
+    @Autowired
+    private ActionDataConverterService actionDataConverterService;
+
+    public ActionTransmissionService() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+        actionDataConverterService.convertToEntityAndSave(doc);
+
+    }
+
 }

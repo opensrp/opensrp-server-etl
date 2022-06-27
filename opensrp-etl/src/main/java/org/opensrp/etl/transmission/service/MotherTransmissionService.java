@@ -7,14 +7,14 @@ import org.opensrp.etl.interfaces.TransmissionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MotherTransmissionService implements TransmissionServices {
-	
-	@Autowired
-	private MotherDataConverterService motherDataConverterService;
-	
-	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		
-		motherDataConverterService.convertToEntityAndSave(doc);
-	}
-	
+
+    @Autowired
+    private MotherDataConverterService motherDataConverterService;
+
+    @Override
+    public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+
+        motherDataConverterService.convertToEntityAndSave(doc);
+    }
+
 }

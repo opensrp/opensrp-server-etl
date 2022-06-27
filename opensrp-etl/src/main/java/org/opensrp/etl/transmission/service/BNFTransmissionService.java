@@ -7,13 +7,13 @@ import org.opensrp.etl.interfaces.TransmissionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BNFTransmissionService implements TransmissionServices {
-	
-	@Autowired
-	private BNFDataConverterService bnfDataConverterService;
-	
-	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		bnfDataConverterService.convertToEntityAndSave(doc);
-	}
-	
+
+    @Autowired
+    private BNFDataConverterService bnfDataConverterService;
+
+    @Override
+    public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+        bnfDataConverterService.convertToEntityAndSave(doc);
+    }
+
 }

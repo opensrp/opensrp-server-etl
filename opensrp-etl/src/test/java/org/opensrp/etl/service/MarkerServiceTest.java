@@ -7,17 +7,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml" })
+@ContextConfiguration({"classpath:application-etl-context.xml", "classpath:application-couchdb-context.xml"})
 public class MarkerServiceTest {
-	
-	@Autowired
-	private MarkerService markerService;
-	
-	@Test
-	public void getCurrentTimeStampFromMarkerTest() {
-		// TODO Auto-generated method stub
-		//System.out.println("timeStamp:" + markerService.getCurrentTimeStampFromMarker());
-		
-	}
-	
+
+    @Autowired
+    private MarkerService markerService;
+
+    @Test
+    public void getCurrentTimeStampFromMarkerTest() {
+        // TODO Auto-generated method stub
+        //System.out.println("timeStamp:" + markerService.getCurrentTimeStampFromMarker());
+
+    }
+
 }
