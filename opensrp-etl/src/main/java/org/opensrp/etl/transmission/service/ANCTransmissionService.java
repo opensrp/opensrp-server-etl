@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.opensrp.etl.transmission.service;
 
@@ -13,18 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author sohel
  */
 public class ANCTransmissionService implements TransmissionServices {
-	
-	@Autowired
-	private ANCDataConverterService ancDataConverterService;
-	
-	public ANCTransmissionService() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		ancDataConverterService.convertToEntityAndSave(doc);
-		
-	}
-	
+
+    @Autowired
+    private ANCDataConverterService ancDataConverterService;
+
+    public ANCTransmissionService() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+        ancDataConverterService.convertToEntityAndSave(doc);
+
+    }
+
 }

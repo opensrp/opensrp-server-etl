@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.opensrp.etl.transmission.service;
 
@@ -13,19 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author sohel
  */
 public class PNCTransmissionService implements TransmissionServices {
-	
-	@Autowired
-	private PNCDataConverterService pncDataConverterService;
-	
-	public PNCTransmissionService() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
-		
-		pncDataConverterService.convertToEntityAndSave(doc);
-		
-	}
-	
+
+    @Autowired
+    private PNCDataConverterService pncDataConverterService;
+
+    public PNCTransmissionService() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void convertDataJsonToEntity(JSONObject doc) throws JSONException {
+
+        pncDataConverterService.convertToEntityAndSave(doc);
+
+    }
+
 }

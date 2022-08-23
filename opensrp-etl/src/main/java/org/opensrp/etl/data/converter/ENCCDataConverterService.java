@@ -8,28 +8,27 @@ import org.opensrp.etl.service.ENCCService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ENCCDataConverterService implements DataConverterService {
-	
-	@Autowired
-	private ENCCEntity enccEntity;
-	
-	@Autowired
-	private ENCCService enccService;
-	
-	public ENCCDataConverterService() {
-		
-	}
-	
-	@Override
-	public void convertToEntityAndSave(JSONObject doc) throws JSONException {
-		
-		try {
-			JSONObject data = new JSONObject(doc.getString("data"));
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		enccService.save(enccEntity);
-	}
-	
+
+    @Autowired
+    private ENCCEntity enccEntity;
+
+    @Autowired
+    private ENCCService enccService;
+
+    public ENCCDataConverterService() {
+
+    }
+
+    @Override
+    public void convertToEntityAndSave(JSONObject doc) throws JSONException {
+
+        try {
+            JSONObject data = new JSONObject(doc.getString("data"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        enccService.save(enccEntity);
+    }
+
 }
